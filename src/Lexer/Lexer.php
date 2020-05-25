@@ -23,7 +23,9 @@ final class Lexer
      */
     private string $input;
 
-    private string $ch;
+    private Char $char;
+    private Char $peekChar;
+
     private int $position;
     private int $readPosition;
 
@@ -42,37 +44,37 @@ final class Lexer
     {
         $this->skipWhitespaces();
 
-        if ($this->charIs(self::EOF)) {
+        if ($this->char->is(self::EOF)) {
             return $this->makeTokenAndAdvance(
                 new Type(TokenTypes::T_EOF),
                 new Literal('')
             );
         }
 
-        if (TokenTypes::isSingleCharToken($this->ch)) {
-            if ($this->charIs('=') && $this->peekCharIs('=')) {
+        if (TokenTypes::isSingleCharToken($this->char->toScalar())) {
+            if ($this->char->is('=') && $this->peekChar->is('=')) {
                 return $this->makeTwoCharTokenAndAdvance(new Type(TokenTypes::T_EQ));
             }
 
-            if ($this->charIs('!') && $this->peekCharIs('=')) {
+            if ($this->char->is('!') && $this->peekChar->is('=')) {
                 return $this->makeTwoCharTokenAndAdvance(new Type(TokenTypes::T_NOT_EQ));
             }
 
-            if ($this->charIs('>') && $this->peekCharIs('=')) {
+            if ($this->char->is('>') && $this->peekChar->is('=')) {
                 return $this->makeTwoCharTokenAndAdvance(new Type(TokenTypes::T_GT_EQ));
             }
 
-            if ($this->charIs('<') && $this->peekCharIs('=')) {
+            if ($this->char->is('<') && $this->peekChar->is('=')) {
                 return $this->makeTwoCharTokenAndAdvance(new Type(TokenTypes::T_LT_EQ));
             }
 
             return $this->makeTokenAndAdvance(
-                new Type($this->ch),
-                new Literal($this->ch)
+                new Type($this->char->toScalar()),
+                new Literal($this->char->toScalar())
             );
         }
 
-        if ($this->isLetter($this->ch)) {
+        if ($this->char->isLetter()) {
             $ident = $this->readIdentifier();
 
             return $this->makeToken(
@@ -81,7 +83,7 @@ final class Lexer
             );
         }
 
-        if ($this->isDigit($this->ch)) {
+        if ($this->char->isDigit()) {
             return $this->makeToken(
                 new Type(TokenTypes::T_INT),
                 new Literal($this->readNumber())
@@ -90,14 +92,14 @@ final class Lexer
 
         return $this->makeTokenAndAdvance(
             new Type(TokenTypes::T_ILLEGAL),
-            new Literal($this->ch)
+            new Literal($this->char->toScalar())
         );
     }
 
     private function readIdentifier(): string
     {
         $position = $this->position;
-        while ($this->isLetter($this->ch)) {
+        while ($this->char->isLetter()) {
             $this->readChar();
         }
 
@@ -107,19 +109,23 @@ final class Lexer
     private function readChar(): void
     {
         if ($this->isEnd()) {
-            $this->ch = self::EOF;
+            $this->char = Char::from(self::EOF);
         } else {
-            $this->ch = $this->input[$this->readPosition];
+            $this->char = Char::from($this->input[$this->readPosition]);
         }
 
         $this->position = $this->readPosition;
         ++$this->readPosition;
+
+        if (!$this->isEnd()) {
+            $this->peekChar = Char::from($this->input[$this->readPosition]);
+        }
     }
 
     private function readNumber(): string
     {
         $position = $this->position;
-        while ($this->isDigit($this->ch)) {
+        while ($this->char->isDigit()) {
             $this->readChar();
         }
 
@@ -128,39 +134,14 @@ final class Lexer
 
     private function skipWhitespaces(): void
     {
-        while ($this->isWhitespace($this->ch)) {
+        while ($this->char->isWhitespace()) {
             $this->readChar();
         }
-    }
-
-    private function isWhitespace(string $ch): bool
-    {
-        return \ctype_space($ch);
-    }
-
-    private function isLetter(string $ch): bool
-    {
-        return '_' === $ch || \ctype_alpha($ch);
-    }
-
-    private function isDigit(string $ch): bool
-    {
-        return \ctype_digit($ch);
     }
 
     private function isEnd(): bool
     {
         return $this->readPosition >= $this->size;
-    }
-
-    private function charIs(string $ch): bool
-    {
-        return $ch === $this->ch;
-    }
-
-    private function peekCharIs(string $ch): bool
-    {
-        return $this->input[$this->readPosition] === $ch;
     }
 
     private function makeTokenAndAdvance(Type $type, Literal $literal): Token
@@ -171,9 +152,9 @@ final class Lexer
 
     private function makeTwoCharTokenAndAdvance(Type $type): Token
     {
-        $ch = $this->ch;
+        $char = $this->char;
         $this->readChar();
-        $token = $this->makeToken($type, new Literal("{$ch}{$this->ch}"));
+        $token = $this->makeToken($type, new Literal("{$char->toScalar()}{$this->char->toScalar()}"));
         $this->readChar();
         return $token;
     }
