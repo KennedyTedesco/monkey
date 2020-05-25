@@ -7,7 +7,7 @@ namespace Tests;
 use Monkey\Lexer\Lexer;
 use Monkey\Token\TokenTypes;
 
-test('test next token', function () {
+test('next token', function () {
     $input = <<<'MONKEY'
 		let five = 5;
 		let ten = 10;
