@@ -11,7 +11,7 @@ use Monkey\Token\Type;
 
 final class Lexer
 {
-    private const EOF = '0';
+    private const EOF = '-1';
 
     /**
      * @psalm-readonly
