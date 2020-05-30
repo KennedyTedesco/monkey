@@ -91,6 +91,6 @@ final class TokenType
 
     public static function isSingleCharToken(string $ch): bool
     {
-        return 2 === (self::TOKEN_MAP[$ch] ?? 0x0) >> 8;
+        return 2 === (self::lookupToken($ch) ?? 0x0) >> 8;
     }
 }
