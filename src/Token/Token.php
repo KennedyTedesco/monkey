@@ -9,22 +9,12 @@ namespace Monkey\Token;
  */
 final class Token
 {
-    private Type $type;
-    private Literal $literal;
+    public int $type;
+    public string $literal;
 
-    public function __construct(Type $type, Literal $literal)
+    public function __construct(int $type, string $literal)
     {
         $this->type = $type;
         $this->literal = $literal;
-    }
-
-    public function type(): string
-    {
-        return $this->type->value;
-    }
-
-    public function literal(): string
-    {
-        return $this->literal->value;
     }
 }

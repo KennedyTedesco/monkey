@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Monkey\Lexer\Lexer;
-use Monkey\Token\TokenTypes;
+use Monkey\Token\TokenType;
 
 test('next token', function () {
     $input = <<<'MONKEY'
@@ -35,113 +35,113 @@ MONKEY;
 
     $tokens = [
         // let five = 5;
-        [TokenTypes::T_LET, 'let'],
-        [TokenTypes::T_IDENT, 'five'],
-        [TokenTypes::T_ASSIGN, '='],
-        [TokenTypes::T_INT, '5'],
-        [TokenTypes::T_SEMICOLON, ';'],
+        [TokenType::T_LET, 'let'],
+        [TokenType::T_IDENT, 'five'],
+        [TokenType::T_ASSIGN, '='],
+        [TokenType::T_INT, '5'],
+        [TokenType::T_SEMICOLON, ';'],
 
         // let ten = 10;
-        [TokenTypes::T_LET, 'let'],
-        [TokenTypes::T_IDENT, 'ten'],
-        [TokenTypes::T_ASSIGN, '='],
-        [TokenTypes::T_INT, '10'],
-        [TokenTypes::T_SEMICOLON, ';'],
+        [TokenType::T_LET, 'let'],
+        [TokenType::T_IDENT, 'ten'],
+        [TokenType::T_ASSIGN, '='],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_SEMICOLON, ';'],
 
         // let add = fn(x, y) {
         //    x + y;
         // };
-        [TokenTypes::T_LET, 'let'],
-        [TokenTypes::T_IDENT, 'add'],
-        [TokenTypes::T_ASSIGN, '='],
-        [TokenTypes::T_FUNC, 'fn'],
-        [TokenTypes::T_LPAREN, '('],
-        [TokenTypes::T_IDENT, 'x'],
-        [TokenTypes::T_COMMA, ','],
-        [TokenTypes::T_IDENT, 'y'],
-        [TokenTypes::T_RPAREN, ')'],
-        [TokenTypes::T_LBRACE, '{'],
-        [TokenTypes::T_IDENT, 'x'],
-        [TokenTypes::T_PLUS, '+'],
-        [TokenTypes::T_IDENT, 'y'],
-        [TokenTypes::T_SEMICOLON, ';'],
-        [TokenTypes::T_RBRACE, '}'],
-        [TokenTypes::T_SEMICOLON, ';'],
+        [TokenType::T_LET, 'let'],
+        [TokenType::T_IDENT, 'add'],
+        [TokenType::T_ASSIGN, '='],
+        [TokenType::T_FUNC, 'fn'],
+        [TokenType::T_LPAREN, '('],
+        [TokenType::T_IDENT, 'x'],
+        [TokenType::T_COMMA, ','],
+        [TokenType::T_IDENT, 'y'],
+        [TokenType::T_RPAREN, ')'],
+        [TokenType::T_LBRACE, '{'],
+        [TokenType::T_IDENT, 'x'],
+        [TokenType::T_PLUS, '+'],
+        [TokenType::T_IDENT, 'y'],
+        [TokenType::T_SEMICOLON, ';'],
+        [TokenType::T_RBRACE, '}'],
+        [TokenType::T_SEMICOLON, ';'],
 
         // let result = add(five, ten);
-        [TokenTypes::T_LET, 'let'],
-        [TokenTypes::T_IDENT, 'result'],
-        [TokenTypes::T_ASSIGN, '='],
-        [TokenTypes::T_IDENT, 'add'],
-        [TokenTypes::T_LPAREN, '('],
-        [TokenTypes::T_IDENT, 'five'],
-        [TokenTypes::T_COMMA, ','],
-        [TokenTypes::T_IDENT, 'ten'],
-        [TokenTypes::T_RPAREN, ')'],
-        [TokenTypes::T_SEMICOLON, ';'],
+        [TokenType::T_LET, 'let'],
+        [TokenType::T_IDENT, 'result'],
+        [TokenType::T_ASSIGN, '='],
+        [TokenType::T_IDENT, 'add'],
+        [TokenType::T_LPAREN, '('],
+        [TokenType::T_IDENT, 'five'],
+        [TokenType::T_COMMA, ','],
+        [TokenType::T_IDENT, 'ten'],
+        [TokenType::T_RPAREN, ')'],
+        [TokenType::T_SEMICOLON, ';'],
 
         // !-/*5;
-        [TokenTypes::T_BANG, '!'],
-        [TokenTypes::T_MINUS, '-'],
-        [TokenTypes::T_SLASH, '/'],
-        [TokenTypes::T_ASTERISK, '*'],
-        [TokenTypes::T_INT, '5'],
-        [TokenTypes::T_SEMICOLON, ';'],
+        [TokenType::T_BANG, '!'],
+        [TokenType::T_MINUS, '-'],
+        [TokenType::T_SLASH, '/'],
+        [TokenType::T_ASTERISK, '*'],
+        [TokenType::T_INT, '5'],
+        [TokenType::T_SEMICOLON, ';'],
 
         // 5 < 10 > 5;
-        [TokenTypes::T_INT, '5'],
-        [TokenTypes::T_LT, '<'],
-        [TokenTypes::T_INT, '10'],
-        [TokenTypes::T_GT, '>'],
-        [TokenTypes::T_INT, '5'],
-        [TokenTypes::T_SEMICOLON, ';'],
+        [TokenType::T_INT, '5'],
+        [TokenType::T_LT, '<'],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_GT, '>'],
+        [TokenType::T_INT, '5'],
+        [TokenType::T_SEMICOLON, ';'],
 
         // if (5 < 10) {
         // 	 return true;
         // } else {
         //	 return false;
         // }
-        [TokenTypes::T_IF, 'if'],
-        [TokenTypes::T_LPAREN, '('],
-        [TokenTypes::T_INT, '5'],
-        [TokenTypes::T_LT, '<'],
-        [TokenTypes::T_INT, '10'],
-        [TokenTypes::T_RPAREN, ')'],
-        [TokenTypes::T_LBRACE, '{'],
-        [TokenTypes::T_RETURN, 'return'],
-        [TokenTypes::T_TRUE, 'true'],
-        [TokenTypes::T_SEMICOLON, ';'],
-        [TokenTypes::T_RBRACE, '}'],
-        [TokenTypes::T_ELSE, 'else'],
-        [TokenTypes::T_LBRACE, '{'],
-        [TokenTypes::T_RETURN, 'return'],
-        [TokenTypes::T_FALSE, 'false'],
-        [TokenTypes::T_SEMICOLON, ';'],
-        [TokenTypes::T_RBRACE, '}'],
+        [TokenType::T_IF, 'if'],
+        [TokenType::T_LPAREN, '('],
+        [TokenType::T_INT, '5'],
+        [TokenType::T_LT, '<'],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_RPAREN, ')'],
+        [TokenType::T_LBRACE, '{'],
+        [TokenType::T_RETURN, 'return'],
+        [TokenType::T_TRUE, 'true'],
+        [TokenType::T_SEMICOLON, ';'],
+        [TokenType::T_RBRACE, '}'],
+        [TokenType::T_ELSE, 'else'],
+        [TokenType::T_LBRACE, '{'],
+        [TokenType::T_RETURN, 'return'],
+        [TokenType::T_FALSE, 'false'],
+        [TokenType::T_SEMICOLON, ';'],
+        [TokenType::T_RBRACE, '}'],
 
         // 10 == 10;
         // 10 != 9;
-        [TokenTypes::T_INT, '10'],
-        [TokenTypes::T_EQ, '=='],
-        [TokenTypes::T_INT, '10'],
-        [TokenTypes::T_SEMICOLON, ';'],
-        [TokenTypes::T_INT, '10'],
-        [TokenTypes::T_NOT_EQ, '!='],
-        [TokenTypes::T_INT, '9'],
-        [TokenTypes::T_SEMICOLON, ';'],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_EQ, '=='],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_SEMICOLON, ';'],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_NOT_EQ, '!='],
+        [TokenType::T_INT, '9'],
+        [TokenType::T_SEMICOLON, ';'],
 
         // 10 >= 2;
         // 10 <= 2;
-        [TokenTypes::T_INT, '10'],
-        [TokenTypes::T_GT_EQ, '>='],
-        [TokenTypes::T_INT, '2'],
-        [TokenTypes::T_SEMICOLON, ';'],
-        [TokenTypes::T_INT, '10'],
-        [TokenTypes::T_LT_EQ, '<='],
-        [TokenTypes::T_INT, '2'],
-        [TokenTypes::T_SEMICOLON, ';'],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_GT_EQ, '>='],
+        [TokenType::T_INT, '2'],
+        [TokenType::T_SEMICOLON, ';'],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_LT_EQ, '<='],
+        [TokenType::T_INT, '2'],
+        [TokenType::T_SEMICOLON, ';'],
 
-        [TokenTypes::T_EOF, ''],
+        [TokenType::T_EOF, '0'],
     ];
 
     $lexer = new Lexer($input);
@@ -151,7 +151,7 @@ MONKEY;
 
         $token = $lexer->nextToken();
 
-        assertSame($type, $token->type());
-        assertSame($literal, $token->literal());
+        assertSame($type, $token->type);
+        assertSame($literal, $token->literal);
     }
 });

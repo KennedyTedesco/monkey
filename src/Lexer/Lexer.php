@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Monkey\Lexer;
 
-use Monkey\Token\Literal;
 use Monkey\Token\Token;
-use Monkey\Token\TokenTypes;
-use Monkey\Token\Type;
+use Monkey\Token\TokenType;
 
 final class Lexer
 {
-    private const EOF = '-1';
+    private const EOF = '0';
 
     /**
      * @psalm-readonly
@@ -45,55 +43,42 @@ final class Lexer
         $this->skipWhitespaces();
 
         if ($this->char->is(self::EOF)) {
-            return $this->makeTokenAndAdvance(
-                new Type(TokenTypes::T_EOF),
-                new Literal('')
-            );
+            return $this->makeTokenAndAdvance(TokenType::T_EOF, self::EOF);
         }
 
-        if (TokenTypes::isSingleCharToken($this->char->toScalar())) {
+        if (TokenType::isSingleCharToken($this->char->toScalar())) {
             if ($this->char->is('=') && $this->peekChar->is('=')) {
-                return $this->makeTwoCharTokenAndAdvance(new Type(TokenTypes::T_EQ));
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ);
             }
 
             if ($this->char->is('!') && $this->peekChar->is('=')) {
-                return $this->makeTwoCharTokenAndAdvance(new Type(TokenTypes::T_NOT_EQ));
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_NOT_EQ);
             }
 
             if ($this->char->is('>') && $this->peekChar->is('=')) {
-                return $this->makeTwoCharTokenAndAdvance(new Type(TokenTypes::T_GT_EQ));
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_GT_EQ);
             }
 
             if ($this->char->is('<') && $this->peekChar->is('=')) {
-                return $this->makeTwoCharTokenAndAdvance(new Type(TokenTypes::T_LT_EQ));
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ);
             }
 
             return $this->makeTokenAndAdvance(
-                new Type($this->char->toScalar()),
-                new Literal($this->char->toScalar())
+                TokenType::lookupToken($this->char->toScalar()),
+                $this->char->toScalar()
             );
         }
 
         if ($this->char->isLetter()) {
             $ident = $this->readIdentifier();
-
-            return $this->makeToken(
-                new Type(TokenTypes::lookupIdentifier($ident)),
-                new Literal($ident)
-            );
+            return $this->makeToken(TokenType::lookupIdentifier($ident), $ident);
         }
 
         if ($this->char->isDigit()) {
-            return $this->makeToken(
-                new Type(TokenTypes::T_INT),
-                new Literal($this->readNumber())
-            );
+            return $this->makeToken(TokenType::T_INT, $this->readNumber());
         }
 
-        return $this->makeTokenAndAdvance(
-            new Type(TokenTypes::T_ILLEGAL),
-            new Literal($this->char->toScalar())
-        );
+        return $this->makeTokenAndAdvance(TokenType::T_ILLEGAL, $this->char->toScalar());
     }
 
     private function readIdentifier(): string
@@ -144,22 +129,22 @@ final class Lexer
         return $this->readPosition >= $this->size;
     }
 
-    private function makeTokenAndAdvance(Type $type, Literal $literal): Token
+    private function makeTokenAndAdvance(int $type, string $literal): Token
     {
         $this->readChar();
         return $this->makeToken($type, $literal);
     }
 
-    private function makeTwoCharTokenAndAdvance(Type $type): Token
+    private function makeTwoCharTokenAndAdvance(int $type): Token
     {
         $char = $this->char;
         $this->readChar();
-        $token = $this->makeToken($type, new Literal("{$char->toScalar()}{$this->char->toScalar()}"));
+        $token = $this->makeToken($type, "{$char->toScalar()}{$this->char->toScalar()}");
         $this->readChar();
         return $token;
     }
 
-    private function makeToken(Type $type, Literal $literal): Token
+    private function makeToken(int $type, string $literal): Token
     {
         return new Token($type, $literal);
     }
