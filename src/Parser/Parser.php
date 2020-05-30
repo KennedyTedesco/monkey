@@ -22,7 +22,6 @@ final class Parser
     public function __construct(Lexer $lexer)
     {
         $this->lexer = $lexer;
-
         $this->nextToken();
         $this->nextToken();
     }
