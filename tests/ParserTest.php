@@ -18,7 +18,7 @@ MONKEY;
 
     $lexer = new Lexer($input);
     $parser = new Parser($lexer);
-    $program = (new ProgramParser($parser))->parse();
+    $program = (new ProgramParser())($parser);
 
     assertSame(3, $program->count());
 

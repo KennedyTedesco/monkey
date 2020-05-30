@@ -9,21 +9,14 @@ use Monkey\Token\TokenType;
 
 final class ReturnParser
 {
-    private Parser $parser;
-
-    public function __construct(Parser $parser)
+    public function __invoke(Parser $parser): ReturnStatement
     {
-        $this->parser = $parser;
-    }
+        $token = $parser->curToken;
 
-    public function parse(): ReturnStatement
-    {
-        $token = $this->parser->curToken;
+        $parser->nextToken();
 
-        $this->parser->nextToken();
-
-        while (!$this->parser->curTokenIs(TokenType::T_SEMICOLON)) {
-            $this->parser->nextToken();
+        while (!$parser->curTokenIs(TokenType::T_SEMICOLON)) {
+            $parser->nextToken();
         }
 
         return new ReturnStatement($token);

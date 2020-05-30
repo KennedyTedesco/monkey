@@ -9,24 +9,17 @@ use Monkey\Token\TokenType;
 
 final class ProgramParser
 {
-    private Parser $parser;
-
-    public function __construct(Parser $parser)
-    {
-        $this->parser = $parser;
-    }
-
-    public function parse(): Program
+    public function __invoke(Parser $parser): Program
     {
         $program = new Program();
 
-        while (!$this->parser->curTokenIs(TokenType::T_EOF)) {
-            switch ($this->parser->curToken->type) {
+        while (!$parser->curTokenIs(TokenType::T_EOF)) {
+            switch ($parser->curToken->type) {
                 case TokenType::T_LET:
-                    $smtp = (new LetParser($this->parser))->parse();
+                    $smtp = (new LetParser())($parser);
                     break;
                 case TokenType::T_RETURN:
-                    $smtp = (new ReturnParser($this->parser))->parse();
+                    $smtp = (new ReturnParser())($parser);
                     break;
                 default:
                     $smtp = null;
@@ -36,7 +29,7 @@ final class ProgramParser
                 $program->append($smtp);
             }
 
-            $this->parser->nextToken();
+            $parser->nextToken();
         }
 
         return $program;

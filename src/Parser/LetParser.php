@@ -10,32 +10,25 @@ use Monkey\Token\TokenType;
 
 final class LetParser
 {
-    private Parser $parser;
-
-    public function __construct(Parser $parser)
+    public function __invoke(Parser $parser): ?LetStatement
     {
-        $this->parser = $parser;
-    }
+        $token = $parser->curToken;
 
-    public function parse(): ?LetStatement
-    {
-        $token = $this->parser->curToken;
-
-        if (!$this->parser->expectPeek(TokenType::T_IDENT)) {
+        if (!$parser->expectPeek(TokenType::T_IDENT)) {
             return null;
         }
 
         $name = new Identifier(
-            $this->parser->curToken,
-            $this->parser->curToken->literal
+            $parser->curToken,
+            $parser->curToken->literal
         );
 
-        if (!$this->parser->expectPeek(TokenType::T_ASSIGN)) {
+        if (!$parser->expectPeek(TokenType::T_ASSIGN)) {
             return null;
         }
 
-        while (!$this->parser->curTokenIs(TokenType::T_SEMICOLON)) {
-            $this->parser->nextToken();
+        while (!$parser->curTokenIs(TokenType::T_SEMICOLON)) {
+            $parser->nextToken();
         }
 
         return new LetStatement($token, $name);
