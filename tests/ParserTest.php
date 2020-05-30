@@ -9,7 +9,7 @@ use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
 
-test('next token', function () {
+test('let parser', function () {
     $input = <<<'MONKEY'
         let x = 5;
         let y = 10;
