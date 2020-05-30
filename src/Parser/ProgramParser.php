@@ -26,7 +26,7 @@ final class ProgramParser
             }
 
             if (null !== $statement) {
-                $program->append($statement);
+                $program->addStatement($statement);
             }
 
             $parser->nextToken();

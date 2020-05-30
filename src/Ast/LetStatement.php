@@ -9,8 +9,8 @@ use Monkey\Token\Token;
 final class LetStatement implements Statement
 {
     private Token $token;
-    private Expression $value;
     private Identifier $identifier;
+    private ?Expression $value = null;
 
     public function __construct(
         Token $token,
@@ -27,7 +27,7 @@ final class LetStatement implements Statement
 
     public function identifierName(): string
     {
-        return $this->identifier->value;
+        return $this->identifier->tokenLiteral();
     }
 
     public function statementNode()
@@ -37,6 +37,6 @@ final class LetStatement implements Statement
 
     public function toString(): string
     {
-        return "{$this->tokenLiteral()} {$this->identifierName()} = {$this->value->toString()};";
+        return "{$this->tokenLiteral()} {$this->identifierName()} = {$this->identifier->value};";
     }
 }

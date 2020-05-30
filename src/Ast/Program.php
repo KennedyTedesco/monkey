@@ -21,7 +21,7 @@ final class Program
         return $this->statements;
     }
 
-    public function append(Statement $statement): void
+    public function addStatement(Statement $statement): void
     {
         $this->statements[] = $statement;
     }
