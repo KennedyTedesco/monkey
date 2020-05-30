@@ -15,7 +15,7 @@ final class Parser
      */
     private Lexer $lexer;
 
-    private array $errors;
+    private array $errors = [];
     public ?Token $curToken = null;
     public ?Token $peekToken = null;
 
