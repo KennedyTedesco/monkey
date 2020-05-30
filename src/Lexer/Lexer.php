@@ -70,8 +70,11 @@ final class Lexer
         }
 
         if ($this->char->isLetter()) {
-            $ident = $this->readIdentifier();
-            return $this->makeToken(TokenType::lookupIdentifier($ident), $ident);
+            $identifier = $this->readIdentifier();
+            return $this->makeToken(
+                TokenType::lookupToken($identifier) ?? TokenType::T_IDENT,
+                $identifier
+            );
         }
 
         if ($this->char->isDigit()) {

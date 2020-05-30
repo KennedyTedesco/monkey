@@ -11,6 +11,11 @@ final class ReturnStatement implements Statement
     private Token $token;
     private Expression $value;
 
+    public function __construct(Token $token)
+    {
+        $this->token = $token;
+    }
+
     public function tokenLiteral(): string
     {
         return $this->token->literal();

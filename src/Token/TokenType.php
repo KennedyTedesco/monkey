@@ -70,9 +70,6 @@ final class TokenType
         '<=' => self::T_LT_EQ,
         '==' => self::T_EQ,
         '!=' => self::T_NOT_EQ,
-    ];
-
-    private const TOKEN_IDENT_MAP = [
         'fn' => self::T_FUNC,
         'let' => self::T_LET,
         'true' => self::T_TRUE,
@@ -82,14 +79,14 @@ final class TokenType
         'return' => self::T_RETURN,
     ];
 
-    public static function lookupToken(string $ch): int
+    public static function tokenName(int $type): string
     {
-        return self::TOKEN_MAP[$ch];
+        return \array_search($type, self::TOKEN_MAP);
     }
 
-    public static function lookupIdentifier(string $identifier): int
+    public static function lookupToken(string $ch): ?int
     {
-        return self::TOKEN_IDENT_MAP[$identifier] ?? self::T_IDENT;
+        return self::TOKEN_MAP[$ch] ?? null;
     }
 
     public static function isSingleCharToken(string $ch): bool

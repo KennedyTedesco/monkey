@@ -30,17 +30,17 @@ final class Parser
         $this->peekToken = $this->lexer->nextToken();
     }
 
-    public function curTokenIs(TokenType $type): bool
+    public function curTokenIs(int $type): bool
     {
-        return $this->curToken->type->value === $type->value;
+        return $this->curToken->type === $type;
     }
 
-    public function peekTokenIs(TokenType $type): bool
+    public function peekTokenIs(int $type): bool
     {
-        return $this->peekToken->type->value === $type->value;
+        return $this->peekToken->type === $type;
     }
 
-    public function expectPeek(TokenType $type): bool
+    public function expectPeek(int $type): bool
     {
         if ($this->peekTokenIs($type)) {
             $this->nextToken();
@@ -50,11 +50,11 @@ final class Parser
         return false;
     }
 
-    public function peekError(TokenType $type): void
+    public function peekError(int $type): void
     {
         $this->errors[] = \sprintf(
             'expected next token to be %s, got %s instead',
-            $type->value, $this->peekToken->type->value
+            TokenType::tokenName($type), $this->peekToken->literal
         );
     }
 }

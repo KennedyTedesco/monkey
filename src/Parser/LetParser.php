@@ -7,7 +7,6 @@ namespace Monkey\Parser;
 use Monkey\Ast\Identifier;
 use Monkey\Ast\LetStatement;
 use Monkey\Token\TokenType;
-use Monkey\Token\TokenType;
 
 final class LetParser
 {
@@ -22,17 +21,23 @@ final class LetParser
     {
         $token = $this->parser->curToken;
 
-        if (!$this->parser->peekTokenIs(TokenType::from(TokenType::T_IDENT))) {
+        if (!$this->parser->peekTokenIs(TokenType::T_IDENT)) {
             return null;
         }
 
         $name = new Identifier(
             $this->parser->curToken,
-            $this->parser->curToken->literal->value
+            $this->parser->curToken->literal
         );
 
-        if (!$this->parser->peekTokenIs(TokenType::from(TokenType::T_ASSIGN))) {
+        if (!$this->parser->peekTokenIs(TokenType::T_ASSIGN)) {
             return null;
         }
+
+        while (!$this->parser->curTokenIs(TokenType::T_SEMICOLON)) {
+            $this->parser->nextToken();
+        }
+
+        return new LetStatement($token, $name);
     }
 }
