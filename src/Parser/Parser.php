@@ -60,4 +60,9 @@ final class Parser
             TokenType::tokenName($type), $this->peekToken->literal
         );
     }
+
+    public function errors(): array
+    {
+        return $this->errors;
+    }
 }
