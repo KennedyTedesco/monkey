@@ -22,7 +22,7 @@ MONKEY;
 
     assertSame(3, $program->count());
 
-    $names = ['x', 'y', 'foo_bar'];
+    $identifiers = ['x', 'y', 'foo_bar'];
 
     for ($i = 0; $i < $program->count(); ++$i) {
         /** @var LetStatement $stmt */
@@ -30,6 +30,6 @@ MONKEY;
 
         assertInstanceOf(LetStatement::class, $stmt);
         assertSame('let', $stmt->tokenLiteral());
-        assertSame($names[$i], $stmt->identifierLiteral());
+        assertSame($identifiers[$i], $stmt->identifierLiteral());
     }
 });
