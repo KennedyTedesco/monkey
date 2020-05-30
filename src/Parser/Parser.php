@@ -16,12 +16,15 @@ final class Parser
     private Lexer $lexer;
 
     private array $errors;
-    public Token $curToken;
-    public Token $peekToken;
+    public ?Token $curToken = null;
+    public ?Token $peekToken = null;
 
     public function __construct(Lexer $lexer)
     {
         $this->lexer = $lexer;
+
+        $this->nextToken();
+        $this->nextToken();
     }
 
     public function nextToken(): void

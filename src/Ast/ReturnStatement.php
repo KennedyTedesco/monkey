@@ -18,7 +18,7 @@ final class ReturnStatement implements Statement
 
     public function tokenLiteral(): string
     {
-        return $this->token->literal();
+        return $this->token->literal;
     }
 
     public function statementNode()

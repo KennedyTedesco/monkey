@@ -21,7 +21,7 @@ final class LetParser
     {
         $token = $this->parser->curToken;
 
-        if (!$this->parser->peekTokenIs(TokenType::T_IDENT)) {
+        if (!$this->parser->expectPeek(TokenType::T_IDENT)) {
             return null;
         }
 
@@ -30,7 +30,7 @@ final class LetParser
             $this->parser->curToken->literal
         );
 
-        if (!$this->parser->peekTokenIs(TokenType::T_ASSIGN)) {
+        if (!$this->parser->expectPeek(TokenType::T_ASSIGN)) {
             return null;
         }
 

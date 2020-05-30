@@ -9,7 +9,7 @@ use Monkey\Token\Token;
 final class Identifier implements Expression
 {
     private Token $token;
-    private string $value;
+    public string $value;
 
     public function __construct(Token $token, string $value)
     {
@@ -24,6 +24,6 @@ final class Identifier implements Expression
 
     public function tokenLiteral(): string
     {
-        return $this->token->literal();
+        return $this->token->literal;
     }
 }

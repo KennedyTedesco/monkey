@@ -4,19 +4,25 @@ declare(strict_types=1);
 
 namespace Monkey\Ast;
 
-final class Program implements Node
+final class Program
 {
     /**
      * @var array<Statement>
      */
     private array $statements = [];
 
-    public function tokenLiteral(): string
+    public function statement(int $index): Node
     {
-        if (0 === \count($this->statements)) {
-            return '';
-        }
+        return $this->statements[$index];
+    }
 
-        return $this->statements[0]->tokenLiteral();
+    public function append(Statement $statement): void
+    {
+        $this->statements[] = $statement;
+    }
+
+    public function count(): int
+    {
+        return \count($this->statements);
     }
 }

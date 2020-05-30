@@ -9,20 +9,25 @@ use Monkey\Token\Token;
 final class LetStatement implements Statement
 {
     private Token $token;
-    private ?Identifier $name;
     private Expression $value;
+    private Identifier $identifier;
 
     public function __construct(
         Token $token,
-        Identifier $name = null
+        Identifier $identifier
     ) {
         $this->token = $token;
-        $this->name = $name;
+        $this->identifier = $identifier;
     }
 
     public function tokenLiteral(): string
     {
-        return $this->token->literal();
+        return $this->token->literal;
+    }
+
+    public function identifierLiteral(): string
+    {
+        return $this->identifier->value;
     }
 
     public function statementNode()
