@@ -25,7 +25,7 @@ final class LetStatement implements Statement
         return $this->token->literal;
     }
 
-    public function identifierLiteral(): string
+    public function identifierName(): string
     {
         return $this->identifier->value;
     }
@@ -33,5 +33,10 @@ final class LetStatement implements Statement
     public function statementNode()
     {
         // TODO: Implement statementNode() method.
+    }
+
+    public function toString(): string
+    {
+        return "{$this->tokenLiteral()} {$this->identifierName()} = {$this->value->toString()};";
     }
 }

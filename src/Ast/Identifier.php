@@ -26,4 +26,9 @@ final class Identifier implements Expression
     {
         return $this->token->literal;
     }
+
+    public function toString(): string
+    {
+        // TODO: Implement toString() method.
+    }
 }

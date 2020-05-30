@@ -7,4 +7,6 @@ namespace Monkey\Ast;
 interface Node
 {
     public function tokenLiteral(): string;
+
+    public function toString(): string;
 }

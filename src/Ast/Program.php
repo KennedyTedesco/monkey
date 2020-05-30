@@ -30,4 +30,15 @@ final class Program
     {
         return \count($this->statements);
     }
+
+    public function toString(): string
+    {
+        $out = '';
+        /** @var Statement $statement */
+        foreach ($this->statements as $statement) {
+            $out .= $statement->toString();
+        }
+
+        return $out;
+    }
 }

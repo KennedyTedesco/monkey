@@ -6,7 +6,7 @@ namespace Monkey\Ast;
 
 use Monkey\Token\Token;
 
-final class ReturnStatement implements Statement
+final class ExpressionStatement implements Statement
 {
     private Token $token;
     private Expression $value;
@@ -28,6 +28,6 @@ final class ReturnStatement implements Statement
 
     public function toString(): string
     {
-        return "{$this->tokenLiteral()} {$this->value->toString()};";
+        return $this->value->toString();
     }
 }
