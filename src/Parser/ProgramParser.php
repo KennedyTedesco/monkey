@@ -16,17 +16,17 @@ final class ProgramParser
         while (!$parser->curTokenIs(TokenType::T_EOF)) {
             switch ($parser->curToken->type) {
                 case TokenType::T_LET:
-                    $smtp = (new LetParser())($parser);
+                    $statement = (new LetParser())($parser);
                     break;
                 case TokenType::T_RETURN:
-                    $smtp = (new ReturnParser())($parser);
+                    $statement = (new ReturnParser())($parser);
                     break;
                 default:
-                    $smtp = null;
+                    $statement = null;
             }
 
-            if (null !== $smtp) {
-                $program->append($smtp);
+            if (null !== $statement) {
+                $program->append($statement);
             }
 
             $parser->nextToken();
