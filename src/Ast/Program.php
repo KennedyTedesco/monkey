@@ -16,6 +16,11 @@ final class Program
         return $this->statements[$index];
     }
 
+    public function statements(): array
+    {
+        return $this->statements;
+    }
+
     public function append(Statement $statement): void
     {
         $this->statements[] = $statement;
