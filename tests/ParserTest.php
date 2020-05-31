@@ -31,10 +31,10 @@ MONKEY;
     $identifiers = ['x', 'y', 'foo_bar'];
 
     /** @var LetStatement $stmt */
-    foreach ($program->statements() as $i => $stmt) {
+    foreach ($program->statements() as $index => $stmt) {
         assertInstanceOf(LetStatement::class, $stmt);
         assertSame('let', $stmt->tokenLiteral());
-        assertSame($identifiers[$i], $stmt->identifierName());
+        assertSame($identifiers[$index], $stmt->identifierName());
     }
 });
 
