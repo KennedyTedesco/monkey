@@ -9,6 +9,7 @@ use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parselet\IdentifierParselet;
 use Monkey\Parser\Parselet\IntegerParselet;
 use Monkey\Parser\Parselet\Parselet;
+use Monkey\Parser\Parselet\PrefixExpressionParselet;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
@@ -46,6 +47,8 @@ final class Parser
 
         $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
         $this->registerPrefixParselet(TokenType::T_INT, new IntegerParselet($this));
+        $this->registerPrefixParselet(TokenType::T_BANG, new PrefixExpressionParselet($this));
+        $this->registerPrefixParselet(TokenType::T_MINUS, new PrefixExpressionParselet($this));
     }
 
     public function nextToken(): void
@@ -82,6 +85,13 @@ final class Parser
         );
     }
 
+    public function prefixParserError(int $type): void
+    {
+        $this->errors[] = \sprintf(
+            'no prefix parse function for %s found', TokenType::tokenName($type)
+        );
+    }
+
     public function registerPrefixParselet(int $type, Parselet $parselet): void
     {
         $this->prefixParselets[$type] = $parselet;
@@ -97,6 +107,7 @@ final class Parser
         /** @var Parselet|null $parselet */
         $parselet = $this->prefixParselets[$this->curToken->type] ?? null;
         if (null === $parselet) {
+            $this->prefixParserError($this->curToken->type);
             return null;
         }
         return $parselet->parse();

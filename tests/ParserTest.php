@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Monkey\Ast\Expressions\Identifier;
+use Monkey\Ast\Expressions\PrefixExpression;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Ast\Statements\ReturnStatement;
@@ -99,3 +100,27 @@ test('integer literal expression', function () {
     assertSame(10, $integer->value());
     assertSame('10', $integer->tokenLiteral());
 });
+
+test('prefix expression', function (string $input, string $operator, int $value) {
+    $lexer = new Lexer($input);
+    $parser = new Parser($lexer);
+    $program = (new ProgramParser())($parser);
+
+    assertSame(1, $program->count());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var PrefixExpression $expression */
+    $expression = $statement->value();
+
+    assertSame($operator, $expression->operator());
+
+    /** @var IntegerLiteral $right */
+    $right = $expression->right();
+    assertSame($value, $right->value());
+})->with([
+    ['!5;', '!', 5],
+    ['-5;', '-', 5],
+]);
