@@ -16,8 +16,9 @@ final class PrefixExpressionParselet extends Parselet
 
         $this->parser->nextToken();
 
+        /** @var Expression $right */
         $right = $this->parser->parseExpression(Precedence::PREFIX);
 
-        return new PrefixExpression($token, $right, $token->literal);
+        return new PrefixExpression($token, $token->literal, $right);
     }
 }

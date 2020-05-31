@@ -4,25 +4,24 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Expressions;
 
-use Monkey\Ast\Node;
 use Monkey\Token\Token;
 
 final class PrefixExpression extends Expression
 {
-    private Node $right;
+    private Expression $right;
     private string $operator;
 
     public function __construct(
         Token $token,
-        Node $right,
-        string $operator
+        string $operator,
+        Expression $right
     ) {
         $this->token = $token;
         $this->right = $right;
         $this->operator = $operator;
     }
 
-    public function right(): Node
+    public function right(): Expression
     {
         return $this->right;
     }
