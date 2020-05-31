@@ -9,8 +9,8 @@ use Monkey\Token\Token;
 
 final class PrefixExpression extends Expression
 {
-    private string $operator;
     private Node $right;
+    private string $operator;
 
     public function __construct(
         Token $token,
