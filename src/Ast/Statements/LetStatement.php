@@ -10,8 +10,8 @@ use Monkey\Token\Token;
 
 final class LetStatement extends Statement
 {
+    private Expression $value;
     private Identifier $identifier;
-    private ?Expression $value = null;
 
     public function __construct(
         Token $token,
@@ -28,6 +28,6 @@ final class LetStatement extends Statement
 
     public function toString(): string
     {
-        return "{$this->tokenLiteral()} {$this->identifierName()} = {$this->identifier->value};";
+        return "{$this->tokenLiteral()} {$this->identifierName()} = {$this->identifier->value()};";
     }
 }

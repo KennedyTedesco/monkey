@@ -74,6 +74,6 @@ test('identifier expression', function () {
     /** @var Identifier $identifier */
     $identifier = $statement->value;
 
-    assertSame('foobar', $identifier->value);
+    assertSame('foobar', $identifier->value());
     assertSame('foobar', $identifier->tokenLiteral());
 });
