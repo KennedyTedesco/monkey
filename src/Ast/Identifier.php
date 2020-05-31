@@ -17,11 +17,6 @@ final class Identifier implements Expression
         $this->value = $value;
     }
 
-    public function expressionNode()
-    {
-        // TODO: Implement expressionNode() method.
-    }
-
     public function tokenLiteral(): string
     {
         return $this->token->literal;
@@ -29,6 +24,6 @@ final class Identifier implements Expression
 
     public function toString(): string
     {
-        // TODO: Implement toString() method.
+        return '';
     }
 }

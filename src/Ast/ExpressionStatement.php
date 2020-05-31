@@ -11,19 +11,15 @@ final class ExpressionStatement implements Statement
     private Token $token;
     private Expression $value;
 
-    public function __construct(Token $token)
+    public function __construct(Token $token, Expression $value)
     {
         $this->token = $token;
+        $this->value = $value;
     }
 
     public function tokenLiteral(): string
     {
         return $this->token->literal;
-    }
-
-    public function statementNode()
-    {
-        // TODO: Implement statementNode() method.
     }
 
     public function toString(): string

@@ -9,11 +9,12 @@ use Monkey\Token\Token;
 final class ReturnStatement implements Statement
 {
     private Token $token;
-    private Expression $value;
+    private ?Expression $value;
 
-    public function __construct(Token $token)
+    public function __construct(Token $token, ?Expression $value = null)
     {
         $this->token = $token;
+        $this->value = $value;
     }
 
     public function tokenLiteral(): string
@@ -21,13 +22,13 @@ final class ReturnStatement implements Statement
         return $this->token->literal;
     }
 
-    public function statementNode()
-    {
-        // TODO: Implement statementNode() method.
-    }
-
     public function toString(): string
     {
-        return "{$this->tokenLiteral()} {$this->value->toString()};";
+        $out = "{$this->tokenLiteral()} ";
+        if (null !== $this->value) {
+            $out .= $this->value->toString();
+        }
+        $out .= ';';
+        return $out;
     }
 }

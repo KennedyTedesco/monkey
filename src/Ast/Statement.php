@@ -6,5 +6,4 @@ namespace Monkey\Ast;
 
 interface Statement extends Node
 {
-    public function statementNode();
 }

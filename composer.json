@@ -19,9 +19,9 @@
     }
   },
   "scripts": {
-    "cs": "php-cs-fixer fix --allow-risky yes",
+    "test": "pest",
     "psalm": "psalm --show-info=false",
-    "test": "./vendor/bin/pest"
+    "cs": "php-cs-fixer fix --allow-risky yes"
   },
   "config": {
     "optimize-autoloader": true,

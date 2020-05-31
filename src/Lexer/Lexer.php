@@ -9,31 +9,28 @@ use Monkey\Token\TokenType;
 
 final class Lexer
 {
+    /** @var string */
     private const EOF = '0';
 
-    /**
-     * @psalm-readonly
-     */
+    /** @psalm-readonly */
     private int $size;
 
-    /**
-     * @psalm-readonly
-     */
+    /** @psalm-readonly */
     private string $input;
 
     private Char $char;
     private Char $peekChar;
 
-    private int $position;
-    private int $readPosition;
+    private int $position = 0;
+    private int $readPosition = 0;
 
     public function __construct(string $input)
     {
         $this->input = $input;
         $this->size = \mb_strlen($this->input);
 
-        $this->position = 0;
-        $this->readPosition = 0;
+        $this->char = Char::from('');
+        $this->peekChar = Char::from('');
 
         $this->readChar();
     }
@@ -63,10 +60,10 @@ final class Lexer
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ);
             }
 
-            return $this->makeTokenAndAdvance(
-                TokenType::lookupToken($this->char->toScalar()),
-                $this->char->toScalar()
-            );
+            /** @var int $tokenType */
+            $tokenType = TokenType::lookupToken($this->char->toScalar());
+
+            return $this->makeTokenAndAdvance($tokenType, $this->char->toScalar());
         }
 
         if ($this->char->isLetter()) {

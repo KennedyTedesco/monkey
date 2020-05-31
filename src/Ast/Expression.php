@@ -6,5 +6,4 @@ namespace Monkey\Ast;
 
 interface Expression extends Node
 {
-    public function expressionNode();
 }

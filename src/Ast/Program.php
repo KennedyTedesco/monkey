@@ -6,9 +6,7 @@ namespace Monkey\Ast;
 
 final class Program
 {
-    /**
-     * @var array<Statement>
-     */
+    /** @var array<Statement> */
     private array $statements = [];
 
     public function statement(int $index): Node
@@ -16,6 +14,9 @@ final class Program
         return $this->statements[$index];
     }
 
+    /**
+     * @return array<Statement>
+     */
     public function statements(): array
     {
         return $this->statements;

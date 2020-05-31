@@ -10,14 +10,23 @@ use Monkey\Token\TokenType;
 
 final class Parser
 {
-    /**
-     * @psalm-readonly
-     */
+    /** @psalm-readonly */
     private Lexer $lexer;
 
+    /** @var array<string> */
     private array $errors = [];
-    public ?Token $curToken = null;
-    public ?Token $peekToken = null;
+
+    /**
+     * @var Token
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
+    public $curToken;
+
+    /**
+     * @var Token
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
+    public $peekToken;
 
     public function __construct(Lexer $lexer)
     {

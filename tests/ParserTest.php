@@ -26,10 +26,7 @@ MONKEY;
 
     $identifiers = ['x', 'y', 'foo_bar'];
 
-    /**
-     * @var int          $i
-     * @var LetStatement $stmt
-     */
+    /** @var LetStatement $stmt */
     foreach ($program->statements() as $i => $stmt) {
         assertInstanceOf(LetStatement::class, $stmt);
         assertSame('let', $stmt->tokenLiteral());
@@ -51,10 +48,7 @@ MONKEY;
     assertSame(3, $program->count());
     assertCount(0, $parser->errors());
 
-    /**
-     * @var int          $i
-     * @var LetStatement $stmt
-     */
+    /** @var LetStatement $stmt */
     foreach ($program->statements() as $stmt) {
         assertInstanceOf(ReturnStatement::class, $stmt);
         assertSame('return', $stmt->tokenLiteral());

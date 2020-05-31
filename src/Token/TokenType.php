@@ -81,7 +81,10 @@ final class TokenType
 
     public static function tokenName(int $type): string
     {
-        return \array_search($type, self::TOKEN_MAP);
+        /** @var string $name */
+        $name = \array_search($type, self::TOKEN_MAP);
+
+        return $name;
     }
 
     public static function lookupToken(string $ch): ?int
