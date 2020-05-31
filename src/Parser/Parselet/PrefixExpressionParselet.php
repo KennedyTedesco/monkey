@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Monkey\Parser\Parselet;
 
+use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\PrefixExpression;
-use Monkey\Ast\Node;
 use Monkey\Parser\Precedence;
 
 final class PrefixExpressionParselet extends Parselet
 {
-    public function parse(): Node
+    public function parse(): Expression
     {
         $token = $this->parser->curToken;
 

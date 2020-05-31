@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Parser;
 
-use Monkey\Ast\Node;
+use Monkey\Ast\Expressions\Expression;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parselet\IdentifierParselet;
 use Monkey\Parser\Parselet\IntegerParselet;
@@ -102,7 +102,7 @@ final class Parser
         $this->infixParselets[$type] = $parselet;
     }
 
-    public function parseExpression(int $precedence): ?Node
+    public function parseExpression(int $precedence): ?Expression
     {
         /** @var Parselet|null $parselet */
         $parselet = $this->prefixParselets[$this->curToken->type] ?? null;
