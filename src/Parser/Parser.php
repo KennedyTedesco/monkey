@@ -92,12 +92,12 @@ final class Parser
 
     public function parseExpression(int $precedence): ?Expression
     {
-        /** @var Parselet|null $prefix */
-        $prefix = $this->prefixParselets[$this->curToken->type] ?? null;
-        if (null === $prefix) {
+        /** @var Parselet|null $parselet */
+        $parselet = $this->prefixParselets[$this->curToken->type] ?? null;
+        if (null === $parselet) {
             return null;
         }
-        return $prefix->parse();
+        return $parselet->parse();
     }
 
     public function errors(): array
