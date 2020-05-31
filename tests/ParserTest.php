@@ -114,7 +114,6 @@ test('prefix expression', function (string $input, string $operator, int $value)
 
     /** @var PrefixExpression $expression */
     $expression = $statement->value();
-
     assertSame($operator, $expression->operator());
 
     /** @var IntegerLiteral $right */
