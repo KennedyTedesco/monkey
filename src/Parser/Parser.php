@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Parser;
 
+use Closure;
 use Monkey\Lexer\Lexer;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
@@ -13,8 +14,14 @@ final class Parser
     /** @psalm-readonly */
     private Lexer $lexer;
 
-    /** @var array<string> */
+    /** @var array<int,string> */
     private array $errors = [];
+
+    /** @var array<int,Closure> */
+    private array $prefixParseFns = [];
+
+    /** @var array<int,Closure> */
+    private array $infixParseFns = [];
 
     /**
      * @var Token
