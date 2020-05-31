@@ -8,6 +8,7 @@ use Monkey\Ast\Expressions\Identifier;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Ast\Statements\ReturnStatement;
+use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
@@ -72,8 +73,29 @@ test('identifier expression', function () {
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var Identifier $identifier */
-    $identifier = $statement->value;
+    $identifier = $statement->value();
 
     assertSame('foobar', $identifier->value());
     assertSame('foobar', $identifier->tokenLiteral());
+});
+
+test('integer literal expression', function () {
+    $input = '10;';
+
+    $lexer = new Lexer($input);
+    $parser = new Parser($lexer);
+    $program = (new ProgramParser())($parser);
+
+    assertSame(1, $program->count());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var IntegerLiteral $integer */
+    $integer = $statement->value();
+
+    assertSame(10, $integer->value());
+    assertSame('10', $integer->tokenLiteral());
 });

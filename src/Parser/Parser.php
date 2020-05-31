@@ -7,6 +7,7 @@ namespace Monkey\Parser;
 use Monkey\Ast\Node;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parselet\IdentifierParselet;
+use Monkey\Parser\Parselet\IntegerParselet;
 use Monkey\Parser\Parselet\Parselet;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
@@ -44,6 +45,7 @@ final class Parser
         $this->nextToken();
 
         $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
+        $this->registerPrefixParselet(TokenType::T_INT, new IntegerParselet($this));
     }
 
     public function nextToken(): void

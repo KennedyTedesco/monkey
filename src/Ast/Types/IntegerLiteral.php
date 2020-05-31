@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Types;
 
-use Monkey\Ast\Node;
+use Monkey\Ast\Expressions\Expression;
 use Monkey\Token\Token;
 
-final class Integer extends Node
+final class IntegerLiteral extends Expression
 {
     private int $value;
 
