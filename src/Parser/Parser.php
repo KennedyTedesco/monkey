@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Monkey\Parser;
 
 use Closure;
+use Monkey\Ast\Expression;
+use Monkey\Ast\Identifier;
 use Monkey\Lexer\Lexer;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
@@ -40,6 +42,11 @@ final class Parser
         $this->lexer = $lexer;
         $this->nextToken();
         $this->nextToken();
+
+        $this->registerPrefix(
+            TokenType::T_IDENT,
+            fn () => new Identifier($this->curToken, $this->curToken->literal)
+        );
     }
 
     public function nextToken(): void
@@ -74,6 +81,25 @@ final class Parser
             'expected next token to be %s, got %s instead',
             TokenType::tokenName($type), $this->peekToken->literal
         );
+    }
+
+    public function registerPrefix(int $type, Closure $fn): void
+    {
+        $this->prefixParseFns[$type] = $fn;
+    }
+
+    public function registerInfix(int $type, Closure $fn): void
+    {
+        $this->infixParseFns[$type] = $fn;
+    }
+
+    public function parseExpression(int $precedence): ?Expression
+    {
+        $prefix = $this->prefixParseFns[$this->curToken->type] ?? null;
+        if (null === $prefix) {
+            return null;
+        }
+        return $prefix();
     }
 
     public function errors(): array

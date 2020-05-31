@@ -22,7 +22,7 @@ final class ProgramParser
                     $statement = (new ReturnParser())($parser);
                     break;
                 default:
-                    $statement = null;
+                    $statement = (new ExpressionParser())($parser);
             }
 
             if (null !== $statement) {

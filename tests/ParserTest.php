@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Monkey\Ast\ExpressionStatement;
+use Monkey\Ast\Identifier;
 use Monkey\Ast\LetStatement;
 use Monkey\Ast\ReturnStatement;
 use Monkey\Lexer\Lexer;
@@ -53,4 +55,25 @@ MONKEY;
         assertInstanceOf(ReturnStatement::class, $stmt);
         assertSame('return', $stmt->tokenLiteral());
     }
+});
+
+test('identifier expression', function () {
+    $input = 'foobar;';
+
+    $lexer = new Lexer($input);
+    $parser = new Parser($lexer);
+    $program = (new ProgramParser())($parser);
+
+    assertSame(1, $program->count());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var Identifier $identifier */
+    $identifier = $statement->value;
+
+    assertSame('foobar', $identifier->value);
+    assertSame('foobar', $identifier->tokenLiteral());
 });
