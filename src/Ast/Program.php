@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Monkey\Ast;
 
+use Monkey\Ast\Statements\Statement;
+
 final class Program
 {
     /** @var array<Statement> */

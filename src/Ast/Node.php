@@ -4,9 +4,16 @@ declare(strict_types=1);
 
 namespace Monkey\Ast;
 
-interface Node
-{
-    public function tokenLiteral(): string;
+use Monkey\Token\Token;
 
-    public function toString(): string;
+abstract class Node
+{
+    protected Token $token;
+
+    public function tokenLiteral(): string
+    {
+        return $this->token->literal;
+    }
+
+    abstract public function toString(): string;
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Parser;
 
-use Monkey\Ast\ExpressionStatement;
+use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Token\TokenType;
 
 final class ExpressionParser

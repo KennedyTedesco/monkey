@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast;
+namespace Monkey\Ast\Statements;
 
+use Monkey\Ast\Expressions\Expression;
+use Monkey\Ast\Expressions\Identifier;
 use Monkey\Token\Token;
 
-final class LetStatement implements Statement
+final class LetStatement extends Statement
 {
-    private Token $token;
     private Identifier $identifier;
     private ?Expression $value = null;
 
@@ -18,11 +19,6 @@ final class LetStatement implements Statement
     ) {
         $this->token = $token;
         $this->identifier = $identifier;
-    }
-
-    public function tokenLiteral(): string
-    {
-        return $this->token->literal;
     }
 
     public function identifierName(): string

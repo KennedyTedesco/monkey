@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Monkey\Ast\ExpressionStatement;
-use Monkey\Ast\Identifier;
-use Monkey\Ast\LetStatement;
-use Monkey\Ast\ReturnStatement;
+use Monkey\Ast\Expressions\Identifier;
+use Monkey\Ast\Statements\ExpressionStatement;
+use Monkey\Ast\Statements\LetStatement;
+use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;

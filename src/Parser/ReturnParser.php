@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Parser;
 
-use Monkey\Ast\ReturnStatement;
+use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Token\TokenType;
 
 final class ReturnParser

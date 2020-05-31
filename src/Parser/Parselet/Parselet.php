@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Parser\Parselet;
 
-use Monkey\Ast\Expression;
+use Monkey\Ast\Node;
 use Monkey\Parser\Parser;
 
 abstract class Parselet
@@ -16,5 +16,5 @@ abstract class Parselet
         $this->parser = $parser;
     }
 
-    abstract public function parse(): Expression;
+    abstract public function parse(): Node;
 }

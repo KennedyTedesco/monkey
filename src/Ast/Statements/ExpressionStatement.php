@@ -2,24 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast;
+namespace Monkey\Ast\Statements;
 
+use Monkey\Ast\Expressions\Expression;
 use Monkey\Token\Token;
 
-final class ExpressionStatement implements Statement
+final class ExpressionStatement extends Statement
 {
-    private Token $token;
     public ?Expression $value;
 
     public function __construct(Token $token, ?Expression $value = null)
     {
         $this->token = $token;
         $this->value = $value;
-    }
-
-    public function tokenLiteral(): string
-    {
-        return $this->token->literal;
     }
 
     public function toString(): string

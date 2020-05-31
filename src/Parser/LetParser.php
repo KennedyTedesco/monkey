@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Monkey\Parser;
 
-use Monkey\Ast\Identifier;
-use Monkey\Ast\LetStatement;
+use Monkey\Ast\Expressions\Identifier;
+use Monkey\Ast\Statements\LetStatement;
 use Monkey\Token\TokenType;
 
 final class LetParser

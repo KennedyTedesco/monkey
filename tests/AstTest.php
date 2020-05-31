@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Monkey\Ast\Identifier;
-use Monkey\Ast\LetStatement;
+use Monkey\Ast\Expressions\Identifier;
 use Monkey\Ast\Program;
+use Monkey\Ast\Statements\LetStatement;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
