@@ -38,26 +38,23 @@ MONKEY;
     }
 });
 
-test('return parser', function () {
-    $input = <<<'MONKEY'
-    return 10;
-    return 100;
-    return 1000;
-MONKEY;
-
+test('return parser', function (string $input) {
     $lexer = new Lexer($input);
     $parser = new Parser($lexer);
     $program = (new ProgramParser())($parser);
 
-    assertSame(3, $program->count());
+    assertSame(1, $program->count());
     assertCount(0, $parser->errors());
 
-    /** @var LetStatement $stmt */
-    foreach ($program->statements() as $stmt) {
-        assertInstanceOf(ReturnStatement::class, $stmt);
-        assertSame('return', $stmt->tokenLiteral());
-    }
-});
+    /** @var ReturnStatement $returnStatement */
+    $returnStatement = $program->statement(0);
+    assertInstanceOf(ReturnStatement::class, $returnStatement);
+    assertSame('return', $returnStatement->tokenLiteral());
+})->with([
+    'return 10;',
+    'return 100;',
+    'return 1000;',
+]);
 
 test('identifier expression', function () {
     $input = 'foobar;';
@@ -70,7 +67,6 @@ test('identifier expression', function () {
 
     /** @var ExpressionStatement $statement */
     $statement = $program->statement(0);
-
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var Identifier $identifier */
