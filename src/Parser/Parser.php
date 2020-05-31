@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Monkey\Parser;
 
-use Closure;
 use Monkey\Ast\Expression;
-use Monkey\Ast\Identifier;
 use Monkey\Lexer\Lexer;
+use Monkey\Parser\Parselet\IdentifierParselet;
+use Monkey\Parser\Parselet\Parselet;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
@@ -19,11 +19,11 @@ final class Parser
     /** @var array<int,string> */
     private array $errors = [];
 
-    /** @var array<int,Closure> */
-    private array $prefixParseFns = [];
+    /** @var array<int,Parselet> */
+    private array $prefixParselets = [];
 
-    /** @var array<int,Closure> */
-    private array $infixParseFns = [];
+    /** @var array<int,Parselet> */
+    private array $infixParselets = [];
 
     /**
      * @var Token
@@ -43,10 +43,7 @@ final class Parser
         $this->nextToken();
         $this->nextToken();
 
-        $this->registerPrefix(
-            TokenType::T_IDENT,
-            fn () => new Identifier($this->curToken, $this->curToken->literal)
-        );
+        $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
     }
 
     public function nextToken(): void
@@ -83,23 +80,24 @@ final class Parser
         );
     }
 
-    public function registerPrefix(int $type, Closure $fn): void
+    public function registerPrefixParselet(int $type, Parselet $parselet): void
     {
-        $this->prefixParseFns[$type] = $fn;
+        $this->prefixParselets[$type] = $parselet;
     }
 
-    public function registerInfix(int $type, Closure $fn): void
+    public function registerInfixParselet(int $type, Parselet $parselet): void
     {
-        $this->infixParseFns[$type] = $fn;
+        $this->infixParselets[$type] = $parselet;
     }
 
     public function parseExpression(int $precedence): ?Expression
     {
-        $prefix = $this->prefixParseFns[$this->curToken->type] ?? null;
+        /** @var Parselet|null $prefix */
+        $prefix = $this->prefixParselets[$this->curToken->type] ?? null;
         if (null === $prefix) {
             return null;
         }
-        return $prefix();
+        return $prefix->parse();
     }
 
     public function errors(): array
