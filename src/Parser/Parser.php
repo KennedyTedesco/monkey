@@ -9,7 +9,7 @@ use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parselet\IdentifierParselet;
 use Monkey\Parser\Parselet\IntegerParselet;
 use Monkey\Parser\Parselet\Parselet;
-use Monkey\Parser\Parselet\PrefixExpressionParselet;
+use Monkey\Parser\Parselet\PrefixParselet;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
@@ -47,8 +47,8 @@ final class Parser
 
         $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
         $this->registerPrefixParselet(TokenType::T_INT, new IntegerParselet($this));
-        $this->registerPrefixParselet(TokenType::T_BANG, new PrefixExpressionParselet($this));
-        $this->registerPrefixParselet(TokenType::T_MINUS, new PrefixExpressionParselet($this));
+        $this->registerPrefixParselet(TokenType::T_BANG, new PrefixParselet($this));
+        $this->registerPrefixParselet(TokenType::T_MINUS, new PrefixParselet($this));
     }
 
     public function nextToken(): void

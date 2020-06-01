@@ -8,7 +8,7 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\PrefixExpression;
 use Monkey\Parser\Precedence;
 
-final class PrefixExpressionParselet extends Parselet
+final class PrefixParselet extends Parselet
 {
     public function parse(): Expression
     {
