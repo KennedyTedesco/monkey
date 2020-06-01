@@ -10,8 +10,8 @@ use Monkey\Token\Token;
 
 final class LetStatement extends Statement
 {
-    private ?Expression $value = null;
     private Identifier $identifier;
+    private ?Expression $value = null;
 
     public function __construct(
         Token $token,
