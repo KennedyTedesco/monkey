@@ -124,7 +124,7 @@ final class Lexer
         }
     }
 
-    private function isEnd(): bool
+    public function isEnd(): bool
     {
         return $this->readPosition >= $this->size;
     }
