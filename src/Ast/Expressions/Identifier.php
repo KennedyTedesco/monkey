@@ -23,6 +23,6 @@ final class Identifier extends Expression
 
     public function toString(): string
     {
-        return '';
+        return $this->value;
     }
 }

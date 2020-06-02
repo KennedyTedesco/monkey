@@ -24,6 +24,6 @@ final class IntegerLiteral extends Expression
 
     public function toString(): string
     {
-        return '';
+        return $this->tokenLiteral();
     }
 }

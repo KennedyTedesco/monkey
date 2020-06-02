@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Monkey\Parser\Parselet;
 
 use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\PrefixExpression;
+use Monkey\Ast\Expressions\InfixExpression;
 use Monkey\Parser\Parser;
-use Monkey\Parser\Precedence;
 
-final class PrefixParselet implements Parselet
+final class InfixParselet implements Parselet
 {
     private Parser $parser;
 
@@ -18,15 +17,17 @@ final class PrefixParselet implements Parselet
         $this->parser = $parser;
     }
 
-    public function parse(): Expression
+    public function parse(Expression $left = null): Expression
     {
         $token = $this->parser->curToken;
 
         $this->parser->nextToken();
 
-        /** @var Expression $right */
-        $right = $this->parser->parseExpression(Precedence::PREFIX);
-
-        return new PrefixExpression($token, $token->literal, $right);
+        return new InfixExpression(
+            $token,
+            $token->literal,
+            $left,
+            $this->parser->parseExpression($this->parser->precedence($token))
+        );
     }
 }

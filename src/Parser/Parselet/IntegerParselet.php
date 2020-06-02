@@ -6,9 +6,17 @@ namespace Monkey\Parser\Parselet;
 
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Types\IntegerLiteral;
+use Monkey\Parser\Parser;
 
-final class IntegerParselet extends Parselet
+final class IntegerParselet implements Parselet
 {
+    private Parser $parser;
+
+    public function __construct(Parser $parser)
+    {
+        $this->parser = $parser;
+    }
+
     public function parse(): Expression
     {
         return new IntegerLiteral($this->parser->curToken, (int) $this->parser->curToken->literal);

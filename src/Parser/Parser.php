@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Monkey\Parser;
 
 use Monkey\Ast\Expressions\Expression;
+use Monkey\Ast\Expressions\InfixExpression;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parselet\IdentifierParselet;
+use Monkey\Parser\Parselet\InfixParselet;
 use Monkey\Parser\Parselet\IntegerParselet;
 use Monkey\Parser\Parselet\Parselet;
 use Monkey\Parser\Parselet\PrefixParselet;
@@ -39,6 +41,20 @@ final class Parser
      */
     public $peekToken;
 
+    /** @var array<int,int> */
+    private array $precedences = [
+        TokenType::T_EQ => Precedence::EQUALS,
+        TokenType::T_NOT_EQ => Precedence::EQUALS,
+        TokenType::T_LT => Precedence::LESSGREATER,
+        TokenType::T_LT_EQ => Precedence::LESSGREATER,
+        TokenType::T_GT => Precedence::LESSGREATER,
+        TokenType::T_GT_EQ => Precedence::LESSGREATER,
+        TokenType::T_PLUS => Precedence::SUM,
+        TokenType::T_MINUS => Precedence::SUM,
+        TokenType::T_SLASH => Precedence::PRODUCT,
+        TokenType::T_ASTERISK => Precedence::PRODUCT,
+    ];
+
     public function __construct(Lexer $lexer)
     {
         $this->lexer = $lexer;
@@ -49,6 +65,15 @@ final class Parser
         $this->registerPrefixParselet(TokenType::T_INT, new IntegerParselet($this));
         $this->registerPrefixParselet(TokenType::T_BANG, new PrefixParselet($this));
         $this->registerPrefixParselet(TokenType::T_MINUS, new PrefixParselet($this));
+
+        $this->registerInfixParselet(TokenType::T_PLUS, new InfixParselet($this));
+        $this->registerInfixParselet(TokenType::T_MINUS, new InfixParselet($this));
+        $this->registerInfixParselet(TokenType::T_SLASH, new InfixParselet($this));
+        $this->registerInfixParselet(TokenType::T_ASTERISK, new InfixParselet($this));
+        $this->registerInfixParselet(TokenType::T_EQ, new InfixParselet($this));
+        $this->registerInfixParselet(TokenType::T_NOT_EQ, new InfixParselet($this));
+        $this->registerInfixParselet(TokenType::T_LT, new InfixParselet($this));
+        $this->registerInfixParselet(TokenType::T_GT, new InfixParselet($this));
     }
 
     public function nextToken(): void
@@ -102,15 +127,50 @@ final class Parser
         $this->infixParselets[$type] = $parselet;
     }
 
+    public function precedence(Token $token): int
+    {
+        return $this->precedences[$token->type] ?? Precedence::LOWEST;
+    }
+
     public function parseExpression(int $precedence): ?Expression
     {
-        /** @var Parselet|null $parselet */
-        $parselet = $this->prefixParselets[$this->curToken->type] ?? null;
-        if (null === $parselet) {
+        /** @var Parselet|null $prefixParser */
+        $prefixParser = $this->prefixParselets[$this->curToken->type] ?? null;
+        if (null === $prefixParser) {
             $this->prefixParserError($this->curToken->type);
+
             return null;
         }
-        return $parselet->parse();
+
+        $leftExpression = $prefixParser->parse();
+
+        while (!$this->peekTokenIs(TokenType::T_SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
+            /** @var InfixParselet|null $infixParser */
+            $infixParser = $this->infixParselets[$this->peekToken->type] ?? null;
+            if (null === $infixParser) {
+                return $leftExpression;
+            }
+
+            $this->nextToken();
+
+            $leftExpression = $infixParser->parse($leftExpression);
+        }
+
+        return $leftExpression;
+    }
+
+    public function parseInfixExpression(Expression $left): Expression
+    {
+        $token = $this->curToken;
+
+        $this->nextToken();
+
+        return new InfixExpression(
+            $token,
+            $token->literal,
+            $left,
+            $this->parseExpression($this->precedence($token))
+        );
     }
 
     public function errors(): array

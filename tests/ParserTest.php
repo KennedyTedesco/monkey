@@ -119,3 +119,24 @@ test('prefix expression', function (string $input, string $operator, int $value)
     ['!5;', '!', 5],
     ['-5;', '-', 5],
 ]);
+
+test('operator precedence parsing', function (string $input, string $expected) {
+    $lexer = new Lexer($input);
+    $program = (new ProgramParser())(
+        new Parser($lexer)
+    );
+
+    assertSame($expected, $program->toString());
+})->with([
+    ['-a * b', '((-a) * b)'],
+    ['!-a', '(!(-a))'],
+    ['a + b + c', '((a + b) + c)'],
+    ['a * b * c', '((a * b) * c)'],
+    ['a * b / c', '((a * b) / c)'],
+    ['a + b / c', '(a + (b / c))'],
+    ['a + b * c + d / e - f', '(((a + (b * c)) + (d / e)) - f)'],
+//    ['3 + 4; -5 * 5', '((a + b) - c)'],
+//    ['5 > 4 == 3 < 4', '((5 > 4) == (3 < 4))'],
+//    ['5 < 4 != 3 > 4', '((5 < 4) != (3 > 4))'],
+//    ['3 + 4 * 5 == 3 * 1 + 4 * 5', '((3 + (4 * 5)) == ((3 * 1) + (4 * 5)))'],
+]);
