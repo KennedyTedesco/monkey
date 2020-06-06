@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Monkey\Parser;
 
 use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\InfixExpression;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parselet\IdentifierParselet;
 use Monkey\Parser\Parselet\InfixParselet;
@@ -157,20 +156,6 @@ final class Parser
         }
 
         return $leftExpression;
-    }
-
-    public function parseInfixExpression(Expression $left): Expression
-    {
-        $token = $this->curToken;
-
-        $this->nextToken();
-
-        return new InfixExpression(
-            $token,
-            $token->literal,
-            $left,
-            $this->parseExpression($this->precedence($token))
-        );
     }
 
     public function errors(): array
