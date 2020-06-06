@@ -1,0 +1,10 @@
+includes:
+    - ./vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
+    - ./vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+parameters:
+    paths:
+        - src
+        - tests
+    level: 8
+    checkMissingIterableValueType: false
+    inferPrivatePropertyTypeFromConstructor: true

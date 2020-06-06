@@ -9,18 +9,14 @@ use Monkey\Token\TokenType;
 
 final class Lexer
 {
-    /** @var string */
     public const EOF = "\0";
 
-    /** @psalm-readonly */
     private int $size;
-
-    /** @psalm-readonly */
     private string $input;
 
-    private ?Char $curChar = null;
-    private ?Char $prevChar = null;
-    private ?Char $peekChar = null;
+    private Char $curChar;
+    private Char $prevChar;
+    private Char $peekChar;
 
     private int $position = 0;
     private int $readPosition = 0;
@@ -29,6 +25,10 @@ final class Lexer
     {
         $this->input = $input;
         $this->size = \mb_strlen($input);
+
+        $this->curChar = Char::empty();
+        $this->prevChar = Char::empty();
+        $this->peekChar = Char::empty();
 
         $this->readChar();
     }

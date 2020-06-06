@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Monkey\Lexer;
 
-/**
- * @psalm-immutable
- */
 final class Char
 {
     private string $ch;
@@ -14,6 +11,11 @@ final class Char
     public function __construct(string $ch)
     {
         $this->ch = $ch;
+    }
+
+    public static function empty(): self
+    {
+        return new self('');
     }
 
     public static function from(string $ch): self

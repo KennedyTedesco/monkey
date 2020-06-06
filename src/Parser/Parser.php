@@ -16,8 +16,13 @@ use Monkey\Token\TokenType;
 
 final class Parser
 {
-    /** @psalm-readonly */
     private Lexer $lexer;
+
+    /** @var Token */
+    public $curToken;
+
+    /** @var Token */
+    public $peekToken;
 
     /** @var array<int,string> */
     private array $errors = [];
@@ -27,18 +32,6 @@ final class Parser
 
     /** @var array<int,Parselet> */
     private array $infixParselets = [];
-
-    /**
-     * @var Token
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    public $curToken;
-
-    /**
-     * @var Token
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    public $peekToken;
 
     /** @var array<int,int> */
     private array $precedences = [
@@ -104,7 +97,7 @@ final class Parser
 
     public function peekError(int $type): void
     {
-        $this->errors[] = \sprintf(
+        $this->errors[] = \safe\sprintf(
             'expected next token to be %s, got %s instead',
             TokenType::name($type), $this->peekToken->literal
         );
@@ -112,7 +105,7 @@ final class Parser
 
     public function prefixParserError(int $type): void
     {
-        $this->errors[] = \sprintf(
+        $this->errors[] = \safe\sprintf(
             'no prefix parse function for %s found', TokenType::name($type)
         );
     }
@@ -159,6 +152,9 @@ final class Parser
         return $leftExpression;
     }
 
+    /**
+     * @return array<int,string>
+     */
     public function errors(): array
     {
         return $this->errors;

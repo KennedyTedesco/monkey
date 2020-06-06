@@ -23,11 +23,12 @@ final class InfixParselet implements Parselet
 
         $this->parser->nextToken();
 
-        return new InfixExpression(
-            $token,
-            $token->literal,
-            $left,
-            $this->parser->parseExpression($this->parser->precedence($token))
-        );
+        /** @var Expression $leftExp */
+        $leftExp = $left;
+
+        /** @var Expression $rightExp */
+        $rightExp = $this->parser->parseExpression($this->parser->precedence($token));
+
+        return new InfixExpression($token, $token->literal, $leftExp, $rightExp);
     }
 }

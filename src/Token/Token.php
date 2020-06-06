@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Monkey\Token;
 
-/**
- * @psalm-immutable
- */
 final class Token
 {
     public int $type;

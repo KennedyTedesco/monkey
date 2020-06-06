@@ -6,9 +6,6 @@ namespace Monkey\Token;
 
 use ReflectionClass;
 
-/**
- * @psalm-immutable
- */
 final class TokenType
 {
     public const T_EOF = 0;
