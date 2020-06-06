@@ -95,6 +95,33 @@ final class Parser
         return false;
     }
 
+    public function parseExpression(int $precedence): ?Expression
+    {
+        /** @var Parselet|null $prefixParser */
+        $prefixParser = $this->prefixParselets[$this->curToken->type] ?? null;
+        if (null === $prefixParser) {
+            $this->prefixParserError($this->curToken->type);
+
+            return null;
+        }
+
+        $leftExpression = $prefixParser->parse();
+
+        while (!$this->peekTokenIs(TokenType::T_SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
+            /** @var InfixParselet|null $infixParser */
+            $infixParser = $this->infixParselets[$this->peekToken->type] ?? null;
+            if (null === $infixParser) {
+                return $leftExpression;
+            }
+
+            $this->nextToken();
+
+            $leftExpression = $infixParser->parse($leftExpression);
+        }
+
+        return $leftExpression;
+    }
+
     public function peekError(int $type): void
     {
         $this->errors[] = \safe\sprintf(
@@ -123,33 +150,6 @@ final class Parser
     public function precedence(Token $token): int
     {
         return $this->precedences[$token->type] ?? Precedence::LOWEST;
-    }
-
-    public function parseExpression(int $precedence): ?Expression
-    {
-        /** @var Parselet|null $prefixParser */
-        $prefixParser = $this->prefixParselets[$this->curToken->type] ?? null;
-        if (null === $prefixParser) {
-            $this->prefixParserError($this->curToken->type);
-
-            return null;
-        }
-
-        $leftExpression = $prefixParser->parse();
-
-        while (!$this->peekTokenIs(TokenType::T_SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
-            /** @var InfixParselet|null $infixParser */
-            $infixParser = $this->infixParselets[$this->peekToken->type] ?? null;
-            if (null === $infixParser) {
-                return $leftExpression;
-            }
-
-            $this->nextToken();
-
-            $leftExpression = $infixParser->parse($leftExpression);
-        }
-
-        return $leftExpression;
     }
 
     /**
