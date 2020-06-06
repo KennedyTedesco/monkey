@@ -11,9 +11,25 @@ final class Repl
 {
     public function start(): void
     {
-        \fwrite(\STDOUT, "----------------------------------------------\n");
-        \fwrite(\STDOUT, "| Welcome to the Monkey Programming Language |\n");
-        \fwrite(\STDOUT, "----------------------------------------------\n");
+        $welcome = <<<TEXT
+       .="=.
+     _/.-.-.\_     _
+    ( ( o o ) )    ))
+     |/  "  \|    //
+      \'---'/    //
+      /`"""`\\  ((
+     / /_,_\ \\  \\
+     \_\\_'__/ \  ))
+     /`  /`~\  |//
+    /   /    \  /
+,--`,--'\/\    /
+ '-- "--'  '--'
+
+@@@@@@@@@ Monkey Programming Language @@@@@@@@@
+-----------------------------------------------
+TEXT;
+
+        \fwrite(\STDOUT, "{$welcome}\n");
 
         while (true) {
             $input = \trim(\fgets(\STDIN));
@@ -21,11 +37,13 @@ final class Repl
                 return;
             }
 
+            \fwrite(\STDOUT, \PHP_EOL);
+
             $lexer = new Lexer($input);
             while (!$lexer->isEnd()) {
                 $token = $lexer->nextToken();
-                //$name = TokenType::tokenName($token->type);
-                \fwrite(\STDOUT, "[{$token->type}, {$token->literal}]");
+                $name = TokenType::name($token->type);
+                \fwrite(\STDOUT, "{$name}: {$token->literal}\n");
             }
         }
     }

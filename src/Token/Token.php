@@ -17,4 +17,9 @@ final class Token
         $this->type = $type;
         $this->literal = $literal;
     }
+
+    public static function from(int $type, string $literal): self
+    {
+        return new self($type, $literal);
+    }
 }

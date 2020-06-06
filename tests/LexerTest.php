@@ -7,7 +7,7 @@ namespace Tests;
 use Monkey\Lexer\Lexer;
 use Monkey\Token\TokenType;
 
-test('next token', function () {
+test('basic tokens', function () {
     $input = <<<'MONKEY'
 		let five = 5;
 		let ten = 10;
@@ -28,7 +28,7 @@ test('next token', function () {
 
         10 == 10;
         10 != 9;
-        
+
         10 >= 2;
         10 <= 2;
 MONKEY;
@@ -141,7 +141,35 @@ MONKEY;
         [TokenType::T_INT, '2'],
         [TokenType::T_SEMICOLON, ';'],
 
-        [TokenType::T_EOF, '0'],
+        [TokenType::T_EOF, Lexer::EOF],
+    ];
+
+    $lexer = new Lexer($input);
+
+    foreach ($tokens as $tt) {
+        [$type, $literal] = $tt;
+
+        $token = $lexer->nextToken();
+
+        assertSame($type, $token->type);
+        assertSame($literal, $token->literal);
+    }
+});
+
+test('comparision operators', function () {
+    $input = '5 > 4 == 3 < 4 <= 3;';
+
+    $tokens = [
+        [TokenType::T_INT, '5'],
+        [TokenType::T_GT, '>'],
+        [TokenType::T_INT, '4'],
+        [TokenType::T_EQ, '=='],
+        [TokenType::T_INT, '3'],
+        [TokenType::T_LT, '<'],
+        [TokenType::T_INT, '4'],
+        [TokenType::T_LT_EQ, '<='],
+        [TokenType::T_INT, '3'],
+        [TokenType::T_SEMICOLON, ';'],
     ];
 
     $lexer = new Lexer($input);

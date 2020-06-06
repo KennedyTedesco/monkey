@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Monkey\Token;
 
+use ReflectionClass;
+
 /**
  * @psalm-immutable
  */
@@ -36,10 +38,10 @@ final class TokenType
 
     // Comparision operators
     public const T_LT = 0x20D;
-    public const T_LT_EQ = 0x301;
     public const T_GT = 0x20E;
-    public const T_GT_EQ = 0x302;
     public const T_EQ = 0x303;
+    public const T_LT_EQ = 0x301;
+    public const T_GT_EQ = 0x302;
     public const T_NOT_EQ = 0x304;
 
     // Keywords
@@ -52,6 +54,7 @@ final class TokenType
     public const T_RETURN = 0x407;
 
     private const TOKEN_MAP = [
+        // One char tokens
         '=' => self::T_ASSIGN,
         '+' => self::T_PLUS,
         '-' => self::T_MINUS,
@@ -65,8 +68,9 @@ final class TokenType
         '{' => self::T_LBRACE,
         '}' => self::T_RBRACE,
         '<' => self::T_LT,
-        '>=' => self::T_GT_EQ,
         '>' => self::T_GT,
+        // Two or more char tokens
+        '>=' => self::T_GT_EQ,
         '<=' => self::T_LT_EQ,
         '==' => self::T_EQ,
         '!=' => self::T_NOT_EQ,
@@ -79,12 +83,11 @@ final class TokenType
         'return' => self::T_RETURN,
     ];
 
-    public static function tokenName(int $type): string
+    public static function name(int $type): string
     {
-        /** @var string $name */
-        $name = \array_search($type, self::TOKEN_MAP);
+        $name = \array_search($type, (new ReflectionClass(self::class))->getConstants(), true);
 
-        return $name;
+        return \is_string($name) ? $name : 'T_ILLEGAL';
     }
 
     public static function lookupToken(string $ch): ?int
