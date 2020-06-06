@@ -57,8 +57,6 @@ final class Parser
     public function __construct(Lexer $lexer)
     {
         $this->lexer = $lexer;
-        $this->nextToken();
-        $this->nextToken();
 
         $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
         $this->registerPrefixParselet(TokenType::T_INT, new IntegerParselet($this));
@@ -73,6 +71,9 @@ final class Parser
         $this->registerInfixParselet(TokenType::T_NOT_EQ, new InfixParselet($this));
         $this->registerInfixParselet(TokenType::T_LT, new InfixParselet($this));
         $this->registerInfixParselet(TokenType::T_GT, new InfixParselet($this));
+
+        $this->nextToken();
+        $this->nextToken();
     }
 
     public function nextToken(): void
