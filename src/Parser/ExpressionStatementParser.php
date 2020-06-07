@@ -8,7 +8,7 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Token\TokenType;
 
-final class ExpressionParser
+final class ExpressionStatementParser
 {
     public function __invoke(Parser $parser): ExpressionStatement
     {

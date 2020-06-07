@@ -7,7 +7,7 @@ namespace Monkey\Parser;
 use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Token\TokenType;
 
-final class ReturnParser
+final class ReturnStatementParser
 {
     public function __invoke(Parser $parser): ReturnStatement
     {

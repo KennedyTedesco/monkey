@@ -8,7 +8,7 @@ use Monkey\Ast\Expressions\Identifier;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Token\TokenType;
 
-final class LetParser
+final class LetStatementParser
 {
     public function __invoke(Parser $parser): ?LetStatement
     {
