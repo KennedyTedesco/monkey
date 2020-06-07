@@ -43,8 +43,8 @@ TEXT;
             $lexer = new Lexer($input);
             while (!$lexer->isEnd()) {
                 $token = $lexer->nextToken();
-                $name = TokenType::name($token->type);
-                \safe\fwrite(\STDOUT, "{$name}: {$token->literal}\n");
+                $name = TokenType::name($token->type());
+                \safe\fwrite(\STDOUT, "{$name}: {$token->literal()}\n");
             }
         }
     }

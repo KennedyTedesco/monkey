@@ -17,7 +17,7 @@ final class ExpressionParser
 
         $statement = new ExpressionStatement($parser->curToken, $expression);
 
-        if ($parser->peekTokenIs(TokenType::T_SEMICOLON)) {
+        if ($parser->peekToken->is(TokenType::T_SEMICOLON)) {
             $parser->nextToken();
         }
 

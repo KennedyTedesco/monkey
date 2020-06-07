@@ -20,14 +20,14 @@ final class LetParser
 
         $name = new Identifier(
             $parser->curToken,
-            $parser->curToken->literal
+            $parser->curToken->literal()
         );
 
         if (!$parser->expectPeek(TokenType::T_ASSIGN)) {
             return null;
         }
 
-        while (!$parser->curTokenIs(TokenType::T_SEMICOLON)) {
+        while (!$parser->curToken->is(TokenType::T_SEMICOLON)) {
             $parser->nextToken();
         }
 

@@ -13,8 +13,8 @@ final class ProgramParser
     {
         $program = new Program();
 
-        while (!$parser->curTokenIs(TokenType::T_EOF)) {
-            switch ($parser->curToken->type) {
+        while (!$parser->curToken->is(TokenType::T_EOF)) {
+            switch ($parser->curToken->type()) {
                 case TokenType::T_LET:
                     $statement = (new LetParser())($parser);
                     break;

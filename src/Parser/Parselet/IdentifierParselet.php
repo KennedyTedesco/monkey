@@ -19,6 +19,6 @@ final class IdentifierParselet implements PrefixParselet
 
     public function parse(): Expression
     {
-        return new Identifier($this->parser->curToken, $this->parser->curToken->literal);
+        return new Identifier($this->parser->curToken, $this->parser->curToken->literal());
     }
 }

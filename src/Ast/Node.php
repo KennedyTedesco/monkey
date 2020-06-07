@@ -12,7 +12,7 @@ abstract class Node
 
     public function tokenLiteral(): string
     {
-        return $this->token->literal;
+        return $this->token->literal();
     }
 
     abstract public function toString(): string;

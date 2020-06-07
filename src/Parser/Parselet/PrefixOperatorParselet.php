@@ -27,6 +27,6 @@ final class PrefixOperatorParselet implements PrefixParselet
         /** @var Expression $right */
         $right = $this->parser->parseExpression(Precedence::PREFIX);
 
-        return new PrefixExpression($token, $token->literal, $right);
+        return new PrefixExpression($token, $token->literal(), $right);
     }
 }

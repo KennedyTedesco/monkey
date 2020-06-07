@@ -151,8 +151,8 @@ MONKEY;
 
         $token = $lexer->nextToken();
 
-        assertSame($type, $token->type);
-        assertSame($literal, $token->literal);
+        assertSame($type, $token->type());
+        assertSame($literal, $token->literal());
     }
 });
 
@@ -179,7 +179,7 @@ test('comparision operators', function () {
 
         $token = $lexer->nextToken();
 
-        assertSame($type, $token->type);
-        assertSame($literal, $token->literal);
+        assertSame($type, $token->type());
+        assertSame($literal, $token->literal());
     }
 });

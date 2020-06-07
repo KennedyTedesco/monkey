@@ -19,6 +19,6 @@ final class LiteralParselet implements PrefixParselet
 
     public function parse(): Expression
     {
-        return new IntegerLiteral($this->parser->curToken, (int) $this->parser->curToken->literal);
+        return new IntegerLiteral($this->parser->curToken, (int) $this->parser->curToken->literal());
     }
 }

@@ -76,19 +76,9 @@ final class Parser
         $this->peekToken = $this->lexer->nextToken();
     }
 
-    public function curTokenIs(int $type): bool
-    {
-        return $this->curToken->type === $type;
-    }
-
-    public function peekTokenIs(int $type): bool
-    {
-        return $this->peekToken->type === $type;
-    }
-
     public function expectPeek(int $type): bool
     {
-        if ($this->peekTokenIs($type)) {
+        if ($this->peekToken->is($type)) {
             $this->nextToken();
             return true;
         }
@@ -99,18 +89,18 @@ final class Parser
     public function parseExpression(int $precedence): ?Expression
     {
         /** @var PrefixParselet|null $prefixParser */
-        $prefixParser = $this->prefixParselets[$this->curToken->type] ?? null;
+        $prefixParser = $this->prefixParselets[$this->curToken->type()] ?? null;
         if (null === $prefixParser) {
-            $this->prefixParserError($this->curToken->type);
+            $this->prefixParserError($this->curToken->type());
 
             return null;
         }
 
         $leftExpression = $prefixParser->parse();
 
-        while (!$this->peekTokenIs(TokenType::T_SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
+        while (!$this->peekToken->is(TokenType::T_SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
             /** @var InfixParselet|null $infixParser */
-            $infixParser = $this->infixParselets[$this->peekToken->type] ?? null;
+            $infixParser = $this->infixParselets[$this->peekToken->type()] ?? null;
             if (null === $infixParser) {
                 return $leftExpression;
             }
@@ -127,7 +117,7 @@ final class Parser
     {
         $this->errors[] = \safe\sprintf(
             'expected next token to be %s, got %s instead',
-            TokenType::name($type), $this->peekToken->literal
+            TokenType::name($type), $this->peekToken->literal()
         );
     }
 
@@ -150,7 +140,7 @@ final class Parser
 
     public function precedence(Token $token): int
     {
-        return $this->precedences[$token->type] ?? Precedence::LOWEST;
+        return $this->precedences[$token->type()] ?? Precedence::LOWEST;
     }
 
     /**

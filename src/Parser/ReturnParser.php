@@ -15,7 +15,7 @@ final class ReturnParser
 
         $parser->nextToken();
 
-        while (!$parser->curTokenIs(TokenType::T_SEMICOLON)) {
+        while (!$parser->curToken->is(TokenType::T_SEMICOLON)) {
             $parser->nextToken();
         }
 
