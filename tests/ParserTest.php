@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tests;
 
 use Monkey\Ast\Expressions\Identifier;
+use Monkey\Ast\Expressions\InfixExpression;
 use Monkey\Ast\Expressions\PrefixExpression;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Ast\Statements\ReturnStatement;
-use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
@@ -54,6 +54,8 @@ test('return parser', function (string $input) {
     'return 10;',
     'return 100;',
     'return 1000;',
+    'return true;',
+    'return false;',
 ]);
 
 test('identifier expression', function () {
@@ -90,14 +92,14 @@ test('integer literal expression', function () {
 
     assertInstanceOf(ExpressionStatement::class, $statement);
 
-    /** @var IntegerLiteral $integer */
+    /** @var \Monkey\Ast\Types\Integer $integer */
     $integer = $statement->value();
 
     assertSame(10, $integer->value());
     assertSame('10', $integer->tokenLiteral());
 });
 
-test('prefix expression', function (string $input, string $operator, int $value) {
+test('prefix expression', function (string $input, string $operator, $value) {
     $lexer = new Lexer($input);
     $parser = new Parser($lexer);
     $program = (new ProgramParser())($parser);
@@ -112,12 +114,51 @@ test('prefix expression', function (string $input, string $operator, int $value)
     $expression = $statement->value();
     assertSame($operator, $expression->operator());
 
-    /** @var IntegerLiteral $right */
+    /** @var \Monkey\Ast\Types\Integer|\Monkey\Ast\Types\Boolean $right */
     $right = $expression->right();
     assertSame($value, $right->value());
 })->with([
     ['!5;', '!', 5],
     ['-5;', '-', 5],
+    ['!true;', '!', true],
+    ['!false;', '!', false],
+]);
+
+test('infix expressions', function (string $input, $leftValue, string $operator, $rightValue) {
+    $lexer = new Lexer($input);
+    $parser = new Parser($lexer);
+    $program = (new ProgramParser())($parser);
+
+    assertSame(1, $program->count());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var InfixExpression $expression */
+    $expression = $statement->value();
+    assertSame($operator, $expression->operator());
+
+    /** @var \Monkey\Ast\Types\Integer|\Monkey\Ast\Types\Boolean $right */
+    $right = $expression->right();
+
+    /** @var \Monkey\Ast\Types\Integer|\Monkey\Ast\Types\Boolean $left */
+    $left = $expression->left();
+
+    assertSame($rightValue, $right->value());
+    assertSame($leftValue, $left->value());
+})->with([
+    ['5 + 5;', 5, '+', 5],
+    ['5 - 5;', 5, '-', 5],
+    ['5 * 5;', 5, '*', 5],
+    ['5 / 5;', 5, '/', 5],
+    ['5 > 5;', 5, '>', 5],
+    ['5 < 5;', 5, '<', 5],
+    ['5 == 5;', 5, '==', 5],
+    ['5 != 5;', 5, '!=', 5],
+    ['true == true;', true, '==', true],
+    ['false == false;', false, '==', false],
+    ['true != false;', true, '!=', false],
 ]);
 
 test('operator precedence parsing', function (string $input, string $expected) {
@@ -128,6 +169,9 @@ test('operator precedence parsing', function (string $input, string $expected) {
 
     assertSame($expected, $program->toString());
 })->with([
+    ['true', 'true'],
+    ['false', 'false'],
+
     ['-a * b', '((-a) * b)'],
     ['!-a', '(!(-a))'],
     ['a + b + c', '((a + b) + c)'],

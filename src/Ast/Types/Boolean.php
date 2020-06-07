@@ -7,17 +7,17 @@ namespace Monkey\Ast\Types;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Token\Token;
 
-final class IntegerLiteral extends Expression
+final class Boolean extends Expression
 {
-    private int $value;
+    private bool $value;
 
-    public function __construct(Token $token, int $value)
+    public function __construct(Token $token, bool $value)
     {
         $this->token = $token;
         $this->value = $value;
     }
 
-    public function value(): int
+    public function value(): bool
     {
         return $this->value;
     }

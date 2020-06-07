@@ -56,6 +56,8 @@ final class Parser
         $this->registerPrefixParselet(TokenType::T_INT, new LiteralParselet($this));
         $this->registerPrefixParselet(TokenType::T_BANG, new PrefixOperatorParselet($this));
         $this->registerPrefixParselet(TokenType::T_MINUS, new PrefixOperatorParselet($this));
+        $this->registerPrefixParselet(TokenType::T_TRUE, new LiteralParselet($this));
+        $this->registerPrefixParselet(TokenType::T_FALSE, new LiteralParselet($this));
 
         $this->registerInfixParselet(TokenType::T_PLUS, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_MINUS, new BinaryOperatorParselet($this));
