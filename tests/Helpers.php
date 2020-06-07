@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Monkey\Ast\Expressions\Expression;
+use Monkey\Ast\Types\BooleanLiteral;
+use Monkey\Ast\Types\IntegerLiteral;
 
 /**
  * @param mixed $leftValue
@@ -12,10 +14,10 @@ function assertInfixExpression(Expression $expression, $leftValue, string $opera
 {
     assertSame($operator, $expression->operator());
 
-    /** @var \Monkey\Ast\Types\Integer|\Monkey\Ast\Types\Boolean $right */
+    /** @var IntegerLiteral|BooleanLiteral $right */
     $right = $expression->right();
 
-    /** @var \Monkey\Ast\Types\Integer|\Monkey\Ast\Types\Boolean $left */
+    /** @var IntegerLiteral|BooleanLiteral $left */
     $left = $expression->left();
 
     assertSame($leftValue, $left->value());

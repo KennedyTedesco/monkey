@@ -7,7 +7,7 @@ namespace Monkey\Ast\Types;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Token\Token;
 
-final class Integer extends Expression
+final class IntegerLiteral extends Expression
 {
     private int $value;
 

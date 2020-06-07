@@ -7,13 +7,14 @@ namespace Monkey\Parser;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parselet\BinaryOperatorParselet;
+use Monkey\Parser\Parselet\FunctionLiteralParselet;
 use Monkey\Parser\Parselet\GroupedExpressionParselet;
 use Monkey\Parser\Parselet\IdentifierParselet;
 use Monkey\Parser\Parselet\IfExpressionParselet;
 use Monkey\Parser\Parselet\InfixParselet;
-use Monkey\Parser\Parselet\LiteralParselet;
 use Monkey\Parser\Parselet\PrefixOperatorParselet;
 use Monkey\Parser\Parselet\PrefixParselet;
+use Monkey\Parser\Parselet\ScalarParselet;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
@@ -55,13 +56,14 @@ final class Parser
         $this->lexer = $lexer;
 
         $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
-        $this->registerPrefixParselet(TokenType::T_INT, new LiteralParselet($this));
+        $this->registerPrefixParselet(TokenType::T_INT, new ScalarParselet($this));
         $this->registerPrefixParselet(TokenType::T_BANG, new PrefixOperatorParselet($this));
         $this->registerPrefixParselet(TokenType::T_MINUS, new PrefixOperatorParselet($this));
-        $this->registerPrefixParselet(TokenType::T_TRUE, new LiteralParselet($this));
-        $this->registerPrefixParselet(TokenType::T_FALSE, new LiteralParselet($this));
+        $this->registerPrefixParselet(TokenType::T_TRUE, new ScalarParselet($this));
+        $this->registerPrefixParselet(TokenType::T_FALSE, new ScalarParselet($this));
         $this->registerPrefixParselet(TokenType::T_LPAREN, new GroupedExpressionParselet($this));
         $this->registerPrefixParselet(TokenType::T_IF, new IfExpressionParselet($this));
+        $this->registerPrefixParselet(TokenType::T_FUNCTION, new FunctionLiteralParselet($this));
 
         $this->registerInfixParselet(TokenType::T_PLUS, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_MINUS, new BinaryOperatorParselet($this));
@@ -72,14 +74,15 @@ final class Parser
         $this->registerInfixParselet(TokenType::T_LT, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_GT, new BinaryOperatorParselet($this));
 
-        $this->nextToken();
-        $this->nextToken();
+        $this->nextToken(2);
     }
 
-    public function nextToken(): void
+    public function nextToken(int $times = 1): void
     {
-        $this->curToken = $this->peekToken;
-        $this->peekToken = $this->lexer->nextToken();
+        while ($times-- > 0) {
+            $this->curToken = $this->peekToken;
+            $this->peekToken = $this->lexer->nextToken();
+        }
     }
 
     public function expectPeek(int $type): bool

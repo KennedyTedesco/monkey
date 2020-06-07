@@ -12,6 +12,9 @@ use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Ast\Statements\ReturnStatement;
+use Monkey\Ast\Types\BooleanLiteral;
+use Monkey\Ast\Types\FunctionLiteral;
+use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
@@ -94,7 +97,7 @@ test('integer literal expression', function () {
 
     assertInstanceOf(ExpressionStatement::class, $statement);
 
-    /** @var \Monkey\Ast\Types\Integer $integer */
+    /** @var IntegerLiteral $integer */
     $integer = $statement->value();
 
     assertSame(10, $integer->value());
@@ -116,7 +119,7 @@ test('prefix expression', function (string $input, string $operator, $value) {
     $expression = $statement->value();
     assertSame($operator, $expression->operator());
 
-    /** @var \Monkey\Ast\Types\Integer|\Monkey\Ast\Types\Boolean $right */
+    /** @var IntegerLiteral|BooleanLiteral $right */
     $right = $expression->right();
     assertSame($value, $right->value());
 })->with([
@@ -243,4 +246,27 @@ MONKEY;
     /** @var BlockStatement $alternative */
     $alternative = $ifExpression->alternative();
     assertCount(1, $alternative->statements());
+});
+
+test('function literal', function () {
+    $lexer = new Lexer('fn(x, y) { x + y; }');
+    $parser = new Parser($lexer);
+    $program = (new ProgramParser())($parser);
+
+    assertCount(1, $program->statements());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var FunctionLiteral $functionLiteral */
+    $functionLiteral = $statement->value();
+
+    assertInstanceOf(FunctionLiteral::class, $functionLiteral);
+    assertCount(2, $functionLiteral->parameters());
+    assertSame('x', $functionLiteral->parameters()[0]->value());
+    assertSame('y', $functionLiteral->parameters()[1]->value());
+    assertCount(1, $functionLiteral->body()->statements());
+
+    assertInfixExpression($functionLiteral->body()->statements()[0]->value(), 'x', '+', 'y');
 });

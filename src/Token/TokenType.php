@@ -42,7 +42,7 @@ final class TokenType
     public const T_NOT_EQ = 0x304;
 
     // Keywords
-    public const T_FUNC = 0x401;
+    public const T_FUNCTION = 0x401;
     public const T_LET = 0x402;
     public const T_TRUE = 0x403;
     public const T_FALSE = 0x404;
@@ -71,7 +71,7 @@ final class TokenType
         '<=' => self::T_LT_EQ,
         '==' => self::T_EQ,
         '!=' => self::T_NOT_EQ,
-        'fn' => self::T_FUNC,
+        'fn' => self::T_FUNCTION,
         'let' => self::T_LET,
         'true' => self::T_TRUE,
         'false' => self::T_FALSE,

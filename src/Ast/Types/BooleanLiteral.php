@@ -7,7 +7,7 @@ namespace Monkey\Ast\Types;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Token\Token;
 
-final class Boolean extends Expression
+final class BooleanLiteral extends Expression
 {
     private bool $value;
 

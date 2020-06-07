@@ -29,6 +29,8 @@ final class IfExpressionParselet implements PrefixParselet
         }
 
         $this->parser->nextToken();
+
+        /** @var Expression $condition */
         $condition = $this->parser->parseExpression(Precedence::LOWEST);
 
         if (!$this->parser->expectPeek(TokenType::T_RPAREN)) {
