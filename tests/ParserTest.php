@@ -203,8 +203,8 @@ test('if expression', function () {
     assertCount(1, $ifExpression->consequence()->statements());
     assertNull($ifExpression->alternative());
 
-    /** @var ExpressionStatement $expr0 */
-    $expr0 = $ifExpression->consequence()->statements()[0];
-    assertInstanceOf(ExpressionStatement::class, $expr0);
-    assertSame($expr0->tokenLiteral(), 'x');
+    /** @var ExpressionStatement $firstExpression */
+    $firstExpression = $ifExpression->consequence()->statements()[0];
+    assertInstanceOf(ExpressionStatement::class, $firstExpression);
+    assertSame($firstExpression->tokenLiteral(), 'x');
 });
