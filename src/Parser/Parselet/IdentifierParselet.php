@@ -8,7 +8,7 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\Identifier;
 use Monkey\Parser\Parser;
 
-final class IdentifierParselet implements Parselet
+final class IdentifierParselet implements PrefixParselet
 {
     private Parser $parser;
 

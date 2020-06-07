@@ -6,10 +6,11 @@ namespace Monkey\Parser;
 
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Lexer\Lexer;
+use Monkey\Parser\Parselet\BinaryOperatorParselet;
 use Monkey\Parser\Parselet\IdentifierParselet;
 use Monkey\Parser\Parselet\InfixParselet;
-use Monkey\Parser\Parselet\IntegerParselet;
-use Monkey\Parser\Parselet\Parselet;
+use Monkey\Parser\Parselet\LiteralParselet;
+use Monkey\Parser\Parselet\PrefixOperatorParselet;
 use Monkey\Parser\Parselet\PrefixParselet;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
@@ -27,10 +28,10 @@ final class Parser
     /** @var array<int,string> */
     private array $errors = [];
 
-    /** @var array<int,Parselet> */
+    /** @var array<int,PrefixParselet> */
     private array $prefixParselets = [];
 
-    /** @var array<int,Parselet> */
+    /** @var array<int,InfixParselet> */
     private array $infixParselets = [];
 
     /** @var array<int,int> */
@@ -52,18 +53,18 @@ final class Parser
         $this->lexer = $lexer;
 
         $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
-        $this->registerPrefixParselet(TokenType::T_INT, new IntegerParselet($this));
-        $this->registerPrefixParselet(TokenType::T_BANG, new PrefixParselet($this));
-        $this->registerPrefixParselet(TokenType::T_MINUS, new PrefixParselet($this));
+        $this->registerPrefixParselet(TokenType::T_INT, new LiteralParselet($this));
+        $this->registerPrefixParselet(TokenType::T_BANG, new PrefixOperatorParselet($this));
+        $this->registerPrefixParselet(TokenType::T_MINUS, new PrefixOperatorParselet($this));
 
-        $this->registerInfixParselet(TokenType::T_PLUS, new InfixParselet($this));
-        $this->registerInfixParselet(TokenType::T_MINUS, new InfixParselet($this));
-        $this->registerInfixParselet(TokenType::T_SLASH, new InfixParselet($this));
-        $this->registerInfixParselet(TokenType::T_ASTERISK, new InfixParselet($this));
-        $this->registerInfixParselet(TokenType::T_EQ, new InfixParselet($this));
-        $this->registerInfixParselet(TokenType::T_NOT_EQ, new InfixParselet($this));
-        $this->registerInfixParselet(TokenType::T_LT, new InfixParselet($this));
-        $this->registerInfixParselet(TokenType::T_GT, new InfixParselet($this));
+        $this->registerInfixParselet(TokenType::T_PLUS, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_MINUS, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_SLASH, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_ASTERISK, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_EQ, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_NOT_EQ, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_LT, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_GT, new BinaryOperatorParselet($this));
 
         $this->nextToken();
         $this->nextToken();
@@ -97,7 +98,7 @@ final class Parser
 
     public function parseExpression(int $precedence): ?Expression
     {
-        /** @var Parselet|null $prefixParser */
+        /** @var PrefixParselet|null $prefixParser */
         $prefixParser = $this->prefixParselets[$this->curToken->type] ?? null;
         if (null === $prefixParser) {
             $this->prefixParserError($this->curToken->type);
@@ -137,12 +138,12 @@ final class Parser
         );
     }
 
-    public function registerPrefixParselet(int $type, Parselet $parselet): void
+    public function registerPrefixParselet(int $type, PrefixParselet $parselet): void
     {
         $this->prefixParselets[$type] = $parselet;
     }
 
-    public function registerInfixParselet(int $type, Parselet $parselet): void
+    public function registerInfixParselet(int $type, InfixParselet $parselet): void
     {
         $this->infixParselets[$type] = $parselet;
     }

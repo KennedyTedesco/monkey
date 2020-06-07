@@ -8,7 +8,7 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Parser\Parser;
 
-final class IntegerParselet implements Parselet
+final class LiteralParselet implements PrefixParselet
 {
     private Parser $parser;
 
