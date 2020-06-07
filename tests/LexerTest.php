@@ -8,7 +8,7 @@ use Monkey\Lexer\Lexer;
 use Monkey\Token\TokenType;
 
 test('basic tokens', function () {
-    $input = <<<'MONKEY'
+    $input = <<<MONKEY
 		let five = 5;
 		let ten = 10;
 
