@@ -8,6 +8,7 @@ use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\InfixExpression;
 use Monkey\Ast\Expressions\PrefixExpression;
+use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Ast\Statements\ReturnStatement;
@@ -199,7 +200,11 @@ test('if expression', function () {
     /** @var IfExpression $ifExpression */
     $ifExpression = $statement->value();
     assertInstanceOf(IfExpression::class, $ifExpression);
+
+    // condition
     assertInfixExpression($ifExpression->condition(), 'x', '<', 'y');
+
+    // consequence
     assertCount(1, $ifExpression->consequence()->statements());
     assertNull($ifExpression->alternative());
 
@@ -207,4 +212,35 @@ test('if expression', function () {
     $firstExpression = $ifExpression->consequence()->statements()[0];
     assertInstanceOf(ExpressionStatement::class, $firstExpression);
     assertSame($firstExpression->tokenLiteral(), 'x');
+});
+
+test('if else expression', function () {
+    $input = <<<MONKEY
+    if (x < y) {
+        x
+    } else {
+        y
+    }
+MONKEY;
+
+    $lexer = new Lexer($input);
+    $parser = new Parser($lexer);
+    $program = (new ProgramParser())($parser);
+
+    assertCount(1, $program->statements());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var IfExpression $ifExpression */
+    $ifExpression = $statement->value();
+    assertInstanceOf(IfExpression::class, $ifExpression);
+
+    // consequence
+    assertCount(1, $ifExpression->consequence()->statements());
+
+    /** @var BlockStatement $alternative */
+    $alternative = $ifExpression->alternative();
+    assertCount(1, $alternative->statements());
 });
