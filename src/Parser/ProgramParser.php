@@ -14,17 +14,7 @@ final class ProgramParser
         $program = new Program();
 
         while (!$parser->curToken->is(TokenType::T_EOF)) {
-            switch ($parser->curToken->type()) {
-                case TokenType::T_LET:
-                    $statement = (new LetStatementParser())($parser);
-                    break;
-                case TokenType::T_RETURN:
-                    $statement = (new ReturnStatementParser())($parser);
-                    break;
-                default:
-                    $statement = (new ExpressionStatementParser())($parser);
-            }
-
+            $statement = (new StatementParser())($parser);
             if (null !== $statement) {
                 $program->addStatement($statement);
             }

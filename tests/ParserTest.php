@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Monkey\Ast\Expressions\IdentifierExpression;
+use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\InfixExpression;
 use Monkey\Ast\Expressions\PrefixExpression;
 use Monkey\Ast\Statements\ExpressionStatement;
@@ -137,16 +138,8 @@ test('infix expressions', function (string $input, $leftValue, string $operator,
 
     /** @var InfixExpression $expression */
     $expression = $statement->value();
-    assertSame($operator, $expression->operator());
 
-    /** @var \Monkey\Ast\Types\Integer|\Monkey\Ast\Types\Boolean $right */
-    $right = $expression->right();
-
-    /** @var \Monkey\Ast\Types\Integer|\Monkey\Ast\Types\Boolean $left */
-    $left = $expression->left();
-
-    assertSame($rightValue, $right->value());
-    assertSame($leftValue, $left->value());
+    assertInfixExpression($expression, $leftValue, $operator, $rightValue);
 })->with([
     ['5 + 5;', 5, '+', 5],
     ['5 - 5;', 5, '-', 5],
@@ -191,3 +184,27 @@ test('operator precedence parsing', function (string $input, string $expected) {
     ['-(5 + 5)', '(-(5 + 5))'],
     ['!(true == true)', '(!(true == true))'],
 ]);
+
+test('if expression', function () {
+    $lexer = new Lexer('if (x < y) { x }');
+    $parser = new Parser($lexer);
+    $program = (new ProgramParser())($parser);
+
+    assertCount(1, $program->statements());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var IfExpression $ifExpression */
+    $ifExpression = $statement->value();
+    assertInstanceOf(IfExpression::class, $ifExpression);
+    assertInfixExpression($ifExpression->condition(), 'x', '<', 'y');
+    assertCount(1, $ifExpression->consequence()->statements());
+    assertNull($ifExpression->alternative());
+
+    /** @var ExpressionStatement $expr0 */
+    $expr0 = $ifExpression->consequence()->statements()[0];
+    assertInstanceOf(ExpressionStatement::class, $expr0);
+    assertSame($expr0->tokenLiteral(), 'x');
+});

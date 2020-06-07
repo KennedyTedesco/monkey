@@ -9,6 +9,7 @@ use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parselet\BinaryOperatorParselet;
 use Monkey\Parser\Parselet\GroupedExpressionParselet;
 use Monkey\Parser\Parselet\IdentifierParselet;
+use Monkey\Parser\Parselet\IfExpressionParselet;
 use Monkey\Parser\Parselet\InfixParselet;
 use Monkey\Parser\Parselet\LiteralParselet;
 use Monkey\Parser\Parselet\PrefixOperatorParselet;
@@ -60,6 +61,7 @@ final class Parser
         $this->registerPrefixParselet(TokenType::T_TRUE, new LiteralParselet($this));
         $this->registerPrefixParselet(TokenType::T_FALSE, new LiteralParselet($this));
         $this->registerPrefixParselet(TokenType::T_LPAREN, new GroupedExpressionParselet($this));
+        $this->registerPrefixParselet(TokenType::T_IF, new IfExpressionParselet($this));
 
         $this->registerInfixParselet(TokenType::T_PLUS, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_MINUS, new BinaryOperatorParselet($this));

@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Monkey\Ast;
+
+namespace Monkey\Ast\Statements;
+
+use Monkey\Token\Token;
+
+final class BlockStatement extends Statement
+{
+    /** @var array<Statement> */
+    private array $statements;
+
+    public function __construct(Token $token, array $statements)
+    {
+        $this->token = $token;
+        $this->statements = $statements;
+    }
+
+    /**
+     * @return array<Statement>
+     */
+    public function statements(): array
+    {
+        return $this->statements;
+    }
+
+    public function toString(): string
+    {
+        $out = '';
+        /** @var Statement $statement */
+        foreach ($this->statements as $statement) {
+            $out .= $statement->toString();
+        }
+        return $out;
+    }
+}

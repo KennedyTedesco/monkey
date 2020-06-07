@@ -12,10 +12,12 @@ final class ExpressionStatementParser
 {
     public function __invoke(Parser $parser): ExpressionStatement
     {
+        $token = $parser->curToken;
+
         /** @var Expression $expression */
         $expression = $parser->parseExpression(Precedence::LOWEST);
 
-        $statement = new ExpressionStatement($parser->curToken, $expression);
+        $statement = new ExpressionStatement($token, $expression);
 
         if ($parser->peekToken->is(TokenType::T_SEMICOLON)) {
             $parser->nextToken();
