@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Parser\Parselet;
 
 use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\Identifier;
+use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Parser\Parser;
 
 final class IdentifierParselet implements PrefixParselet
@@ -19,6 +19,6 @@ final class IdentifierParselet implements PrefixParselet
 
     public function parse(): Expression
     {
-        return new Identifier($this->parser->curToken, $this->parser->curToken->literal());
+        return new IdentifierExpression($this->parser->curToken, $this->parser->curToken->literal());
     }
 }

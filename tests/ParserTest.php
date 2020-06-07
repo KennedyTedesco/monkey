@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Monkey\Ast\Expressions\Identifier;
+use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\InfixExpression;
 use Monkey\Ast\Expressions\PrefixExpression;
 use Monkey\Ast\Statements\ExpressionStatement;
@@ -71,7 +71,7 @@ test('identifier expression', function () {
     $statement = $program->statement(0);
     assertInstanceOf(ExpressionStatement::class, $statement);
 
-    /** @var Identifier $identifier */
+    /** @var IdentifierExpression $identifier */
     $identifier = $statement->value();
 
     assertSame('foobar', $identifier->value());

@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Monkey\Ast\Statements;
 
 use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\Identifier;
+use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Token\Token;
 
 final class LetStatement extends Statement
 {
-    private Identifier $identifier;
+    private IdentifierExpression $identifier;
     private ?Expression $value = null;
 
     public function __construct(
         Token $token,
-        Identifier $identifier
+        IdentifierExpression $identifier
     ) {
         $this->token = $token;
         $this->identifier = $identifier;

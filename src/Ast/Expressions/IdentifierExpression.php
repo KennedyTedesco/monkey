@@ -6,7 +6,7 @@ namespace Monkey\Ast\Expressions;
 
 use Monkey\Token\Token;
 
-final class Identifier extends Expression
+final class IdentifierExpression extends Expression
 {
     private string $value;
 

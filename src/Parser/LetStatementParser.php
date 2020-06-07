@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Parser;
 
-use Monkey\Ast\Expressions\Identifier;
+use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Token\TokenType;
 
@@ -18,7 +18,7 @@ final class LetStatementParser
             return null;
         }
 
-        $name = new Identifier(
+        $name = new IdentifierExpression(
             $parser->curToken,
             $parser->curToken->literal()
         );

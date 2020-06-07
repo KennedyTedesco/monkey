@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Monkey\Ast\Expressions\Identifier;
+use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Program;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Token\Token;
@@ -15,7 +15,7 @@ test('toString', function () {
     $program->addStatement(
         new LetStatement(
             new Token(TokenType::T_LET, 'let'),
-            new Identifier(new Token(TokenType::T_IDENT, 'foo'), '10')
+            new IdentifierExpression(new Token(TokenType::T_IDENT, 'foo'), '10')
         )
     );
 
