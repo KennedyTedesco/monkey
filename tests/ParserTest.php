@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Monkey\Ast\Expressions\BinaryExpression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
-use Monkey\Ast\Expressions\InfixExpression;
 use Monkey\Ast\Expressions\PrefixExpression;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
@@ -137,7 +137,7 @@ test('infix expressions', function (string $input, $leftValue, string $operator,
     $statement = $program->statement(0);
     assertInstanceOf(ExpressionStatement::class, $statement);
 
-    /** @var InfixExpression $expression */
+    /** @var BinaryExpression $expression */
     $expression = $statement->value();
 
     assertInfixExpression($expression, $leftValue, $operator, $rightValue);
