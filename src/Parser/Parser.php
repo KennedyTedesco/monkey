@@ -7,6 +7,7 @@ namespace Monkey\Parser;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parselet\BinaryOperatorParselet;
+use Monkey\Parser\Parselet\GroupedExpressionParselet;
 use Monkey\Parser\Parselet\IdentifierParselet;
 use Monkey\Parser\Parselet\InfixParselet;
 use Monkey\Parser\Parselet\LiteralParselet;
@@ -58,6 +59,7 @@ final class Parser
         $this->registerPrefixParselet(TokenType::T_MINUS, new PrefixOperatorParselet($this));
         $this->registerPrefixParselet(TokenType::T_TRUE, new LiteralParselet($this));
         $this->registerPrefixParselet(TokenType::T_FALSE, new LiteralParselet($this));
+        $this->registerPrefixParselet(TokenType::T_LPAREN, new GroupedExpressionParselet($this));
 
         $this->registerInfixParselet(TokenType::T_PLUS, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_MINUS, new BinaryOperatorParselet($this));
@@ -98,6 +100,7 @@ final class Parser
             return null;
         }
 
+        /** @var Expression $leftExpression */
         $leftExpression = $prefixParser->parse();
 
         while (!$this->peekToken->is(TokenType::T_SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
