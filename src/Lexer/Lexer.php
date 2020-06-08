@@ -11,9 +11,7 @@ final class Lexer
 {
     public const EOF = "\0";
 
-    private int $size;
-    private string $input;
-
+    private Input $input;
     private Char $curChar;
     private Char $prevChar;
     private Char $peekChar;
@@ -23,9 +21,7 @@ final class Lexer
 
     public function __construct(string $input)
     {
-        $this->input = $input;
-        $this->size = \mb_strlen($input);
-
+        $this->input = new Input($input);
         $this->curChar = Char::empty();
         $this->prevChar = Char::empty();
         $this->peekChar = Char::empty();
@@ -85,8 +81,7 @@ final class Lexer
         while ($this->curChar->isLetter()) {
             $this->readChar();
         }
-
-        return \mb_substr($this->input, $position, $this->position - $position);
+        return $this->input->substr($position, $this->position - $position);
     }
 
     private function readChar(): void
@@ -96,14 +91,14 @@ final class Lexer
         if ($this->isEnd()) {
             $this->curChar = Char::from(self::EOF);
         } else {
-            $this->curChar = Char::from($this->input[$this->readPosition]);
+            $this->curChar = Char::from($this->input->char($this->readPosition));
         }
 
         $this->position = $this->readPosition;
         ++$this->readPosition;
 
         if (!$this->isEnd()) {
-            $this->peekChar = Char::from($this->input[$this->readPosition]);
+            $this->peekChar = Char::from($this->input->char($this->readPosition));
         }
     }
 
@@ -113,8 +108,7 @@ final class Lexer
         while ($this->curChar->isDigit()) {
             $this->readChar();
         }
-
-        return \mb_substr($this->input, $position, $this->position - $position);
+        return $this->input->substr($position, $this->position - $position);
     }
 
     private function skipWhitespaces(): void
@@ -126,7 +120,7 @@ final class Lexer
 
     public function isEnd(): bool
     {
-        return $this->readPosition >= $this->size;
+        return $this->readPosition >= $this->input->size();
     }
 
     private function makeTokenAndAdvance(int $type, string $literal): Token
