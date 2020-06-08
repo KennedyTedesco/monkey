@@ -19,9 +19,6 @@ final class BlockStatement extends Statement
         $this->statements = $statements;
     }
 
-    /**
-     * @return array<Statement>
-     */
     public function statements(): array
     {
         return $this->statements;
