@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Statements;
 
-use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Token\Token;
 
 final class LetStatement extends Statement
 {
     private IdentifierExpression $identifier;
-    private ?Expression $value = null;
 
     public function __construct(
         Token $token,
