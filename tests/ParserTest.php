@@ -15,9 +15,6 @@ use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
-use Monkey\Lexer\Lexer;
-use Monkey\Parser\Parser;
-use Monkey\Parser\ProgramParser;
 
 test('let parser', function () {
     $input = <<<'MONKEY'
@@ -26,12 +23,8 @@ test('let parser', function () {
         let foo_bar = 838383;
 MONKEY;
 
-    $lexer = new Lexer($input);
-    $parser = new Parser($lexer);
-    $program = (new ProgramParser())($parser);
-
+    $program = newProgram($input);
     assertSame(3, $program->count());
-    assertCount(0, $parser->errors());
 
     $identifiers = ['x', 'y', 'foo_bar'];
 
@@ -44,12 +37,8 @@ MONKEY;
 });
 
 test('return parser', function (string $input) {
-    $lexer = new Lexer($input);
-    $parser = new Parser($lexer);
-    $program = (new ProgramParser())($parser);
-
+    $program = newProgram($input);
     assertSame(1, $program->count());
-    assertCount(0, $parser->errors());
 
     /** @var ReturnStatement $returnStatement */
     $returnStatement = $program->statement(0);
@@ -66,10 +55,7 @@ test('return parser', function (string $input) {
 test('identifier expression', function () {
     $input = 'foobar;';
 
-    $lexer = new Lexer($input);
-    $parser = new Parser($lexer);
-    $program = (new ProgramParser())($parser);
-
+    $program = newProgram($input);
     assertSame(1, $program->count());
 
     /** @var ExpressionStatement $statement */
@@ -86,10 +72,7 @@ test('identifier expression', function () {
 test('integer literal expression', function () {
     $input = '10;';
 
-    $lexer = new Lexer($input);
-    $parser = new Parser($lexer);
-    $program = (new ProgramParser())($parser);
-
+    $program = newProgram($input);
     assertSame(1, $program->count());
 
     /** @var ExpressionStatement $statement */
@@ -105,10 +88,7 @@ test('integer literal expression', function () {
 });
 
 test('prefix expression', function (string $input, string $operator, $value) {
-    $lexer = new Lexer($input);
-    $parser = new Parser($lexer);
-    $program = (new ProgramParser())($parser);
-
+    $program = newProgram($input);
     assertSame(1, $program->count());
 
     /** @var ExpressionStatement $statement */
@@ -130,10 +110,7 @@ test('prefix expression', function (string $input, string $operator, $value) {
 ]);
 
 test('infix expressions', function (string $input, $leftValue, string $operator, $rightValue) {
-    $lexer = new Lexer($input);
-    $parser = new Parser($lexer);
-    $program = (new ProgramParser())($parser);
-
+    $program = newProgram($input);
     assertSame(1, $program->count());
 
     /** @var ExpressionStatement $statement */
@@ -159,11 +136,7 @@ test('infix expressions', function (string $input, $leftValue, string $operator,
 ]);
 
 test('operator precedence parsing', function (string $input, string $expected) {
-    $lexer = new Lexer($input);
-    $program = (new ProgramParser())(
-        new Parser($lexer)
-    );
-
+    $program = newProgram($input);
     assertSame($expected, $program->toString());
 })->with([
     ['true', 'true'],
@@ -190,10 +163,7 @@ test('operator precedence parsing', function (string $input, string $expected) {
 ]);
 
 test('if expression', function () {
-    $lexer = new Lexer('if (x < y) { x }');
-    $parser = new Parser($lexer);
-    $program = (new ProgramParser())($parser);
-
+    $program = newProgram('if (x < y) { x }');
     assertCount(1, $program->statements());
 
     /** @var ExpressionStatement $statement */
@@ -226,10 +196,7 @@ test('if else expression', function () {
     }
 MONKEY;
 
-    $lexer = new Lexer($input);
-    $parser = new Parser($lexer);
-    $program = (new ProgramParser())($parser);
-
+    $program = newProgram($input);
     assertCount(1, $program->statements());
 
     /** @var ExpressionStatement $statement */
@@ -249,10 +216,7 @@ MONKEY;
 });
 
 test('function literal', function () {
-    $lexer = new Lexer('fn(x, y) { x + y; }');
-    $parser = new Parser($lexer);
-    $program = (new ProgramParser())($parser);
-
+    $program = newProgram('fn(x, y) { x + y; }');
     assertCount(1, $program->statements());
 
     /** @var ExpressionStatement $statement */
@@ -270,3 +234,23 @@ test('function literal', function () {
 
     assertInfixExpression($functionLiteral->body()->statements()[0]->value(), 'x', '+', 'y');
 });
+
+test('function parameters', function (string $input, array $parameters) {
+    $program = newProgram($input);
+    assertCount(1, $program->statements());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var FunctionLiteral $functionLiteral */
+    $functionLiteral = $statement->value();
+    assertInstanceOf(FunctionLiteral::class, $functionLiteral);
+
+    $paramsTokenLiteral = \array_map(fn (IdentifierExpression $ident) => $ident->tokenLiteral(), $functionLiteral->parameters());
+    assertSame($parameters, $paramsTokenLiteral);
+})->with([
+    ['fn() {};', []],
+    ['fn(x) {};', ['x']],
+    ['fn(x, y, z) {};', ['x', 'y', 'z']],
+]);

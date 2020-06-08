@@ -3,8 +3,12 @@
 declare(strict_types=1);
 
 use Monkey\Ast\Expressions\Expression;
+use Monkey\Ast\Program;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
+use Monkey\Lexer\Lexer;
+use Monkey\Parser\Parser;
+use Monkey\Parser\ProgramParser;
 
 /**
  * @param mixed $leftValue
@@ -22,4 +26,13 @@ function assertInfixExpression(Expression $expression, $leftValue, string $opera
 
     assertSame($leftValue, $left->value());
     assertSame($rightValue, $right->value());
+}
+
+function newProgram(string $input): Program
+{
+    return (new ProgramParser())(
+        new Parser(
+            new Lexer($input)
+        )
+    );
 }

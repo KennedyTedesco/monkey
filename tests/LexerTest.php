@@ -54,7 +54,7 @@ MONKEY;
         [TokenType::T_LET, 'let'],
         [TokenType::T_IDENT, 'add'],
         [TokenType::T_ASSIGN, '='],
-        [TokenType::T_FUNCTION, 'fn'],
+        [TokenType::T_FN, 'fn'],
         [TokenType::T_LPAREN, '('],
         [TokenType::T_IDENT, 'x'],
         [TokenType::T_COMMA, ','],
