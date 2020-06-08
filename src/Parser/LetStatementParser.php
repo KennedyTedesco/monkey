@@ -27,10 +27,14 @@ final class LetStatementParser
             return null;
         }
 
-        while (!$parser->curToken->is(TokenType::T_SEMICOLON)) {
+        $parser->nextToken();
+
+        $value = $parser->parseExpression(Precedence::LOWEST);
+
+        if ($parser->peekToken->is(TokenType::T_SEMICOLON)) {
             $parser->nextToken();
         }
 
-        return new LetStatement($token, $name);
+        return new LetStatement($token, $name, $value);
     }
 }

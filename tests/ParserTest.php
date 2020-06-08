@@ -17,26 +17,28 @@ use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 
-test('let parser', function () {
-    $program = newProgram(<<<'MONKEY'
-        let x = 5;
-        let y = 10;
-        let foo_bar = true;
-    MONKEY);
+test('let statements', function (string $input, string $name, $value) {
+    $program = newProgram($input);
+    assertSame(1, $program->count());
 
-    assertSame(3, $program->count());
+    /** @var LetStatement $letStatement */
+    $letStatement = $program->statement(0);
+    assertInstanceOf(LetStatement::class, $letStatement);
 
-    $identifiers = ['x', 'y', 'foo_bar'];
+    assertSame('let', $letStatement->tokenLiteral());
+    assertSame($name, $letStatement->identifierName());
 
-    /** @var LetStatement $stmt */
-    foreach ($program->statements() as $index => $stmt) {
-        assertInstanceOf(LetStatement::class, $stmt);
-        assertSame('let', $stmt->tokenLiteral());
-        assertSame($identifiers[$index], $stmt->identifierName());
-    }
-});
+    /** @var IntegerLiteral|BooleanLiteral $valueExpression */
+    $valueExpression = $letStatement->valueExpression();
+    assertSame($value, $valueExpression->value());
+})->with([
+    ['let x = 5;', 'x', 5],
+    ['let y = 10;', 'y', 10],
+    ['let foo = true;', 'foo', true],
+    ['let foo_bar = false;', 'foo_bar', false],
+]);
 
-test('return parser', function (string $input) {
+test('return statement', function (string $input) {
     $program = newProgram($input);
     assertSame(1, $program->count());
 
