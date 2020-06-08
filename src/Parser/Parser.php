@@ -156,9 +156,6 @@ final class Parser
         return $this->precedences[$token->type()] ?? Precedence::LOWEST;
     }
 
-    /**
-     * @return array<int,string>
-     */
     public function errors(): array
     {
         return $this->errors;
