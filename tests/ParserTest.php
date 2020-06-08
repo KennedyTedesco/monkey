@@ -38,7 +38,7 @@ test('let statements', function (string $input, string $name, $value) {
     ['let foo_bar = false;', 'foo_bar', false],
 ]);
 
-test('return statement', function (string $input) {
+test('return statement', function (string $input, $value) {
     $program = newProgram($input);
     assertSame(1, $program->count());
 
@@ -46,12 +46,16 @@ test('return statement', function (string $input) {
     $returnStatement = $program->statement(0);
     assertInstanceOf(ReturnStatement::class, $returnStatement);
     assertSame('return', $returnStatement->tokenLiteral());
+
+    /** @var IntegerLiteral|BooleanLiteral $valueExpression */
+    $valueExpression = $returnStatement->valueExpression();
+    assertSame($value, $valueExpression->value());
 })->with([
-    'return 10;',
-    'return 100;',
-    'return 1000;',
-    'return true;',
-    'return false;',
+    ['return 10;', 10],
+    ['return 100;', 100],
+    ['return 1000;', 1000],
+    ['return true;', true],
+    ['return false;', false],
 ]);
 
 test('identifier expression', function () {

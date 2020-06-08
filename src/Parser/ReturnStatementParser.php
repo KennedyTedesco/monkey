@@ -15,10 +15,12 @@ final class ReturnStatementParser
 
         $parser->nextToken();
 
-        while (!$parser->curToken->is(TokenType::T_SEMICOLON)) {
+        $valueExpression = $parser->parseExpression(Precedence::LOWEST);
+
+        if ($parser->peekToken->is(TokenType::T_SEMICOLON)) {
             $parser->nextToken();
         }
 
-        return new ReturnStatement($token);
+        return new ReturnStatement($token, $valueExpression);
     }
 }

@@ -11,19 +11,26 @@ use Monkey\Token\Token;
 
 final class ReturnStatement extends Statement
 {
-    private ?Expression $value;
+    private Expression $valueExpression;
 
-    public function __construct(Token $token, ?Expression $value = null)
-    {
+    public function __construct(
+        Token $token,
+        Expression $valueExpression
+    ) {
         $this->token = $token;
-        $this->value = $value;
+        $this->valueExpression = $valueExpression;
+    }
+
+    public function valueExpression(): Expression
+    {
+        return $this->valueExpression;
     }
 
     public function toString(): string
     {
         $out = "{$this->tokenLiteral()} ";
-        if (null !== $this->value) {
-            $out .= $this->value->toString();
+        if (null !== $this->valueExpression) {
+            $out .= $this->valueExpression->toString();
         }
         $out .= ';';
         return $out;
