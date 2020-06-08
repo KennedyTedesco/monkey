@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Monkey\Ast\Expressions\BinaryExpression;
+use Monkey\Ast\Expressions\CallExpression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\PrefixExpression;
@@ -160,6 +161,10 @@ test('operator precedence parsing', function (string $input, string $expected) {
     ['2 / (5 + 5)', '(2 / (5 + 5))'],
     ['-(5 + 5)', '(-(5 + 5))'],
     ['!(true == true)', '(!(true == true))'],
+
+    ['a + add(b * c) + d', '((a + add((b * c))) + d)'],
+    ['add(a, b, 1, 2 * 3, 4 + 5, add(6, 7 * 8))', 'add(a, b, 1, (2 * 3), (4 + 5), add(6, (7 * 8)))'],
+    ['add(a + b + c * d / f + g)', 'add((((a + b) + ((c * d) / f)) + g))'],
 ]);
 
 test('if expression', function () {
@@ -254,3 +259,23 @@ test('function parameters', function (string $input, array $parameters) {
     ['fn(x) {};', ['x']],
     ['fn(x, y, z) {};', ['x', 'y', 'z']],
 ]);
+
+test('call expression', function () {
+    $program = newProgram('add(1, 2 * 3, 4 + 5);');
+    assertCount(1, $program->statements());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var CallExpression $callExpression */
+    $callExpression = $statement->value();
+    assertInstanceOf(CallExpression::class, $callExpression);
+
+    assertSame('add', $callExpression->function()->tokenLiteral());
+    assertCount(3, $callExpression->arguments());
+
+    assertSame(1, $callExpression->arguments()[0]->value());
+    assertInfixExpression($callExpression->arguments()[1], 2, '*', 3);
+    assertInfixExpression($callExpression->arguments()[2], 4, '+', 5);
+});

@@ -7,6 +7,7 @@ namespace Monkey\Parser;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parselet\BinaryOperatorParselet;
+use Monkey\Parser\Parselet\CallExpressionParselet;
 use Monkey\Parser\Parselet\FunctionLiteralParselet;
 use Monkey\Parser\Parselet\GroupedExpressionParselet;
 use Monkey\Parser\Parselet\IdentifierParselet;
@@ -49,6 +50,7 @@ final class Parser
         TokenType::T_MINUS => Precedence::SUM,
         TokenType::T_SLASH => Precedence::PRODUCT,
         TokenType::T_ASTERISK => Precedence::PRODUCT,
+        TokenType::T_LPAREN => Precedence::CALL,
     ];
 
     public function __construct(Lexer $lexer)
@@ -73,6 +75,7 @@ final class Parser
         $this->registerInfixParselet(TokenType::T_NOT_EQ, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_LT, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_GT, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_LPAREN, new CallExpressionParselet($this));
 
         $this->nextToken(2);
     }

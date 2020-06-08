@@ -50,7 +50,7 @@ final class FunctionLiteral extends Expression
             $out .= \implode(',', $params);
         }
 
-        $out .= "}{$this->body->toString()}";
+        $out .= "){$this->body->toString()}";
 
         return $out;
     }
