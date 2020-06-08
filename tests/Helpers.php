@@ -12,7 +12,7 @@ use Monkey\Parser\ProgramParser;
 
 /**
  * @param mixed $leftValue
- * @param $rightValue
+ * @param mixed $rightValue
  */
 function assertInfixExpression(Expression $expression, $leftValue, string $operator, $rightValue): void
 {
