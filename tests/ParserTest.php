@@ -18,13 +18,12 @@ use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 
 test('let parser', function () {
-    $input = <<<'MONKEY'
+    $program = newProgram(<<<'MONKEY'
         let x = 5;
         let y = 10;
-        let foo_bar = 838383;
-MONKEY;
+        let foo_bar = true;
+    MONKEY);
 
-    $program = newProgram($input);
     assertSame(3, $program->count());
 
     $identifiers = ['x', 'y', 'foo_bar'];
@@ -193,15 +192,14 @@ test('if expression', function () {
 });
 
 test('if else expression', function () {
-    $input = <<<MONKEY
-    if (x < y) {
-        x
-    } else {
-        y
-    }
-MONKEY;
+    $program = newProgram(<<<'MONKEY'
+        if (x < y) {
+            x
+        } else {
+            y
+        }
+    MONKEY);
 
-    $program = newProgram($input);
     assertCount(1, $program->statements());
 
     /** @var ExpressionStatement $statement */
@@ -221,7 +219,12 @@ MONKEY;
 });
 
 test('function literal', function () {
-    $program = newProgram('fn(x, y) { x + y; }');
+    $program = newProgram(<<<'MONKEY'
+        fn(x, y) { 
+            x + y; 
+        }
+    MONKEY);
+
     assertCount(1, $program->statements());
 
     /** @var ExpressionStatement $statement */
