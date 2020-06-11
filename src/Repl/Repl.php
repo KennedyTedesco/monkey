@@ -30,14 +30,18 @@ final class Repl
         --------------------------------\n\n
         TEXT);
 
+        \safe\fwrite(\STDOUT, '> ');
+
         while (true) {
             /** @var string $input */
-            $input = \fgets(\STDIN);
-            if (':q' === \trim($input)) {
+            $input = \trim(\fgets(\STDIN));
+            if ('exit' === $input) {
                 return;
             }
 
-            \safe\fwrite(\STDOUT, \PHP_EOL);
+            if ('' === $input) {
+                \safe\fwrite(\STDOUT, '> ');
+            }
 
             $parser = new Parser(new Lexer($input));
             $program = (new ProgramParser())($parser);
