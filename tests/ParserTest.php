@@ -289,7 +289,7 @@ test('call expression', function () {
     assertInfixExpression($callExpression->arguments()[2], 4, '+', 5);
 });
 
-test('program parser', function () {
+test('program to string', function () {
     $program = newProgram('let x = 1 * 2 * 3 * 4 * 5;');
     assertSame('let x = ((((1 * 2) * 3) * 4) * 5);', $program->toString());
 });
