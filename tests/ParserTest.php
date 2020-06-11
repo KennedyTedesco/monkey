@@ -26,7 +26,7 @@ test('let statements', function (string $input, string $name, $value) {
     assertInstanceOf(LetStatement::class, $letStatement);
 
     assertSame('let', $letStatement->tokenLiteral());
-    assertSame($name, $letStatement->identifierName());
+    assertSame($name, $letStatement->name()->tokenLiteral());
 
     /** @var IntegerLiteral|BooleanLiteral $valueExpression */
     $valueExpression = $letStatement->valueExpression();
@@ -287,4 +287,9 @@ test('call expression', function () {
     assertSame(1, $callExpression->arguments()[0]->value());
     assertInfixExpression($callExpression->arguments()[1], 2, '*', 3);
     assertInfixExpression($callExpression->arguments()[2], 4, '+', 5);
+});
+
+test('program parser', function () {
+    $program = newProgram('let x = 1 * 2 * 3 * 4 * 5;');
+    assertSame('let x = ((((1 * 2) * 3) * 4) * 5);', $program->toString());
 });

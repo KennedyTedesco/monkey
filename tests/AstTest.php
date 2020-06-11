@@ -16,9 +16,9 @@ test('toString', function () {
 
     $program->addStatement(
         new LetStatement(
-            $token = new Token(TokenType::T_LET, 'let'),
-            new IdentifierExpression(new Token(TokenType::T_IDENT, 'foo'), '10'),
-            new IntegerLiteral($token, 10)
+            new Token(TokenType::T_LET, 'let'),
+            new IdentifierExpression(new Token(TokenType::T_IDENT, 'foo'), 'foo'),
+            new IntegerLiteral(new Token(TokenType::T_INT, '10'), 10)
         )
     );
 

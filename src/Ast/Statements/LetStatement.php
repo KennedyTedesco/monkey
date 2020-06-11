@@ -11,16 +11,21 @@ use Monkey\Token\Token;
 final class LetStatement extends Statement
 {
     private Expression $valueExpression;
-    private IdentifierExpression $identifier;
+    private IdentifierExpression $name;
 
     public function __construct(
         Token $token,
-        IdentifierExpression $identifier,
+        IdentifierExpression $name,
         Expression $valueExpression
     ) {
         $this->token = $token;
-        $this->identifier = $identifier;
+        $this->name = $name;
         $this->valueExpression = $valueExpression;
+    }
+
+    public function name(): IdentifierExpression
+    {
+        return $this->name;
     }
 
     public function valueExpression(): Expression
@@ -28,13 +33,8 @@ final class LetStatement extends Statement
         return $this->valueExpression;
     }
 
-    public function identifierName(): string
-    {
-        return $this->identifier->tokenLiteral();
-    }
-
     public function toString(): string
     {
-        return "{$this->tokenLiteral()} {$this->identifierName()} = {$this->identifier->value()};";
+        return "{$this->tokenLiteral()} {$this->name->tokenLiteral()} = {$this->valueExpression->toString()};";
     }
 }
