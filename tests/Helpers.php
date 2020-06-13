@@ -6,7 +6,10 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Program;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
+use Monkey\Evaluator\Evaluator;
 use Monkey\Lexer\Lexer;
+use Monkey\Object\IntegerObject;
+use Monkey\Object\InternalObject;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
 
@@ -35,4 +38,16 @@ function newProgram(string $input): Program
             new Lexer($input)
         )
     );
+}
+
+function evalProgram(string $input): InternalObject
+{
+    return (new Evaluator())->eval(newProgram($input));
+}
+
+function testIntegerObject(InternalObject $object, int $expected)
+{
+    assertInstanceOf(IntegerObject::class, $object);
+    assertSame(InternalObject::INTEGER_OBJ, $object->type());
+    assertSame($expected, $object->value());
 }

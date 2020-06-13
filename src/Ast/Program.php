@@ -6,7 +6,7 @@ namespace Monkey\Ast;
 
 use Monkey\Ast\Statements\Statement;
 
-final class Program
+final class Program extends Node
 {
     /** @var array<Statement> */
     private array $statements = [];
@@ -32,6 +32,15 @@ final class Program
     public function count(): int
     {
         return \count($this->statements);
+    }
+
+    public function tokenLiteral(): string
+    {
+        if ($this->count() <= 0) {
+            return '';
+        }
+
+        return $this->statement(0)->tokenLiteral();
     }
 
     public function toString(): string

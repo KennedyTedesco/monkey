@@ -69,7 +69,7 @@ test('identifier expression', function () {
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var IdentifierExpression $identifier */
-    $identifier = $statement->value();
+    $identifier = $statement->expression();
 
     assertSame('foobar', $identifier->value());
     assertSame('foobar', $identifier->tokenLiteral());
@@ -87,7 +87,7 @@ test('integer literal expression', function () {
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var IntegerLiteral $integer */
-    $integer = $statement->value();
+    $integer = $statement->expression();
 
     assertSame(10, $integer->value());
     assertSame('10', $integer->tokenLiteral());
@@ -102,7 +102,7 @@ test('prefix expression', function (string $input, string $operator, $value) {
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var PrefixExpression $expression */
-    $expression = $statement->value();
+    $expression = $statement->expression();
     assertSame($operator, $expression->operator());
 
     /** @var IntegerLiteral|BooleanLiteral $right */
@@ -124,7 +124,7 @@ test('infix expressions', function (string $input, $leftValue, string $operator,
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var BinaryExpression $expression */
-    $expression = $statement->value();
+    $expression = $statement->expression();
 
     assertInfixExpression($expression, $leftValue, $operator, $rightValue);
 })->with([
@@ -181,7 +181,7 @@ test('if expression', function () {
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var IfExpression $ifExpression */
-    $ifExpression = $statement->value();
+    $ifExpression = $statement->expression();
     assertInstanceOf(IfExpression::class, $ifExpression);
 
     // condition
@@ -213,7 +213,7 @@ test('if else expression', function () {
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var IfExpression $ifExpression */
-    $ifExpression = $statement->value();
+    $ifExpression = $statement->expression();
     assertInstanceOf(IfExpression::class, $ifExpression);
 
     // consequence
@@ -238,7 +238,7 @@ test('function literal', function () {
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var FunctionLiteral $functionLiteral */
-    $functionLiteral = $statement->value();
+    $functionLiteral = $statement->expression();
 
     assertInstanceOf(FunctionLiteral::class, $functionLiteral);
     assertCount(2, $functionLiteral->parameters());
@@ -246,7 +246,7 @@ test('function literal', function () {
     assertSame('y', $functionLiteral->parameters()[1]->value());
     assertCount(1, $functionLiteral->body()->statements());
 
-    assertInfixExpression($functionLiteral->body()->statements()[0]->value(), 'x', '+', 'y');
+    assertInfixExpression($functionLiteral->body()->statements()[0]->expression(), 'x', '+', 'y');
 });
 
 test('function parameters', function (string $input, array $parameters) {
@@ -258,7 +258,7 @@ test('function parameters', function (string $input, array $parameters) {
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var FunctionLiteral $functionLiteral */
-    $functionLiteral = $statement->value();
+    $functionLiteral = $statement->expression();
     assertInstanceOf(FunctionLiteral::class, $functionLiteral);
 
     $paramsTokenLiteral = \array_map(fn (IdentifierExpression $ident) => $ident->tokenLiteral(), $functionLiteral->parameters());
@@ -278,7 +278,7 @@ test('call expression', function () {
     assertInstanceOf(ExpressionStatement::class, $statement);
 
     /** @var CallExpression $callExpression */
-    $callExpression = $statement->value();
+    $callExpression = $statement->expression();
     assertInstanceOf(CallExpression::class, $callExpression);
 
     assertSame('add', $callExpression->function()->tokenLiteral());
@@ -292,4 +292,19 @@ test('call expression', function () {
 test('program to string', function () {
     $program = newProgram('let x = 1 * 2 * 3 * 4 * 5;');
     assertSame('let x = ((((1 * 2) * 3) * 4) * 5);', $program->toString());
+});
+
+test('program statements', function () {
+    $program = newProgram('5');
+    assertCount(1, $program->statements());
+    assertInstanceOf(ExpressionStatement::class, $program->statement(0));
+
+    /** @var ExpressionStatement $expression */
+    $expression = $program->statement(0);
+
+    /** @var IntegerLiteral $integerLiteral */
+    $integerLiteral = $expression->expression();
+    assertInstanceOf(IntegerLiteral::class, $integerLiteral);
+
+    assertSame(5, $integerLiteral->value());
 });

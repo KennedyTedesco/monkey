@@ -9,21 +9,21 @@ use Monkey\Token\Token;
 
 final class ExpressionStatement extends Statement
 {
-    private Expression $value;
+    private Expression $expression;
 
-    public function __construct(Token $token, Expression $value)
+    public function __construct(Token $token, Expression $expression)
     {
         $this->token = $token;
-        $this->value = $value;
+        $this->expression = $expression;
     }
 
-    public function value(): Expression
+    public function expression(): Expression
     {
-        return $this->value;
+        return $this->expression;
     }
 
     public function toString(): string
     {
-        return $this->value->toString();
+        return $this->expression->toString();
     }
 }
