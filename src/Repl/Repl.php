@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Repl;
 
+use Monkey\Evaluator\Evaluator;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
@@ -51,7 +52,10 @@ final class Repl
                 break;
             }
 
-            \safe\fwrite(\STDOUT, $program->toString());
+            $evaluated = (new Evaluator())->eval($program);
+            if (null !== $evaluated) {
+                \safe\fwrite(\STDOUT, $evaluated->inspect());
+            }
         }
     }
 
