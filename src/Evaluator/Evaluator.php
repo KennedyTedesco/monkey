@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Evaluator;
 
+use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Node;
 use Monkey\Ast\Program;
 use Monkey\Ast\Statements\ExpressionStatement;
@@ -12,13 +13,14 @@ use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
+use Monkey\Object\NullObject;
 
 final class Evaluator
 {
     public function eval(Node $node): ?InternalObject
     {
         if ($node instanceof Program) {
-            return $this->statements($node);
+            return $this->evalStatements($node);
         }
 
         if ($node instanceof ExpressionStatement) {
@@ -33,10 +35,14 @@ final class Evaluator
             return true === $node->value() ? BooleanObject::true() : BooleanObject::false();
         }
 
+        if ($node instanceof UnaryExpression) {
+            return $this->evalUnaryExpression($node->operator(), $this->eval($node->right()));
+        }
+
         return null;
     }
 
-    private function statements(Program $program): ?InternalObject
+    private function evalStatements(Program $program): ?InternalObject
     {
         $result = null;
         foreach ($program->statements() as $statement) {
@@ -44,5 +50,28 @@ final class Evaluator
         }
 
         return $result;
+    }
+
+    private function evalUnaryExpression(string $operator, InternalObject $right): ?InternalObject
+    {
+        switch ($operator) {
+            case '!':
+                return $this->evalBangOperatorExpression($right);
+            default:
+                return null;
+        }
+    }
+
+    private function evalBangOperatorExpression(InternalObject $right): InternalObject
+    {
+        if ($right instanceof BooleanObject) {
+            return $right->value() ? BooleanObject::false() : BooleanObject::true();
+        }
+
+        if ($right instanceof NullObject) {
+            return BooleanObject::true();
+        }
+
+        return BooleanObject::false();
     }
 }

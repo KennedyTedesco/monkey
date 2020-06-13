@@ -27,6 +27,15 @@ test('eval boolean expression', function (string $input, bool $expected) {
     ['false', false],
 ]);
 
+test('eval bang operator', function (string $input, bool $expected) {
+    testBooleanObject(evalProgram($input), $expected);
+})->with([
+    ['!true', false],
+    ['!false', true],
+    ['!5', false],
+    ['!!true', true],
+]);
+
 function testIntegerObject(InternalObject $object, int $expected)
 {
     assertInstanceOf(IntegerObject::class, $object);
