@@ -6,7 +6,7 @@ namespace Monkey\Ast\Expressions;
 
 use Monkey\Token\Token;
 
-final class PrefixExpression extends Expression
+final class UnaryExpression extends Expression
 {
     private Expression $right;
     private string $operator;

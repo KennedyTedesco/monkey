@@ -8,7 +8,7 @@ use Monkey\Ast\Expressions\BinaryExpression;
 use Monkey\Ast\Expressions\CallExpression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
-use Monkey\Ast\Expressions\PrefixExpression;
+use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
@@ -101,7 +101,7 @@ test('prefix expression', function (string $input, string $operator, $value) {
     $statement = $program->statement(0);
     assertInstanceOf(ExpressionStatement::class, $statement);
 
-    /** @var PrefixExpression $expression */
+    /** @var UnaryExpression $expression */
     $expression = $statement->expression();
     assertSame($operator, $expression->operator());
 

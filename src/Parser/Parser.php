@@ -13,9 +13,9 @@ use Monkey\Parser\Parselet\GroupedExpressionParselet;
 use Monkey\Parser\Parselet\IdentifierParselet;
 use Monkey\Parser\Parselet\IfExpressionParselet;
 use Monkey\Parser\Parselet\InfixParselet;
-use Monkey\Parser\Parselet\PrefixOperatorParselet;
 use Monkey\Parser\Parselet\PrefixParselet;
 use Monkey\Parser\Parselet\ScalarParselet;
+use Monkey\Parser\Parselet\UnaryOperatorParselet;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
@@ -59,8 +59,8 @@ final class Parser
 
         $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
         $this->registerPrefixParselet(TokenType::T_INT, new ScalarParselet($this));
-        $this->registerPrefixParselet(TokenType::T_BANG, new PrefixOperatorParselet($this));
-        $this->registerPrefixParselet(TokenType::T_MINUS, new PrefixOperatorParselet($this));
+        $this->registerPrefixParselet(TokenType::T_BANG, new UnaryOperatorParselet($this));
+        $this->registerPrefixParselet(TokenType::T_MINUS, new UnaryOperatorParselet($this));
         $this->registerPrefixParselet(TokenType::T_TRUE, new ScalarParselet($this));
         $this->registerPrefixParselet(TokenType::T_FALSE, new ScalarParselet($this));
         $this->registerPrefixParselet(TokenType::T_LPAREN, new GroupedExpressionParselet($this));

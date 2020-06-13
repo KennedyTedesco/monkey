@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Monkey\Parser\Parselet;
 
 use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\PrefixExpression;
+use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Parser\Parser;
 use Monkey\Parser\Precedence;
 
-final class PrefixOperatorParselet implements PrefixParselet
+final class UnaryOperatorParselet implements PrefixParselet
 {
     private Parser $parser;
 
@@ -27,6 +27,6 @@ final class PrefixOperatorParselet implements PrefixParselet
         /** @var Expression $right */
         $right = $this->parser->parseExpression(Precedence::PREFIX);
 
-        return new PrefixExpression($token, $token->literal(), $right);
+        return new UnaryExpression($token, $token->literal(), $right);
     }
 }
