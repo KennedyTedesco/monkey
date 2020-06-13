@@ -30,7 +30,7 @@ final class Evaluator
         }
 
         if ($node instanceof BooleanLiteral) {
-            return new BooleanObject($node->value());
+            return true === $node->value() ? BooleanObject::true() : BooleanObject::false();
         }
 
         return null;

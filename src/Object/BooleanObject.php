@@ -27,4 +27,16 @@ final class BooleanObject implements InternalObject
     {
         return $this->value ? 'true' : 'false';
     }
+
+    public static function true(): self
+    {
+        static $true;
+        return $true ??= new self(true);
+    }
+
+    public static function false(): self
+    {
+        static $false;
+        return $false ??= new self(false);
+    }
 }
