@@ -7,6 +7,8 @@ namespace Monkey\Object;
 final class BooleanObject implements InternalObject
 {
     private bool $value;
+    private static self $true;
+    private static self $false;
 
     public function __construct(bool $value)
     {
@@ -30,13 +32,11 @@ final class BooleanObject implements InternalObject
 
     public static function true(): self
     {
-        static $true;
-        return $true ??= new self(true);
+        return self::$true ??= new self(true);
     }
 
     public static function false(): self
     {
-        static $false;
-        return $false ??= new self(false);
+        return self::$false ??= new self(false);
     }
 }
