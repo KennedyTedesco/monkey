@@ -7,7 +7,9 @@ namespace Monkey\Evaluator;
 use Monkey\Ast\Node;
 use Monkey\Ast\Program;
 use Monkey\Ast\Statements\ExpressionStatement;
+use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
+use Monkey\Object\BooleanObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 
@@ -25,6 +27,10 @@ final class Evaluator
 
         if ($node instanceof IntegerLiteral) {
             return new IntegerObject($node->value());
+        }
+
+        if ($node instanceof BooleanLiteral) {
+            return new BooleanObject($node->value());
         }
 
         return null;
