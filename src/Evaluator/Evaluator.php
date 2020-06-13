@@ -13,14 +13,13 @@ use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
-use Monkey\Object\NullObject;
 
 final class Evaluator
 {
     public function eval(Node $node): ?InternalObject
     {
         if ($node instanceof Program) {
-            return $this->evalStatements($node);
+            return (new EvalStatements($this))($node);
         }
 
         if ($node instanceof ExpressionStatement) {
@@ -36,42 +35,9 @@ final class Evaluator
         }
 
         if ($node instanceof UnaryExpression) {
-            return $this->evalUnaryExpression($node->operator(), $this->eval($node->right()));
+            return (new EvalUnaryExpression())($node->operator(), $this->eval($node->right()));
         }
 
         return null;
-    }
-
-    private function evalStatements(Program $program): ?InternalObject
-    {
-        $result = null;
-        foreach ($program->statements() as $statement) {
-            $result = $this->eval($statement);
-        }
-
-        return $result;
-    }
-
-    private function evalUnaryExpression(string $operator, InternalObject $right): ?InternalObject
-    {
-        switch ($operator) {
-            case '!':
-                return $this->evalBangOperatorExpression($right);
-            default:
-                return null;
-        }
-    }
-
-    private function evalBangOperatorExpression(InternalObject $right): InternalObject
-    {
-        if ($right instanceof BooleanObject) {
-            return $right->value() ? BooleanObject::false() : BooleanObject::true();
-        }
-
-        if ($right instanceof NullObject) {
-            return BooleanObject::true();
-        }
-
-        return BooleanObject::false();
     }
 }
