@@ -6,6 +6,8 @@ namespace Monkey\Object;
 
 final class NullObject implements InternalObject
 {
+    private static self $null;
+
     public function value(): void
     {
     }
@@ -18,5 +20,10 @@ final class NullObject implements InternalObject
     public function inspect(): string
     {
         return 'null';
+    }
+
+    public static function null(): self
+    {
+        return self::$null ??= new self();
     }
 }
