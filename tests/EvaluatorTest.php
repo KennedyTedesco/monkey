@@ -8,16 +8,26 @@ use Monkey\Object\BooleanObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 
-test('eval integer expression', function (string $input, int $expected) {
+test('eval integer expressions', function (string $input, int $expected) {
     testIntegerObject(evalProgram($input), $expected);
 })->with([
+    ['5', 5],
     ['10', 10],
-    ['100', 100],
-    ['1000', 1000],
-    ['10000', 10000],
-    ['100000', 100000],
-    ['1000000', 1000000],
-    [(string) \PHP_INT_MAX, \PHP_INT_MAX],
+    ['(5 + 5) * 2', 20],
+    ['5 + 5 * 2', 15],
+    ['5 + 5 + 5 + 5 - 10', 10],
+    ['2 * 2 * 2 * 2 * 2', 32],
+    ['5 * 2 + 10', 20],
+    ['5 + 2 * 10', 25],
+    ['50 / 2 * 2 + 10', 60],
+    ['2 * (5 + 10)', 30],
+    ['3 * 3 * 3 + 10', 37],
+    ['3 * (3 * 3) + 10', 37],
+    ['(5 + 10 * 2 + 15 / 3) * 2 + -10', 50],
+    ['-50 + 100 + -50', 0],
+    ['20 + 2 * -10', 0],
+    ['-5', -5],
+    ['-10', -10],
 ]);
 
 test('eval boolean expression', function (string $input, bool $expected) {

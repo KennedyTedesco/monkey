@@ -6,6 +6,7 @@ namespace Monkey\Evaluator;
 
 use Monkey\Ast\Program;
 use Monkey\Object\InternalObject;
+use Monkey\Object\NullObject;
 
 final class EvalStatements
 {
@@ -16,9 +17,10 @@ final class EvalStatements
         $this->evaluator = $evaluator;
     }
 
-    public function __invoke(Program $program): ?InternalObject
+    public function __invoke(Program $program): InternalObject
     {
-        $result = null;
+        $result = NullObject::null();
+
         foreach ($program->statements() as $statement) {
             $result = $this->evaluator->eval($statement);
         }

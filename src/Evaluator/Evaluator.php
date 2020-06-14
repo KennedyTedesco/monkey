@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Evaluator;
 
+use Monkey\Ast\Expressions\BinaryExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Node;
 use Monkey\Ast\Program;
@@ -13,10 +14,11 @@ use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
+use Monkey\Object\NullObject;
 
 final class Evaluator
 {
-    public function eval(Node $node): ?InternalObject
+    public function eval(Node $node): InternalObject
     {
         if ($node instanceof Program) {
             return (new EvalStatements($this))($node);
@@ -38,6 +40,14 @@ final class Evaluator
             return (new EvalUnaryExpression())($node->operator(), $this->eval($node->right()));
         }
 
-        return null;
+        if ($node instanceof BinaryExpression) {
+            return (new EvalBinaryExpression())(
+                $node->operator(),
+                $this->eval($node->left()),
+                $this->eval($node->right())
+            );
+        }
+
+        return NullObject::null();
     }
 }
