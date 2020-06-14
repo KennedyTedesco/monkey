@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Repl;
 
+use Monkey\Evaluator\Environment;
 use Monkey\Evaluator\Evaluator;
 use Monkey\Lexer\Lexer;
 use Monkey\Parser\Parser;
@@ -33,6 +34,8 @@ final class Repl
 
         \safe\fwrite(\STDOUT, '> ');
 
+        $env = new Environment();
+
         while (true) {
             /** @var string $input */
             $input = \trim(\fgets(\STDIN));
@@ -52,7 +55,7 @@ final class Repl
                 break;
             }
 
-            $evaluated = (new Evaluator())->eval($program);
+            $evaluated = (new Evaluator($env))->eval($program);
             if (null !== $evaluated) {
                 \safe\fwrite(\STDOUT, $evaluated->inspect());
             }

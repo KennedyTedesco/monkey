@@ -6,6 +6,7 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Program;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
+use Monkey\Evaluator\Environment;
 use Monkey\Evaluator\Evaluator;
 use Monkey\Lexer\Lexer;
 use Monkey\Object\InternalObject;
@@ -41,5 +42,5 @@ function newProgram(string $input): Program
 
 function evalProgram(string $input): InternalObject
 {
-    return (new Evaluator())->eval(newProgram($input));
+    return (new Evaluator(new Environment()))->eval(newProgram($input));
 }

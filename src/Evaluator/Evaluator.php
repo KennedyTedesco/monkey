@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Monkey\Evaluator;
 
 use Monkey\Ast\Expressions\BinaryExpression;
+use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Node;
 use Monkey\Ast\Program;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
+use Monkey\Ast\Statements\LetStatement;
 use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
@@ -23,6 +25,13 @@ use Monkey\Object\ReturnValueObject;
 
 final class Evaluator
 {
+    private Environment $environment;
+
+    public function __construct(Environment $environment)
+    {
+        $this->environment = $environment;
+    }
+
     public function eval(Node $node): InternalObject
     {
         switch (true) {
@@ -58,6 +67,12 @@ final class Evaluator
                     $node->operator(), $this->eval($node->left()), $this->eval($node->right())
                 );
 
+            case $node instanceof LetStatement:
+                return (new EvalLetStatement($this))($node);
+
+            case $node instanceof IdentifierExpression:
+                return (new EvalIdentifier($this))($node);
+
             default:
                 return NullObject::instance();
         }
@@ -66,5 +81,10 @@ final class Evaluator
     private function isError(InternalObject $object): bool
     {
         return $object instanceof ErrorObject;
+    }
+
+    public function environment(): Environment
+    {
+        return $this->environment;
     }
 }

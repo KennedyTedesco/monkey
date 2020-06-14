@@ -29,7 +29,7 @@ test('let statements', function (string $input, string $name, $value) {
     assertSame($name, $letStatement->name()->tokenLiteral());
 
     /** @var IntegerLiteral|BooleanLiteral $valueExpression */
-    $valueExpression = $letStatement->valueExpression();
+    $valueExpression = $letStatement->value();
     assertSame($value, $valueExpression->value());
 })->with([
     ['let x = 5;', 'x', 5],

@@ -37,4 +37,9 @@ final class ErrorObject implements InternalObject
     {
         return new self('type mismatch: '.\implode(' ', $args));
     }
+
+    public static function identifierNotFound(string $name): self
+    {
+        return new self("identifier not found: {$name}");
+    }
 }

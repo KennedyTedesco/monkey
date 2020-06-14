@@ -10,17 +10,17 @@ use Monkey\Token\Token;
 
 final class LetStatement extends Statement
 {
-    private Expression $valueExpression;
+    private Expression $value;
     private IdentifierExpression $name;
 
     public function __construct(
         Token $token,
         IdentifierExpression $name,
-        Expression $valueExpression
+        Expression $value
     ) {
         $this->token = $token;
         $this->name = $name;
-        $this->valueExpression = $valueExpression;
+        $this->value = $value;
     }
 
     public function name(): IdentifierExpression
@@ -28,13 +28,13 @@ final class LetStatement extends Statement
         return $this->name;
     }
 
-    public function valueExpression(): Expression
+    public function value(): Expression
     {
-        return $this->valueExpression;
+        return $this->value;
     }
 
     public function toString(): string
     {
-        return "{$this->tokenLiteral()} {$this->name->tokenLiteral()} = {$this->valueExpression->toString()};";
+        return "{$this->tokenLiteral()} {$this->name->tokenLiteral()} = {$this->value->toString()};";
     }
 }
