@@ -30,13 +30,12 @@ final class BooleanObject implements InternalObject
         return $this->value ? 'true' : 'false';
     }
 
-    public static function true(): self
+    public static function from(bool $value): self
     {
-        return self::$true ??= new self(true);
-    }
+        if ($value) {
+            return self::$true ??= new self(true);
+        }
 
-    public static function false(): self
-    {
         return self::$false ??= new self(false);
     }
 }

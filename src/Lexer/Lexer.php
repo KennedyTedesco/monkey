@@ -133,12 +133,7 @@ final class Lexer
     private function makeTwoCharTokenAndAdvance(int $type): Token
     {
         $this->readChar();
-
-        $token = Token::from(
-            $type,
-            "{$this->prevChar->toScalar()}{$this->curChar->toScalar()}"
-        );
-
+        $token = Token::from($type, "{$this->prevChar->toScalar()}{$this->curChar->toScalar()}");
         $this->readChar();
 
         return $token;

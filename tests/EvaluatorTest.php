@@ -35,6 +35,17 @@ test('eval boolean expression', function (string $input, bool $expected) {
 })->with([
     ['true', true],
     ['false', false],
+    ['1 > 1', false],
+    ['1 < 1', false],
+    ['true == false', false],
+    ['true != false', true],
+    ['true == true', true],
+    ['1 >= 1', true],
+    ['1 <= 1', true],
+    ['1 == 1', true],
+    ['1 == 2', false],
+    ['1 != 1', false],
+    ['1 != 2', true],
 ]);
 
 test('eval bang operator', function (string $input, bool $expected) {

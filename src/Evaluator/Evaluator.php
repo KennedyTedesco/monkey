@@ -33,11 +33,14 @@ final class Evaluator
         }
 
         if ($node instanceof BooleanLiteral) {
-            return true === $node->value() ? BooleanObject::true() : BooleanObject::false();
+            return BooleanObject::from($node->value());
         }
 
         if ($node instanceof UnaryExpression) {
-            return (new EvalUnaryExpression())($node->operator(), $this->eval($node->right()));
+            return (new EvalUnaryExpression())(
+                $node->operator(),
+                $this->eval($node->right())
+            );
         }
 
         if ($node instanceof BinaryExpression) {

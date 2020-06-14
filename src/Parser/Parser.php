@@ -74,7 +74,10 @@ final class Parser
         $this->registerInfixParselet(TokenType::T_EQ, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_NOT_EQ, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_LT, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_LT_EQ, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_GT, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_GT_EQ, new BinaryOperatorParselet($this));
+
         $this->registerInfixParselet(TokenType::T_LPAREN, new CallExpressionParselet($this));
 
         $this->nextToken(2);

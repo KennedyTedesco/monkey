@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Evaluator;
 
+use Monkey\Object\BooleanObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
 
@@ -18,6 +19,13 @@ final class EvalBinaryExpression
             return (new EvalIntegerBinaryExpression())($operator, $left, $right);
         }
 
-        return NullObject::null();
+        switch ($operator) {
+            case '!=':
+                return BooleanObject::from($left->value() !== $right->value());
+            case '==':
+                return BooleanObject::from($left->value() === $right->value());
+            default:
+                return NullObject::null();
+        }
     }
 }
