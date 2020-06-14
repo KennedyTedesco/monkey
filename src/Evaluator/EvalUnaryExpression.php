@@ -11,11 +11,16 @@ final class EvalUnaryExpression
 {
     public function __invoke(string $operator, InternalObject $right): InternalObject
     {
-        switch ($operator) {
-            case '!':
+        switch (true) {
+            case $right instanceof ErrorObject:
+                return $right;
+
+            case '!' === $operator:
                 return (new EvalBangOperatorExpression())($right);
-            case '-':
+
+            case '-' === $operator:
                 return (new EvalMinusUnaryOperatorExpression())($right);
+
             default:
                 return ErrorObject::unknownOperator($operator, $right->type());
         }

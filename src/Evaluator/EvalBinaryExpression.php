@@ -16,6 +16,12 @@ final class EvalBinaryExpression
         InternalObject $right
     ): InternalObject {
         switch (true) {
+            case $left instanceof ErrorObject:
+                return $left;
+
+            case $right instanceof ErrorObject:
+                return $right;
+
             case $left->type() !== $right->type():
                 return ErrorObject::typeMismatch($left->type(), $operator, $right->type());
 

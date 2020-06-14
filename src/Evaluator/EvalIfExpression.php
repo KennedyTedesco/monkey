@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Evaluator;
 
 use Monkey\Ast\Expressions\IfExpression;
+use Monkey\Object\ErrorObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\ObjectUtils;
@@ -23,6 +24,9 @@ final class EvalIfExpression
         $condition = $this->evaluator->eval($expression->condition());
 
         switch (true) {
+            case $condition instanceof ErrorObject:
+                return $condition;
+
             case ObjectUtils::isTruthy($condition):
                 return $this->evaluator->eval($expression->consequence());
 

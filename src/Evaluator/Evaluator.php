@@ -15,6 +15,7 @@ use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Object\BooleanObject;
+use Monkey\Object\ErrorObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
@@ -44,12 +45,13 @@ final class Evaluator
                 return BooleanObject::from($node->value());
 
             case $node instanceof ReturnStatement:
-                return new ReturnValueObject($this->eval($node->returnValue()));
+                if ($this->isError($object = $this->eval($node->returnValue()))) {
+                    return $object;
+                }
+                return new ReturnValueObject($object);
 
             case $node instanceof UnaryExpression:
-                return (new EvalUnaryExpression())(
-                    $node->operator(), $this->eval($node->right())
-                );
+                return (new EvalUnaryExpression())($node->operator(), $this->eval($node->right()));
 
             case $node instanceof BinaryExpression:
                 return (new EvalBinaryExpression())(
@@ -59,5 +61,10 @@ final class Evaluator
             default:
                 return NullObject::instance();
         }
+    }
+
+    private function isError(InternalObject $object): bool
+    {
+        return $object instanceof ErrorObject;
     }
 }
