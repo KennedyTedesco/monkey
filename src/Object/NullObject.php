@@ -22,7 +22,7 @@ final class NullObject implements InternalObject
         return 'null';
     }
 
-    public static function null(): self
+    public static function instance(): self
     {
         return self::$null ??= new self();
     }

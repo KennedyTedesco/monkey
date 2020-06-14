@@ -17,7 +17,7 @@ final class EvalUnaryExpression
             case '-':
                 return (new EvalMinusUnaryOperatorExpression())($right);
             default:
-                return NullObject::null();
+                return NullObject::instance();
         }
     }
 }

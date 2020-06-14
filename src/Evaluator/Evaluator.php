@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Monkey\Evaluator;
 
 use Monkey\Ast\Expressions\BinaryExpression;
+use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Node;
 use Monkey\Ast\Program;
+use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
@@ -20,8 +22,12 @@ final class Evaluator
 {
     public function eval(Node $node): InternalObject
     {
-        if ($node instanceof Program) {
+        if ($node instanceof Program || $node instanceof BlockStatement) {
             return (new EvalStatements($this))($node);
+        }
+
+        if ($node instanceof IfExpression) {
+            return (new EvalIfExpression($this))($node);
         }
 
         if ($node instanceof ExpressionStatement) {
@@ -51,6 +57,6 @@ final class Evaluator
             );
         }
 
-        return NullObject::null();
+        return NullObject::instance();
     }
 }

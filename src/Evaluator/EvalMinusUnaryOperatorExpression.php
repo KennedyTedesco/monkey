@@ -13,7 +13,7 @@ final class EvalMinusUnaryOperatorExpression
     public function __invoke(InternalObject $right): InternalObject
     {
         if (InternalObject::INTEGER_OBJ !== $right->type()) {
-            return NullObject::null();
+            return NullObject::instance();
         }
 
         return new IntegerObject($right->value() * (-1));

@@ -38,7 +38,7 @@ final class EvalIntegerBinaryExpression
             case '==':
                 return BooleanObject::from($left->value() === $right->value());
             default:
-                return NullObject::null();
+                return NullObject::instance();
         }
     }
 }

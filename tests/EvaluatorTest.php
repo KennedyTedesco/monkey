@@ -7,6 +7,7 @@ namespace Tests;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
+use Monkey\Object\NullObject;
 
 test('eval integer expressions', function (string $input, int $expected) {
     testIntegerObject(evalProgram($input), $expected);
@@ -63,11 +64,33 @@ test('eval bang operator', function (string $input, bool $expected) {
     ['!!true', true],
 ]);
 
+test('if else expressions', function (string $input, $expected) {
+    if (\is_int($expected)) {
+        testIntegerObject(evalProgram($input), $expected);
+    } else {
+        testNullObject(evalProgram($input), $expected);
+    }
+})->with([
+    ['if (false) { 10 }', NullObject::instance()],
+    ['if (0) { 10 }', NullObject::instance()],
+    ['if (true == false) { 10 }', NullObject::instance()],
+    ['if (true) { 10 }', 10],
+    ['if (1) { 10 }', 10],
+    ['if (1 < 2) { 10 }', 10],
+    ['if (1 > 2) { 10 } else { 20 }', 20],
+    ['if (1 < 2) { 10 } else { 20 }', 10],
+]);
+
 function testIntegerObject(InternalObject $object, int $expected)
 {
     assertInstanceOf(IntegerObject::class, $object);
     assertSame(InternalObject::INTEGER_OBJ, $object->type());
     assertSame($expected, $object->value());
+}
+
+function testNullObject(InternalObject $object, NullObject $expected)
+{
+    assertSame($expected, $object);
 }
 
 function testBooleanObject(InternalObject $object, bool $expected)

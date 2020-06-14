@@ -6,7 +6,7 @@ namespace Monkey\Ast;
 
 use Monkey\Ast\Statements\Statement;
 
-final class Program extends Node
+final class Program extends Node implements HasStatements
 {
     /** @var array<Statement> */
     private array $statements = [];

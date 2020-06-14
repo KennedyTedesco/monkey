@@ -6,9 +6,10 @@ namespace Monkey\Ast;
 
 namespace Monkey\Ast\Statements;
 
+use Monkey\Ast\HasStatements;
 use Monkey\Token\Token;
 
-final class BlockStatement extends Statement
+final class BlockStatement extends Statement implements HasStatements
 {
     /** @var array<Statement> */
     private array $statements;
