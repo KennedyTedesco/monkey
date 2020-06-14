@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Monkey\Evaluator;
 
 use Monkey\Object\BooleanObject;
+use Monkey\Object\ErrorObject;
 use Monkey\Object\InternalObject;
-use Monkey\Object\NullObject;
 
 final class EvalBinaryExpression
 {
@@ -15,7 +15,11 @@ final class EvalBinaryExpression
         InternalObject $left,
         InternalObject $right
     ): InternalObject {
-        if (InternalObject::INTEGER_OBJ === $left->type() && InternalObject::INTEGER_OBJ === $right->type()) {
+        if ($left->type() !== $right->type()) {
+            return ErrorObject::typeMismatch($left->type(), $operator, $right->type());
+        }
+
+        if (InternalObject::INTEGER_OBJ === $left->type()) {
             return (new EvalIntegerBinaryExpression())($operator, $left, $right);
         }
 
@@ -25,7 +29,7 @@ final class EvalBinaryExpression
             case '==':
                 return BooleanObject::from($left->value() === $right->value());
             default:
-                return NullObject::instance();
+                return ErrorObject::unknownOperator($left->type(), $operator, $right->type());
         }
     }
 }

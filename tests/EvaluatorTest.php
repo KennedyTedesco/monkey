@@ -5,9 +5,29 @@ declare(strict_types=1);
 namespace Tests;
 
 use Monkey\Object\BooleanObject;
+use Monkey\Object\ErrorObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
+
+function testIntegerObject(InternalObject $object, int $expected)
+{
+    assertInstanceOf(IntegerObject::class, $object);
+    assertSame(InternalObject::INTEGER_OBJ, $object->type());
+    assertSame($expected, $object->value());
+}
+
+function testNullObject(InternalObject $object, NullObject $expected)
+{
+    assertSame($expected, $object);
+}
+
+function testBooleanObject(InternalObject $object, bool $expected)
+{
+    assertInstanceOf(BooleanObject::class, $object);
+    assertSame(InternalObject::BOOLEAN_OBJ, $object->type());
+    assertSame($expected, $object->value());
+}
 
 test('eval integer expressions', function (string $input, int $expected) {
     testIntegerObject(evalProgram($input), $expected);
@@ -93,21 +113,17 @@ test('eval return statements', function (string $input, $expected) {
     ['if (10 > 1) { if (10 > 1) { return 10; } return 1; }', 10],
 ]);
 
-function testIntegerObject(InternalObject $object, int $expected)
-{
-    assertInstanceOf(IntegerObject::class, $object);
-    assertSame(InternalObject::INTEGER_OBJ, $object->type());
+test('error handling', function (string $input, string $expected) {
+    /** @var ErrorObject $object */
+    $object = evalProgram($input);
+    assertInstanceOf(ErrorObject::class, $object);
     assertSame($expected, $object->value());
-}
-
-function testNullObject(InternalObject $object, NullObject $expected)
-{
-    assertSame($expected, $object);
-}
-
-function testBooleanObject(InternalObject $object, bool $expected)
-{
-    assertInstanceOf(BooleanObject::class, $object);
-    assertSame(InternalObject::BOOLEAN_OBJ, $object->type());
-    assertSame($expected, $object->value());
-}
+})->with([
+    ['5 + true;', 'type mismatch: INTEGER + BOOLEAN'],
+    ['5 + true; 5;', 'type mismatch: INTEGER + BOOLEAN'],
+    ['-true', 'unknown operator: -BOOLEAN'],
+    ['true + false', 'unknown operator: BOOLEAN + BOOLEAN'],
+    ['5; true + false; 5', 'unknown operator: BOOLEAN + BOOLEAN'],
+    ['if (10 > 1) { true + false; }', 'unknown operator: BOOLEAN + BOOLEAN'],
+    ['if (10 > 1) { if (10 > 1) { return true + false; } return 1; }', 'unknown operator: BOOLEAN + BOOLEAN'],
+]);

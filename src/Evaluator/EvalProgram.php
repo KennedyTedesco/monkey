@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Evaluator;
 
 use Monkey\Ast\Program;
+use Monkey\Object\ErrorObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\ReturnValueObject;
@@ -25,8 +26,11 @@ final class EvalProgram
         foreach ($node->statements() as $statement) {
             $result = $this->evaluator->eval($statement);
 
-            if ($result instanceof ReturnValueObject) {
-                return $result->value();
+            switch (true) {
+                case $result instanceof ReturnValueObject:
+                    return $result->value();
+                case $result instanceof ErrorObject:
+                    return $result;
             }
         }
 

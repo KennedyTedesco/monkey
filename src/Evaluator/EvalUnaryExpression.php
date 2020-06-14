@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Monkey\Evaluator;
 
+use Monkey\Object\ErrorObject;
 use Monkey\Object\InternalObject;
-use Monkey\Object\NullObject;
 
 final class EvalUnaryExpression
 {
@@ -17,7 +17,7 @@ final class EvalUnaryExpression
             case '-':
                 return (new EvalMinusUnaryOperatorExpression())($right);
             default:
-                return NullObject::instance();
+                return ErrorObject::unknownOperator($operator, $right->type());
         }
     }
 }

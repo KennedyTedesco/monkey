@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Evaluator;
 
 use Monkey\Ast\Statements\BlockStatement;
+use Monkey\Object\ErrorObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\ReturnValueObject;
@@ -25,8 +26,10 @@ final class EvalBlockStatement
         foreach ($node->statements() as $statement) {
             $result = $this->evaluator->eval($statement);
 
-            if ($result instanceof ReturnValueObject) {
-                return $result;
+            switch (true) {
+                case $result instanceof ErrorObject:
+                case $result instanceof ReturnValueObject:
+                    return $result;
             }
         }
 
