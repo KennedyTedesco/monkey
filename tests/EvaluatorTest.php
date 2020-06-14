@@ -79,6 +79,7 @@ test('if else expressions', function (string $input, $expected) {
     ['if (1 < 2) { 10 }', 10],
     ['if (1 > 2) { 10 } else { 20 }', 20],
     ['if (1 < 2) { 10 } else { 20 }', 10],
+    ['if (5 * 5 + 10 > 34) { 99 } else { 100 }', 99],
 ]);
 
 function testIntegerObject(InternalObject $object, int $expected)
