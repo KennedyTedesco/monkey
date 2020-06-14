@@ -12,14 +12,15 @@ final class EvalBangOperatorExpression
 {
     public function __invoke(InternalObject $right): InternalObject
     {
-        if ($right instanceof BooleanObject) {
-            return BooleanObject::from(!$right->value());
-        }
+        switch (true) {
+            case $right instanceof BooleanObject:
+                return BooleanObject::from(!$right->value());
 
-        if ($right instanceof NullObject) {
-            return BooleanObject::from(true);
-        }
+            case $right instanceof NullObject:
+                return BooleanObject::from(true);
 
-        return BooleanObject::from(false);
+            default:
+                return BooleanObject::from(false);
+        }
     }
 }

@@ -24,49 +24,40 @@ final class Evaluator
 {
     public function eval(Node $node): InternalObject
     {
-        if ($node instanceof Program) {
-            return (new EvalProgram($this))($node);
-        }
+        switch (true) {
+            case $node instanceof Program:
+                return (new EvalProgram($this))($node);
 
-        if ($node instanceof BlockStatement) {
-            return (new EvalBlockStatement($this))($node);
-        }
+            case $node instanceof BlockStatement:
+                return (new EvalBlockStatement($this))($node);
 
-        if ($node instanceof IfExpression) {
-            return (new EvalIfExpression($this))($node);
-        }
+            case $node instanceof IfExpression:
+                return (new EvalIfExpression($this))($node);
 
-        if ($node instanceof ExpressionStatement) {
-            return $this->eval($node->expression());
-        }
+            case $node instanceof ExpressionStatement:
+                return $this->eval($node->expression());
 
-        if ($node instanceof IntegerLiteral) {
-            return new IntegerObject($node->value());
-        }
+            case $node instanceof IntegerLiteral:
+                return new IntegerObject($node->value());
 
-        if ($node instanceof BooleanLiteral) {
-            return BooleanObject::from($node->value());
-        }
+            case $node instanceof BooleanLiteral:
+                return BooleanObject::from($node->value());
 
-        if ($node instanceof ReturnStatement) {
-            return new ReturnValueObject($this->eval($node->returnValue()));
-        }
+            case $node instanceof ReturnStatement:
+                return new ReturnValueObject($this->eval($node->returnValue()));
 
-        if ($node instanceof UnaryExpression) {
-            return (new EvalUnaryExpression())(
-                $node->operator(),
-                $this->eval($node->right())
-            );
-        }
+            case $node instanceof UnaryExpression:
+                return (new EvalUnaryExpression())(
+                    $node->operator(), $this->eval($node->right())
+                );
 
-        if ($node instanceof BinaryExpression) {
-            return (new EvalBinaryExpression())(
-                $node->operator(),
-                $this->eval($node->left()),
-                $this->eval($node->right())
-            );
-        }
+            case $node instanceof BinaryExpression:
+                return (new EvalBinaryExpression())(
+                    $node->operator(), $this->eval($node->left()), $this->eval($node->right())
+                );
 
-        return NullObject::instance();
+            default:
+                return NullObject::instance();
+        }
     }
 }

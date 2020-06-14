@@ -22,14 +22,15 @@ final class EvalIfExpression
     {
         $condition = $this->evaluator->eval($expression->condition());
 
-        if (ObjectUtils::isTruthy($condition)) {
-            return $this->evaluator->eval($expression->consequence());
-        }
+        switch (true) {
+            case ObjectUtils::isTruthy($condition):
+                return $this->evaluator->eval($expression->consequence());
 
-        if (null !== $expression->alternative()) {
-            return $this->evaluator->eval($expression->alternative());
-        }
+            case null !== $expression->alternative():
+                return $this->evaluator->eval($expression->alternative());
 
-        return NullObject::instance();
+            default:
+                return NullObject::instance();
+        }
     }
 }

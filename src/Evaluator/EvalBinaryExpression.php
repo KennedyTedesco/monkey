@@ -15,19 +15,19 @@ final class EvalBinaryExpression
         InternalObject $left,
         InternalObject $right
     ): InternalObject {
-        if ($left->type() !== $right->type()) {
-            return ErrorObject::typeMismatch($left->type(), $operator, $right->type());
-        }
+        switch (true) {
+            case $left->type() !== $right->type():
+                return ErrorObject::typeMismatch($left->type(), $operator, $right->type());
 
-        if (InternalObject::INTEGER_OBJ === $left->type()) {
-            return (new EvalIntegerBinaryExpression())($operator, $left, $right);
-        }
+            case InternalObject::INTEGER_OBJ === $left->type():
+                return (new EvalIntegerBinaryExpression())($operator, $left, $right);
 
-        switch ($operator) {
-            case '!=':
-                return BooleanObject::from($left->value() !== $right->value());
-            case '==':
+            case '==' === $operator:
                 return BooleanObject::from($left->value() === $right->value());
+
+            case '!=' === $operator:
+                return BooleanObject::from($left->value() !== $right->value());
+
             default:
                 return ErrorObject::unknownOperator($left->type(), $operator, $right->type());
         }
