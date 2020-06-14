@@ -48,7 +48,7 @@ test('return statement', function (string $input, $value) {
     assertSame('return', $returnStatement->tokenLiteral());
 
     /** @var IntegerLiteral|BooleanLiteral $valueExpression */
-    $valueExpression = $returnStatement->valueExpression();
+    $valueExpression = $returnStatement->returnValue();
     assertSame($value, $valueExpression->value());
 })->with([
     ['return 10;', 10],

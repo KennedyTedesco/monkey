@@ -11,19 +11,25 @@ use Monkey\Ast\Node;
 use Monkey\Ast\Program;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
+use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
+use Monkey\Object\ReturnValueObject;
 
 final class Evaluator
 {
     public function eval(Node $node): InternalObject
     {
-        if ($node instanceof Program || $node instanceof BlockStatement) {
-            return (new EvalStatements($this))($node);
+        if ($node instanceof Program) {
+            return (new EvalProgram($this))($node);
+        }
+
+        if ($node instanceof BlockStatement) {
+            return (new EvalBlockStatement($this))($node);
         }
 
         if ($node instanceof IfExpression) {
@@ -40,6 +46,10 @@ final class Evaluator
 
         if ($node instanceof BooleanLiteral) {
             return BooleanObject::from($node->value());
+        }
+
+        if ($node instanceof ReturnStatement) {
+            return new ReturnValueObject($this->eval($node->returnValue()));
         }
 
         if ($node instanceof UnaryExpression) {

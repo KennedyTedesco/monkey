@@ -64,7 +64,7 @@ test('eval bang operator', function (string $input, bool $expected) {
     ['!!true', true],
 ]);
 
-test('if else expressions', function (string $input, $expected) {
+test('eval if else expressions', function (string $input, $expected) {
     if (\is_int($expected)) {
         testIntegerObject(evalProgram($input), $expected);
     } else {
@@ -80,6 +80,17 @@ test('if else expressions', function (string $input, $expected) {
     ['if (1 > 2) { 10 } else { 20 }', 20],
     ['if (1 < 2) { 10 } else { 20 }', 10],
     ['if (5 * 5 + 10 > 34) { 99 } else { 100 }', 99],
+]);
+
+test('eval return statements', function (string $input, $expected) {
+    testIntegerObject(evalProgram($input), $expected);
+})->with([
+    ['return 10;', 10],
+    ['return 5;', 5],
+    ['return 10; 9;', 10],
+    ['return 2 * 5; 9;', 10],
+    ['9; return 2 * 5; 9;', 10],
+    ['if (10 > 1) { if (10 > 1) { return 10; } return 1; }', 10],
 ]);
 
 function testIntegerObject(InternalObject $object, int $expected)
