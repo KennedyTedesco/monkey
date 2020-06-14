@@ -27,8 +27,8 @@ final class Repl
         ,--`,--'\/\    /
          '-- "--'  '--'
         
-        @ Monkey Programming Language @
-        --------------------------------\n\n
+        # Monkey Programming Language #
+        -------------------------------\n\n
         TEXT);
 
         \safe\fwrite(\STDOUT, '> ');
