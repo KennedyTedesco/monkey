@@ -12,7 +12,7 @@ final class EvalMinusUnaryOperatorExpression
 {
     public function __invoke(InternalObject $right): InternalObject
     {
-        if (InternalObject::INTEGER_OBJ !== $right->type()) {
+        if (!$right instanceof IntegerObject) {
             return ErrorObject::unknownOperator("-{$right->type()}");
         }
 
