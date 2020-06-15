@@ -82,7 +82,10 @@ final class TokenType
 
     public static function name(int $type): string
     {
-        $name = \array_search($type, (new ReflectionClass(self::class))->getConstants(), true);
+        static $constants;
+        $name = \array_search(
+            $type, $constants ??= (new ReflectionClass(self::class))->getConstants(), true
+        );
 
         return \is_string($name) ? $name : 'T_ILLEGAL';
     }
