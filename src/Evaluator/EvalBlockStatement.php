@@ -12,10 +12,14 @@ use Monkey\Object\ReturnValueObject;
 
 final class EvalBlockStatement
 {
+    private Environment $env;
     private Evaluator $evaluator;
 
-    public function __construct(Evaluator $evaluator)
-    {
+    public function __construct(
+        Evaluator $evaluator,
+        Environment $env
+    ) {
+        $this->env = $env;
         $this->evaluator = $evaluator;
     }
 
@@ -24,7 +28,7 @@ final class EvalBlockStatement
         $result = NullObject::instance();
 
         foreach ($node->statements() as $statement) {
-            $result = $this->evaluator->eval($statement);
+            $result = $this->evaluator->eval($statement, $this->env);
 
             switch (true) {
                 case $result instanceof ErrorObject:

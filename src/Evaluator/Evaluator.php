@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Monkey\Evaluator;
 
 use Monkey\Ast\Expressions\BinaryExpression;
+use Monkey\Ast\Expressions\CallExpression;
+use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
@@ -15,9 +17,11 @@ use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\BooleanLiteral;
+use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
+use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
@@ -25,27 +29,23 @@ use Monkey\Object\ReturnValueObject;
 
 final class Evaluator
 {
-    private Environment $environment;
-
-    public function __construct(Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
-    public function eval(Node $node): InternalObject
+    public function eval(Node $node, Environment $env): InternalObject
     {
         switch (true) {
             case $node instanceof Program:
-                return (new EvalProgram($this))($node);
+                return (new EvalProgram($this, $env))($node);
 
             case $node instanceof BlockStatement:
-                return (new EvalBlockStatement($this))($node);
+                return (new EvalBlockStatement($this, $env))($node);
 
             case $node instanceof IfExpression:
-                return (new EvalIfExpression($this))($node);
+                return (new EvalIfExpression($this, $env))($node);
+
+            case $node instanceof FunctionLiteral:
+                return new FunctionObject($node->parameters(), $node->body(), $env);
 
             case $node instanceof ExpressionStatement:
-                return $this->eval($node->expression());
+                return $this->eval($node->expression(), $env);
 
             case $node instanceof IntegerLiteral:
                 return new IntegerObject($node->value());
@@ -54,37 +54,103 @@ final class Evaluator
                 return BooleanObject::from($node->value());
 
             case $node instanceof ReturnStatement:
-                if ($this->isError($object = $this->eval($node->returnValue()))) {
+                if ($this->isError($object = $this->eval($node->returnValue(), $env))) {
                     return $object;
                 }
                 return new ReturnValueObject($object);
 
+            case $node instanceof CallExpression:
+                if ($this->isError($function = $this->eval($node->function(), $env))) {
+                    return $function;
+                }
+                $args = $this->evalExpressions($node->arguments(), $env);
+                if (1 === $args && $this->isError($args[0])) {
+                    return $args[0];
+                }
+                return $this->applyFunction($function, $args);
+
             case $node instanceof UnaryExpression:
-                return (new EvalUnaryExpression())($node->operator(), $this->eval($node->right()));
+                return (new EvalUnaryExpression())(
+                    $node->operator(),
+                    $this->eval($node->right(), $env)
+                );
 
             case $node instanceof BinaryExpression:
                 return (new EvalBinaryExpression())(
-                    $node->operator(), $this->eval($node->left()), $this->eval($node->right())
+                    $node->operator(),
+                    $this->eval($node->left(), $env),
+                    $this->eval($node->right(), $env)
                 );
 
             case $node instanceof LetStatement:
-                return (new EvalLetStatement($this))($node);
+                return (new EvalLetStatement($this, $env))($node);
 
             case $node instanceof IdentifierExpression:
-                return (new EvalIdentifier($this))($node);
+                return (new EvalIdentifier($env))($node);
 
             default:
                 return NullObject::instance();
         }
     }
 
+    /**
+     * @param array<Expression> $expressions
+     *
+     * @return array<InternalObject>
+     */
+    public function evalExpressions(array $expressions, Environment $env): array
+    {
+        $result = [];
+        /** @var Expression $expression */
+        foreach ($expressions as $expression) {
+            $object = $this->eval($expression, $env);
+            if ($this->isError($object)) {
+                return [$object];
+            }
+            $result[] = $object;
+        }
+
+        return $result;
+    }
+
+    private function applyFunction(InternalObject $function, array $args): InternalObject
+    {
+        if (!$function instanceof FunctionObject) {
+            return ErrorObject::notAFunction($function->type());
+        }
+
+        $extendedEnv = $this->extendFunctionEnv($function, $args);
+
+        return $this->unwrapReturnValue(
+            $this->eval($function->body(), $extendedEnv)
+        );
+    }
+
+    /**
+     * @param array<InternalObject> $args
+     */
+    private function extendFunctionEnv(FunctionObject $function, array $args): Environment
+    {
+        $env = Environment::newEnclosed($function->environment());
+        /** @var IdentifierExpression $parameter */
+        foreach ($function->parameters() as $index => $parameter) {
+            $env->set($parameter->value(), $args[$index]);
+        }
+
+        return $env;
+    }
+
+    private function unwrapReturnValue(InternalObject $object): InternalObject
+    {
+        if ($object instanceof ReturnValueObject) {
+            return $object->value();
+        }
+
+        return $object;
+    }
+
     private function isError(InternalObject $object): bool
     {
         return $object instanceof ErrorObject;
-    }
-
-    public function environment(): Environment
-    {
-        return $this->environment;
     }
 }

@@ -24,9 +24,4 @@ interface InternalObject
     public function type(): string;
 
     public function inspect(): string;
-
-    /**
-     * @return mixed
-     */
-    public function value();
 }

@@ -42,5 +42,5 @@ function newProgram(string $input): Program
 
 function evalProgram(string $input): InternalObject
 {
-    return (new Evaluator(new Environment()))->eval(newProgram($input));
+    return (new Evaluator())->eval(newProgram($input), Environment::new());
 }

@@ -10,19 +10,17 @@ use Monkey\Object\InternalObject;
 
 final class EvalIdentifier
 {
-    private Evaluator $evaluator;
+    private Environment $env;
 
-    public function __construct(Evaluator $evaluator)
+    public function __construct(Environment $env)
     {
-        $this->evaluator = $evaluator;
+        $this->env = $env;
     }
 
     public function __invoke(IdentifierExpression $node): InternalObject
     {
-        $env = $this->evaluator->environment();
-
-        if ($env->contains($node->value())) {
-            return $env->get($node->value());
+        if ($this->env->contains($node->value())) {
+            return $this->env->get($node->value());
         }
 
         return ErrorObject::identifierNotFound($node->value());

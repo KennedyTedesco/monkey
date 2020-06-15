@@ -28,6 +28,11 @@ final class ErrorObject implements InternalObject
         return "ERROR: {$this->value}";
     }
 
+    public static function notAFunction(string $name): self
+    {
+        return new self("not a function: {$name}");
+    }
+
     public static function unknownOperator(string ...$args): self
     {
         return new self('unknown operator: '.\implode(' ', $args));

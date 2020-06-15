@@ -34,7 +34,7 @@ final class Repl
 
         \safe\fwrite(\STDOUT, '> ');
 
-        $env = new Environment();
+        $env = Environment::new();
 
         while (true) {
             /** @var string $input */

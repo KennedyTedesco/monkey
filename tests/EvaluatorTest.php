@@ -6,6 +6,7 @@ namespace Tests;
 
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
+use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
@@ -135,4 +136,26 @@ test('eval let statements', function (string $input, int $expected) {
     ['let a = 5;', 5],
     ['let a = 5; a;', 5],
     ['let a = 5 * 5; a;', 25],
+]);
+
+test('function object', function () {
+    /** @var FunctionObject $object */
+    $object = evalProgram('fn(x) { x + 2; };');
+
+    assertInstanceOf(FunctionObject::class, $object);
+    assertCount(1, $object->parameters());
+
+    assertSame('x', $object->parameters()[0]->toString());
+    assertSame('(x + 2)', $object->body()->toString());
+});
+
+test('eval function', function (string $input, int $expected) {
+    testIntegerObject(evalProgram($input), $expected);
+})->with([
+    ['let identity = fn(x) { x; }; identity(5);', 5],
+    ['let identity = fn(x) { return x; }; identity(5);', 5],
+    ['let double = fn(x) { x * 2; }; double(5);', 10],
+    ['let add = fn(x, y) { x + y; }; add(5, 5);', 10],
+    ['let add = fn(x, y) { x + y; }; add(5 + 5, add(5, 5));', 20],
+    ['fn(x) { x; }(5)', 5],
 ]);
