@@ -159,3 +159,18 @@ test('eval function', function (string $input, int $expected) {
     ['let add = fn(x, y) { x + y; }; add(5 + 5, add(5, 5));', 20],
     ['fn(x) { x; }(5)', 5],
 ]);
+
+test('eval closure', function () {
+    $input = <<<MONKEY
+        let newAdder = fn(x) {
+          fn(y) { 
+            x + y 
+          };
+        };
+
+        let addTwo = newAdder(2);
+        addTwo(2);
+    MONKEY;
+
+    testIntegerObject(evalProgram($input), 4);
+});

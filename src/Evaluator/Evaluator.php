@@ -60,7 +60,9 @@ final class Evaluator
                 return new ReturnValueObject($object);
 
             case $node instanceof CallExpression:
-                if ($this->isError($function = $this->eval($node->function(), $env))) {
+                /** @var FunctionObject $function */
+                $function = $this->eval($node->function(), $env);
+                if ($this->isError($function)) {
                     return $function;
                 }
                 $args = $this->evalExpressions($node->arguments(), $env);

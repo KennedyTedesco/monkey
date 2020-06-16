@@ -40,6 +40,6 @@ final class Environment
 
     public function contains(string $name): bool
     {
-        return isset($this->store[$name]);
+        return isset($this->store[$name]) || ($this->outer && $this->outer->contains($name));
     }
 }
