@@ -33,50 +33,39 @@ final class Lexer
     {
         $this->skipWhitespaces();
 
-        if ($this->curChar->is(self::EOF)) {
-            return Token::from(TokenType::T_EOF, self::EOF);
-        }
-
-        if ($this->curChar->is('"')) {
-            return $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString());
-        }
-
         if (TokenType::isSingleCharToken($this->curChar->toScalar())) {
-            if ($this->curChar->is('=') && $this->peekChar->is('=')) {
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ);
+            switch (true) {
+                case $this->curChar->is('=') && $this->peekChar->is('='):
+                    return $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ);
+                case $this->curChar->is('!') && $this->peekChar->is('='):
+                    return $this->makeTwoCharTokenAndAdvance(TokenType::T_NOT_EQ);
+                case $this->curChar->is('>') && $this->peekChar->is('='):
+                    return $this->makeTwoCharTokenAndAdvance(TokenType::T_GT_EQ);
+                case $this->curChar->is('<') && $this->peekChar->is('='):
+                    return $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ);
+                default:
+                    return $this->makeTokenAndAdvance(
+                        TokenType::lookupToken($this->curChar->toScalar()),
+                        $this->curChar->toScalar()
+                    );
             }
-
-            if ($this->curChar->is('!') && $this->peekChar->is('=')) {
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_NOT_EQ);
-            }
-
-            if ($this->curChar->is('>') && $this->peekChar->is('=')) {
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_GT_EQ);
-            }
-
-            if ($this->curChar->is('<') && $this->peekChar->is('=')) {
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ);
-            }
-
-            /** @var int $tokenType */
-            $tokenType = TokenType::lookupToken($this->curChar->toScalar());
-
-            return $this->makeTokenAndAdvance($tokenType, $this->curChar->toScalar());
         }
 
-        if ($this->curChar->isLetter()) {
-            $identifier = $this->readIdentifier();
-            return Token::from(
-                TokenType::lookupToken($identifier) ?? TokenType::T_IDENT,
-                $identifier
-            );
+        switch (true) {
+            case $this->curChar->is('"'):
+                return $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString());
+            case $this->curChar->isLetter():
+                return Token::from(
+                    TokenType::lookupToken($identifier = $this->readIdentifier()) ?? TokenType::T_IDENT,
+                    $identifier
+                );
+            case $this->curChar->isDigit():
+                return Token::from(TokenType::T_INT, $this->readNumber());
+            case $this->curChar->is(self::EOF):
+                return Token::from(TokenType::T_EOF, self::EOF);
+            default:
+                return $this->makeTokenAndAdvance(TokenType::T_ILLEGAL, $this->curChar->toScalar());
         }
-
-        if ($this->curChar->isDigit()) {
-            return Token::from(TokenType::T_INT, $this->readNumber());
-        }
-
-        return $this->makeTokenAndAdvance(TokenType::T_ILLEGAL, $this->curChar->toScalar());
     }
 
     private function readIdentifier(): string
