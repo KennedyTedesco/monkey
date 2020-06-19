@@ -16,6 +16,7 @@ use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
+use Monkey\Ast\Types\StringLiteral;
 
 test('let statements', function (string $input, string $name, $value) {
     $program = newProgram($input);
@@ -91,6 +92,23 @@ test('integer literal expression', function () {
 
     assertSame(10, $integer->value());
     assertSame('10', $integer->tokenLiteral());
+});
+
+test('string literal expression', function () {
+    $input = '"foobar";';
+
+    $program = newProgram($input);
+    assertSame(1, $program->count());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var StringLiteral $integer */
+    $integer = $statement->expression();
+
+    assertSame('foobar', $integer->value());
 });
 
 test('prefix expression', function (string $input, string $operator, $value) {

@@ -7,6 +7,7 @@ namespace Monkey\Parser\Parselet;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
+use Monkey\Ast\Types\StringLiteral;
 use Monkey\Parser\Parser;
 use Monkey\Token\TokenType;
 
@@ -23,12 +24,13 @@ final class ScalarParselet implements PrefixParselet
     {
         $token = $this->parser->curToken;
 
-        if ($token->is(TokenType::T_INT)) {
-            return new IntegerLiteral($token, (int) $token->literal());
-        }
-
-        if ($token->is(TokenType::T_FALSE, TokenType::T_TRUE)) {
-            return new BooleanLiteral($token, $token->is(TokenType::T_TRUE));
+        switch (true) {
+            case $token->is(TokenType::T_INT):
+                return new IntegerLiteral($token, (int) $token->literal());
+            case $token->is(TokenType::T_FALSE, TokenType::T_TRUE):
+                return new BooleanLiteral($token, $token->is(TokenType::T_TRUE));
+            case $token->is(TokenType::T_STRING):
+                return new StringLiteral($token, $token->literal());
         }
     }
 }

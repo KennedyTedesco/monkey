@@ -66,6 +66,7 @@ final class Parser
         $this->registerPrefixParselet(TokenType::T_LPAREN, new GroupedExpressionParselet($this));
         $this->registerPrefixParselet(TokenType::T_IF, new IfExpressionParselet($this));
         $this->registerPrefixParselet(TokenType::T_FN, new FunctionLiteralParselet($this));
+        $this->registerPrefixParselet(TokenType::T_STRING, new ScalarParselet($this));
 
         $this->registerInfixParselet(TokenType::T_PLUS, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_MINUS, new BinaryOperatorParselet($this));
