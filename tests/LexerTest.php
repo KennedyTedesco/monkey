@@ -31,6 +31,8 @@ test('basic tokens', function () {
 
         10 >= 2;
         10 <= 2;
+        "foobar";
+        "foo bar";
 MONKEY;
 
     $tokens = [
@@ -139,6 +141,13 @@ MONKEY;
         [TokenType::T_INT, '10'],
         [TokenType::T_LT_EQ, '<='],
         [TokenType::T_INT, '2'],
+        [TokenType::T_SEMICOLON, ';'],
+
+        // "foobar";
+        // "foo bar";
+        [TokenType::T_STRING, 'foobar'],
+        [TokenType::T_SEMICOLON, ';'],
+        [TokenType::T_STRING, 'foo bar'],
         [TokenType::T_SEMICOLON, ';'],
 
         [TokenType::T_EOF, Lexer::EOF],

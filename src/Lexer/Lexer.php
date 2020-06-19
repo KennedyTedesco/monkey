@@ -37,6 +37,10 @@ final class Lexer
             return Token::from(TokenType::T_EOF, self::EOF);
         }
 
+        if ($this->curChar->is('"')) {
+            return $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString());
+        }
+
         if (TokenType::isSingleCharToken($this->curChar->toScalar())) {
             if ($this->curChar->is('=') && $this->peekChar->is('=')) {
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ);
@@ -107,6 +111,18 @@ final class Lexer
         $position = $this->position;
         while ($this->curChar->isDigit()) {
             $this->readChar();
+        }
+        return $this->input->substr($position, $this->position - $position);
+    }
+
+    private function readString(): string
+    {
+        $position = $this->position + 1;
+        while (true) {
+            $this->readChar();
+            if ($this->curChar->is('"') || $this->isEnd()) {
+                break;
+            }
         }
         return $this->input->substr($position, $this->position - $position);
     }

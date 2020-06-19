@@ -14,6 +14,7 @@ final class TokenType
     // Identifiers and literals
     public const T_IDENT = 0x100;
     public const T_INT = 0x101;
+    public const T_STRING = 0x102;
 
     // Operators
     public const T_ASSIGN = 0x201;
