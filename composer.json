@@ -3,6 +3,7 @@
   "description": "Monkey Programming Language",
   "license": "proprietary",
   "require": {
+    "ext-readline": "*",
     "thecodingmachine/safe": "^1.1"
   },
   "require-dev": {

@@ -32,19 +32,12 @@ final class Repl
         -------------------------------\n\n
         TEXT);
 
-        \safe\fwrite(\STDOUT, '> ');
-
         $env = Environment::new();
 
         while (true) {
-            /** @var string $input */
-            $input = \trim(\fgets(\STDIN));
+            $input = \readline("\n > ");
             if ('exit' === $input) {
                 return;
-            }
-
-            if ('' === $input) {
-                \safe\fwrite(\STDOUT, '> ');
             }
 
             $parser = new Parser(new Lexer($input));
@@ -55,9 +48,9 @@ final class Repl
                 break;
             }
 
-            $evaluated = (new Evaluator($env))->eval($program);
+            $evaluated = (new Evaluator())->eval($program, $env);
             if (null !== $evaluated) {
-                \safe\fwrite(\STDOUT, $evaluated->inspect());
+                \safe\fwrite(\STDOUT, $evaluated->inspect().\PHP_EOL);
             }
         }
     }
