@@ -19,7 +19,11 @@ The Monkey Programming Language & Interpreter (Tree-Walk Interpreter) in **PHP**
 
 A working in progress. More docs soon.
 
-### How it works
+### Why?
+
+This is just a C-like language and its interpreter that I built to learn and understand how things work, how lexers and parsers work. I hope that could be useful to you, at least, inspire you to create your interpreter.
+
+### How it works?
 
 This interpreter uses an approach called Tree-Walking, it parses the source code, builds an abstract syntax tree (AST), and then evaluates this tree.
 
