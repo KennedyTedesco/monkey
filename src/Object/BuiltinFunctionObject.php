@@ -15,7 +15,7 @@ final class BuiltinFunctionObject implements InternalObject
         $this->function = $function;
     }
 
-    public function builtin(): Closure
+    public function value(): Closure
     {
         return $this->function;
     }

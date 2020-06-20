@@ -140,7 +140,7 @@ final class Evaluator
         }
 
         if ($function instanceof BuiltinFunctionObject) {
-            return $function->builtin()(...$args);
+            return $function->value()(...$args);
         }
 
         return ErrorObject::notAFunction($function->type());
