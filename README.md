@@ -1,8 +1,10 @@
-## Monkey Programming Language
-
 <p align="center">
     <img src="resources/monkey-php.png?raw=true" alt="Monkey Programming Language">
 </p>
+
+## Monkey Programming Language
+
+The Monkey Programming Language & Interpreter in PHP. From [Write An Interpreter In Go](https://interpreterbook.com/).
 
 A working in progress. More docs soon.
 
