@@ -21,6 +21,7 @@ The Monkey Programming Language & Interpreter in **PHP**. From the awesome [Writ
 Future scope:
 
 - Loops;
+- More Logical Operators;
 - More built-in functions;
 - Etc.
 
