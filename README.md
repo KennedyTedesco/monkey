@@ -46,6 +46,37 @@ The steps are:
     <img src="resources/interpreter-steps.png?raw=true" alt="How it works">
 </p>
 
+### Using the REPL
+
+Clone this repository, execute `composer install`, then:
+
+```bash
+$ ./monkey repl
+```
+
+Example:
+
+```text
+       .="=.
+     _/.-.-.\_     _
+    ( ( o o ) )    ))
+     |/  "  \|    //
+      \'---'/    //
+      /`"""`\  ((
+     / /_,_\ \  \
+     \_\_'__/ \  ))
+     /`  /`~\  |//
+    /   /    \  /
+,--`,--'\/\    /
+ '-- "--'  '--'
+
+# Monkey Programming Language #
+-------------------------------
+
+ > let a = 20 + fn(){ return 10; }()
+30
+```
+
 ### Running on PHP 8 with Docker
 
 Pull the docker image:
