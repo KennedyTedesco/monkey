@@ -25,7 +25,7 @@ Future scope:
 - More built-in functions;
 - Etc.
 
-A working in progress. More docs soon.
+A working in progress. More features and docs soon.
 
 ### Why?
 
