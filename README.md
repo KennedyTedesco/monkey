@@ -41,6 +41,8 @@ let fibonacci = fn(x) {
 };
 ```
 
+See more on [examples](examples) folder.
+
 A working in progress. More features and docs soon.
 
 ### Why?
