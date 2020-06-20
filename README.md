@@ -18,12 +18,28 @@ The Monkey Programming Language & Interpreter in **PHP**. From the awesome [Writ
 - Recursion;
 - Closures;
 
-Future scope:
+**Future scope:**
 
 - Loops;
 - More Logical Operators;
 - More built-in functions;
 - Etc.
+
+**Basic syntax:**
+
+```javascript
+let fibonacci = fn(x) {
+  if (x == 0) {
+    return 0;
+  } else {
+    if (x == 1) {
+      return 1;
+    } else {
+      fibonacci(x - 1) + fibonacci(x - 2);
+    }
+  }
+};
+```
 
 A working in progress. More features and docs soon.
 
