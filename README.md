@@ -1,6 +1,8 @@
 ## Monkey Programming Language
 
-![Monkey Programming Language](resources/monkey-php.png?raw=true)
+<p align="center">
+    <img src="resources/monkey-php.png?raw=true" alt="Monkey Programming Language">
+</p>
 
 A working in progress. More docs soon.
 
