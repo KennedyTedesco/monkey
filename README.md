@@ -17,6 +17,12 @@ The Monkey Programming Language & Interpreter (Tree-Walk Interpreter) in **PHP**
 - Recursion
 - Closures
 
+Future scope:
+
+- Loops
+- More built-in functions;
+- Etc;
+
 A working in progress. More docs soon.
 
 ### Why?
