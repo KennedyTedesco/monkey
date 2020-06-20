@@ -11,6 +11,7 @@ The Monkey Programming Language & Interpreter in **PHP**. From the awesome [Writ
 - A REPL;
 - Integers, booleans, strings, arrays (TODO), hash maps (TODO);
 - Arithmetic expressions;
+- Conditional expression;
 - Let statements;
 - First-class and higher-order functions;
 - Built-in functions;
