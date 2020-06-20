@@ -50,11 +50,11 @@ final class ErrorObject implements InternalObject
 
     public static function wrongNumberOfArguments(int $got, int $want): self
     {
-        return new self(\Safe\sprintf('wrong number of arguments. got=%s, want=%s', $got, $want));
+        return new self(\sprintf('wrong number of arguments. got=%s, want=%s', $got, $want));
     }
 
     public static function invalidArgument(string $to, string $got): self
     {
-        return new self(\Safe\sprintf('argument to "%s" not supported, got %s', $to, $got));
+        return new self(\sprintf('argument to "%s" not supported, got %s', $to, $got));
     }
 }

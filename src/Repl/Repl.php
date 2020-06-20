@@ -14,7 +14,7 @@ final class Repl
 {
     public static function start(): void
     {
-        \safe\fwrite(\STDOUT, <<<TEXT
+        \fwrite(\STDOUT, <<<TEXT
                .="=.
              _/.-.-.\_     _
             ( ( o o ) )    ))
@@ -33,25 +33,31 @@ final class Repl
         TEXT);
 
         $env = Environment::new();
-
         while (true) {
             $input = \readline("\n > ");
             if ('exit' === $input) {
                 return;
             }
 
-            $parser = new Parser(new Lexer($input));
-            $program = (new ProgramParser())($parser);
+            self::eval($input, $env);
+        }
+    }
 
-            if (\count($parser->errors()) > 0) {
-                self::printErrors($parser->errors());
-                break;
-            }
+    public static function eval(string $input, Environment $env): void
+    {
+        $parser = new Parser(new Lexer($input));
 
-            $evaluated = (new Evaluator())->eval($program, $env);
-            if (null !== $evaluated) {
-                \safe\fwrite(\STDOUT, $evaluated->inspect().\PHP_EOL);
-            }
+        if (\count($parser->errors()) > 0) {
+            self::printErrors($parser->errors());
+            return;
+        }
+
+        $evaluated = (new Evaluator())->eval(
+            (new ProgramParser())($parser), $env
+        );
+
+        if (null !== $evaluated) {
+            \fwrite(\STDOUT, $evaluated->inspect().\PHP_EOL);
         }
     }
 
@@ -59,7 +65,7 @@ final class Repl
     {
         foreach ($errors as $index => $error) {
             ++$index;
-            \safe\fwrite(\STDOUT, "{$index}) {$error}");
+            \fwrite(\STDOUT, "{$index}) {$error}");
         }
     }
 }

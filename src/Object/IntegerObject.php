@@ -25,6 +25,6 @@ final class IntegerObject implements InternalObject
 
     public function inspect(): string
     {
-        return \Safe\sprintf('%d', $this->value);
+        return \sprintf('%d', $this->value);
     }
 }

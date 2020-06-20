@@ -56,6 +56,6 @@ final class FunctionObject implements InternalObject
             $params[] = $parameter->toString();
         }
 
-        return \Safe\sprintf("fn(%s) {\n%s\n}", \implode(', ', $params), $this->body->toString());
+        return \sprintf("fn(%s) {\n%s\n}", \implode(', ', $params), $this->body->toString());
     }
 }

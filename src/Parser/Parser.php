@@ -132,7 +132,7 @@ final class Parser
 
     public function peekError(int $type): void
     {
-        $this->errors[] = \safe\sprintf(
+        $this->errors[] = \sprintf(
             'expected next token to be %s, got %s instead',
             TokenType::name($type), $this->peekToken->literal()
         );
@@ -140,7 +140,7 @@ final class Parser
 
     public function prefixParserError(int $type): void
     {
-        $this->errors[] = \safe\sprintf(
+        $this->errors[] = \sprintf(
             'no prefix parse function for %s found', TokenType::name($type)
         );
     }

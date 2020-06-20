@@ -25,6 +25,6 @@ final class StringObject implements InternalObject
 
     public function inspect(): string
     {
-        return \Safe\sprintf('%s', $this->value);
+        return \sprintf('%s', $this->value);
     }
 }
