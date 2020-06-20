@@ -1,6 +1,6 @@
 ## Monkey Programming Language
 
-[Monkey Programming Language](/resources/monkey-php.png?raw=true)
+![Monkey Programming Language](resources/monkey-php.png?raw=true)
 
 A working in progress. More docs soon.
 
