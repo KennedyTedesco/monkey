@@ -12,7 +12,7 @@ use Monkey\Parser\ProgramParser;
 
 final class Repl
 {
-    public function start(): void
+    public static function start(): void
     {
         \safe\fwrite(\STDOUT, <<<TEXT
                .="=.
@@ -44,7 +44,7 @@ final class Repl
             $program = (new ProgramParser())($parser);
 
             if (\count($parser->errors()) > 0) {
-                $this->printErrors($parser->errors());
+                self::printErrors($parser->errors());
                 break;
             }
 
@@ -55,7 +55,7 @@ final class Repl
         }
     }
 
-    private function printErrors(array $errors): void
+    private static function printErrors(array $errors): void
     {
         foreach ($errors as $index => $error) {
             ++$index;

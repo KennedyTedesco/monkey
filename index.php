@@ -6,4 +6,4 @@ use Monkey\Repl\Repl;
 
 require 'vendor/autoload.php';
 
-(new Repl())->start();
+Repl::start();
