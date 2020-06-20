@@ -25,7 +25,7 @@ This interpreter uses an approach called Tree-Walking, it parses the source code
 
 The steps are:
 
-1. **Lexical analysis:** from source code to Tokens/Lexemes;
+1. **Lexical analysis:** from source code (free text) to Tokens/Lexemes;
 2. **Parsing:** uses the generated tokens to create an Abstract Syntax Tree;
 3. **Abstract Syntax Tree (AST):** a structural representation of the source code with its precedence level, associativity, etc;
 4. **Evaluator:** runs through the AST evaluating all operations.
