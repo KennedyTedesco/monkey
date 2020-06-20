@@ -19,6 +19,7 @@ use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
+use Monkey\Ast\Types\StringLiteral;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FunctionObject;
@@ -26,6 +27,7 @@ use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\ReturnValueObject;
+use Monkey\Object\StringObject;
 
 final class Evaluator
 {
@@ -49,6 +51,9 @@ final class Evaluator
 
             case $node instanceof IntegerLiteral:
                 return new IntegerObject($node->value());
+
+            case $node instanceof StringLiteral:
+                return new StringObject($node->value());
 
             case $node instanceof BooleanLiteral:
                 return BooleanObject::from($node->value());

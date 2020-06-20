@@ -10,6 +10,7 @@ use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
+use Monkey\Object\StringObject;
 
 function testIntegerObject(InternalObject $object, int $expected)
 {
@@ -50,6 +51,17 @@ test('eval integer expressions', function (string $input, int $expected) {
     ['20 + 2 * -10', 0],
     ['-5', -5],
     ['-10', -10],
+]);
+
+test('eval string expressions', function (string $input, string $expected) {
+    /** @var StringObject $object */
+    $object = evalProgram($input);
+    assertInstanceOf(StringObject::class, $object);
+    assertSame(InternalObject::STRING_OBJ, $object->type());
+    assertSame($expected, $object->value());
+})->with([
+    ['"foobar";', 'foobar'],
+    ['"foo bar";', 'foo bar'],
 ]);
 
 test('eval boolean expression', function (string $input, bool $expected) {
