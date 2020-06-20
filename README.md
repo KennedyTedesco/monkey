@@ -34,7 +34,7 @@ The steps are:
     <img src="resources/interpreter-steps.png?raw=true" alt="How it works">
 </p>
 
-## Running on PHP 8 with Docker
+### Running on PHP 8 with Docker
 
 Pull the docker image:
 
@@ -59,3 +59,7 @@ Running from a file contents of the examples folder:
 ```bash
 docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit:latest ./monkey run examples/fibo.mk
 ```
+
+### Contributing
+
+I'll be pleased to have you contributing to any aspect of this project.
