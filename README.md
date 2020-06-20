@@ -4,7 +4,7 @@
 
 ## Monkey Programming Language
 
-The Monkey Programming Language & Interpreter (Tree-Walk Interpreter) in PHP. From [Write An Interpreter In Go](https://interpreterbook.com/).
+The Monkey Programming Language & Interpreter (Tree-Walk Interpreter) in **PHP**. From [Write An Interpreter In Go](https://interpreterbook.com/).
 
 **Features:**
 
