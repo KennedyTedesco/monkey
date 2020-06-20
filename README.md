@@ -8,20 +8,20 @@ The Monkey Programming Language & Interpreter (Tree-Walk Interpreter) in **PHP**
 
 **Features:**
 
-- A REPL
-- Integers, booleans, strings, arrays (TODO), hash maps (TODO)
-- Arithmetic expressions
-- Let statements
-- First-class and higher-order functions
-- Built-in functions
-- Recursion
-- Closures
+- A REPL;
+- Integers, booleans, strings, arrays (TODO), hash maps (TODO);
+- Arithmetic expressions;
+- Let statements;
+- First-class and higher-order functions;
+- Built-in functions;
+- Recursion;
+- Closures;
 
 Future scope:
 
-- Loops
+- Loops;
 - More built-in functions;
-- Etc;
+- Etc.
 
 A working in progress. More docs soon.
 
