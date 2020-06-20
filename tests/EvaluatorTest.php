@@ -62,6 +62,7 @@ test('eval string expressions', function (string $input, string $expected) {
 })->with([
     ['"foobar";', 'foobar'],
     ['"foo bar";', 'foo bar'],
+    ['"foo" + " " + "baz";', 'foo baz'],
 ]);
 
 test('eval boolean expression', function (string $input, bool $expected) {
@@ -140,6 +141,7 @@ test('error handling', function (string $input, string $expected) {
     ['if (10 > 1) { true + false; }', 'unknown operator: BOOLEAN + BOOLEAN'],
     ['if (10 > 1) { if (10 > 1) { return true + false; } return 1; }', 'unknown operator: BOOLEAN + BOOLEAN'],
     ['foobar', 'identifier not found: foobar'],
+    ['"Hello" - "World"', 'unknown operator: STRING - STRING'],
 ]);
 
 test('eval let statements', function (string $input, int $expected) {

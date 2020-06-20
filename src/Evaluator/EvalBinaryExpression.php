@@ -8,6 +8,7 @@ use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
+use Monkey\Object\StringObject;
 
 final class EvalBinaryExpression
 {
@@ -26,8 +27,11 @@ final class EvalBinaryExpression
             case $left->type() !== $right->type():
                 return ErrorObject::typeMismatch($left->type(), $operator, $right->type());
 
-            case $left instanceof IntegerObject:
+            case $left instanceof IntegerObject && $right instanceof IntegerObject:
                 return (new EvalIntegerBinaryExpression())($operator, $left, $right);
+
+            case $left instanceof StringObject && $right instanceof StringObject:
+                return (new EvalStringBinaryExpression())($operator, $left, $right);
 
             case '==' === $operator:
                 return BooleanObject::from($left->value() === $right->value());

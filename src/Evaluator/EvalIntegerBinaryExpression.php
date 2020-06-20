@@ -13,8 +13,8 @@ final class EvalIntegerBinaryExpression
 {
     public function __invoke(
         string $operator,
-        InternalObject $left,
-        InternalObject $right
+        IntegerObject $left,
+        IntegerObject $right
     ): InternalObject {
         switch ($operator) {
             case '+':
