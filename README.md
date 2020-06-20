@@ -1,5 +1,7 @@
 ## Monkey Programming Language
 
+[Monkey Programming Language](resources/monkey-php.png)
+
 A working in progress. More docs soon.
 
 ## Running on PHP 8 with Docker
