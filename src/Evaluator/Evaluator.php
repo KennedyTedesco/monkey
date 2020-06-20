@@ -20,7 +20,9 @@ use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Ast\Types\StringLiteral;
+use Monkey\Evaluator\Builtin\EvalLenFunction;
 use Monkey\Object\BooleanObject;
+use Monkey\Object\BuiltinFunctionObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
@@ -31,6 +33,13 @@ use Monkey\Object\StringObject;
 
 final class Evaluator
 {
+    public function __construct()
+    {
+        BuiltinFunction::set('len', function (InternalObject ...$arguments) {
+            return (new EvalLenFunction())(...$arguments);
+        });
+    }
+
     public function eval(Node $node, Environment $env): InternalObject
     {
         switch (true) {
@@ -122,15 +131,19 @@ final class Evaluator
 
     private function applyFunction(InternalObject $function, array $args): InternalObject
     {
-        if (!$function instanceof FunctionObject) {
-            return ErrorObject::notAFunction($function->type());
+        if ($function instanceof FunctionObject) {
+            $extendedEnv = $this->extendFunctionEnv($function, $args);
+
+            return $this->unwrapReturnValue(
+                $this->eval($function->body(), $extendedEnv)
+            );
         }
 
-        $extendedEnv = $this->extendFunctionEnv($function, $args);
+        if ($function instanceof BuiltinFunctionObject) {
+            return $function->builtin()(...$args);
+        }
 
-        return $this->unwrapReturnValue(
-            $this->eval($function->body(), $extendedEnv)
-        );
+        return ErrorObject::notAFunction($function->type());
     }
 
     /**

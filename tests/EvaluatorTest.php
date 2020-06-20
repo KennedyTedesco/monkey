@@ -188,3 +188,19 @@ test('eval closure', function () {
 
     testIntegerObject(evalProgram($input), 4);
 });
+
+test('eval builtin len function', function (string $input, $expected) {
+    $object = evalProgram($input);
+
+    if ($object instanceof IntegerObject) {
+        testIntegerObject($object, $expected);
+    }
+
+    assertSame($expected, $object->value());
+})->with([
+    ['len("")', 0],
+    ['len("a")', 1],
+    ['len("foo")', 3],
+    ['len(1)', 'argument to "len" not supported, got INTEGER'],
+    ['len("one", "two")', 'wrong number of arguments. got=2, want=1'],
+]);

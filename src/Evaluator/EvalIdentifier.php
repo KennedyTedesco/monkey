@@ -23,6 +23,10 @@ final class EvalIdentifier
             return $this->env->get($node->value());
         }
 
+        if (BuiltinFunction::contains($node->value())) {
+            return BuiltinFunction::get($node->value());
+        }
+
         return ErrorObject::identifierNotFound($node->value());
     }
 }

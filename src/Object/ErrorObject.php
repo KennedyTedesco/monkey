@@ -47,4 +47,14 @@ final class ErrorObject implements InternalObject
     {
         return new self("identifier not found: {$name}");
     }
+
+    public static function wrongNumberOfArguments(int $got, int $want): self
+    {
+        return new self(\Safe\sprintf('wrong number of arguments. got=%s, want=%s', $got, $want));
+    }
+
+    public static function invalidArgument(string $to, string $got): self
+    {
+        return new self(\Safe\sprintf('argument to "%s" not supported, got %s', $to, $got));
+    }
 }
