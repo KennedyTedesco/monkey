@@ -61,7 +61,7 @@ The steps are:
 4. **Evaluator:** runs through the AST evaluating all expressions.
 
 <p align="center">
-    <img src="resources/interpreter-steps.png?raw=true" alt="How it works">
+    <img src="resources/how-it-works.png?raw=true" alt="How it works">
 </p>
 
 ### Using the REPL
