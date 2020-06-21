@@ -13,6 +13,7 @@ use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Ast\Statements\ReturnStatement;
+use Monkey\Ast\Types\ArrayLiteral;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
@@ -109,6 +110,30 @@ test('string literal expression', function () {
     $integer = $statement->expression();
 
     assertSame('foobar', $integer->value());
+});
+
+test('array literal expression', function () {
+    $input = '[1, 2 * 2, 3 + 3]';
+
+    $program = newProgram($input);
+    assertSame(1, $program->count());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var ArrayLiteral $array */
+    $array = $statement->expression();
+
+    assertCount(3, $array->elements());
+
+    /** @var IntegerLiteral $firstElement */
+    $firstElement = $array->elements()[0];
+    assertInstanceOf(IntegerLiteral::class, $firstElement);
+    assertSame(1, $firstElement->value());
+
+    assertInfixExpression($array->elements()[1], 2, '*', 2);
+    assertInfixExpression($array->elements()[2], 3, '+', 3);
 });
 
 test('prefix expression', function (string $input, string $operator, $value) {

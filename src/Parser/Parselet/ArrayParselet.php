@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Monkey\Parser\Parselet;
 
-use Monkey\Ast\Expressions\CallExpression;
 use Monkey\Ast\Expressions\Expression;
+use Monkey\Ast\Types\ArrayLiteral;
 use Monkey\Parser\ExpressionListParser;
 use Monkey\Parser\Parser;
 use Monkey\Token\TokenType;
 
-final class CallExpressionParselet implements InfixParselet
+final class ArrayParselet implements PrefixParselet
 {
     private Parser $parser;
 
@@ -19,10 +19,12 @@ final class CallExpressionParselet implements InfixParselet
         $this->parser = $parser;
     }
 
-    public function parse(Expression $function): Expression
+    public function parse(): Expression
     {
-        $arguments = (new ExpressionListParser())($this->parser, TokenType::T_RPAREN);
+        $token = $this->parser->curToken;
 
-        return new CallExpression($this->parser->curToken, $function, $arguments);
+        $elements = (new ExpressionListParser())($this->parser, TokenType::T_RBRACKET);
+
+        return new ArrayLiteral($token, $elements);
     }
 }

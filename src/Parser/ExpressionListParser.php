@@ -7,17 +7,17 @@ namespace Monkey\Parser;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Token\TokenType;
 
-final class CallArgumentsParser
+final class ExpressionListParser
 {
     /**
      * @return array<Expression>
      */
-    public function __invoke(Parser $parser): array
+    public function __invoke(Parser $parser, int $endTokenType): array
     {
         /** @var array<Expression> $args */
         $args = [];
 
-        if ($parser->peekToken->is(TokenType::T_RPAREN)) {
+        if ($parser->peekToken->is($endTokenType)) {
             $parser->nextToken();
 
             return $args;
@@ -33,7 +33,7 @@ final class CallArgumentsParser
             $args[] = $parser->parseExpression(Precedence::LOWEST);
         }
 
-        if (!$parser->expectPeek(TokenType::T_RPAREN)) {
+        if (!$parser->expectPeek($endTokenType)) {
             return [];
         }
 
