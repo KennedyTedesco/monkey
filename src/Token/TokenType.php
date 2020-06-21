@@ -28,15 +28,17 @@ final class TokenType
     public const T_COMMA = 0x207;
     public const T_SEMICOLON = 0x208;
 
-    // Parentheses and braces
+    // Parentheses, braces and brackets
     public const T_LPAREN = 0x209;
     public const T_RPAREN = 0x20A;
     public const T_LBRACE = 0x20B;
     public const T_RBRACE = 0x20C;
+    public const T_LBRACKET = 0x20D;
+    public const T_RBRACKET = 0x20E;
 
     // Comparision operators
-    public const T_LT = 0x20D;
-    public const T_GT = 0x20E;
+    public const T_LT = 0x20F;
+    public const T_GT = 0x210;
     public const T_EQ = 0x303;
     public const T_LT_EQ = 0x301;
     public const T_GT_EQ = 0x302;
@@ -67,6 +69,8 @@ final class TokenType
         '}' => self::T_RBRACE,
         '<' => self::T_LT,
         '>' => self::T_GT,
+        '[' => self::T_LBRACKET,
+        ']' => self::T_RBRACKET,
         // Two or more char tokens
         '>=' => self::T_GT_EQ,
         '<=' => self::T_LT_EQ,
