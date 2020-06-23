@@ -13,6 +13,7 @@ use Monkey\Parser\Parselet\FunctionLiteralParselet;
 use Monkey\Parser\Parselet\GroupedExpressionParselet;
 use Monkey\Parser\Parselet\IdentifierParselet;
 use Monkey\Parser\Parselet\IfExpressionParselet;
+use Monkey\Parser\Parselet\IndexExpressionParselet;
 use Monkey\Parser\Parselet\InfixParselet;
 use Monkey\Parser\Parselet\PrefixParselet;
 use Monkey\Parser\Parselet\ScalarParselet;
@@ -52,6 +53,7 @@ final class Parser
         TokenType::T_SLASH => Precedence::PRODUCT,
         TokenType::T_ASTERISK => Precedence::PRODUCT,
         TokenType::T_LPAREN => Precedence::CALL,
+        TokenType::T_LBRACKET => Precedence::INDEX,
     ];
 
     public function __construct(Lexer $lexer)
@@ -80,7 +82,7 @@ final class Parser
         $this->registerInfixParselet(TokenType::T_LT_EQ, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_GT, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_GT_EQ, new BinaryOperatorParselet($this));
-
+        $this->registerInfixParselet(TokenType::T_LBRACKET, new IndexExpressionParselet($this));
         $this->registerInfixParselet(TokenType::T_LPAREN, new CallExpressionParselet($this));
 
         $this->nextToken(2);

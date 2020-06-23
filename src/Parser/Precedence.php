@@ -13,4 +13,5 @@ final class Precedence
     public const PRODUCT = 0x5;
     public const PREFIX = 0x6;
     public const CALL = 0x7;
+    public const INDEX = 0x8;
 }

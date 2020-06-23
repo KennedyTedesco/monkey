@@ -8,6 +8,7 @@ use Monkey\Ast\Expressions\BinaryExpression;
 use Monkey\Ast\Expressions\CallExpression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
+use Monkey\Ast\Expressions\IndexExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
@@ -136,6 +137,27 @@ test('array literal expression', function () {
     assertInfixExpression($array->elements()[2], 3, '+', 3);
 });
 
+test('array index expression', function () {
+    $input = 'foo[1 + 2]';
+
+    $program = newProgram($input);
+    assertSame(1, $program->count());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var IndexExpression $indexExpression */
+    $indexExpression = $statement->expression();
+    assertInstanceOf(IndexExpression::class, $indexExpression);
+
+    /** @var IdentifierExpression $identifier */
+    $identifier = $indexExpression->left();
+    assertSame('foo', $identifier->value());
+
+    assertInfixExpression($indexExpression->index(), 1, '+', 2);
+});
+
 test('prefix expression', function (string $input, string $operator, $value) {
     $program = newProgram($input);
     assertSame(1, $program->count());
@@ -213,6 +235,9 @@ test('operator precedence parsing', function (string $input, string $expected) {
     ['a + add(b * c) + d', '((a + add((b * c))) + d)'],
     ['add(a, b, 1, 2 * 3, 4 + 5, add(6, 7 * 8))', 'add(a, b, 1, (2 * 3), (4 + 5), add(6, (7 * 8)))'],
     ['add(a + b + c * d / f + g)', 'add((((a + b) + ((c * d) / f)) + g))'],
+
+    ['a * [1, 2, 3, 4][b * c] * d', '((a * ([1,2,3,4][(b * c)])) * d)'],
+    ['add(a * b[2], b[1], 2 * [1, 2][1])', 'add((a * (b[2])), (b[1]), (2 * ([1,2][1])))'],
 ]);
 
 test('if expression', function () {
