@@ -34,6 +34,9 @@ test('basic tokens', function () {
         "foobar";
         "foo bar";
         [1, 2];
+        true && false;
+        true || false;
+        10 % 2;
 MONKEY;
 
     $tokens = [
@@ -84,7 +87,7 @@ MONKEY;
         [TokenType::T_SEMICOLON, ';'],
 
         // !-/*5;
-        [TokenType::T_BANG, '!'],
+        [TokenType::T_NOT, '!'],
         [TokenType::T_MINUS, '-'],
         [TokenType::T_SLASH, '/'],
         [TokenType::T_ASTERISK, '*'],
@@ -157,6 +160,24 @@ MONKEY;
         [TokenType::T_COMMA, ','],
         [TokenType::T_INT, '2'],
         [TokenType::T_RBRACKET, ']'],
+        [TokenType::T_SEMICOLON, ';'],
+
+        // true && false;
+        [TokenType::T_TRUE, 'true'],
+        [TokenType::T_AND, '&&'],
+        [TokenType::T_FALSE, 'false'],
+        [TokenType::T_SEMICOLON, ';'],
+
+        // true || false;
+        [TokenType::T_TRUE, 'true'],
+        [TokenType::T_OR, '||'],
+        [TokenType::T_FALSE, 'false'],
+        [TokenType::T_SEMICOLON, ';'],
+
+        // 10 % 2;
+        [TokenType::T_INT, '10'],
+        [TokenType::T_MODULO, '%'],
+        [TokenType::T_INT, '2'],
         [TokenType::T_SEMICOLON, ';'],
 
         [TokenType::T_EOF, Lexer::EOF],

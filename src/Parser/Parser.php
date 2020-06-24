@@ -44,16 +44,19 @@ final class Parser
     private array $precedences = [
         TokenType::T_EQ => Precedence::EQUALS,
         TokenType::T_NOT_EQ => Precedence::EQUALS,
-        TokenType::T_LT => Precedence::LESSGREATER,
-        TokenType::T_LT_EQ => Precedence::LESSGREATER,
-        TokenType::T_GT => Precedence::LESSGREATER,
-        TokenType::T_GT_EQ => Precedence::LESSGREATER,
+        TokenType::T_LT => Precedence::LESS_GREATER,
+        TokenType::T_LT_EQ => Precedence::LESS_GREATER,
+        TokenType::T_GT => Precedence::LESS_GREATER,
+        TokenType::T_GT_EQ => Precedence::LESS_GREATER,
         TokenType::T_PLUS => Precedence::SUM,
         TokenType::T_MINUS => Precedence::SUM,
         TokenType::T_SLASH => Precedence::PRODUCT,
         TokenType::T_ASTERISK => Precedence::PRODUCT,
+        TokenType::T_MODULO => Precedence::PRODUCT,
         TokenType::T_LPAREN => Precedence::CALL,
         TokenType::T_LBRACKET => Precedence::INDEX,
+        TokenType::T_AND => Precedence::AND,
+        TokenType::T_OR => Precedence::OR,
     ];
 
     public function __construct(Lexer $lexer)
@@ -62,7 +65,7 @@ final class Parser
 
         $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
         $this->registerPrefixParselet(TokenType::T_INT, new ScalarParselet($this));
-        $this->registerPrefixParselet(TokenType::T_BANG, new UnaryOperatorParselet($this));
+        $this->registerPrefixParselet(TokenType::T_NOT, new UnaryOperatorParselet($this));
         $this->registerPrefixParselet(TokenType::T_MINUS, new UnaryOperatorParselet($this));
         $this->registerPrefixParselet(TokenType::T_TRUE, new ScalarParselet($this));
         $this->registerPrefixParselet(TokenType::T_FALSE, new ScalarParselet($this));

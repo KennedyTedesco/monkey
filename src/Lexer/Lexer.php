@@ -33,25 +33,19 @@ final class Lexer
     {
         $this->skipWhitespaces();
 
-        if (TokenType::isSingleCharToken($this->curChar->toScalar())) {
-            switch (true) {
-                case $this->curAndPeekIs('=='):
-                    return $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ);
-                case $this->curAndPeekIs('!='):
-                    return $this->makeTwoCharTokenAndAdvance(TokenType::T_NOT_EQ);
-                case $this->curAndPeekIs('>='):
-                    return $this->makeTwoCharTokenAndAdvance(TokenType::T_GT_EQ);
-                case $this->curAndPeekIs('<='):
-                    return $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ);
-                default:
-                    return $this->makeTokenAndAdvance(
-                        TokenType::lookupToken($this->curChar->toScalar()),
-                        $this->curChar->toScalar()
-                    );
-            }
-        }
-
         switch (true) {
+            case $this->curAndPeekIs('=='):
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ);
+            case $this->curAndPeekIs('!='):
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_NOT_EQ);
+            case $this->curAndPeekIs('>='):
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_GT_EQ);
+            case $this->curAndPeekIs('<='):
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ);
+            case $this->curAndPeekIs('&&'):
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_AND);
+            case $this->curAndPeekIs('||'):
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_OR);
             case $this->curChar->is('"'):
                 return $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString());
             case $this->curChar->isLetter():
@@ -63,6 +57,11 @@ final class Lexer
                 return Token::from(TokenType::T_INT, $this->readNumber());
             case $this->curChar->is(self::EOF):
                 return Token::from(TokenType::T_EOF, self::EOF);
+            case TokenType::isSingleCharToken($this->curChar->toScalar()):
+                return $this->makeTokenAndAdvance(
+                    TokenType::lookupToken($this->curChar->toScalar()),
+                    $this->curChar->toScalar()
+                );
             default:
                 return $this->makeTokenAndAdvance(TokenType::T_ILLEGAL, $this->curChar->toScalar());
         }

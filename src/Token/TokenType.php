@@ -20,25 +20,30 @@ final class TokenType
     public const T_ASSIGN = 0x201;
     public const T_PLUS = 0x202;
     public const T_MINUS = 0x203;
-    public const T_BANG = 0x204;
     public const T_ASTERISK = 0x205;
     public const T_SLASH = 0x206;
+    public const T_MODULO = 0x207;
+
+    // Logical operators
+    public const T_NOT = 0x241;
+    public const T_AND = 0x305;
+    public const T_OR = 0x306;
 
     // Delimiters
-    public const T_COMMA = 0x207;
-    public const T_SEMICOLON = 0x208;
+    public const T_COMMA = 0x210;
+    public const T_SEMICOLON = 0x211;
 
     // Parentheses, braces and brackets
-    public const T_LPAREN = 0x209;
-    public const T_RPAREN = 0x20A;
-    public const T_LBRACE = 0x20B;
-    public const T_RBRACE = 0x20C;
-    public const T_LBRACKET = 0x20D;
-    public const T_RBRACKET = 0x20E;
+    public const T_LPAREN = 0x221;
+    public const T_RPAREN = 0x222;
+    public const T_LBRACE = 0x223;
+    public const T_RBRACE = 0x224;
+    public const T_LBRACKET = 0x225;
+    public const T_RBRACKET = 0x226;
 
     // Comparision operators
-    public const T_LT = 0x20F;
-    public const T_GT = 0x210;
+    public const T_LT = 0x231;
+    public const T_GT = 0x232;
     public const T_EQ = 0x303;
     public const T_LT_EQ = 0x301;
     public const T_GT_EQ = 0x302;
@@ -58,8 +63,9 @@ final class TokenType
         '=' => self::T_ASSIGN,
         '+' => self::T_PLUS,
         '-' => self::T_MINUS,
-        '!' => self::T_BANG,
+        '!' => self::T_NOT,
         '*' => self::T_ASTERISK,
+        '%' => self::T_MODULO,
         '/' => self::T_SLASH,
         ',' => self::T_COMMA,
         ';' => self::T_SEMICOLON,
@@ -76,6 +82,8 @@ final class TokenType
         '<=' => self::T_LT_EQ,
         '==' => self::T_EQ,
         '!=' => self::T_NOT_EQ,
+        '&&' => self::T_AND,
+        '||' => self::T_OR,
         'fn' => self::T_FN,
         'let' => self::T_LET,
         'true' => self::T_TRUE,
