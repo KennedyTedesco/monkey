@@ -9,7 +9,7 @@ The Monkey Programming Language & Interpreter in **PHP**. From the awesome [Writ
 **Features:**
 
 - A REPL;
-- Integers, booleans, strings, arrays (TODO), hash maps (TODO);
+- Integers, booleans, strings, arrays, hash maps (TODO);
 - Arithmetic expressions;
 - Conditional expressions;
 - Let statements;
