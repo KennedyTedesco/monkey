@@ -57,4 +57,9 @@ final class ErrorObject implements InternalObject
     {
         return new self(\sprintf('argument to "%s" not supported, got %s', $to, $got));
     }
+
+    public static function invalidIndexOperator(string $type): self
+    {
+        return new self(\sprintf('index operator not supported: %s', $type));
+    }
 }

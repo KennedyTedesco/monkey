@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Monkey\Object\ArrayObject;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FunctionObject;
@@ -203,4 +204,48 @@ test('eval builtin len function', function (string $input, $expected) {
     ['len("foo")', 3],
     ['len(1)', 'argument to "len" not supported, got INTEGER'],
     ['len("one", "two")', 'wrong number of arguments. got=2, want=1'],
+]);
+
+test('eval array literals', function (string $input, $expected) {
+    /** @var ArrayObject $arrayObject */
+    $arrayObject = evalProgram($input);
+
+    /** @var InternalObject $element */
+    foreach ($arrayObject->value() as $index => $element) {
+        if ($element instanceof IntegerObject) {
+            testIntegerObject($element, $expected[$index]);
+        } else {
+            assertSame($expected[$index], $element->value());
+        }
+    }
+})->with([
+    ['[1, 2 * 2, 3 + 3]', [1, 4, 6]],
+    ['[1, 2, 3]', [1, 2, 3]],
+    ['[1, "teste", 3]', [1, 'teste', 3]],
+    ['[1, fn(x) { return x * 2; }(2), 8]', [1, 4, 8]],
+]);
+
+test('eval array index operations', function (string $input, ?int $expected) {
+    /** @var IntegerObject $object */
+    $object = evalProgram($input);
+
+    if ($object instanceof NullObject) {
+        assertNull($expected);
+    }
+
+    if ($object instanceof IntegerObject) {
+        testIntegerObject($object, $object->value());
+    }
+})->with([
+    ['[1, 2, 3][0]', 1],
+    ['[1, 2, 3][1]', 2],
+    ['[1, 2, 3][2]', 3],
+    ['let i = 0; [1][i];', 1],
+    ['[1, 2, 3][1 + 1];', 3],
+    ['let myArray = [1, 2, 3]; myArray[2];', 3],
+    ['let myArray = [1, 2, 3]; myArray[0] + myArray[1] + myArray[2];', 6],
+    ['let myArray = [1, 2, 3]; let i = myArray[0]; myArray[i]', 2],
+    ['[1, 2, 3][3]', null],
+    ['[1, 2, 3][-1]', null],
+    ['[1, fn(x) { x * 2 }(2)][fn() { 1 }()]', 4],
 ]);

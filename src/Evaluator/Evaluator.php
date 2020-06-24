@@ -9,6 +9,7 @@ use Monkey\Ast\Expressions\CallExpression;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
+use Monkey\Ast\Expressions\IndexExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Node;
 use Monkey\Ast\Program;
@@ -16,11 +17,13 @@ use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Ast\Statements\ReturnStatement;
+use Monkey\Ast\Types\ArrayLiteral;
 use Monkey\Ast\Types\BooleanLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Ast\Types\StringLiteral;
 use Monkey\Evaluator\Builtin\EvalLenFunction;
+use Monkey\Object\ArrayObject;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\BuiltinFunctionObject;
 use Monkey\Object\ErrorObject;
@@ -84,6 +87,24 @@ final class Evaluator
                     return $args[0];
                 }
                 return $this->applyFunction($function, $args);
+
+            case $node instanceof ArrayLiteral:
+                $elements = $this->evalExpressions($node->elements(), $env);
+                if (1 === $elements && $this->isError($elements[0])) {
+                    return $elements[0];
+                }
+                return new ArrayObject($elements);
+
+            case $node instanceof IndexExpression:
+                $left = $this->eval($node->left(), $env);
+                if ($this->isError($left)) {
+                    return $left;
+                }
+                $index = $this->eval($node->index(), $env);
+                if ($this->isError($index)) {
+                    return $index;
+                }
+                return (new EvalIndexExpression())($left, $index);
 
             case $node instanceof UnaryExpression:
                 return (new EvalUnaryExpression())(
