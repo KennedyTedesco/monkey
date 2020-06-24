@@ -199,11 +199,14 @@ test('infix expressions', function (string $input, $leftValue, string $operator,
     ['5 / 5;', 5, '/', 5],
     ['5 > 5;', 5, '>', 5],
     ['5 < 5;', 5, '<', 5],
+    ['10 % 2;', 10, '%', 2],
     ['5 == 5;', 5, '==', 5],
     ['5 != 5;', 5, '!=', 5],
     ['true == true;', true, '==', true],
     ['false == false;', false, '==', false],
     ['true != false;', true, '!=', false],
+    ['true && false;', true, '&&', false],
+    ['false || false;', false, '||', false],
 ]);
 
 test('operator precedence parsing', function (string $input, string $expected) {
@@ -219,6 +222,8 @@ test('operator precedence parsing', function (string $input, string $expected) {
     ['a * b * c', '((a * b) * c)'],
     ['a * b / c', '((a * b) / c)'],
     ['a + b / c', '(a + (b / c))'],
+    ['a % b * c', '((a % b) * c)'],
+    ['a % b * c', '((a % b) * c)'],
     ['a + b * c + d / e - f', '(((a + (b * c)) + (d / e)) - f)'],
 
     ['3 + 4; -5 * 5', '(3 + 4)((-5) * 5)'],
@@ -231,6 +236,9 @@ test('operator precedence parsing', function (string $input, string $expected) {
     ['2 / (5 + 5)', '(2 / (5 + 5))'],
     ['-(5 + 5)', '(-(5 + 5))'],
     ['!(true == true)', '(!(true == true))'],
+    ['true && false || true', '((true && false) || true)'],
+    ['true || false || true', '((true || false) || true)'],
+    ['false || true && false', '(false || (true && false))'],
 
     ['a + add(b * c) + d', '((a + add((b * c))) + d)'],
     ['add(a, b, 1, 2 * 3, 4 + 5, add(6, 7 * 8))', 'add(a, b, 1, (2 * 3), (4 + 5), add(6, (7 * 8)))'],

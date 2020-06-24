@@ -76,6 +76,7 @@ final class Parser
         $this->registerPrefixParselet(TokenType::T_LBRACKET, new ArrayParselet($this));
 
         $this->registerInfixParselet(TokenType::T_PLUS, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_MODULO, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_MINUS, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_SLASH, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_ASTERISK, new BinaryOperatorParselet($this));
@@ -85,6 +86,9 @@ final class Parser
         $this->registerInfixParselet(TokenType::T_LT_EQ, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_GT, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_GT_EQ, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_AND, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_OR, new BinaryOperatorParselet($this));
+
         $this->registerInfixParselet(TokenType::T_LBRACKET, new IndexExpressionParselet($this));
         $this->registerInfixParselet(TokenType::T_LPAREN, new CallExpressionParselet($this));
 

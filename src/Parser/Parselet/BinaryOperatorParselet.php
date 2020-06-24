@@ -23,9 +23,9 @@ final class BinaryOperatorParselet implements InfixParselet
 
         $this->parser->nextToken();
 
-        /** @var Expression $rightExp */
-        $rightExp = $this->parser->parseExpression($this->parser->precedence($token));
+        /** @var Expression $right */
+        $right = $this->parser->parseExpression($this->parser->precedence($token));
 
-        return new BinaryExpression($token, $token->literal(), $left, $rightExp);
+        return new BinaryExpression($token, $token->literal(), $left, $right);
     }
 }
