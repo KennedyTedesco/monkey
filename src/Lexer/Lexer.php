@@ -35,13 +35,13 @@ final class Lexer
 
         if (TokenType::isSingleCharToken($this->curChar->toScalar())) {
             switch (true) {
-                case $this->curChar->is('=') && $this->peekChar->is('='):
+                case $this->curAndPeekIs('=='):
                     return $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ);
-                case $this->curChar->is('!') && $this->peekChar->is('='):
+                case $this->curAndPeekIs('!='):
                     return $this->makeTwoCharTokenAndAdvance(TokenType::T_NOT_EQ);
-                case $this->curChar->is('>') && $this->peekChar->is('='):
+                case $this->curAndPeekIs('>='):
                     return $this->makeTwoCharTokenAndAdvance(TokenType::T_GT_EQ);
-                case $this->curChar->is('<') && $this->peekChar->is('='):
+                case $this->curAndPeekIs('<='):
                     return $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ);
                 default:
                     return $this->makeTokenAndAdvance(
@@ -66,6 +66,11 @@ final class Lexer
             default:
                 return $this->makeTokenAndAdvance(TokenType::T_ILLEGAL, $this->curChar->toScalar());
         }
+    }
+
+    private function curAndPeekIs(string $operators): bool
+    {
+        return $this->curChar->is($operators[0]) && $this->peekChar->is($operators[1]);
     }
 
     private function readIdentifier(): string
