@@ -247,5 +247,5 @@ test('eval array index operations', function (string $input, ?int $expected) {
     ['let myArray = [1, 2, 3]; let i = myArray[0]; myArray[i]', 2],
     ['[1, 2, 3][3]', null],
     ['[1, 2, 3][-1]', null],
-    ['[1, fn(x) { x * 2 }(2)][fn() { 1 }()]', 4],
+    ['[1, fn(x){x * 2}(2)][fn(){1}()]', 4],
 ]);
