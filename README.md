@@ -47,7 +47,7 @@ A working in progress. More features and docs soon.
 
 ### Why?
 
-This is just a C-like language and its interpreter that I built to learn and understand how things work, how lexers and parsers work. I hope that could be useful to you, at least, inspire you to create your interpreter.
+This is just a C-like language and its interpreter that I built to learn and understand how things work, how lexers and parsers work. I hope that could be useful to you, at least, inspire you to create your interpreter to learn those things.
 
 ### How it works?
 
