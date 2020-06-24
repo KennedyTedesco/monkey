@@ -33,6 +33,12 @@ final class EvalBinaryExpression
             case $left instanceof StringObject && $right instanceof StringObject:
                 return (new EvalStringBinaryExpression())($operator, $left, $right);
 
+            case '&&' === $operator:
+                return BooleanObject::from($left->value() && $right->value());
+
+            case '||' === $operator:
+                return BooleanObject::from($left->value() || $right->value());
+
             case '==' === $operator:
                 return BooleanObject::from($left->value() === $right->value());
 

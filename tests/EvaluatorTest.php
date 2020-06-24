@@ -78,6 +78,11 @@ test('eval boolean expression', function (string $input, bool $expected) {
     ['true == false', false],
     ['true != false', true],
     ['true == true', true],
+    ['true || true', true],
+    ['true && true', true],
+    ['true && false', false],
+    ['false || true', true],
+    ['false || false', false],
     ['1 >= 1', true],
     ['1 <= 1', true],
     ['1 == 1', true],
@@ -112,6 +117,8 @@ test('eval if else expressions', function (string $input, $expected) {
     ['if (0) { 10 }', NullObject::instance()],
     ['if (true == false) { 10 }', NullObject::instance()],
     ['if (true) { 10 }', 10],
+    ['if (true && true) { 10 }', 10],
+    ['if (true || false) { 10 }', 10],
     ['if (1) { 10 }', 10],
     ['if (1 < 2) { 10 }', 10],
     ['if (1 > 2) { 10 } else { 20 }', 20],
@@ -136,6 +143,9 @@ test('error handling', function (string $input, string $expected) {
     assertInstanceOf(ErrorObject::class, $object);
     assertSame($expected, $object->value());
 })->with([
+    ['5 && true;', 'type mismatch: INTEGER && BOOLEAN'],
+    ['5 || true;', 'type mismatch: INTEGER || BOOLEAN'],
+    ['"1" || true;', 'type mismatch: STRING || BOOLEAN'],
     ['5 + true;', 'type mismatch: INTEGER + BOOLEAN'],
     ['5 + true; 5;', 'type mismatch: INTEGER + BOOLEAN'],
     ['-true', 'unknown operator: -BOOLEAN'],
