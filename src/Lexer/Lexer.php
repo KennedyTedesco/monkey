@@ -34,17 +34,17 @@ final class Lexer
         $this->skipWhitespaces();
 
         switch (true) {
-            case $this->curAndPeekIs('=='):
+            case $this->curAndPeekCharIs('=='):
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ);
-            case $this->curAndPeekIs('!='):
+            case $this->curAndPeekCharIs('!='):
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_NOT_EQ);
-            case $this->curAndPeekIs('>='):
+            case $this->curAndPeekCharIs('>='):
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_GT_EQ);
-            case $this->curAndPeekIs('<='):
+            case $this->curAndPeekCharIs('<='):
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ);
-            case $this->curAndPeekIs('&&'):
+            case $this->curAndPeekCharIs('&&'):
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_AND);
-            case $this->curAndPeekIs('||'):
+            case $this->curAndPeekCharIs('||'):
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_OR);
             case $this->curChar->is('"'):
                 return $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString());
@@ -67,7 +67,7 @@ final class Lexer
         }
     }
 
-    private function curAndPeekIs(string $operators): bool
+    private function curAndPeekCharIs(string $operators): bool
     {
         return $this->curChar->is($operators[0]) && $this->peekChar->is($operators[1]);
     }
