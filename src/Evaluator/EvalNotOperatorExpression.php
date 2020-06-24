@@ -8,7 +8,7 @@ use Monkey\Object\BooleanObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
 
-final class EvalBangOperatorExpression
+final class EvalNotOperatorExpression
 {
     public function __invoke(InternalObject $right): InternalObject
     {

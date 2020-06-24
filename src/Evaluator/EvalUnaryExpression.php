@@ -16,7 +16,7 @@ final class EvalUnaryExpression
                 return $right;
 
             case '!' === $operator:
-                return (new EvalBangOperatorExpression())($right);
+                return (new EvalNotOperatorExpression())($right);
 
             case '-' === $operator:
                 return (new EvalMinusUnaryOperatorExpression())($right);

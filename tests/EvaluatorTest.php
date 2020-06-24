@@ -37,6 +37,8 @@ test('eval integer expressions', function (string $input, int $expected) {
 })->with([
     ['5', 5],
     ['10', 10],
+    ['10 % 2', 0],
+    ['11 % 2', 1],
     ['(5 + 5) * 2', 20],
     ['5 + 5 * 2', 15],
     ['5 + 5 + 5 + 5 - 10', 10],

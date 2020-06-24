@@ -23,6 +23,8 @@ final class EvalIntegerBinaryExpression
                 return new IntegerObject($left->value() - $right->value());
             case '*':
                 return new IntegerObject($left->value() * $right->value());
+            case '%':
+                return new IntegerObject($left->value() % $right->value());
             case '/':
                 return new IntegerObject($left->value() / $right->value());
             case '<':
