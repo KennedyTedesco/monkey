@@ -20,6 +20,14 @@ final class ObjectUtils
             return false;
         }
 
+        if ($object instanceof StringObject && '' === $object->value()) {
+            return false;
+        }
+
+        if ($object instanceof FloatObject && 0.0 === $object->value()) {
+            return false;
+        }
+
         return true;
     }
 }
