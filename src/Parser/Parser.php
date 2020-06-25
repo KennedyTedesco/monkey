@@ -64,36 +64,36 @@ final class Parser
     {
         $this->lexer = $lexer;
 
-        $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
-        $this->registerPrefixParselet(TokenType::T_INT, new ScalarParselet($this));
-        $this->registerPrefixParselet(TokenType::T_FLOAT, new ScalarParselet($this));
-        $this->registerPrefixParselet(TokenType::T_NOT, new UnaryOperatorParselet($this));
-        $this->registerPrefixParselet(TokenType::T_MINUS, new UnaryOperatorParselet($this));
-        $this->registerPrefixParselet(TokenType::T_TRUE, new ScalarParselet($this));
-        $this->registerPrefixParselet(TokenType::T_FALSE, new ScalarParselet($this));
-        $this->registerPrefixParselet(TokenType::T_LPAREN, new GroupedExpressionParselet($this));
-        $this->registerPrefixParselet(TokenType::T_IF, new IfExpressionParselet($this));
-        $this->registerPrefixParselet(TokenType::T_FN, new FunctionLiteralParselet($this));
-        $this->registerPrefixParselet(TokenType::T_STRING, new ScalarParselet($this));
-        $this->registerPrefixParselet(TokenType::T_LBRACKET, new ArrayParselet($this));
+        $this->registerPrefix(TokenType::T_IDENT, new IdentifierParselet($this));
+        $this->registerPrefix(TokenType::T_INT, new ScalarParselet($this));
+        $this->registerPrefix(TokenType::T_FLOAT, new ScalarParselet($this));
+        $this->registerPrefix(TokenType::T_NOT, new UnaryOperatorParselet($this));
+        $this->registerPrefix(TokenType::T_MINUS, new UnaryOperatorParselet($this));
+        $this->registerPrefix(TokenType::T_TRUE, new ScalarParselet($this));
+        $this->registerPrefix(TokenType::T_FALSE, new ScalarParselet($this));
+        $this->registerPrefix(TokenType::T_LPAREN, new GroupedExpressionParselet($this));
+        $this->registerPrefix(TokenType::T_IF, new IfExpressionParselet($this));
+        $this->registerPrefix(TokenType::T_FN, new FunctionLiteralParselet($this));
+        $this->registerPrefix(TokenType::T_STRING, new ScalarParselet($this));
+        $this->registerPrefix(TokenType::T_LBRACKET, new ArrayParselet($this));
 
-        $this->registerInfixParselet(TokenType::T_PLUS, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_MODULO, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_POWER, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_MINUS, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_SLASH, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_ASTERISK, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_EQ, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_NOT_EQ, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_LT, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_LT_EQ, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_GT, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_GT_EQ, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_AND, new BinaryOperatorParselet($this));
-        $this->registerInfixParselet(TokenType::T_OR, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_PLUS, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_MODULO, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_POWER, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_MINUS, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_SLASH, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_ASTERISK, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_EQ, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_NOT_EQ, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_LT, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_LT_EQ, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_GT, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_GT_EQ, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_AND, new BinaryOperatorParselet($this));
+        $this->registerInfix(TokenType::T_OR, new BinaryOperatorParselet($this));
 
-        $this->registerInfixParselet(TokenType::T_LBRACKET, new IndexExpressionParselet($this));
-        $this->registerInfixParselet(TokenType::T_LPAREN, new CallExpressionParselet($this));
+        $this->registerInfix(TokenType::T_LBRACKET, new IndexExpressionParselet($this));
+        $this->registerInfix(TokenType::T_LPAREN, new CallExpressionParselet($this));
 
         $this->nextToken(2);
     }
@@ -144,31 +144,6 @@ final class Parser
         return $leftExpression;
     }
 
-    public function peekError(int $type): void
-    {
-        $this->errors[] = \sprintf(
-            'expected next token to be %s, got %s instead',
-            TokenType::name($type), $this->peekToken->literal()
-        );
-    }
-
-    public function prefixParserError(int $type): void
-    {
-        $this->errors[] = \sprintf(
-            'no prefix parse function for %s found', TokenType::name($type)
-        );
-    }
-
-    public function registerPrefixParselet(int $type, PrefixParselet $parselet): void
-    {
-        $this->prefixParselets[$type] = $parselet;
-    }
-
-    public function registerInfixParselet(int $type, InfixParselet $parselet): void
-    {
-        $this->infixParselets[$type] = $parselet;
-    }
-
     public function precedence(Token $token): int
     {
         return $this->precedences[$token->type()] ?? Precedence::LOWEST;
@@ -177,5 +152,30 @@ final class Parser
     public function errors(): array
     {
         return $this->errors;
+    }
+
+    private function registerPrefix(int $type, PrefixParselet $parselet): void
+    {
+        $this->prefixParselets[$type] = $parselet;
+    }
+
+    private function registerInfix(int $type, InfixParselet $parselet): void
+    {
+        $this->infixParselets[$type] = $parselet;
+    }
+
+    private function prefixParserError(int $type): void
+    {
+        $this->errors[] = \sprintf(
+            'no prefix parse function for %s found', TokenType::name($type)
+        );
+    }
+
+    private function peekError(int $type): void
+    {
+        $this->errors[] = \sprintf(
+            'expected next token to be %s, got %s instead',
+            TokenType::name($type), $this->peekToken->literal()
+        );
     }
 }
