@@ -8,26 +8,16 @@ final class ObjectUtils
 {
     public static function isTruthy(InternalObject $object): bool
     {
-        if ($object instanceof BooleanObject) {
-            return $object->value();
+        switch (true) {
+            case $object instanceof BooleanObject:
+                return $object->value();
+            case $object instanceof NullObject:
+            case $object instanceof IntegerObject && 0 === $object->value():
+            case $object instanceof StringObject && '' === $object->value():
+            case $object instanceof FloatObject && 0.0 === $object->value():
+                return false;
+            default:
+                return true;
         }
-
-        if ($object instanceof NullObject) {
-            return false;
-        }
-
-        if ($object instanceof IntegerObject && 0 === $object->value()) {
-            return false;
-        }
-
-        if ($object instanceof StringObject && '' === $object->value()) {
-            return false;
-        }
-
-        if ($object instanceof FloatObject && 0.0 === $object->value()) {
-            return false;
-        }
-
-        return true;
     }
 }
