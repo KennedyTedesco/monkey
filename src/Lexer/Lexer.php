@@ -52,7 +52,7 @@ final class Lexer
                 return $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString());
             case $this->curChar->isLetter():
                 return Token::from(
-                    TokenType::lookupToken($identifier = $this->readIdentifier(), TokenType::T_IDENT), $identifier
+                    TokenType::lookupToken($identifier = $this->readIdentifier()) ?? TokenType::T_IDENT, $identifier
                 );
             case $this->curChar->isDigit():
                 return Token::from(\ctype_digit($number = $this->readNumber()) ? TokenType::T_INT : TokenType::T_FLOAT, $number);

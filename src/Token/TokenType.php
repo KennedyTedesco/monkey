@@ -99,7 +99,7 @@ final class TokenType
         'return' => self::T_RETURN,
     ];
 
-    public static function name(int $type): string
+    public static function lexeme(int $type): string
     {
         static $constants;
         $name = \array_search(
@@ -109,9 +109,9 @@ final class TokenType
         return \is_string($name) ? $name : 'T_ILLEGAL';
     }
 
-    public static function lookupToken(string $ch, int $default = null): ?int
+    public static function lookupToken(string $ch): ?int
     {
-        return self::TOKEN_MAP[$ch] ?? $default ?? null;
+        return self::TOKEN_MAP[$ch] ?? null;
     }
 
     public static function isSingleCharToken(string $ch): bool

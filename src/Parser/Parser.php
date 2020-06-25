@@ -167,7 +167,7 @@ final class Parser
     private function prefixParserError(int $type): void
     {
         $this->errors[] = \sprintf(
-            'no prefix parse function for %s found', TokenType::name($type)
+            'no prefix parse function for %s found', TokenType::lexeme($type)
         );
     }
 
@@ -175,7 +175,7 @@ final class Parser
     {
         $this->errors[] = \sprintf(
             'expected next token to be %s, got %s instead',
-            TokenType::name($type), $this->peekToken->literal()
+            TokenType::lexeme($type), $this->peekToken->literal()
         );
     }
 }
