@@ -38,6 +38,7 @@ test('basic tokens', function () {
         true || false;
         10 % 2;
         10.5 * 0.5;
+        2 ** 2;
 MONKEY;
 
     $tokens = [
@@ -185,6 +186,12 @@ MONKEY;
         [TokenType::T_FLOAT, '10.5'],
         [TokenType::T_ASTERISK, '*'],
         [TokenType::T_FLOAT, '0.5'],
+        [TokenType::T_SEMICOLON, ';'],
+
+        // 2 ** 2;
+        [TokenType::T_INT, '2'],
+        [TokenType::T_POWER, '**'],
+        [TokenType::T_INT, '2'],
         [TokenType::T_SEMICOLON, ';'],
 
         [TokenType::T_EOF, Lexer::EOF],

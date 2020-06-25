@@ -24,6 +24,8 @@ final class EvalNumericBinaryExpression
                 return new $left($left->value() * $right->value());
             case '%':
                 return new $left($left->value() % $right->value());
+            case '**':
+                return new $left($left->value() ** $right->value());
             case '/':
                 return new $left($left->value() / $right->value());
             case '<':

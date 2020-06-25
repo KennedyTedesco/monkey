@@ -24,6 +24,7 @@ final class TokenType
     public const T_ASTERISK = 0x203;
     public const T_SLASH = 0x204;
     public const T_MODULO = 0x205;
+    public const T_POWER = 0x206;
 
     // Logical operators
     public const T_NOT = 0x300;
@@ -66,6 +67,7 @@ final class TokenType
         '!' => self::T_NOT,
         '*' => self::T_ASTERISK,
         '%' => self::T_MODULO,
+        '**' => self::T_POWER,
         '/' => self::T_SLASH,
 
         ',' => self::T_COMMA,

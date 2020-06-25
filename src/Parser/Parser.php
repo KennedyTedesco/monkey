@@ -57,6 +57,7 @@ final class Parser
         TokenType::T_LBRACKET => Precedence::INDEX,
         TokenType::T_AND => Precedence::AND,
         TokenType::T_OR => Precedence::OR,
+        TokenType::T_POWER => Precedence::POWER,
     ];
 
     public function __construct(Lexer $lexer)
@@ -78,6 +79,7 @@ final class Parser
 
         $this->registerInfixParselet(TokenType::T_PLUS, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_MODULO, new BinaryOperatorParselet($this));
+        $this->registerInfixParselet(TokenType::T_POWER, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_MINUS, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_SLASH, new BinaryOperatorParselet($this));
         $this->registerInfixParselet(TokenType::T_ASTERISK, new BinaryOperatorParselet($this));

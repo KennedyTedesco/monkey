@@ -51,6 +51,7 @@ test('eval integer expressions', function (string $input, $expected) {
     ['10', 10],
     ['10 % 2', 0],
     ['11 % 2', 1],
+    ['2 ** 2', 4],
     ['0.5 * 0.5', 0.25],
     ['9.5 + 0.5', 10.0],
     ['(5 + 5) * 2', 20],

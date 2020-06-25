@@ -16,4 +16,5 @@ final class Precedence
     public const PREFIX = 0x8;
     public const CALL = 0x9;
     public const INDEX = 0xA;
+    public const POWER = 0xB;
 }

@@ -34,6 +34,8 @@ final class Lexer
         $this->skipWhitespaces();
 
         switch (true) {
+            case $this->curAndPeekCharIs('**'):
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_POWER);
             case $this->curAndPeekCharIs('=='):
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ);
             case $this->curAndPeekCharIs('!='):
