@@ -114,6 +114,6 @@ final class TokenType
 
     public static function isSingleCharToken(string $ch): bool
     {
-        return self::lookupToken($ch) && 1 === \mb_strlen($ch);
+        return 1 === \mb_strlen($ch) && self::lookupToken($ch);
     }
 }
