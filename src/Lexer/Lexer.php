@@ -50,8 +50,7 @@ final class Lexer
                 return $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString());
             case $this->curChar->isLetter():
                 return Token::from(
-                    TokenType::lookupToken($identifier = $this->readIdentifier()) ?? TokenType::T_IDENT,
-                    $identifier
+                    TokenType::lookupToken($identifier = $this->readIdentifier(), TokenType::T_IDENT), $identifier
                 );
             case $this->curChar->isDigit():
                 return Token::from(\ctype_digit($number = $this->readNumber()) ? TokenType::T_INT : TokenType::T_FLOAT, $number);
@@ -59,8 +58,7 @@ final class Lexer
                 return Token::from(TokenType::T_EOF, self::EOF);
             case TokenType::isSingleCharToken($this->curChar->toScalar()):
                 return $this->makeTokenAndAdvance(
-                    TokenType::lookupToken($this->curChar->toScalar()),
-                    $this->curChar->toScalar()
+                    TokenType::lookupToken($this->curChar->toScalar()), $this->curChar->toScalar()
                 );
             default:
                 return $this->makeTokenAndAdvance(TokenType::T_ILLEGAL, $this->curChar->toScalar());
