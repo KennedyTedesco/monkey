@@ -9,6 +9,7 @@ interface InternalObject
     public const NULL_OBJ = 'NULL';
     public const ERROR_OBJ = 'ERROR';
 
+    public const FLOAT_OBJ = 'FLOAT';
     public const INTEGER_OBJ = 'INTEGER';
     public const BOOLEAN_OBJ = 'BOOLEAN';
     public const STRING_OBJ = 'STRING';

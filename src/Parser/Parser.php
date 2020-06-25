@@ -65,6 +65,7 @@ final class Parser
 
         $this->registerPrefixParselet(TokenType::T_IDENT, new IdentifierParselet($this));
         $this->registerPrefixParselet(TokenType::T_INT, new ScalarParselet($this));
+        $this->registerPrefixParselet(TokenType::T_FLOAT, new ScalarParselet($this));
         $this->registerPrefixParselet(TokenType::T_NOT, new UnaryOperatorParselet($this));
         $this->registerPrefixParselet(TokenType::T_MINUS, new UnaryOperatorParselet($this));
         $this->registerPrefixParselet(TokenType::T_TRUE, new ScalarParselet($this));

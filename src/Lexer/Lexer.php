@@ -54,7 +54,7 @@ final class Lexer
                     $identifier
                 );
             case $this->curChar->isDigit():
-                return Token::from(TokenType::T_INT, $this->readNumber());
+                return Token::from(\ctype_digit($number = $this->readNumber()) ? TokenType::T_INT : TokenType::T_FLOAT, $number);
             case $this->curChar->is(self::EOF):
                 return Token::from(TokenType::T_EOF, self::EOF);
             case TokenType::isSingleCharToken($this->curChar->toScalar()):
@@ -102,9 +102,11 @@ final class Lexer
     private function readNumber(): string
     {
         $position = $this->position;
-        while ($this->curChar->isDigit()) {
+
+        while ($this->curChar->isDigit() || $this->curChar->is('.')) {
             $this->readChar();
         }
+
         return $this->input->substr($position, $this->position - $position);
     }
 

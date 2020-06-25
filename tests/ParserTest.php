@@ -193,6 +193,7 @@ test('infix expressions', function (string $input, $leftValue, string $operator,
 
     assertInfixExpression($expression, $leftValue, $operator, $rightValue);
 })->with([
+    ['10.5 + 0.5;', 10.5, '+', 0.5],
     ['5 + 5;', 5, '+', 5],
     ['5 - 5;', 5, '-', 5],
     ['5 * 5;', 5, '*', 5],
@@ -235,6 +236,7 @@ test('operator precedence parsing', function (string $input, string $expected) {
     ['(5 + 5) * 2', '((5 + 5) * 2)'],
     ['2 / (5 + 5)', '(2 / (5 + 5))'],
     ['-(5 + 5)', '(-(5 + 5))'],
+    ['-(0.5 + 0.1)', '(-(0.5 + 0.1))'],
     ['!(true == true)', '(!(true == true))'],
     ['true && false || true', '((true && false) || true)'],
     ['true || false || true', '((true || false) || true)'],

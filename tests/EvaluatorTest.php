@@ -7,6 +7,7 @@ namespace Tests;
 use Monkey\Object\ArrayObject;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
+use Monkey\Object\FloatObject;
 use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
@@ -17,6 +18,13 @@ function testIntegerObject(InternalObject $object, int $expected)
 {
     assertInstanceOf(IntegerObject::class, $object);
     assertSame(InternalObject::INTEGER_OBJ, $object->type());
+    assertSame($expected, $object->value());
+}
+
+function testFloatObject(InternalObject $object, float $expected)
+{
+    assertInstanceOf(FloatObject::class, $object);
+    assertSame(InternalObject::FLOAT_OBJ, $object->type());
     assertSame($expected, $object->value());
 }
 
@@ -32,13 +40,19 @@ function testBooleanObject(InternalObject $object, bool $expected)
     assertSame($expected, $object->value());
 }
 
-test('eval integer expressions', function (string $input, int $expected) {
-    testIntegerObject(evalProgram($input), $expected);
+test('eval integer expressions', function (string $input, $expected) {
+    if (\is_int($expected)) {
+        testIntegerObject(evalProgram($input), $expected);
+    } elseif (\is_float($expected)) {
+        testFloatObject(evalProgram($input), $expected);
+    }
 })->with([
     ['5', 5],
     ['10', 10],
     ['10 % 2', 0],
     ['11 % 2', 1],
+    ['0.5 * 0.5', 0.25],
+    ['9.5 + 0.5', 10.0],
     ['(5 + 5) * 2', 20],
     ['5 + 5 * 2', 15],
     ['5 + 5 + 5 + 5 - 10', 10],
@@ -75,6 +89,9 @@ test('eval boolean expression', function (string $input, bool $expected) {
     ['false', false],
     ['1 > 1', false],
     ['1 < 1', false],
+    ['"foo" == "foo"', true],
+    ['"bar" == "foo"', false],
+    ['"baz" != "foo"', true],
     ['true == false', false],
     ['true != false', true],
     ['true == true', true],

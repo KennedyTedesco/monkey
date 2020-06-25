@@ -19,6 +19,7 @@ use Monkey\Ast\Statements\LetStatement;
 use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\ArrayLiteral;
 use Monkey\Ast\Types\BooleanLiteral;
+use Monkey\Ast\Types\FloatLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Ast\Types\StringLiteral;
@@ -27,6 +28,7 @@ use Monkey\Object\ArrayObject;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\BuiltinFunctionObject;
 use Monkey\Object\ErrorObject;
+use Monkey\Object\FloatObject;
 use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
@@ -49,6 +51,18 @@ final class Evaluator
             case $node instanceof Program:
                 return (new EvalProgram($this, $env))($node);
 
+            case $node instanceof IntegerLiteral:
+                return new IntegerObject($node->value());
+
+            case $node instanceof FloatLiteral:
+                return new FloatObject($node->value());
+
+            case $node instanceof StringLiteral:
+                return new StringObject($node->value());
+
+            case $node instanceof BooleanLiteral:
+                return BooleanObject::from($node->value());
+
             case $node instanceof BlockStatement:
                 return (new EvalBlockStatement($this, $env))($node);
 
@@ -60,15 +74,6 @@ final class Evaluator
 
             case $node instanceof ExpressionStatement:
                 return $this->eval($node->expression(), $env);
-
-            case $node instanceof IntegerLiteral:
-                return new IntegerObject($node->value());
-
-            case $node instanceof StringLiteral:
-                return new StringObject($node->value());
-
-            case $node instanceof BooleanLiteral:
-                return BooleanObject::from($node->value());
 
             case $node instanceof ReturnStatement:
                 if ($this->isError($object = $this->eval($node->returnValue(), $env))) {

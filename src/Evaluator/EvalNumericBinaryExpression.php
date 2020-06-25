@@ -6,27 +6,26 @@ namespace Monkey\Evaluator;
 
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
-use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 
-final class EvalIntegerBinaryExpression
+final class EvalNumericBinaryExpression
 {
     public function __invoke(
         string $operator,
-        IntegerObject $left,
-        IntegerObject $right
+        InternalObject $left,
+        InternalObject $right
     ): InternalObject {
         switch ($operator) {
             case '+':
-                return new IntegerObject($left->value() + $right->value());
+                return new $left($left->value() + $right->value());
             case '-':
-                return new IntegerObject($left->value() - $right->value());
+                return new $left($left->value() - $right->value());
             case '*':
-                return new IntegerObject($left->value() * $right->value());
+                return new $left($left->value() * $right->value());
             case '%':
-                return new IntegerObject($left->value() % $right->value());
+                return new $left($left->value() % $right->value());
             case '/':
-                return new IntegerObject($left->value() / $right->value());
+                return new $left($left->value() / $right->value());
             case '<':
                 return BooleanObject::from($left->value() < $right->value());
             case '>':
