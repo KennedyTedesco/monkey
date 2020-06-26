@@ -24,16 +24,13 @@ use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Ast\Types\StringLiteral;
 use Monkey\Evaluator\Builtin\EvalLenFunction;
-use Monkey\Object\ArrayObject;
 use Monkey\Object\BooleanObject;
-use Monkey\Object\BuiltinFunctionObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FloatObject;
 use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\InternalObject;
 use Monkey\Object\NullObject;
-use Monkey\Object\ReturnValueObject;
 use Monkey\Object\StringObject;
 
 final class Evaluator
@@ -76,40 +73,16 @@ final class Evaluator
                 return $this->eval($node->expression(), $env);
 
             case $node instanceof ReturnStatement:
-                if ($this->isError($object = $this->eval($node->returnValue(), $env))) {
-                    return $object;
-                }
-                return new ReturnValueObject($object);
+                return (new EvalReturnStatement($this, $env))($node);
 
             case $node instanceof CallExpression:
-                /** @var FunctionObject $function */
-                $function = $this->eval($node->function(), $env);
-                if ($this->isError($function)) {
-                    return $function;
-                }
-                $args = $this->evalExpressions($node->arguments(), $env);
-                if (1 === $args && $this->isError($args[0])) {
-                    return $args[0];
-                }
-                return $this->applyFunction($function, $args);
+                return (new EvalCallExpression($this, $env))($node);
 
             case $node instanceof ArrayLiteral:
-                $elements = $this->evalExpressions($node->elements(), $env);
-                if (1 === $elements && $this->isError($elements[0])) {
-                    return $elements[0];
-                }
-                return new ArrayObject($elements);
+                return (new EvalArrayLiteral($this, $env))($node);
 
             case $node instanceof IndexExpression:
-                $left = $this->eval($node->left(), $env);
-                if ($this->isError($left)) {
-                    return $left;
-                }
-                $index = $this->eval($node->index(), $env);
-                if ($this->isError($index)) {
-                    return $index;
-                }
-                return (new EvalIndexExpression())($left, $index);
+                return (new EvalIndexExpression($this, $env))($node);
 
             case $node instanceof UnaryExpression:
                 return (new EvalUnaryExpression())(
@@ -146,57 +119,14 @@ final class Evaluator
         /** @var Expression $expression */
         foreach ($expressions as $expression) {
             $object = $this->eval($expression, $env);
-            if ($this->isError($object)) {
+
+            if ($object instanceof ErrorObject) {
                 return [$object];
             }
+
             $result[] = $object;
         }
 
         return $result;
-    }
-
-    private function applyFunction(InternalObject $function, array $args): InternalObject
-    {
-        if ($function instanceof FunctionObject) {
-            $extendedEnv = $this->extendFunctionEnv($function, $args);
-
-            return $this->unwrapReturnValue(
-                $this->eval($function->body(), $extendedEnv)
-            );
-        }
-
-        if ($function instanceof BuiltinFunctionObject) {
-            return $function->value()(...$args);
-        }
-
-        return ErrorObject::notAFunction($function->type());
-    }
-
-    /**
-     * @param array<InternalObject> $args
-     */
-    private function extendFunctionEnv(FunctionObject $function, array $args): Environment
-    {
-        $env = Environment::newEnclosed($function->environment());
-        /** @var IdentifierExpression $parameter */
-        foreach ($function->parameters() as $index => $parameter) {
-            $env->set($parameter->value(), $args[$index]);
-        }
-
-        return $env;
-    }
-
-    private function unwrapReturnValue(InternalObject $object): InternalObject
-    {
-        if ($object instanceof ReturnValueObject) {
-            return $object->value();
-        }
-
-        return $object;
-    }
-
-    private function isError(InternalObject $object): bool
-    {
-        return $object instanceof ErrorObject;
     }
 }
