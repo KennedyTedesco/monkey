@@ -116,6 +116,7 @@ final class Evaluator
     public function evalExpressions(array $expressions, Environment $env): array
     {
         $result = [];
+
         /** @var Expression $expression */
         foreach ($expressions as $expression) {
             $object = $this->eval($expression, $env);
