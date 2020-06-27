@@ -21,6 +21,13 @@ function testIntegerObject(MonkeyObject $object, int $expected)
     assertSame($expected, $object->value());
 }
 
+function testStringObject(MonkeyObject $object, string $expected)
+{
+    assertInstanceOf(StringObject::class, $object);
+    assertSame(MonkeyObject::MO_STRING, $object->type());
+    assertSame($expected, $object->value());
+}
+
 function testFloatObject(MonkeyObject $object, float $expected)
 {
     assertInstanceOf(FloatObject::class, $object);
@@ -181,6 +188,21 @@ test('eval let statements', function (string $input, int $expected) {
     ['let a = 5;', 5],
     ['let a = 5; a;', 5],
     ['let a = 5 * 5; a;', 25],
+]);
+
+test('eval assign statements', function (string $input, $expected) {
+    if (\is_int($expected)) {
+        testIntegerObject(evalProgram($input), $expected);
+    } elseif (\is_float($expected)) {
+        testFloatObject(evalProgram($input), $expected);
+    } elseif (\is_string($expected)) {
+        testStringObject(evalProgram($input), $expected);
+    }
+})->with([
+    ['let a = 5; a = 10;', 10],
+    ['let a = 5; a;', 5],
+    ['let a = 5; a = 5.5;', 5.5],
+    ['let a = 5 * 5; a = "foo";', 'foo'],
 ]);
 
 test('function object', function () {

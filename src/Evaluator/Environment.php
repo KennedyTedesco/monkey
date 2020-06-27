@@ -27,4 +27,9 @@ final class Environment
     {
         return $this->store[$name] ?? (null !== $this->outer ? $this->outer->get($name) : null);
     }
+
+    public function contains(string $name): bool
+    {
+        return \array_key_exists($name, $this->store) || ($this->outer && $this->outer->contains($name));
+    }
 }

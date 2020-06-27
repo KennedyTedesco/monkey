@@ -9,12 +9,14 @@ use Monkey\Token\TokenType;
 
 final class StatementParser
 {
-    public function __invoke(Parser $parser): ?Statement
+    public function __invoke(Parser $parser): Statement
     {
-        switch ($parser->curToken->type()) {
-            case TokenType::T_LET:
+        switch (true) {
+            case $parser->curToken->is(TokenType::T_IDENT) && $parser->peekToken->is(TokenType::T_ASSIGN):
+                return (new AssignStatementParser())($parser);
+            case $parser->curToken->is(TokenType::T_LET):
                 return (new LetStatementParser())($parser);
-            case TokenType::T_RETURN:
+            case $parser->curToken->is(TokenType::T_RETURN):
                 return (new ReturnStatementParser())($parser);
             default:
                 return (new ExpressionStatementParser())($parser);

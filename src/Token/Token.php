@@ -20,14 +20,9 @@ final class Token
         return new self($type, $literal);
     }
 
-    public function is(int ...$types): bool
+    public function is(int $type): bool
     {
-        foreach ($types as $type) {
-            if ($type === $this->type) {
-                return true;
-            }
-        }
-        return false;
+        return $type === $this->type;
     }
 
     public function type(): int

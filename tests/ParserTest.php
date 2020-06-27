@@ -11,6 +11,7 @@ use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\IndexExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Expressions\WhileExpression;
+use Monkey\Ast\Statements\AssignStatement;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
@@ -40,6 +41,25 @@ test('let statements', function (string $input, string $name, $value) {
     ['let y = 10;', 'y', 10],
     ['let foo = true;', 'foo', true],
     ['let foo_bar = false;', 'foo_bar', false],
+]);
+
+test('assign statements', function (string $input, string $name, $value) {
+    $program = newProgram($input);
+    assertSame(1, $program->count());
+
+    /** @var AssignStatement $assignStatement */
+    $assignStatement = $program->statement(0);
+    assertInstanceOf(AssignStatement::class, $assignStatement);
+
+    assertSame($name, $assignStatement->name()->tokenLiteral());
+
+    /** @var IntegerLiteral|BooleanLiteral $valueExpression */
+    $valueExpression = $assignStatement->value();
+    assertSame($value, $valueExpression->value());
+})->with([
+    ['x = 5;', 'x', 5],
+    ['y = 10;', 'y', 10],
+    ['foo = true;', 'foo', true],
 ]);
 
 test('return statement', function (string $input, $value) {

@@ -30,7 +30,7 @@ final class ScalarParselet implements PrefixParselet
                 return new IntegerLiteral($token, (int) $token->literal());
             case $token->is(TokenType::T_FLOAT):
                 return new FloatLiteral($token, (float) $token->literal());
-            case $token->is(TokenType::T_FALSE, TokenType::T_TRUE):
+            case $token->is(TokenType::T_FALSE) || $token->is(TokenType::T_TRUE):
                 return new BooleanLiteral($token, $token->is(TokenType::T_TRUE));
             case $token->is(TokenType::T_STRING):
                 return new StringLiteral($token, $token->literal());

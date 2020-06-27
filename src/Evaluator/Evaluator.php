@@ -13,6 +13,7 @@ use Monkey\Ast\Expressions\IndexExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Node;
 use Monkey\Ast\Program;
+use Monkey\Ast\Statements\AssignStatement;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
@@ -99,6 +100,9 @@ final class Evaluator
 
             case $node instanceof LetStatement:
                 return (new EvalLetStatement($this, $env))($node);
+
+            case $node instanceof AssignStatement:
+                return (new EvalAssingStatement($this, $env))($node);
 
             case $node instanceof IdentifierExpression:
                 return (new EvalIdentifier($env))($node);
