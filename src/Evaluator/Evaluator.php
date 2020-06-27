@@ -11,6 +11,7 @@ use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\IndexExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
+use Monkey\Ast\Expressions\WhileExpression;
 use Monkey\Ast\Node;
 use Monkey\Ast\Program;
 use Monkey\Ast\Statements\AssignStatement;
@@ -66,6 +67,9 @@ final class Evaluator
 
             case $node instanceof IfExpression:
                 return (new EvalIfExpression($this, $env))($node);
+
+            case $node instanceof WhileExpression:
+                return (new EvalWhileExpression($this, $env))($node);
 
             case $node instanceof FunctionLiteral:
                 return new FunctionObject($node->parameters(), $node->body(), $env);

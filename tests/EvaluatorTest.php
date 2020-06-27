@@ -286,7 +286,7 @@ test('eval array index operations', function (string $input, ?int $expected) {
     }
 
     if ($object instanceof IntegerObject) {
-        testIntegerObject($object, $object->value());
+        testIntegerObject($object, $expected);
     }
 })->with([
     ['[1, 2, 3][0]', 1],
@@ -301,3 +301,22 @@ test('eval array index operations', function (string $input, ?int $expected) {
     ['[1, 2, 3][-1]', null],
     ['[1, fn(x){x * 2}(2), "Baz"][fn(){1}()]', 4],
 ]);
+
+test('eval while', function () {
+    $input = <<<MONKEY
+        let foo = fn() {
+            let x = 0;
+
+            while (x < 100) {
+                x = x + 1;
+            }
+
+            return x;
+        };
+        
+        foo();
+    MONKEY;
+
+    $object = evalProgram($input);
+    testIntegerObject($object, 100);
+});
