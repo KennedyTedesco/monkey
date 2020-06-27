@@ -12,6 +12,7 @@ The Monkey Programming Language & Interpreter in **PHP**. From the awesome [Writ
 - Integers, floats, booleans, strings, arrays, hash maps (TODO);
 - Arithmetic expressions;
 - Conditional expressions;
+- While expression;
 - Let statements;
 - First-class and higher-order functions;
 - Built-in functions;
@@ -20,7 +21,6 @@ The Monkey Programming Language & Interpreter in **PHP**. From the awesome [Writ
 
 **Future scope:**
 
-- Loops;
 - More Logical Operators;
 - More built-in functions;
 - Enums;
@@ -50,7 +50,7 @@ This is just a C-like language and its interpreter that I built to learn and und
 
 ### Is it fast?
 
-Not. It's slow because this is a pure interpreter in PHP, and PHP compiles to an intermediate code that runs on top of a Virtual Machine written in C. Also, speed isn't the goal. The goal here is to learn, play, and have fun with the foundation of interpreters.
+Not. It's slow because this is a pure tree-walk interpreter (which is notable slow) written in a PHP (a high-level programming language), and PHP compiles to an intermediate code that runs on top of a Virtual Machine written in C. Also, speed isn't the goal. The goal here is to learn, play, and have fun with the foundation of interpreters.
 
 ### How it works?
 
