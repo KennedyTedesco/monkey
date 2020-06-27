@@ -50,7 +50,7 @@ This is just a C-like language and its interpreter that I built to learn and und
 
 ### Is it fast?
 
-Not. It's slow because this is a pure interpreter in PHP, and PHP already runs on top of a Virtual Machine written in C. Also, speed isn't the goal. The goal here is to learn, play, and have fun with the foundation of interpreters.
+Not. It's slow because this is a pure interpreter in PHP, and PHP compiles to an intermediate code that runs on top of a Virtual Machine written in C. Also, speed isn't the goal. The goal here is to learn, play, and have fun with the foundation of interpreters.
 
 ### How it works?
 
