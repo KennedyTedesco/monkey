@@ -23,6 +23,9 @@ The Monkey Programming Language & Interpreter in **PHP**. From the awesome [Writ
 - Loops;
 - More Logical Operators;
 - More built-in functions;
+- Enums;
+- Classes and Objects;
+- Match Expression;
 - Etc.
 
 **Basic syntax:**
