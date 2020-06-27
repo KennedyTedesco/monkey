@@ -9,7 +9,7 @@ use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Evaluator\Environment;
 use Monkey\Evaluator\Evaluator;
 use Monkey\Lexer\Lexer;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
 
@@ -40,7 +40,7 @@ function newProgram(string $input): Program
     );
 }
 
-function evalProgram(string $input): InternalObject
+function evalProgram(string $input): MonkeyObject
 {
     return (new Evaluator())->eval(newProgram($input), Environment::new());
 }

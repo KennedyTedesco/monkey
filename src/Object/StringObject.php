@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class StringObject implements InternalObject
+final class StringObject extends MonkeyObject
 {
     private string $value;
 

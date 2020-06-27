@@ -8,7 +8,7 @@ use Monkey\Ast\Expressions\IndexExpression;
 use Monkey\Object\ArrayObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\IntegerObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 
 final class EvalIndexExpression
@@ -24,7 +24,7 @@ final class EvalIndexExpression
         $this->evaluator = $evaluator;
     }
 
-    public function __invoke(IndexExpression $node): InternalObject
+    public function __invoke(IndexExpression $node): MonkeyObject
     {
         $left = $this->evaluator->eval($node->left(), $this->env);
 

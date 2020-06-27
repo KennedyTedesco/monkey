@@ -6,7 +6,7 @@ namespace Monkey\Evaluator;
 
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Object\ErrorObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 
 final class EvalLetStatement
 {
@@ -21,7 +21,7 @@ final class EvalLetStatement
         $this->evaluator = $evaluator;
     }
 
-    public function __invoke(LetStatement $node): InternalObject
+    public function __invoke(LetStatement $node): MonkeyObject
     {
         $value = $this->evaluator->eval($node->value(), $this->env);
 

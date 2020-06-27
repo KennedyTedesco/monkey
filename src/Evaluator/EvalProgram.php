@@ -6,7 +6,7 @@ namespace Monkey\Evaluator;
 
 use Monkey\Ast\Program;
 use Monkey\Object\ErrorObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\ReturnValueObject;
 
@@ -23,7 +23,7 @@ final class EvalProgram
         $this->evaluator = $evaluator;
     }
 
-    public function __invoke(Program $node): InternalObject
+    public function __invoke(Program $node): MonkeyObject
     {
         $result = NullObject::instance();
 

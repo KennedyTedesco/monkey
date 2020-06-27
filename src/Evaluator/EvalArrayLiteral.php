@@ -7,7 +7,7 @@ namespace Monkey\Evaluator;
 use Monkey\Ast\Types\ArrayLiteral;
 use Monkey\Object\ArrayObject;
 use Monkey\Object\ErrorObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 
 final class EvalArrayLiteral
 {
@@ -22,7 +22,7 @@ final class EvalArrayLiteral
         $this->evaluator = $evaluator;
     }
 
-    public function __invoke(ArrayLiteral $node): InternalObject
+    public function __invoke(ArrayLiteral $node): MonkeyObject
     {
         $elements = $this->evaluator->evalExpressions($node->elements(), $this->env);
 

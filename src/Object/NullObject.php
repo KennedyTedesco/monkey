@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class NullObject implements InternalObject
+final class NullObject extends MonkeyObject
 {
     private static self $null;
 

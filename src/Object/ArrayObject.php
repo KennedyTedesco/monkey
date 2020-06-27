@@ -6,7 +6,7 @@ namespace Monkey\Object;
 
 use Monkey\Ast\Expressions\Expression;
 
-final class ArrayObject implements InternalObject
+final class ArrayObject extends MonkeyObject
 {
     /** @var array<Expression> */
     private array $elements;

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class ReturnValueObject implements InternalObject
+final class ReturnValueObject extends MonkeyObject
 {
-    private InternalObject $value;
+    private MonkeyObject $value;
 
-    public function __construct(InternalObject $value)
+    public function __construct(MonkeyObject $value)
     {
         $this->value = $value;
     }
 
-    public function value(): InternalObject
+    public function value(): MonkeyObject
     {
         return $this->value;
     }

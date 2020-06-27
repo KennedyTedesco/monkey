@@ -6,7 +6,7 @@ namespace Monkey\Evaluator;
 
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Object\ErrorObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 
 final class EvalIdentifier
 {
@@ -17,7 +17,7 @@ final class EvalIdentifier
         $this->env = $env;
     }
 
-    public function __invoke(IdentifierExpression $node): InternalObject
+    public function __invoke(IdentifierExpression $node): MonkeyObject
     {
         if ($this->env->contains($node->value())) {
             return $this->env->get($node->value());

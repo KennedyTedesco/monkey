@@ -6,15 +6,15 @@ namespace Monkey\Evaluator;
 
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 
 final class EvalNumericBinaryExpression
 {
     public function __invoke(
         string $operator,
-        InternalObject $left,
-        InternalObject $right
-    ): InternalObject {
+        MonkeyObject $left,
+        MonkeyObject $right
+    ): MonkeyObject {
         switch ($operator) {
             case '+':
                 return new $left($left->value() + $right->value());

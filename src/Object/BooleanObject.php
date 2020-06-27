@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class BooleanObject implements InternalObject
+final class BooleanObject extends MonkeyObject
 {
     private bool $value;
     private static self $true;

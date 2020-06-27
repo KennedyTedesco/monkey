@@ -8,16 +8,16 @@ use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FloatObject;
 use Monkey\Object\IntegerObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\StringObject;
 
 final class EvalBinaryExpression
 {
     public function __invoke(
         string $operator,
-        InternalObject $left,
-        InternalObject $right
-    ): InternalObject {
+        MonkeyObject $left,
+        MonkeyObject $right
+    ): MonkeyObject {
         switch (true) {
             case $left instanceof ErrorObject:
                 return $left;

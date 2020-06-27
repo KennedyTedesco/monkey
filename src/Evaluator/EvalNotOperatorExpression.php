@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Monkey\Evaluator;
 
 use Monkey\Object\BooleanObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 
 final class EvalNotOperatorExpression
 {
-    public function __invoke(InternalObject $right): InternalObject
+    public function __invoke(MonkeyObject $right): MonkeyObject
     {
         switch (true) {
             case $right instanceof BooleanObject:

@@ -6,7 +6,7 @@ namespace Monkey\Evaluator;
 
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\StringObject;
 
 final class EvalStringBinaryExpression
@@ -15,7 +15,7 @@ final class EvalStringBinaryExpression
         string $operator,
         StringObject $left,
         StringObject $right
-    ): InternalObject {
+    ): MonkeyObject {
         switch ($operator) {
             case '+':
                 return new StringObject("{$left->value()}{$right->value()}");

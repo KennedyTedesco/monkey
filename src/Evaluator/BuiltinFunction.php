@@ -6,7 +6,7 @@ namespace Monkey\Evaluator;
 
 use Closure;
 use Monkey\Object\BuiltinFunctionObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 
 final class BuiltinFunction
 {
@@ -23,7 +23,7 @@ final class BuiltinFunction
         return isset(self::$store[$name]);
     }
 
-    public static function get(string $name): InternalObject
+    public static function get(string $name): MonkeyObject
     {
         return self::$store[$name];
     }

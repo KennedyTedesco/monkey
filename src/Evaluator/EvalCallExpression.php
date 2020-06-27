@@ -9,7 +9,7 @@ use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Object\BuiltinFunctionObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FunctionObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\ReturnValueObject;
 
 final class EvalCallExpression
@@ -25,7 +25,7 @@ final class EvalCallExpression
         $this->evaluator = $evaluator;
     }
 
-    public function __invoke(CallExpression $node): InternalObject
+    public function __invoke(CallExpression $node): MonkeyObject
     {
         /** @var FunctionObject $function */
         $function = $this->evaluator->eval($node->function(), $this->env);
@@ -43,7 +43,7 @@ final class EvalCallExpression
         return $this->applyFunction($function, $args);
     }
 
-    private function applyFunction(InternalObject $function, array $args): InternalObject
+    private function applyFunction(MonkeyObject $function, array $args): MonkeyObject
     {
         if ($function instanceof FunctionObject) {
             $extendedEnv = $this->extendFunctionEnv($function, $args);
@@ -61,7 +61,7 @@ final class EvalCallExpression
     }
 
     /**
-     * @param array<InternalObject> $args
+     * @param array<MonkeyObject> $args
      */
     private function extendFunctionEnv(FunctionObject $function, array $args): Environment
     {
@@ -75,7 +75,7 @@ final class EvalCallExpression
         return $env;
     }
 
-    private function unwrapReturnValue(InternalObject $object): InternalObject
+    private function unwrapReturnValue(MonkeyObject $object): MonkeyObject
     {
         if ($object instanceof ReturnValueObject) {
             return $object->value();

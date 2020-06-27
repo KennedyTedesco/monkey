@@ -6,7 +6,7 @@ namespace Monkey\Evaluator;
 
 use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Object\ErrorObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\ReturnValueObject;
 
 final class EvalReturnStatement
@@ -22,7 +22,7 @@ final class EvalReturnStatement
         $this->evaluator = $evaluator;
     }
 
-    public function __invoke(ReturnStatement $node): InternalObject
+    public function __invoke(ReturnStatement $node): MonkeyObject
     {
         $object = $this->evaluator->eval($node->returnValue(), $this->env);
 

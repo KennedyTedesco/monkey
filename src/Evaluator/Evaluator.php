@@ -29,7 +29,7 @@ use Monkey\Object\ErrorObject;
 use Monkey\Object\FloatObject;
 use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\StringObject;
 
@@ -37,12 +37,12 @@ final class Evaluator
 {
     public function __construct()
     {
-        BuiltinFunction::set('len', function (InternalObject ...$arguments) {
+        BuiltinFunction::set('len', function (MonkeyObject ...$arguments) {
             return (new EvalLenFunction())(...$arguments);
         });
     }
 
-    public function eval(Node $node, Environment $env): InternalObject
+    public function eval(Node $node, Environment $env): MonkeyObject
     {
         switch (true) {
             case $node instanceof Program:
@@ -111,7 +111,7 @@ final class Evaluator
     /**
      * @param array<Expression> $expressions
      *
-     * @return array<InternalObject>
+     * @return array<MonkeyObject>
      */
     public function evalExpressions(array $expressions, Environment $env): array
     {

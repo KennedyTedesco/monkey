@@ -6,7 +6,7 @@ namespace Monkey\Evaluator;
 
 use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Object\ErrorObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\ObjectUtils;
 
@@ -23,7 +23,7 @@ final class EvalIfExpression
         $this->evaluator = $evaluator;
     }
 
-    public function __invoke(IfExpression $expression): InternalObject
+    public function __invoke(IfExpression $expression): MonkeyObject
     {
         $condition = $this->evaluator->eval($expression->condition(), $this->env);
 

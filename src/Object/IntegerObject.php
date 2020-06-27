@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class IntegerObject implements InternalObject
+final class IntegerObject extends MonkeyObject
 {
     private int $value;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class FloatObject implements InternalObject
+final class FloatObject extends MonkeyObject
 {
     private float $value;
 

@@ -6,7 +6,7 @@ namespace Monkey\Object;
 
 use Closure;
 
-final class BuiltinFunctionObject implements InternalObject
+final class BuiltinFunctionObject extends MonkeyObject
 {
     private Closure $function;
 

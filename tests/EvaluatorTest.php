@@ -10,33 +10,33 @@ use Monkey\Object\ErrorObject;
 use Monkey\Object\FloatObject;
 use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\StringObject;
 
-function testIntegerObject(InternalObject $object, int $expected)
+function testIntegerObject(MonkeyObject $object, int $expected)
 {
     assertInstanceOf(IntegerObject::class, $object);
-    assertSame(InternalObject::INTEGER_OBJ, $object->type());
+    assertSame(MonkeyObject::INTEGER_OBJ, $object->type());
     assertSame($expected, $object->value());
 }
 
-function testFloatObject(InternalObject $object, float $expected)
+function testFloatObject(MonkeyObject $object, float $expected)
 {
     assertInstanceOf(FloatObject::class, $object);
-    assertSame(InternalObject::FLOAT_OBJ, $object->type());
+    assertSame(MonkeyObject::FLOAT_OBJ, $object->type());
     assertSame($expected, $object->value());
 }
 
-function testNullObject(InternalObject $object, NullObject $expected)
+function testNullObject(MonkeyObject $object, NullObject $expected)
 {
     assertSame($expected, $object);
 }
 
-function testBooleanObject(InternalObject $object, bool $expected)
+function testBooleanObject(MonkeyObject $object, bool $expected)
 {
     assertInstanceOf(BooleanObject::class, $object);
-    assertSame(InternalObject::BOOLEAN_OBJ, $object->type());
+    assertSame(MonkeyObject::BOOLEAN_OBJ, $object->type());
     assertSame($expected, $object->value());
 }
 
@@ -75,7 +75,7 @@ test('eval string expressions', function (string $input, string $expected) {
     /** @var StringObject $object */
     $object = evalProgram($input);
     assertInstanceOf(StringObject::class, $object);
-    assertSame(InternalObject::STRING_OBJ, $object->type());
+    assertSame(MonkeyObject::STRING_OBJ, $object->type());
     assertSame($expected, $object->value());
 })->with([
     ['"foobar";', 'foobar'],
@@ -240,7 +240,7 @@ test('eval array literals', function (string $input, $expected) {
     /** @var ArrayObject $arrayObject */
     $arrayObject = evalProgram($input);
 
-    /** @var InternalObject $element */
+    /** @var MonkeyObject $element */
     foreach ($arrayObject->value() as $index => $element) {
         if ($element instanceof IntegerObject) {
             testIntegerObject($element, $expected[$index]);

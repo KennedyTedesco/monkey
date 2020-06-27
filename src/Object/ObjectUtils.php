@@ -6,7 +6,7 @@ namespace Monkey\Object;
 
 final class ObjectUtils
 {
-    public static function isTruthy(InternalObject $object): bool
+    public static function isTruthy(MonkeyObject $object): bool
     {
         switch (true) {
             case $object instanceof BooleanObject:

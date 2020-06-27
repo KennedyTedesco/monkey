@@ -6,18 +6,18 @@ namespace Monkey\Evaluator\Builtin;
 
 use Monkey\Object\ErrorObject;
 use Monkey\Object\IntegerObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 use Monkey\Object\StringObject;
 
 final class EvalLenFunction
 {
-    public function __invoke(InternalObject ...$arguments): InternalObject
+    public function __invoke(MonkeyObject ...$arguments): MonkeyObject
     {
         if (1 !== \count($arguments)) {
             return ErrorObject::wrongNumberOfArguments(\count($arguments), 1);
         }
 
-        /** @var InternalObject $object */
+        /** @var MonkeyObject $object */
         $object = $arguments[0];
 
         if ($object instanceof StringObject) {

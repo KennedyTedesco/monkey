@@ -8,7 +8,7 @@ use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Evaluator\Environment;
 
-final class FunctionObject implements InternalObject
+final class FunctionObject extends MonkeyObject
 {
     /** @var array<IdentifierExpression> */
     private array $parameters;

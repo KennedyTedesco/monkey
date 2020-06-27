@@ -6,11 +6,11 @@ namespace Monkey\Evaluator;
 
 use Monkey\Object\ErrorObject;
 use Monkey\Object\IntegerObject;
-use Monkey\Object\InternalObject;
+use Monkey\Object\MonkeyObject;
 
 final class EvalMinusUnaryOperatorExpression
 {
-    public function __invoke(InternalObject $right): InternalObject
+    public function __invoke(MonkeyObject $right): MonkeyObject
     {
         if (!$right instanceof IntegerObject) {
             return ErrorObject::unknownOperator("-{$right->type()}");
