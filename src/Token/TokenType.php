@@ -59,6 +59,7 @@ final class TokenType
     public const T_IF = 0x704;
     public const T_ELSE = 0x705;
     public const T_RETURN = 0x706;
+    public const T_WHILE = 0x707;
 
     private const TOKEN_MAP = [
         '=' => self::T_ASSIGN,
@@ -90,12 +91,13 @@ final class TokenType
         '&&' => self::T_AND,
         '||' => self::T_OR,
 
+        'if' => self::T_IF,
         'fn' => self::T_FN,
         'let' => self::T_LET,
         'true' => self::T_TRUE,
-        'false' => self::T_FALSE,
-        'if' => self::T_IF,
         'else' => self::T_ELSE,
+        'while' => self::T_WHILE,
+        'false' => self::T_FALSE,
         'return' => self::T_RETURN,
     ];
 

@@ -39,6 +39,10 @@ test('basic tokens', function () {
         10 % 2;
         10.5 * 0.5;
         2 ** 2;
+        
+        while (true) {
+            1
+        }
 MONKEY;
 
     $tokens = [
@@ -193,6 +197,17 @@ MONKEY;
         [TokenType::T_POWER, '**'],
         [TokenType::T_INT, '2'],
         [TokenType::T_SEMICOLON, ';'],
+
+        // while (true) {
+        //     1
+        // }
+        [TokenType::T_WHILE, 'while'],
+        [TokenType::T_LPAREN, '('],
+        [TokenType::T_TRUE, 'true'],
+        [TokenType::T_RPAREN, ')'],
+        [TokenType::T_LBRACE, '{'],
+        [TokenType::T_INT, '1'],
+        [TokenType::T_RBRACE, '}'],
 
         [TokenType::T_EOF, Lexer::EOF],
     ];
