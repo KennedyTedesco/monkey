@@ -4,7 +4,7 @@
 
 ## Monkey Programming Language
 
-The Monkey Programming Language & Interpreter in **PHP**. From the awesome [Write An Interpreter In Go](https://interpreterbook.com/).
+The Monkey Programming Language & Interpreter written in **PHP**.
 
 **Features:**
 
@@ -127,3 +127,7 @@ docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit:latest ./monkey run 
 ### Contributing
 
 I'll be pleased to have you contributing to any aspect of this project.
+
+### Credits
+
+This language is a version of the incredible [Monkey Lang](https://monkeylang.org/) with some extra batteries included.
