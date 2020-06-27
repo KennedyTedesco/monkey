@@ -18,6 +18,7 @@ use Monkey\Parser\Parselet\InfixParselet;
 use Monkey\Parser\Parselet\PrefixParselet;
 use Monkey\Parser\Parselet\ScalarParselet;
 use Monkey\Parser\Parselet\UnaryOperatorParselet;
+use Monkey\Parser\Parselet\WhileExpressionParselet;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
@@ -34,11 +35,11 @@ final class Parser
     /** @var array<int,string> */
     private array $errors = [];
 
-    /** @var array<int,PrefixParselet> */
-    private array $prefixParselets = [];
-
     /** @var array<int,InfixParselet> */
     private array $infixParselets = [];
+
+    /** @var array<int,PrefixParselet> */
+    private array $prefixParselets = [];
 
     /** @var array<int,int> */
     private array $precedences = [
@@ -73,6 +74,7 @@ final class Parser
         $this->registerPrefix(TokenType::T_FALSE, new ScalarParselet($this));
         $this->registerPrefix(TokenType::T_LPAREN, new GroupedExpressionParselet($this));
         $this->registerPrefix(TokenType::T_IF, new IfExpressionParselet($this));
+        $this->registerPrefix(TokenType::T_WHILE, new WhileExpressionParselet($this));
         $this->registerPrefix(TokenType::T_FN, new FunctionLiteralParselet($this));
         $this->registerPrefix(TokenType::T_STRING, new ScalarParselet($this));
         $this->registerPrefix(TokenType::T_LBRACKET, new ArrayParselet($this));
@@ -110,9 +112,12 @@ final class Parser
     {
         if ($this->peekToken->is($type)) {
             $this->nextToken();
+
             return true;
         }
+
         $this->peekError($type);
+
         return false;
     }
 

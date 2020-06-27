@@ -10,6 +10,7 @@ use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\IndexExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
+use Monkey\Ast\Expressions\WhileExpression;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
@@ -253,7 +254,7 @@ test('operator precedence parsing', function (string $input, string $expected) {
 ]);
 
 test('if expression', function () {
-    $program = newProgram('if (x < y) { x }');
+    $program = newProgram('if (x < 10) { x }');
     assertCount(1, $program->statements());
 
     /** @var ExpressionStatement $statement */
@@ -265,7 +266,7 @@ test('if expression', function () {
     assertInstanceOf(IfExpression::class, $ifExpression);
 
     // condition
-    assertInfixExpression($ifExpression->condition(), 'x', '<', 'y');
+    assertInfixExpression($ifExpression->condition(), 'x', '<', 10);
 
     // consequence
     assertCount(1, $ifExpression->consequence()->statements());
@@ -273,6 +274,35 @@ test('if expression', function () {
 
     /** @var ExpressionStatement $firstExpression */
     $firstExpression = $ifExpression->consequence()->statements()[0];
+    assertInstanceOf(ExpressionStatement::class, $firstExpression);
+    assertSame($firstExpression->tokenLiteral(), 'x');
+});
+
+test('while expression', function () {
+    $program = newProgram(<<<MONKEY
+        while (x < 10) {
+            x
+        }
+    MONKEY
+    );
+    assertCount(1, $program->statements());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(0);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var WhileExpression $whileExpression */
+    $whileExpression = $statement->expression();
+    assertInstanceOf(WhileExpression::class, $whileExpression);
+
+    // condition
+    assertInfixExpression($whileExpression->condition(), 'x', '<', 10);
+
+    // consequence
+    assertCount(1, $whileExpression->consequence()->statements());
+
+    /** @var ExpressionStatement $firstExpression */
+    $firstExpression = $whileExpression->consequence()->statements()[0];
     assertInstanceOf(ExpressionStatement::class, $firstExpression);
     assertSame($firstExpression->tokenLiteral(), 'x');
 });
