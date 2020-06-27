@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Parser;
 
 use Monkey\Ast\Program;
+use Monkey\Parser\Statements\StatementParser;
 use Monkey\Token\TokenType;
 
 final class ProgramParser

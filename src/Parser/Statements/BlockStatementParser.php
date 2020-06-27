@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser;
+namespace Monkey\Parser\Statements;
 
 use Monkey\Ast\Statements\BlockStatement;
+use Monkey\Parser\Parser;
 use Monkey\Token\TokenType;
 
 final class BlockStatementParser

@@ -15,9 +15,11 @@ use Monkey\Ast\Statements\AssignStatement;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
+use Monkey\Ast\Statements\PrintStatement;
 use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\ArrayLiteral;
 use Monkey\Ast\Types\BooleanLiteral;
+use Monkey\Ast\Types\FloatLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Ast\Types\StringLiteral;
@@ -303,8 +305,8 @@ test('while expression', function () {
         while (x < 10) {
             x
         }
-    MONKEY
-    );
+    MONKEY);
+
     assertCount(1, $program->statements());
 
     /** @var ExpressionStatement $statement */
@@ -438,3 +440,50 @@ test('program statements', function () {
 
     assertSame(5, $integerLiteral->value());
 });
+
+test('print statement', function (string $input, string $expectedinstance, int $statementIndex) {
+    $program = newProgram($input);
+
+    /** @var PrintStatement $statement */
+    $statement = $program->statement($statementIndex);
+    assertInstanceOf(PrintStatement::class, $statement);
+    assertInstanceOf($expectedinstance, $statement->value());
+})->with([
+    [
+        <<<MONKEY
+            let name = "Kennedy";
+            print name;
+        MONKEY,
+        IdentifierExpression::class,
+        1,
+    ],
+    [
+        <<<MONKEY
+            let name = "Kennedy";
+            print fn (n){ return n;}(name);
+        MONKEY,
+        CallExpression::class,
+        1,
+    ],
+    [
+        <<<MONKEY
+            print "kennedy";
+        MONKEY,
+        StringLiteral::class,
+        0,
+    ],
+    [
+        <<<MONKEY
+            print 10;
+        MONKEY,
+        IntegerLiteral::class,
+        0,
+    ],
+    [
+        <<<MONKEY
+            print 10.5;
+        MONKEY,
+        FloatLiteral::class,
+        0,
+    ],
+]);

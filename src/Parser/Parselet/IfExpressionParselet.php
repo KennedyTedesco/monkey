@@ -6,9 +6,9 @@ namespace Monkey\Parser\Parselet;
 
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IfExpression;
-use Monkey\Parser\BlockStatementParser;
 use Monkey\Parser\Parser;
 use Monkey\Parser\Precedence;
+use Monkey\Parser\Statements\BlockStatementParser;
 use Monkey\Token\TokenType;
 
 final class IfExpressionParselet implements PrefixParselet

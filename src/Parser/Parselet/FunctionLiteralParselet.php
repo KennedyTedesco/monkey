@@ -6,9 +6,9 @@ namespace Monkey\Parser\Parselet;
 
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Types\FunctionLiteral;
-use Monkey\Parser\BlockStatementParser;
 use Monkey\Parser\FunctionParametersParser;
 use Monkey\Parser\Parser;
+use Monkey\Parser\Statements\BlockStatementParser;
 use Monkey\Token\TokenType;
 
 final class FunctionLiteralParselet implements PrefixParselet

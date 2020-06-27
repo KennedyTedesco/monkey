@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser;
+namespace Monkey\Parser\Statements;
 
 use Monkey\Ast\Statements\Statement;
+use Monkey\Parser\Parser;
 use Monkey\Token\TokenType;
 
 final class StatementParser
@@ -18,6 +19,8 @@ final class StatementParser
                 return (new LetStatementParser())($parser);
             case $parser->curToken->is(TokenType::T_RETURN):
                 return (new ReturnStatementParser())($parser);
+            case $parser->curToken->is(TokenType::T_PRINT):
+                return (new PrintStatementParser())($parser);
             default:
                 return (new ExpressionStatementParser())($parser);
         }

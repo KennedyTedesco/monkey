@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser;
+namespace Monkey\Parser\Statements;
 
 use Monkey\Ast\Statements\ReturnStatement;
+use Monkey\Parser\Parser;
+use Monkey\Parser\Precedence;
 use Monkey\Token\TokenType;
 
 final class ReturnStatementParser

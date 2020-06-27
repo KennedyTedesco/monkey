@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser;
+namespace Monkey\Parser\Statements;
 
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Statements\ExpressionStatement;
+use Monkey\Parser\Parser;
+use Monkey\Parser\Precedence;
 use Monkey\Token\TokenType;
 
 final class ExpressionStatementParser
