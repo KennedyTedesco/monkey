@@ -42,5 +42,5 @@ function newProgram(string $input): Program
 
 function evalProgram(string $input): MonkeyObject
 {
-    return (new Evaluator())->eval(newProgram($input), Environment::new());
+    return (new Evaluator())->eval(newProgram($input), new Environment());
 }

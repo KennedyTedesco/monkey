@@ -65,7 +65,7 @@ final class EvalCallExpression
      */
     private function extendFunctionEnv(FunctionObject $function, array $args): Environment
     {
-        $env = Environment::newEnclosed($function->environment());
+        $env = new Environment($function->environment());
 
         /** @var IdentifierExpression $parameter */
         foreach ($function->parameters() as $index => $parameter) {

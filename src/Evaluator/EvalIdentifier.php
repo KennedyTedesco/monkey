@@ -19,12 +19,10 @@ final class EvalIdentifier
 
     public function __invoke(IdentifierExpression $node): MonkeyObject
     {
-        if ($this->env->contains($node->value())) {
-            return $this->env->get($node->value());
-        }
+        $object = $this->env->get($node->value()) ?? BuiltinFunction::get($node->value());
 
-        if (BuiltinFunction::contains($node->value())) {
-            return BuiltinFunction::get($node->value());
+        if (null !== $object) {
+            return $object;
         }
 
         return ErrorObject::identifierNotFound($node->value());

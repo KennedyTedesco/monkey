@@ -18,13 +18,8 @@ final class BuiltinFunction
         static::$store[$name] = new BuiltinFunctionObject($closure);
     }
 
-    public static function contains(string $name): bool
+    public static function get(string $name): ?MonkeyObject
     {
-        return isset(self::$store[$name]);
-    }
-
-    public static function get(string $name): MonkeyObject
-    {
-        return self::$store[$name];
+        return self::$store[$name] ?? null;
     }
 }

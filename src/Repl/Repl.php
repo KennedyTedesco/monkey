@@ -32,7 +32,7 @@ final class Repl
         -------------------------------\n\n
         TEXT);
 
-        $env = Environment::new();
+        $env = new Environment();
         while (true) {
             $input = \readline("\n > ");
             if ('exit' === $input) {
