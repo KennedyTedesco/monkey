@@ -60,6 +60,7 @@ final class TokenType
     public const T_ELSE = 0x705;
     public const T_RETURN = 0x706;
     public const T_WHILE = 0x707;
+    public const T_PRINT = 0x708;
 
     private const TOKEN_MAP = [
         '=' => self::T_ASSIGN,
@@ -96,6 +97,7 @@ final class TokenType
         'let' => self::T_LET,
         'true' => self::T_TRUE,
         'else' => self::T_ELSE,
+        'print' => self::T_PRINT,
         'while' => self::T_WHILE,
         'false' => self::T_FALSE,
         'return' => self::T_RETURN,
