@@ -302,21 +302,50 @@ test('eval array index operations', function (string $input, ?int $expected) {
     ['[1, fn(x){x * 2}(2), "Baz"][fn(){1}()]', 4],
 ]);
 
-test('eval while', function () {
-    $input = <<<MONKEY
+test('eval while', function (string $input, int $expected) {
+    testIntegerObject(evalProgram($input), $expected);
+})->with([
+    [
+        <<<MONKEY
+            let foo = fn() {
+                let x = 0;
+                while (x < 10) {
+                    x = x + 1;
+                }
+                return x;
+            };
+            
+            foo();
+        MONKEY,
+        10,
+    ],
+    [
+        <<<MONKEY
         let foo = fn() {
             let x = 0;
-
-            while (x < 100) {
+            while (fn(x) { return x < 10; }(x)) {
                 x = x + 1;
             }
-
             return x;
         };
         
         foo();
-    MONKEY;
+        MONKEY,
+        10,
+    ],
+    [
+        <<<MONKEY
+        let x = 0;
+        let foo = fn(x) {
+            while (fn(x) { return x < 10; }(x)) {
+                x = x + 1;
+            }
+            return x;
+        };
 
-    $object = evalProgram($input);
-    testIntegerObject($object, 100);
-});
+        let y = foo(x);
+        x;
+        MONKEY,
+        0,
+    ],
+]);
