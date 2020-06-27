@@ -11,7 +11,7 @@ final class Environment
     private ?Environment $outer;
 
     /** @var array<MonkeyObject> */
-    private array $store;
+    private array $store = [];
 
     public function __construct(?self $outer = null)
     {
@@ -40,6 +40,6 @@ final class Environment
 
     public function contains(string $name): bool
     {
-        return isset($this->store[$name]) || ($this->outer && $this->outer->contains($name));
+        return \array_key_exists($name, $this->store) || (null !== $this->outer && $this->outer->contains($name));
     }
 }

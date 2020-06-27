@@ -23,29 +23,4 @@ abstract class MonkeyObject
     abstract public function inspect(): string;
 
     abstract public function typeLiteral(): string;
-
-    public function isInt(): bool
-    {
-        return self::MO_INT === $this->type();
-    }
-
-    public function isFloat(): bool
-    {
-        return self::MO_FLOAT === $this->type();
-    }
-
-    public function isString(): bool
-    {
-        return self::MO_STRING === $this->type();
-    }
-
-    public function isArray(): bool
-    {
-        return self::MO_ARRAY === $this->type();
-    }
-
-    public function isBool(): bool
-    {
-        return self::MO_BOOL === $this->type();
-    }
 }
