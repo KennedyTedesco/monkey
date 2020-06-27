@@ -18,9 +18,14 @@ final class IntegerObject extends MonkeyObject
         return $this->value;
     }
 
-    public function type(): string
+    public function type(): int
     {
-        return self::INTEGER_OBJ;
+        return self::MO_INT;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'INTEGER';
     }
 
     public function inspect(): string

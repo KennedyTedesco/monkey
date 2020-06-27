@@ -13,7 +13,7 @@ final class EvalMinusUnaryOperatorExpression
     public function __invoke(MonkeyObject $right): MonkeyObject
     {
         if (!$right instanceof IntegerObject) {
-            return ErrorObject::unknownOperator("-{$right->type()}");
+            return ErrorObject::unknownOperator("-{$right->typeLiteral()}");
         }
 
         return new IntegerObject($right->value() * (-1));

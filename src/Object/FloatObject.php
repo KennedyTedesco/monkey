@@ -18,9 +18,14 @@ final class FloatObject extends MonkeyObject
         return $this->value;
     }
 
-    public function type(): string
+    public function type(): int
     {
-        return self::FLOAT_OBJ;
+        return self::MO_FLOAT;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'FLOAT';
     }
 
     public function inspect(): string

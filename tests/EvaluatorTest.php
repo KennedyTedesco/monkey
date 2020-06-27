@@ -17,14 +17,14 @@ use Monkey\Object\StringObject;
 function testIntegerObject(MonkeyObject $object, int $expected)
 {
     assertInstanceOf(IntegerObject::class, $object);
-    assertSame(MonkeyObject::INTEGER_OBJ, $object->type());
+    assertSame(MonkeyObject::MO_INT, $object->type());
     assertSame($expected, $object->value());
 }
 
 function testFloatObject(MonkeyObject $object, float $expected)
 {
     assertInstanceOf(FloatObject::class, $object);
-    assertSame(MonkeyObject::FLOAT_OBJ, $object->type());
+    assertSame(MonkeyObject::MO_FLOAT, $object->type());
     assertSame($expected, $object->value());
 }
 
@@ -36,7 +36,7 @@ function testNullObject(MonkeyObject $object, NullObject $expected)
 function testBooleanObject(MonkeyObject $object, bool $expected)
 {
     assertInstanceOf(BooleanObject::class, $object);
-    assertSame(MonkeyObject::BOOLEAN_OBJ, $object->type());
+    assertSame(MonkeyObject::MO_BOOL, $object->type());
     assertSame($expected, $object->value());
 }
 
@@ -75,7 +75,7 @@ test('eval string expressions', function (string $input, string $expected) {
     /** @var StringObject $object */
     $object = evalProgram($input);
     assertInstanceOf(StringObject::class, $object);
-    assertSame(MonkeyObject::STRING_OBJ, $object->type());
+    assertSame(MonkeyObject::MO_STRING, $object->type());
     assertSame($expected, $object->value());
 })->with([
     ['"foobar";', 'foobar'],
@@ -161,16 +161,16 @@ test('error handling', function (string $input, string $expected) {
     assertInstanceOf(ErrorObject::class, $object);
     assertSame($expected, $object->value());
 })->with([
-    ['5 && true;', 'type mismatch: INTEGER && BOOLEAN'],
-    ['5 || true;', 'type mismatch: INTEGER || BOOLEAN'],
-    ['"1" || true;', 'type mismatch: STRING || BOOLEAN'],
-    ['5 + true;', 'type mismatch: INTEGER + BOOLEAN'],
-    ['5 + true; 5;', 'type mismatch: INTEGER + BOOLEAN'],
-    ['-true', 'unknown operator: -BOOLEAN'],
-    ['true + false', 'unknown operator: BOOLEAN + BOOLEAN'],
-    ['5; true + false; 5', 'unknown operator: BOOLEAN + BOOLEAN'],
-    ['if (10 > 1) { true + false; }', 'unknown operator: BOOLEAN + BOOLEAN'],
-    ['if (10 > 1) { if (10 > 1) { return true + false; } return 1; }', 'unknown operator: BOOLEAN + BOOLEAN'],
+    ['5 && true;', 'type mismatch: INTEGER && BOOL'],
+    ['5 || true;', 'type mismatch: INTEGER || BOOL'],
+    ['"1" || true;', 'type mismatch: STRING || BOOL'],
+    ['5 + true;', 'type mismatch: INTEGER + BOOL'],
+    ['5 + true; 5;', 'type mismatch: INTEGER + BOOL'],
+    ['-true', 'unknown operator: -BOOL'],
+    ['true + false', 'unknown operator: BOOL + BOOL'],
+    ['5; true + false; 5', 'unknown operator: BOOL + BOOL'],
+    ['if (10 > 1) { true + false; }', 'unknown operator: BOOL + BOOL'],
+    ['if (10 > 1) { if (10 > 1) { return true + false; } return 1; }', 'unknown operator: BOOL + BOOL'],
     ['foobar', 'identifier not found: foobar'],
     ['"Hello" - "World"', 'unknown operator: STRING - STRING'],
 ]);

@@ -57,7 +57,7 @@ final class EvalCallExpression
             return $function->value()(...$args);
         }
 
-        return ErrorObject::notAFunction($function->type());
+        return ErrorObject::notAFunction($function->typeLiteral());
     }
 
     /**

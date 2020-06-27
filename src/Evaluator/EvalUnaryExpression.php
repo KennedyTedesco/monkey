@@ -22,7 +22,7 @@ final class EvalUnaryExpression
                 return (new EvalMinusUnaryOperatorExpression())($right);
 
             default:
-                return ErrorObject::unknownOperator($operator, $right->type());
+                return ErrorObject::unknownOperator($operator, $right->typeLiteral());
         }
     }
 }

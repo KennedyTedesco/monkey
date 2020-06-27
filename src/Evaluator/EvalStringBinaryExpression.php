@@ -24,7 +24,7 @@ final class EvalStringBinaryExpression
             case '==':
                 return BooleanObject::from($left->value() === $right->value());
             default:
-                return ErrorObject::unknownOperator($left->type(), $operator, $right->type());
+                return ErrorObject::unknownOperator($left->typeLiteral(), $operator, $right->typeLiteral());
         }
     }
 }

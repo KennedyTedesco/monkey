@@ -43,9 +43,14 @@ final class FunctionObject extends MonkeyObject
         return $this->body;
     }
 
-    public function type(): string
+    public function type(): int
     {
-        return self::FUNCTION_OBJ;
+        return self::MO_FUNCTION;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'FUNCTION';
     }
 
     public function inspect(): string

@@ -12,9 +12,14 @@ final class NullObject extends MonkeyObject
     {
     }
 
-    public function type(): string
+    public function type(): int
     {
-        return self::NULL_OBJ;
+        return self::MO_NULL;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'NULL';
     }
 
     public function inspect(): string

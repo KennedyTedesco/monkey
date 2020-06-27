@@ -24,6 +24,6 @@ final class EvalLenFunction
             return new IntegerObject(\mb_strlen($object->value()));
         }
 
-        return ErrorObject::invalidArgument('len', $object->type());
+        return ErrorObject::invalidArgument('len', $object->typeLiteral());
     }
 }

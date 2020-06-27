@@ -21,9 +21,14 @@ final class ArrayObject extends MonkeyObject
         return $this->elements;
     }
 
-    public function type(): string
+    public function type(): int
     {
-        return self::ARRAY_OBJ;
+        return self::MO_ARRAY;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'ARRAY';
     }
 
     public function inspect(): string

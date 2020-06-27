@@ -20,9 +20,14 @@ final class BooleanObject extends MonkeyObject
         return $this->value;
     }
 
-    public function type(): string
+    public function type(): int
     {
-        return self::BOOLEAN_OBJ;
+        return self::MO_BOOL;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'BOOL';
     }
 
     public function inspect(): string

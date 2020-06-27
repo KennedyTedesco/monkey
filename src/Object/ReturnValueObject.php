@@ -18,9 +18,14 @@ final class ReturnValueObject extends MonkeyObject
         return $this->value;
     }
 
-    public function type(): string
+    public function type(): int
     {
-        return self::RETURN_VALUE_OBJ;
+        return self::MO_RETURN_VALUE;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'RETURN_VALUE';
     }
 
     public function inspect(): string

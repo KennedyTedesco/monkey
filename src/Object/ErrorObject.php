@@ -18,9 +18,14 @@ final class ErrorObject extends MonkeyObject
         return $this->value;
     }
 
-    public function type(): string
+    public function type(): int
     {
-        return self::BOOLEAN_OBJ;
+        return self::MO_BOOL;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'ERROR';
     }
 
     public function inspect(): string

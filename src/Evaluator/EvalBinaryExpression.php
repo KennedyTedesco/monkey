@@ -26,7 +26,7 @@ final class EvalBinaryExpression
                 return $right;
 
             case $left->type() !== $right->type():
-                return ErrorObject::typeMismatch($left->type(), $operator, $right->type());
+                return ErrorObject::typeMismatch($left->typeLiteral(), $operator, $right->typeLiteral());
 
             case $left instanceof IntegerObject && $right instanceof IntegerObject:
             case $left instanceof FloatObject && $right instanceof FloatObject:
@@ -48,7 +48,7 @@ final class EvalBinaryExpression
                 return BooleanObject::from($left->value() !== $right->value());
 
             default:
-                return ErrorObject::unknownOperator($left->type(), $operator, $right->type());
+                return ErrorObject::unknownOperator($left->typeLiteral(), $operator, $right->typeLiteral());
         }
     }
 }

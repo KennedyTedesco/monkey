@@ -9,7 +9,7 @@ final class ObjectUtils
     public static function isTruthy(MonkeyObject $object): bool
     {
         switch (true) {
-            case $object instanceof BooleanObject:
+            case $object->isBool():
                 return $object->value();
             case $object instanceof NullObject:
             case $object instanceof IntegerObject && 0 === $object->value():

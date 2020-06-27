@@ -18,9 +18,14 @@ final class StringObject extends MonkeyObject
         return $this->value;
     }
 
-    public function type(): string
+    public function type(): int
     {
-        return self::STRING_OBJ;
+        return self::MO_STRING;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'STRING';
     }
 
     public function inspect(): string

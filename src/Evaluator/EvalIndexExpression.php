@@ -42,6 +42,6 @@ final class EvalIndexExpression
             return $left->value()[$index->value()] ?? NullObject::instance();
         }
 
-        return ErrorObject::invalidIndexOperator($index->type());
+        return ErrorObject::invalidIndexOperator($index->typeLiteral());
     }
 }

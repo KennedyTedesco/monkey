@@ -20,9 +20,14 @@ final class BuiltinFunctionObject extends MonkeyObject
         return $this->function;
     }
 
-    public function type(): string
+    public function type(): int
     {
-        return self::BUILTIN_OBJ;
+        return self::MO_BUILTIN;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'BUILTIN_FUNCTION';
     }
 
     public function inspect(): string
