@@ -10,7 +10,7 @@ let map = fn(arr, callback) {
         }
     };
 
-    iter(arr, []);
+    return iter(arr, []);
 };
 
 let foo = [1, 2, 3, 4];
