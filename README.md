@@ -97,6 +97,12 @@ Example:
 32
 ```
 
+Or, you want to execute a file:
+
+```bash
+./monkey run examples/closure.mk
+```
+
 ### Running with Docker
 
 Pull the docker image:
@@ -120,7 +126,7 @@ docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./vendor/bin/pest
 Running from a file contents of the examples folder:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./monkey run examples/fibo.mk
+docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./monkey run examples/closure.mk
 ```
 
 ### Contributing
