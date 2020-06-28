@@ -8,7 +8,7 @@ use Monkey\Evaluator\Environment;
 use Monkey\Evaluator\Evaluator;
 use Monkey\Lexer\Lexer;
 use Monkey\Object\MonkeyObject;
-use Monkey\Object\OutputObject;
+use Monkey\Object\NullObject;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
 
@@ -44,12 +44,14 @@ final class Repl
         }
     }
 
-    public static function eval(string $input, Environment $env): MonkeyObject
+    public static function eval(string $input, Environment $env): ?MonkeyObject
     {
         $parser = new Parser(new Lexer($input));
 
         if (\count($parser->errors()) > 0) {
-            return new OutputObject(self::getErrors($parser->errors()));
+            echo self::getErrors($parser->errors());
+
+            return null;
         }
 
         return (new Evaluator())->eval((new ProgramParser())($parser), $env);
@@ -57,7 +59,10 @@ final class Repl
 
     public static function evalAndInspect(string $input, Environment $env): void
     {
-        \fwrite(\STDOUT, (self::eval($input, $env))->inspect().\PHP_EOL);
+        $object = self::eval($input, $env);
+        if (null !== $object && !$object instanceof NullObject) {
+            echo $object->inspect().\PHP_EOL;
+        }
     }
 
     private static function getErrors(array $errors): string

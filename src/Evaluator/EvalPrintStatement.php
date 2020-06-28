@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Evaluator;
 
 use Monkey\Ast\Statements\PrintStatement;
-use Monkey\Object\OutputObject;
+use Monkey\Object\NullObject;
 
 final class EvalPrintStatement
 {
@@ -20,10 +20,12 @@ final class EvalPrintStatement
         $this->evaluator = $evaluator;
     }
 
-    public function __invoke(PrintStatement $node): OutputObject
+    public function __invoke(PrintStatement $node): NullObject
     {
         $object = $this->evaluator->eval($node->value(), $this->env);
 
-        return new OutputObject($object->value());
+        echo $object->value();
+
+        return NullObject::instance();
     }
 }

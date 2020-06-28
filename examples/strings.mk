@@ -1,4 +1,6 @@
 let firstName = "Kennedy";
 let lastName = "Parreira";
 
-print firstName + " " + lastName;
+print firstName;
+print " ";
+print lastName;

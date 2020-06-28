@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Monkey;
 
 use Monkey\Evaluator\Environment;
-use Monkey\Object\OutputObject;
 use Monkey\Repl\Repl;
 
 function help(): string
@@ -34,10 +33,7 @@ switch ($argv[1]) {
         Repl::start();
         break;
     case 'run':
-        $object = Repl::eval(\file_get_contents($argv[2]), new Environment());
-        if ($object instanceof OutputObject) {
-            echo $object->value();
-        }
+        Repl::eval(\file_get_contents($argv[2]), new Environment());
         break;
     default:
         help();
