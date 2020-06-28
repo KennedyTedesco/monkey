@@ -29,6 +29,7 @@ use Monkey\Ast\Types\StringLiteral;
 use Monkey\Evaluator\Builtin\EvalFirstFunction;
 use Monkey\Evaluator\Builtin\EvalLastFunction;
 use Monkey\Evaluator\Builtin\EvalLenFunction;
+use Monkey\Evaluator\Builtin\EvalPushFunction;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FloatObject;
@@ -44,6 +45,7 @@ final class Evaluator
         'len' => EvalLenFunction::class,
         'last' => EvalLastFunction::class,
         'first' => EvalFirstFunction::class,
+        'push' => EvalPushFunction::class,
     ];
 
     public function __construct()
