@@ -75,9 +75,11 @@ final class Lexer
     private function readIdentifier(): string
     {
         $position = $this->position;
-        while ($this->curChar->isLetter()) {
+
+        while ($this->curChar->isAlphanumeric()) {
             $this->readChar();
         }
+
         return $this->input->substr($position, $this->position - $position);
     }
 
@@ -113,12 +115,15 @@ final class Lexer
     private function readString(): string
     {
         $position = $this->position + 1;
+
         while (true) {
             $this->readChar();
+
             if ($this->curChar->is('"') || $this->isEnd()) {
                 break;
             }
         }
+
         return $this->input->substr($position, $this->position - $position);
     }
 

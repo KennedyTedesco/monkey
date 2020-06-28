@@ -9,6 +9,9 @@ use Monkey\Token\TokenType;
 
 test('basic tokens', function () {
     $input = <<<MONKEY
+        let foo1 = 10;
+        let foo_bar = 10;
+        let _bar = 10;
 		let five = 5;
 		let ten = 10;
 
@@ -48,6 +51,27 @@ test('basic tokens', function () {
 MONKEY;
 
     $tokens = [
+        // let foo1 = 10;
+        [TokenType::T_LET, 'let'],
+        [TokenType::T_IDENT, 'foo1'],
+        [TokenType::T_ASSIGN, '='],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_SEMICOLON, ';'],
+
+        // let foo_bar = 10;
+        [TokenType::T_LET, 'let'],
+        [TokenType::T_IDENT, 'foo_bar'],
+        [TokenType::T_ASSIGN, '='],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_SEMICOLON, ';'],
+
+        // let _bar = 10;
+        [TokenType::T_LET, 'let'],
+        [TokenType::T_IDENT, '_bar'],
+        [TokenType::T_ASSIGN, '='],
+        [TokenType::T_INT, '10'],
+        [TokenType::T_SEMICOLON, ';'],
+
         // let five = 5;
         [TokenType::T_LET, 'let'],
         [TokenType::T_IDENT, 'five'],

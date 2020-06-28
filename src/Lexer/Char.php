@@ -33,6 +33,11 @@ final class Char
         return '_' === $this->ch || \ctype_alpha($this->ch);
     }
 
+    public function isAlphanumeric(): bool
+    {
+        return '_' === $this->ch || \ctype_alnum($this->ch);
+    }
+
     public function isDigit(): bool
     {
         return \ctype_digit($this->ch);

@@ -30,7 +30,11 @@ The Monkey Programming Language & Interpreter written in **PHP**.
 
 **Basic syntax:**
 
+A Fibonacci sequence using recursion:
+
 ```javascript
+// ./monkey run examples/fibo_recursion.monkey
+
 let fibonacci = fn(x) {
     if (x == 0 || x == 1) {
         return x;
@@ -40,6 +44,31 @@ let fibonacci = fn(x) {
 };
 
 print fibonacci(10);
+```
+
+A Fibonacci sequence using loop (much faster):
+
+```javascript
+// ./monkey run examples/fibo_while.monkey
+
+let fibonacci = fn(num) {
+    let a = 0;
+    let b = 1;
+    let temp = 0;
+
+    while (num > 0) {
+        temp = b;
+        b = b + a;
+        a = temp;
+
+        num = num - 1;
+    }
+
+    return a;
+};
+
+print fibonacci(32);
+
 ```
 
 A working in progress. More features and docs soon.
