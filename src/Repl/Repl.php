@@ -52,9 +52,7 @@ final class Repl
             return new OutputObject(self::getErrors($parser->errors()));
         }
 
-        return (new Evaluator())->eval(
-            (new ProgramParser())($parser), $env
-        );
+        return (new Evaluator())->eval((new ProgramParser())($parser), $env);
     }
 
     public static function evalAndInspect(string $input, Environment $env): void
