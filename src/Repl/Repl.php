@@ -7,6 +7,8 @@ namespace Monkey\Repl;
 use Monkey\Evaluator\Environment;
 use Monkey\Evaluator\Evaluator;
 use Monkey\Lexer\Lexer;
+use Monkey\Object\MonkeyObject;
+use Monkey\Object\OutputObject;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
 
@@ -15,20 +17,19 @@ final class Repl
     public static function start(): void
     {
         \fwrite(\STDOUT, <<<TEXT
-               .="=.
-             _/.-.-.\_     _
-            ( ( o o ) )    ))
-             |/  "  \|    //
-              \'---'/    //
-              /`"""`\\  ((
-             / /_,_\ \\  \\
-             \_\\_'__/ \  ))
-             /`  /`~\  |//
-            /   /    \  /
-        ,--`,--'\/\    /
-         '-- "--'  '--'
-        
-        # Monkey Programming Language #
+                    __,__
+           .--.  .-"     "-.  .--.
+          / .. \/  .-. .-.  \/ .. \
+         | |  '|  /   Y   \  |'  | |
+         | \   \  \ 0 | 0 /  /   / |
+          \ '- ,\.-"`` ``"-./, -' /
+           `'-' /_   ^ ^   _\ '-'`
+               |  \._   _./  |
+               \   \ `~` /   /
+                '._ '-=-' _.'
+                   '~---~'
+        -------------------------------
+        | Monkey Programming Language |
         -------------------------------\n\n
         TEXT);
 
@@ -39,33 +40,34 @@ final class Repl
                 return;
             }
 
-            self::eval($input, $env);
+            self::evalAndInspect($input, $env);
         }
     }
 
-    public static function eval(string $input, Environment $env): void
+    public static function eval(string $input, Environment $env): MonkeyObject
     {
         $parser = new Parser(new Lexer($input));
 
         if (\count($parser->errors()) > 0) {
-            self::printErrors($parser->errors());
-            return;
+            return new OutputObject(self::getErrors($parser->errors()));
         }
 
-        $evaluated = (new Evaluator())->eval(
+        return (new Evaluator())->eval(
             (new ProgramParser())($parser), $env
         );
-
-        if (null !== $evaluated) {
-            \fwrite(\STDOUT, $evaluated->inspect().\PHP_EOL);
-        }
     }
 
-    private static function printErrors(array $errors): void
+    public static function evalAndInspect(string $input, Environment $env): void
     {
+        \fwrite(\STDOUT, (self::eval($input, $env))->inspect().\PHP_EOL);
+    }
+
+    private static function getErrors(array $errors): string
+    {
+        $out = '';
         foreach ($errors as $index => $error) {
-            ++$index;
-            \fwrite(\STDOUT, "{$index}) {$error}");
+            $out .= "{$index}) {$error}";
         }
+        return $out;
     }
 }

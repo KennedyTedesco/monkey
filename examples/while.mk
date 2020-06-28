@@ -8,4 +8,4 @@ let foo = fn() {
     return x;
 };
 
-foo();
+print foo();

@@ -18,6 +18,7 @@ use Monkey\Ast\Statements\AssignStatement;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
+use Monkey\Ast\Statements\PrintStatement;
 use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\ArrayLiteral;
 use Monkey\Ast\Types\BooleanLiteral;
@@ -107,6 +108,9 @@ final class Evaluator
 
             case $node instanceof AssignStatement:
                 return (new EvalAssingStatement($this, $env))($node);
+
+            case $node instanceof PrintStatement:
+                return (new EvalPrintStatement($this, $env))($node);
 
             case $node instanceof IdentifierExpression:
                 return (new EvalIdentifier($env))($node);

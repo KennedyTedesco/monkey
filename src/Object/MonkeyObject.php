@@ -17,6 +17,7 @@ abstract class MonkeyObject
     public const MO_BUILTIN = 0x8;
     public const MO_ARRAY = 0x9;
     public const MO_HASH = 0xA;
+    public const MO_OUTPUT = 0xB;
 
     abstract public function type(): int;
 

@@ -6,4 +6,4 @@ let newAdder = fn(a, b) {
 
 let adder = newAdder(1, 2);
 
-adder(8);
+print adder(8);

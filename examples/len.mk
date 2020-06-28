@@ -1,3 +1,3 @@
 let name = "Kennedy";
 
-len(name);
+print len(name);

@@ -12,7 +12,27 @@ use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
+use Monkey\Object\OutputObject;
 use Monkey\Object\StringObject;
+
+function testObjectValue(MonkeyObject $object, $expected)
+{
+    if ($object instanceof IntegerObject) {
+        testIntegerObject($object, $expected);
+    } elseif ($object instanceof FloatObject) {
+        testFloatObject($object, $expected);
+    } elseif ($object instanceof StringObject) {
+        testStringObject($object, $expected);
+    } elseif ($object instanceof ErrorObject) {
+        assertSame($expected, $object->value());
+    } elseif ($object instanceof NullObject) {
+        assertSame($expected, $object->value());
+    } elseif ($object instanceof BooleanObject) {
+        testBooleanObject($object, $expected);
+    } elseif ($object instanceof OutputObject) {
+        assertSame($expected, $object->value());
+    }
+}
 
 function testIntegerObject(MonkeyObject $object, int $expected)
 {
@@ -35,11 +55,6 @@ function testFloatObject(MonkeyObject $object, float $expected)
     assertSame($expected, $object->value());
 }
 
-function testNullObject(MonkeyObject $object, NullObject $expected)
-{
-    assertSame($expected, $object);
-}
-
 function testBooleanObject(MonkeyObject $object, bool $expected)
 {
     assertInstanceOf(BooleanObject::class, $object);
@@ -48,11 +63,7 @@ function testBooleanObject(MonkeyObject $object, bool $expected)
 }
 
 test('eval integer expressions', function (string $input, $expected) {
-    if (\is_int($expected)) {
-        testIntegerObject(evalProgram($input), $expected);
-    } elseif (\is_float($expected)) {
-        testFloatObject(evalProgram($input), $expected);
-    }
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['5', 5],
     ['10', 10],
@@ -79,11 +90,7 @@ test('eval integer expressions', function (string $input, $expected) {
 ]);
 
 test('eval string expressions', function (string $input, string $expected) {
-    /** @var StringObject $object */
-    $object = evalProgram($input);
-    assertInstanceOf(StringObject::class, $object);
-    assertSame(MonkeyObject::MO_STRING, $object->type());
-    assertSame($expected, $object->value());
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['"foobar";', 'foobar'],
     ['"foo bar";', 'foo bar'],
@@ -91,7 +98,7 @@ test('eval string expressions', function (string $input, string $expected) {
 ]);
 
 test('eval boolean expression', function (string $input, bool $expected) {
-    testBooleanObject(evalProgram($input), $expected);
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['true', true],
     ['false', false],
@@ -123,7 +130,7 @@ test('eval boolean expression', function (string $input, bool $expected) {
 ]);
 
 test('eval bang operator', function (string $input, bool $expected) {
-    testBooleanObject(evalProgram($input), $expected);
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['!true', false],
     ['!false', true],
@@ -132,15 +139,11 @@ test('eval bang operator', function (string $input, bool $expected) {
 ]);
 
 test('eval if else expressions', function (string $input, $expected) {
-    if (\is_int($expected)) {
-        testIntegerObject(evalProgram($input), $expected);
-    } else {
-        testNullObject(evalProgram($input), $expected);
-    }
+    testObjectValue(evalProgram($input), $expected);
 })->with([
-    ['if (false) { 10 }', NullObject::instance()],
-    ['if (0) { 10 }', NullObject::instance()],
-    ['if (true == false) { 10 }', NullObject::instance()],
+    ['if (false) { 10 }', null],
+    ['if (0) { 10 }', null],
+    ['if (true == false) { 10 }', null],
     ['if (true) { 10 }', 10],
     ['if (true && true) { 10 }', 10],
     ['if (true || false) { 10 }', 10],
@@ -152,7 +155,7 @@ test('eval if else expressions', function (string $input, $expected) {
 ]);
 
 test('eval return statements', function (string $input, $expected) {
-    testIntegerObject(evalProgram($input), $expected);
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['return 10;', 10],
     ['return 5;', 5],
@@ -163,10 +166,7 @@ test('eval return statements', function (string $input, $expected) {
 ]);
 
 test('error handling', function (string $input, string $expected) {
-    /** @var ErrorObject $object */
-    $object = evalProgram($input);
-    assertInstanceOf(ErrorObject::class, $object);
-    assertSame($expected, $object->value());
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['5 && true;', 'type mismatch: INTEGER && BOOL'],
     ['5 || true;', 'type mismatch: INTEGER || BOOL'],
@@ -183,7 +183,7 @@ test('error handling', function (string $input, string $expected) {
 ]);
 
 test('eval let statements', function (string $input, int $expected) {
-    testIntegerObject(evalProgram($input), $expected);
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['let a = 5;', 5],
     ['let a = 5; a;', 5],
@@ -191,13 +191,7 @@ test('eval let statements', function (string $input, int $expected) {
 ]);
 
 test('eval assign statements', function (string $input, $expected) {
-    if (\is_int($expected)) {
-        testIntegerObject(evalProgram($input), $expected);
-    } elseif (\is_float($expected)) {
-        testFloatObject(evalProgram($input), $expected);
-    } elseif (\is_string($expected)) {
-        testStringObject(evalProgram($input), $expected);
-    }
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['let a = 5; a = 10;', 10],
     ['let a = 5; a;', 5],
@@ -217,7 +211,7 @@ test('function object', function () {
 });
 
 test('eval function', function (string $input, int $expected) {
-    testIntegerObject(evalProgram($input), $expected);
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['let identity = fn(x) { x; }; identity(5);', 5],
     ['let identity = fn(x) { return x; }; identity(5);', 5],
@@ -239,17 +233,11 @@ test('eval closure', function () {
         addTwo(2);
     MONKEY;
 
-    testIntegerObject(evalProgram($input), 4);
+    testObjectValue(evalProgram($input), 4);
 });
 
 test('eval builtin len function', function (string $input, $expected) {
-    $object = evalProgram($input);
-
-    if ($object instanceof IntegerObject) {
-        testIntegerObject($object, $expected);
-    }
-
-    assertSame($expected, $object->value());
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['len("")', 0],
     ['len("a")', 1],
@@ -264,11 +252,7 @@ test('eval array literals', function (string $input, $expected) {
 
     /** @var MonkeyObject $element */
     foreach ($arrayObject->value() as $index => $element) {
-        if ($element instanceof IntegerObject) {
-            testIntegerObject($element, $expected[$index]);
-        } else {
-            assertSame($expected[$index], $element->value());
-        }
+        testObjectValue($element, $expected[$index]);
     }
 })->with([
     ['[1, 2 * 2, 3 + 3]', [1, 4, 6]],
@@ -278,16 +262,7 @@ test('eval array literals', function (string $input, $expected) {
 ]);
 
 test('eval array index operations', function (string $input, ?int $expected) {
-    /** @var IntegerObject $object */
-    $object = evalProgram($input);
-
-    if ($object instanceof NullObject) {
-        assertNull($expected);
-    }
-
-    if ($object instanceof IntegerObject) {
-        testIntegerObject($object, $expected);
-    }
+    testObjectValue(evalProgram($input), $expected);
 })->with([
     ['[1, 2, 3][0]', 1],
     ['[1, 2, 3][1]', 2],
