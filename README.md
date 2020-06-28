@@ -99,30 +99,30 @@ Example:
 32
 ```
 
-### Running on PHP 8 with Docker
+### Running with Docker
 
 Pull the docker image:
 
 ```bash
-docker pull keinos/php8-jit:latest
+docker pull php:7.4-cli
 ```
 
 Running the tests:
 
 ```bash
-docker run --rm -v $(pwd):/monkey -w /monkey keinos/php8-jit:latest ./vendor/bin/pest
+docker run --rm -v $(pwd):/monkey -w /monkey php:7.4-cli ./vendor/bin/pest
 ```
 
 If you're using a fish-like shell:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit:latest ./vendor/bin/pest
+docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./vendor/bin/pest
 ```
 
 Running from a file contents of the examples folder:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit:latest ./monkey run examples/fibo.mk
+docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./monkey run examples/fibo.mk
 ```
 
 ### Contributing
