@@ -34,6 +34,7 @@ final class ArrayObject extends MonkeyObject
     public function inspect(): string
     {
         $elements = [];
+
         /** @var MonkeyObject $element */
         foreach ($this->elements as $element) {
             if (self::MO_STRING === $element->type()) {
