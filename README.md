@@ -131,7 +131,7 @@ docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./monkey run examples/cl
 
 ### Contributing
 
-I'll be pleased to have you contributing to any aspect of this project.
+I'll be pleased to have you contributing to any aspect of this project. You can fix a bug, implement new functionality, or add more [tests](tests/examples).
 
 ### Credits
 

@@ -239,7 +239,9 @@ test('eval builtin len function', function (string $input, $expected) {
     ['len("")', 0],
     ['len("a")', 1],
     ['len("foo")', 3],
-    ['len(1)', 'argument to "len" not supported, got INTEGER'],
+    ['len(1)', 'argument to "len()" not supported, got INTEGER'],
+    ['first(1)', 'argument to "first()" not supported, got INTEGER'],
+    ['last(1)', 'argument to "last()" not supported, got INTEGER'],
     ['len("one", "two")', 'wrong number of arguments. got=2, want=1'],
 ]);
 

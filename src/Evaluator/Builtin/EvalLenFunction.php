@@ -26,7 +26,7 @@ final class EvalLenFunction
             case $object instanceof ArrayObject:
                 return new IntegerObject(\count($object->value()));
             default:
-                return ErrorObject::invalidArgument('len', $object->typeLiteral());
+                return ErrorObject::invalidArgument('len()', $object->typeLiteral());
         }
     }
 }

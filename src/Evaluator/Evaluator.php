@@ -26,6 +26,8 @@ use Monkey\Ast\Types\FloatLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Ast\Types\StringLiteral;
+use Monkey\Evaluator\Builtin\EvalFirstFunction;
+use Monkey\Evaluator\Builtin\EvalLastFunction;
 use Monkey\Evaluator\Builtin\EvalLenFunction;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
@@ -38,11 +40,15 @@ use Monkey\Object\StringObject;
 
 final class Evaluator
 {
+    private array $builtinFunctions = [
+        'len' => EvalLenFunction::class,
+        'last' => EvalLastFunction::class,
+        'first' => EvalFirstFunction::class,
+    ];
+
     public function __construct()
     {
-        BuiltinFunction::set('len', function (MonkeyObject ...$arguments) {
-            return (new EvalLenFunction())(...$arguments);
-        });
+        $this->registerBuiltinFunctions();
     }
 
     public function eval(Node $node, Environment $env): MonkeyObject
@@ -141,5 +147,12 @@ final class Evaluator
         }
 
         return $result;
+    }
+
+    private function registerBuiltinFunctions(): void
+    {
+        foreach ($this->builtinFunctions as $funcName => $className) {
+            BuiltinFunction::set($funcName, fn (MonkeyObject ...$arguments) => (new $className())(...$arguments));
+        }
     }
 }
