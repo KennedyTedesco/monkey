@@ -30,6 +30,6 @@ final class OutputObject extends MonkeyObject
 
     public function inspect(): string
     {
-        return $this->value->inspect();
+        return (string) $this->value;
     }
 }
