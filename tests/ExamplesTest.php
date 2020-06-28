@@ -24,7 +24,7 @@ test('eval integer expressionss', function (string $filename) {
 
     assertSame($details['expect'], $output);
 })->with(function () {
-    foreach (\glob(__DIR__.'/examples/*.mk') as $filename) {
+    foreach (\glob(__DIR__.'/examples/*.monkey') as $filename) {
         yield \basename($filename);
     }
 });

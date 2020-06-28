@@ -100,7 +100,7 @@ Example:
 Or, if you want to execute a file:
 
 ```bash
-./monkey run examples/closure.mk
+./monkey run examples/closure.monkey
 ```
 
 ### Running with Docker
@@ -126,7 +126,7 @@ docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./vendor/bin/pest
 Running from a file contents of the examples folder:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./monkey run examples/closure.mk
+docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./monkey run examples/closure.monkey
 ```
 
 ### Contributing
