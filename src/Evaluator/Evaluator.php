@@ -30,6 +30,7 @@ use Monkey\Evaluator\Builtin\EvalFirstFunction;
 use Monkey\Evaluator\Builtin\EvalLastFunction;
 use Monkey\Evaluator\Builtin\EvalLenFunction;
 use Monkey\Evaluator\Builtin\EvalPushFunction;
+use Monkey\Evaluator\Builtin\EvalSliceFunction;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FloatObject;
@@ -46,6 +47,7 @@ final class Evaluator
         'last' => EvalLastFunction::class,
         'first' => EvalFirstFunction::class,
         'push' => EvalPushFunction::class,
+        'slice' => EvalSliceFunction::class,
     ];
 
     public function __construct()

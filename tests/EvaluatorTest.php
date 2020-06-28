@@ -243,6 +243,9 @@ test('eval builtin len function', function (string $input, $expected) {
     ['first(1)', 'argument to "first()" not supported, got INTEGER'],
     ['last(1)', 'argument to "last()" not supported, got INTEGER'],
     ['len("one", "two")', 'wrong number of arguments. got=2, want=1'],
+    ['slice(1)', 'wrong number of arguments. got=1, want=2'],
+    ['slice(1, 2)', 'argument to "slice()" not supported, got INTEGER'],
+    ['slice(1, 2, 3, 4)', 'wrong number of arguments. got=4, want=2'],
 ]);
 
 test('eval array literals', function (string $input, $expected) {

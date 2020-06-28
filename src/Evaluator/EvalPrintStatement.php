@@ -24,7 +24,7 @@ final class EvalPrintStatement
     {
         $object = $this->evaluator->eval($node->value(), $this->env);
 
-        echo $object->value();
+        echo $object->inspect();
 
         return NullObject::instance();
     }

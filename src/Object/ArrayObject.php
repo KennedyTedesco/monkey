@@ -34,9 +34,9 @@ final class ArrayObject extends MonkeyObject
     public function inspect(): string
     {
         $elements = [];
-        /** @var Expression $element */
+        /** @var MonkeyObject $element */
         foreach ($this->elements as $element) {
-            $elements[] = $element->toString();
+            $elements[] = $element->inspect();
         }
 
         return \sprintf('[%s]', \implode(', ', $elements));
