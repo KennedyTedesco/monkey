@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Evaluator;
 
+use Monkey\Object\ArrayObject;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FloatObject;
@@ -34,6 +35,9 @@ final class EvalBinaryExpression
 
             case $left instanceof StringObject && $right instanceof StringObject:
                 return (new EvalStringBinaryExpression())($operator, $left, $right);
+
+            case $left instanceof ArrayObject && $right instanceof ArrayObject:
+                return (new EvalArrayBinaryExpression())($operator, $left, $right);
 
             case '&&' === $operator:
                 return BooleanObject::from($left->value() && $right->value());

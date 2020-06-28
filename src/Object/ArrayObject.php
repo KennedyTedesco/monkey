@@ -36,7 +36,11 @@ final class ArrayObject extends MonkeyObject
         $elements = [];
         /** @var MonkeyObject $element */
         foreach ($this->elements as $element) {
-            $elements[] = $element->inspect();
+            if (self::MO_STRING === $element->type()) {
+                $elements[] = '"'.$element->inspect().'"';
+            } else {
+                $elements[] = $element->inspect();
+            }
         }
 
         return \sprintf('[%s]', \implode(', ', $elements));
