@@ -5,9 +5,9 @@ let map = fn(arr, callback) {
     let iter = fn(arr, accumulated) {
         if (len(arr) == 0) {
             return accumulated;
-        } else {
-            iter(slice(arr, 1), push(accumulated, callback(first(arr))));
         }
+
+        return iter(slice(arr, 1), push(accumulated, callback(first(arr))));
     };
 
     return iter(arr, []);
