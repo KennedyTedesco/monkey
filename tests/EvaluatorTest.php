@@ -12,7 +12,6 @@ use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
-use Monkey\Object\OutputObject;
 use Monkey\Object\StringObject;
 
 function testObjectValue(MonkeyObject $object, $expected)
@@ -29,8 +28,6 @@ function testObjectValue(MonkeyObject $object, $expected)
         assertSame($expected, $object->value());
     } elseif ($object instanceof BooleanObject) {
         testBooleanObject($object, $expected);
-    } elseif ($object instanceof OutputObject) {
-        assertSame($expected, $object->value());
     }
 }
 

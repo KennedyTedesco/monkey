@@ -10,7 +10,7 @@ final class StringObject extends MonkeyObject
 
     public function __construct(string $value)
     {
-        $this->value = $value;
+        $this->value = \str_replace('\n', "\n", $value);
     }
 
     public function value(): string
