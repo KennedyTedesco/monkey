@@ -97,7 +97,7 @@ Example:
 32
 ```
 
-Or, you want to execute a file:
+Or, if you want to execute a file:
 
 ```bash
 ./monkey run examples/closure.mk
