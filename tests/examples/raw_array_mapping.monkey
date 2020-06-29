@@ -1,7 +1,7 @@
 --TEST--
 Testing raw array mapping
 --FILE--
-let map = fn(arr, callback) {
+let rawMap = fn(arr, callback) {
     let iter = fn(arr, accumulated) {
         if (len(arr) == 0) {
             return accumulated;
@@ -13,7 +13,7 @@ let map = fn(arr, callback) {
     return iter(arr, []);
 };
 
-let foo = map([1, 2, 3, 4], fn(x) { x * 2});
+let foo = rawMap([1, 2, 3, 4], fn(x) { x * 2});
 
 print foo;
 --EXPECT--
