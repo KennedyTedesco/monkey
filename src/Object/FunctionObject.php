@@ -38,6 +38,11 @@ final class FunctionObject extends MonkeyObject
         return $this->parameters;
     }
 
+    public function parameter(int $index): IdentifierExpression
+    {
+        return $this->parameters[$index];
+    }
+
     public function body(): BlockStatement
     {
         return $this->body;

@@ -29,6 +29,7 @@ use Monkey\Ast\Types\StringLiteral;
 use Monkey\Evaluator\Builtin\EvalFirstFunction;
 use Monkey\Evaluator\Builtin\EvalLastFunction;
 use Monkey\Evaluator\Builtin\EvalLenFunction;
+use Monkey\Evaluator\Builtin\EvalMapFunction;
 use Monkey\Evaluator\Builtin\EvalPushFunction;
 use Monkey\Evaluator\Builtin\EvalSliceFunction;
 use Monkey\Object\BooleanObject;
@@ -43,10 +44,11 @@ use Monkey\Object\StringObject;
 final class Evaluator
 {
     private array $builtinFunctions = [
+        'map' => EvalMapFunction::class,
         'len' => EvalLenFunction::class,
         'last' => EvalLastFunction::class,
-        'first' => EvalFirstFunction::class,
         'push' => EvalPushFunction::class,
+        'first' => EvalFirstFunction::class,
         'slice' => EvalSliceFunction::class,
     ];
 
@@ -156,7 +158,7 @@ final class Evaluator
     private function registerBuiltinFunctions(): void
     {
         foreach ($this->builtinFunctions as $funcName => $className) {
-            BuiltinFunction::set($funcName, fn (MonkeyObject ...$arguments) => (new $className())(...$arguments));
+            BuiltinFunction::set($funcName, fn (MonkeyObject ...$arguments) => (new $className($this))(...$arguments));
         }
     }
 }

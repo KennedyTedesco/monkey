@@ -86,6 +86,14 @@ let foo = rawMap([1, 2, 3, 4], fn(x) { x * 2});
 print foo; // [2, 4, 6, 8]
 ```
 
+Or, you can just use the builtin function `map()`:
+
+```javascript
+let foo = map([2, 4, 6, 8], fn(x) { x * 2 });
+
+print foo;
+```
+
 A working in progress. More features and docs soon.
 
 ### Why?

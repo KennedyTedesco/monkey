@@ -67,4 +67,9 @@ final class ErrorObject extends MonkeyObject
     {
         return new self(\sprintf('index operator not supported: %s', $type));
     }
+
+    public static function error(string $error): self
+    {
+        return new self($error);
+    }
 }
