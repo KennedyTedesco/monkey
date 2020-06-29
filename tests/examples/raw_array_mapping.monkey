@@ -13,10 +13,7 @@ let map = fn(arr, callback) {
     return iter(arr, []);
 };
 
-let foo = [1, 2, 3, 4];
-foo = map(foo, fn(x) {
-    return x * 2
-});
+let foo = map([1, 2, 3, 4], fn(x) { x * 2});
 
 print foo;
 --EXPECT--

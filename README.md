@@ -33,8 +33,6 @@ The Monkey Programming Language & Interpreter written in **PHP**.
 A Fibonacci sequence using recursion:
 
 ```javascript
-// ./monkey run examples/fibo_recursion.monkey
-
 let fibonacci = fn(x) {
     if (x == 0 || x == 1) {
         return x;
@@ -49,8 +47,6 @@ print fibonacci(10);
 A Fibonacci sequence using loop (much faster):
 
 ```javascript
-// ./monkey run examples/fibo_while.monkey
-
 let fibonacci = fn(num) {
     let a = 0;
     let b = 1;
@@ -68,7 +64,26 @@ let fibonacci = fn(num) {
 };
 
 print fibonacci(32);
+```
 
+A raw implementation of array map:
+
+```javascript
+let map = fn(arr, callback) {
+    let iter = fn(arr, accumulated) {
+        if (len(arr) == 0) {
+            return accumulated;
+        }
+
+        return iter(slice(arr, 1), push(accumulated, callback(first(arr))));
+    };
+
+    return iter(arr, []);
+};
+
+let foo = map([1, 2, 3, 4], fn(x) { x * 2});
+
+print foo;
 ```
 
 A working in progress. More features and docs soon.
