@@ -66,7 +66,7 @@ let fibonacci = fn(num) {
 print fibonacci(32);
 ```
 
-A raw implementation of array map:
+A raw implementation of mapping an array:
 
 ```javascript
 let map = fn(arr, callback) {
