@@ -79,7 +79,7 @@ This is just a C-like language and its interpreter that I built to learn and und
 
 ### Is it fast?
 
-Not. It's slow because this is a pure tree-walk interpreter (which is notable slow) written in a PHP (a high-level programming language), and PHP compiles to an intermediate code that runs on top of a Virtual Machine written in C. Also, speed isn't the goal. The goal here is to learn, play, and have fun with the foundation of interpreters.
+It's not so fast because this is a pure tree-walk interpreter (which is notable slow) written in a PHP (a high-level programming language), and PHP compiles to an intermediate code that runs on top of a Virtual Machine written in C. Also, speed isn't the goal. The goal here is to learn, play, and have fun with the foundation of interpreters.
 
 ### How it works?
 
