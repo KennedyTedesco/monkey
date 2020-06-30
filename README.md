@@ -81,7 +81,7 @@ let rawMap = fn(arr, callback) {
     return iter(arr, []);
 };
 
-let foo = rawMap([1, 2, 3, 4], fn(x) { x * 2});
+let foo = rawMap([1, 2, 3, 4], fn(x) { x * 2 });
 
 print foo; // [2, 4, 6, 8]
 ```
