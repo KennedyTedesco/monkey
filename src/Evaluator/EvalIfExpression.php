@@ -8,7 +8,6 @@ use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
-use Monkey\Object\ObjectUtils;
 
 final class EvalIfExpression
 {
@@ -31,7 +30,7 @@ final class EvalIfExpression
             case $condition instanceof ErrorObject:
                 return $condition;
 
-            case ObjectUtils::isTruthy($condition):
+            case (bool) $condition->value():
                 return $this->evaluator->eval($expression->consequence(), $this->env);
 
             case null !== $expression->alternative():

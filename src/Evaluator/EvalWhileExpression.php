@@ -8,7 +8,6 @@ use Monkey\Ast\Expressions\WhileExpression;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\MonkeyObject;
-use Monkey\Object\ObjectUtils;
 
 final class EvalWhileExpression
 {
@@ -31,7 +30,7 @@ final class EvalWhileExpression
                 return $condition;
             }
 
-            if (ObjectUtils::isTruthy($condition)) {
+            if ((bool) $condition->value()) {
                 $evaluated = $this->evaluator->eval($expression->consequence(), $this->env);
                 if ($evaluated instanceof ErrorObject) {
                     return $condition;
