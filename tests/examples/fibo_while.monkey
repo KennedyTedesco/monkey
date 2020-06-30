@@ -11,7 +11,7 @@ let fibonacci = fn(num) {
         b = b + a;
         a = temp;
 
-        num = num - 1;
+        num--;
     }
 
     return a;

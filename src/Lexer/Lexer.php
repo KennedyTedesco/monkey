@@ -48,6 +48,10 @@ final class Lexer
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_AND);
             case $this->curAndPeekCharIs('||'):
                 return $this->makeTwoCharTokenAndAdvance(TokenType::T_OR);
+            case $this->curAndPeekCharIs('++'):
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_PLUS_PLUS);
+            case $this->curAndPeekCharIs('--'):
+                return $this->makeTwoCharTokenAndAdvance(TokenType::T_MINUS_MINUS);
             case $this->curChar->is('"'):
                 return $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString());
             case $this->curChar->isLetter():

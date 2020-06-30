@@ -48,6 +48,8 @@ test('basic tokens', function () {
         }
         
         print 1;
+        a++;
+        a--;
 MONKEY;
 
     $tokens = [
@@ -238,6 +240,16 @@ MONKEY;
         // print 1;
         [TokenType::T_PRINT, 'print'],
         [TokenType::T_INT, '1'],
+        [TokenType::T_SEMICOLON, ';'],
+
+        // a++;
+        [TokenType::T_IDENT, 'a'],
+        [TokenType::T_PLUS_PLUS, '++'],
+        [TokenType::T_SEMICOLON, ';'],
+
+        // a--;
+        [TokenType::T_IDENT, 'a'],
+        [TokenType::T_MINUS_MINUS, '--'],
         [TokenType::T_SEMICOLON, ';'],
 
         [TokenType::T_EOF, Lexer::EOF],

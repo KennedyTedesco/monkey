@@ -4,7 +4,7 @@ Testing a while expression
 let foo = fn() {
     let x = 0;
     while (x < 100) {
-        x = x + 1;
+        x++;
     }
     return x;
 };

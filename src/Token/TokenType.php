@@ -25,6 +25,8 @@ final class TokenType
     public const T_SLASH = 0x204;
     public const T_MODULO = 0x205;
     public const T_POWER = 0x206;
+    public const T_PLUS_PLUS = 0x207;
+    public const T_MINUS_MINUS = 0x208;
 
     // Logical operators
     public const T_NOT = 0x300;
@@ -71,6 +73,8 @@ final class TokenType
         '%' => self::T_MODULO,
         '**' => self::T_POWER,
         '/' => self::T_SLASH,
+        '++' => self::T_PLUS_PLUS,
+        '--' => self::T_MINUS_MINUS,
 
         ',' => self::T_COMMA,
         ';' => self::T_SEMICOLON,

@@ -9,6 +9,7 @@ use Monkey\Ast\Expressions\CallExpression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\IndexExpression;
+use Monkey\Ast\Expressions\PostfixExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Expressions\WhileExpression;
 use Monkey\Ast\Statements\AssignStatement;
@@ -232,6 +233,26 @@ test('infix expressions', function (string $input, $leftValue, string $operator,
     ['true != false;', true, '!=', false],
     ['true && false;', true, '&&', false],
     ['false || false;', false, '||', false],
+]);
+
+test('postfix expressions', function (string $input, string $operator) {
+    $program = newProgram($input);
+    assertSame(2, $program->count());
+
+    /** @var ExpressionStatement $statement */
+    $statement = $program->statement(1);
+    assertInstanceOf(ExpressionStatement::class, $statement);
+
+    /** @var PostfixExpression $expression */
+    $expression = $statement->expression();
+    assertInstanceOf(PostfixExpression::class, $expression);
+    assertSame($operator, $expression->operator());
+})->with([
+    ['a++;', '++'],
+    ['1--;', '--'],
+    ['a++;', '++'],
+    ['b--;', '--'],
+    ['b--;', '--'],
 ]);
 
 test('operator precedence parsing', function (string $input, string $expected) {

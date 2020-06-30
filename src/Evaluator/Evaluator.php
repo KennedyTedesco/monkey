@@ -10,6 +10,7 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Expressions\IfExpression;
 use Monkey\Ast\Expressions\IndexExpression;
+use Monkey\Ast\Expressions\PostfixExpression;
 use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Ast\Expressions\WhileExpression;
 use Monkey\Ast\Node;
@@ -126,6 +127,9 @@ final class Evaluator
 
             case $node instanceof IdentifierExpression:
                 return (new EvalIdentifier($env))($node);
+
+            case $node instanceof PostfixExpression:
+                return (new EvalPostfixExpression($env))($node);
 
             default:
                 return NullObject::instance();

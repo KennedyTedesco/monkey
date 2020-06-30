@@ -15,6 +15,8 @@ use Monkey\Parser\Parselet\IdentifierParselet;
 use Monkey\Parser\Parselet\IfExpressionParselet;
 use Monkey\Parser\Parselet\IndexExpressionParselet;
 use Monkey\Parser\Parselet\InfixParselet;
+use Monkey\Parser\Parselet\PostfixOperatorParselet;
+use Monkey\Parser\Parselet\PostfixParselet;
 use Monkey\Parser\Parselet\PrefixParselet;
 use Monkey\Parser\Parselet\ScalarParselet;
 use Monkey\Parser\Parselet\UnaryOperatorParselet;
@@ -25,6 +27,9 @@ use Monkey\Token\TokenType;
 final class Parser
 {
     private Lexer $lexer;
+
+    /** @var Token */
+    public $prevToken;
 
     /** @var Token */
     public $curToken;
@@ -40,6 +45,9 @@ final class Parser
 
     /** @var array<int,PrefixParselet> */
     private array $prefixParselets = [];
+
+    /** @var array<int,PrefixParselet> */
+    private array $postfixParselets = [];
 
     /** @var array<int,int> */
     private array $precedences = [
@@ -93,9 +101,11 @@ final class Parser
         $this->registerInfix(TokenType::T_GT_EQ, new BinaryOperatorParselet($this));
         $this->registerInfix(TokenType::T_AND, new BinaryOperatorParselet($this));
         $this->registerInfix(TokenType::T_OR, new BinaryOperatorParselet($this));
-
         $this->registerInfix(TokenType::T_LBRACKET, new IndexExpressionParselet($this));
         $this->registerInfix(TokenType::T_LPAREN, new CallExpressionParselet($this));
+
+        $this->registerPostfix(TokenType::T_PLUS_PLUS, new PostfixOperatorParselet($this));
+        $this->registerPostfix(TokenType::T_MINUS_MINUS, new PostfixOperatorParselet($this));
 
         $this->nextToken(2);
     }
@@ -103,6 +113,7 @@ final class Parser
     public function nextToken(int $times = 1): void
     {
         while ($times-- > 0) {
+            $this->prevToken = $this->curToken;
             $this->curToken = $this->peekToken;
             $this->peekToken = $this->lexer->nextToken();
         }
@@ -123,27 +134,33 @@ final class Parser
 
     public function parseExpression(int $precedence): ?Expression
     {
-        /** @var PrefixParselet|null $prefixParser */
-        $prefixParser = $this->prefixParselets[$this->curToken->type()] ?? null;
-        if (null === $prefixParser) {
+        /** @var PostfixParselet|null $postfixParselet */
+        $postfixParselet = $this->postfixParselets[$this->curToken->type()] ?? null;
+        if (null !== $postfixParselet) {
+            return $postfixParselet->parse();
+        }
+
+        /** @var PrefixParselet|null $prefixParselet */
+        $prefixParselet = $this->prefixParselets[$this->curToken->type()] ?? null;
+        if (null === $prefixParselet) {
             $this->prefixParserError($this->curToken->type());
 
             return null;
         }
 
         /** @var Expression $leftExpression */
-        $leftExpression = $prefixParser->parse();
+        $leftExpression = $prefixParselet->parse();
 
         while (!$this->peekToken->is(TokenType::T_SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
-            /** @var InfixParselet|null $infixParser */
-            $infixParser = $this->infixParselets[$this->peekToken->type()] ?? null;
-            if (null === $infixParser) {
+            /** @var InfixParselet|null $infixParselet */
+            $infixParselet = $this->infixParselets[$this->peekToken->type()] ?? null;
+            if (null === $infixParselet) {
                 return $leftExpression;
             }
 
             $this->nextToken();
 
-            $leftExpression = $infixParser->parse($leftExpression);
+            $leftExpression = $infixParselet->parse($leftExpression);
         }
 
         return $leftExpression;
@@ -167,6 +184,11 @@ final class Parser
     private function registerInfix(int $type, InfixParselet $parselet): void
     {
         $this->infixParselets[$type] = $parselet;
+    }
+
+    private function registerPostfix(int $type, PostfixParselet $parselet): void
+    {
+        $this->postfixParselets[$type] = $parselet;
     }
 
     private function prefixParserError(int $type): void

@@ -84,6 +84,8 @@ test('eval integer expressions', function (string $input, $expected) {
     ['20 + 2 * -10', 0],
     ['-5', -5],
     ['-10', -10],
+    ['let i = 10; i++;', 11],
+    ['let i = 10; i--;', 9],
 ]);
 
 test('eval string expressions', function (string $input, string $expected) {
@@ -177,6 +179,7 @@ test('error handling', function (string $input, string $expected) {
     ['if (10 > 1) { if (10 > 1) { return true + false; } return 1; }', 'unknown operator: BOOL + BOOL'],
     ['foobar', 'identifier not found: foobar'],
     ['"Hello" - "World"', 'unknown operator: STRING - STRING'],
+    ['let foo = 10.5; foo++;', 'postfix operator ++ only valid with integers.'],
 ]);
 
 test('eval let statements', function (string $input, int $expected) {

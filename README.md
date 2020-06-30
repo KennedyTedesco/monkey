@@ -56,8 +56,7 @@ let fibonacci = fn(num) {
         temp = b;
         b = b + a;
         a = temp;
-
-        num = num - 1;
+        num--;
     }
 
     return a;
