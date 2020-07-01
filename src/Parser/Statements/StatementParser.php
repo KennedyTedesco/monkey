@@ -19,8 +19,6 @@ final class StatementParser
                 return (new LetStatementParser())($parser);
             case $parser->curToken->is(TokenType::T_RETURN):
                 return (new ReturnStatementParser())($parser);
-            case $parser->curToken->is(TokenType::T_PRINT):
-                return (new PrintStatementParser())($parser);
             default:
                 return (new ExpressionStatementParser())($parser);
         }

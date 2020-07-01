@@ -19,7 +19,6 @@ use Monkey\Ast\Statements\AssignStatement;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Ast\Statements\ExpressionStatement;
 use Monkey\Ast\Statements\LetStatement;
-use Monkey\Ast\Statements\PrintStatement;
 use Monkey\Ast\Statements\ReturnStatement;
 use Monkey\Ast\Types\ArrayLiteral;
 use Monkey\Ast\Types\BooleanLiteral;
@@ -32,6 +31,7 @@ use Monkey\Evaluator\Builtin\EvalLastFunction;
 use Monkey\Evaluator\Builtin\EvalLenFunction;
 use Monkey\Evaluator\Builtin\EvalMapFunction;
 use Monkey\Evaluator\Builtin\EvalPushFunction;
+use Monkey\Evaluator\Builtin\EvalPutsFunction;
 use Monkey\Evaluator\Builtin\EvalSliceFunction;
 use Monkey\Object\BooleanObject;
 use Monkey\Object\ErrorObject;
@@ -51,6 +51,7 @@ final class Evaluator
         'push' => EvalPushFunction::class,
         'first' => EvalFirstFunction::class,
         'slice' => EvalSliceFunction::class,
+        'puts' => EvalPutsFunction::class,
     ];
 
     public function __construct()
@@ -121,9 +122,6 @@ final class Evaluator
 
             case $node instanceof AssignStatement:
                 return (new EvalAssingStatement($this, $env))($node);
-
-            case $node instanceof PrintStatement:
-                return (new EvalPrintStatement($this, $env))($node);
 
             case $node instanceof IdentifierExpression:
                 return (new EvalIdentifier($env))($node);

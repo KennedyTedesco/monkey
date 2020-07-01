@@ -17,10 +17,10 @@ final class EvalNotOperatorExpression
                 return BooleanObject::from(!$right->value());
 
             case $right instanceof NullObject:
-                return BooleanObject::from(true);
+                return BooleanObject::true();
 
             default:
-                return BooleanObject::from(false);
+                return BooleanObject::false();
         }
     }
 }

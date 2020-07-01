@@ -30,6 +30,6 @@ final class StringObject extends MonkeyObject
 
     public function inspect(): string
     {
-        return \sprintf('%s', $this->value);
+        return $this->value;
     }
 }

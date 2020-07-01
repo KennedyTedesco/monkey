@@ -35,12 +35,22 @@ final class BooleanObject extends MonkeyObject
         return $this->value ? 'true' : 'false';
     }
 
+    public static function true(): self
+    {
+        return self::$true ??= new self(true);
+    }
+
+    public static function false(): self
+    {
+        return self::$false ??= new self(false);
+    }
+
     public static function from(bool $value): self
     {
         if (true === $value) {
-            return self::$true ??= new self(true);
+            return self::true();
         }
 
-        return self::$false ??= new self(false);
+        return self::false();
     }
 }

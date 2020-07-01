@@ -6,4 +6,4 @@ let fibonacci = fn(x) {
     return fibonacci(x - 1) + fibonacci(x - 2);
 };
 
-print fibonacci(10);
+puts(fibonacci(10));

@@ -42,6 +42,6 @@ final class EvalWhileExpression
             break;
         }
 
-        return BooleanObject::from(true);
+        return BooleanObject::true();
     }
 }

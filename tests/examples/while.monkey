@@ -9,6 +9,6 @@ let foo = fn() {
     return x;
 };
 
-print foo();
+puts(foo());
 --EXPECT--
 100

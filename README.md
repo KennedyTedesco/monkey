@@ -41,7 +41,7 @@ let fibonacci = fn(x) {
     return fibonacci(x - 1) + fibonacci(x - 2);
 };
 
-print fibonacci(10);
+puts(fibonacci(10));
 ```
 
 A Fibonacci sequence using loop (much faster):
@@ -62,7 +62,7 @@ let fibonacci = fn(num) {
     return a;
 };
 
-print fibonacci(32);
+puts(fibonacci(32));
 ```
 
 A raw implementation of mapping an array:
@@ -82,7 +82,7 @@ let rawMap = fn(arr, callback) {
 
 let foo = rawMap([1, 2, 3, 4], fn(x) { x * 2 });
 
-print foo; // [2, 4, 6, 8]
+puts(foo); // [2, 4, 6, 8]
 ```
 
 Or, you can just use the builtin function `map()`:
@@ -90,7 +90,7 @@ Or, you can just use the builtin function `map()`:
 ```javascript
 let foo = map([1, 2, 3, 4], fn(x) { x * 2 });
 
-print foo; // [2, 4, 6, 8]
+puts(foo); // [2, 4, 6, 8]
 ```
 
 A working in progress. More features and docs soon.

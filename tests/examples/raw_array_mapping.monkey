@@ -15,6 +15,6 @@ let rawMap = fn(arr, callback) {
 
 let foo = rawMap([1, 2, 3, 4], fn(x) { x * 2 });
 
-print foo;
+puts(foo);
 --EXPECT--
 [2, 4, 6, 8]

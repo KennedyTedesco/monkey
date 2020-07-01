@@ -46,8 +46,7 @@ test('basic tokens', function () {
         while (true) {
             1
         }
-        
-        print 1;
+
         a++;
         a--;
 MONKEY;
@@ -236,11 +235,6 @@ MONKEY;
         [TokenType::T_LBRACE, '{'],
         [TokenType::T_INT, '1'],
         [TokenType::T_RBRACE, '}'],
-
-        // print 1;
-        [TokenType::T_PRINT, 'print'],
-        [TokenType::T_INT, '1'],
-        [TokenType::T_SEMICOLON, ';'],
 
         // a++;
         [TokenType::T_IDENT, 'a'],

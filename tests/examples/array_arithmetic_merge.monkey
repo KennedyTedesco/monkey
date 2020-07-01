@@ -1,6 +1,7 @@
 --TEST--
 Testing array merge with the plus operator
 --FILE--
-print [1, 2, 3] + [4, "foo"];
+let foo = [1, 2, 3] + [4, "foo"];
+puts(foo);
 --EXPECT--
 [1, 2, 3, 4, "foo"]

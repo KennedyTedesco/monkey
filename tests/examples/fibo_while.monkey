@@ -17,6 +17,6 @@ let fibonacci = fn(num) {
     return a;
 };
 
-print fibonacci(32);
+puts(fibonacci(32));
 --EXPECT--
 2178309
