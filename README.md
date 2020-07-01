@@ -9,24 +9,25 @@ The Monkey Programming Language & Interpreter written in **PHP**.
 **Features:**
 
 - A REPL;
-- Integers, floats, booleans, strings, arrays, hash maps (TODO);
-- Arithmetic expressions;
-- Conditional expressions;
-- While expression;
-- Let statements;
-- First-class and higher-order functions;
-- Built-in functions;
+- Integers (`10`), floats (`10.5`), booleans (`false`, `true`), strings (`"foo"`), arrays (`[2016, "foo"]`), hash maps (TODO);
+- Arithmetic expressions (`+`, `-`, `*`, `%`, `/`, `**`);
+- Postfix operators (`i++`, `i--`)
+- Comparison operators (`>`, `<`, `>=`, `<=`, `==`, `!=`)
+- Conditional expressions (`if else`);
+- Logical operators (`&&`, `||`)
+- Loop (`while`);
+- Let statements (`let a = 1`);
+- First-class and higher-order functions (`let foo = fn(x) { x + 1 }`);
+- Built-in functions (`puts()`, etc);
 - Recursion;
 - Closures;
 
 **Future scope:**
 
-- More Logical Operators;
-- More built-in functions;
 - Enums;
 - Classes and Objects;
 - Match Expression;
-- Etc.
+- Regex support;
 
 **Basic syntax:**
 
@@ -93,7 +94,9 @@ let foo = map([1, 2, 3, 4], fn(x) { x * 2 });
 puts(foo); // [2, 4, 6, 8]
 ```
 
-A working in progress. More features and docs soon.
+See more examples [here](tests/examples).
+
+(A working in progress. More features and docs soon.)
 
 ### Why?
 
