@@ -177,7 +177,7 @@ docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./vendor/bin/pest
 Running from a file contents of the examples folder:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./monkey run examples/closure.monkey
+docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./monkey run examples/fibo_while.monkey
 ```
 
 ### Contributing
