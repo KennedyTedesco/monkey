@@ -23,9 +23,9 @@ function testObjectValue(MonkeyObject $object, $expected)
     } elseif ($object instanceof StringObject) {
         testStringObject($object, $expected);
     } elseif ($object instanceof ErrorObject) {
-        assertSame($expected, $object->value());
+        expect($expected)->toBe($object->value());
     } elseif ($object instanceof NullObject) {
-        assertSame($expected, $object->value());
+        expect($expected)->toBe($object->value());
     } elseif ($object instanceof BooleanObject) {
         testBooleanObject($object, $expected);
     }
@@ -33,30 +33,30 @@ function testObjectValue(MonkeyObject $object, $expected)
 
 function testIntegerObject(MonkeyObject $object, int $expected)
 {
-    assertInstanceOf(IntegerObject::class, $object);
-    assertSame(MonkeyObject::MO_INT, $object->type());
-    assertSame($expected, $object->value());
+    expect($object)->toBeInstanceOf(IntegerObject::class);
+    expect($object->type())->toBe(MonkeyObject::MO_INT);
+    expect($expected)->toBe($object->value());
 }
 
 function testStringObject(MonkeyObject $object, string $expected)
 {
-    assertInstanceOf(StringObject::class, $object);
-    assertSame(MonkeyObject::MO_STRING, $object->type());
-    assertSame($expected, $object->value());
+    expect($object)->toBeInstanceOf(StringObject::class);
+    expect($object->type())->toBe(MonkeyObject::MO_STRING);
+    expect($expected)->toBe($object->value());
 }
 
 function testFloatObject(MonkeyObject $object, float $expected)
 {
-    assertInstanceOf(FloatObject::class, $object);
-    assertSame(MonkeyObject::MO_FLOAT, $object->type());
-    assertSame($expected, $object->value());
+    expect($object)->toBeInstanceOf(FloatObject::class);
+    expect($object->type())->toBe(MonkeyObject::MO_FLOAT);
+    expect($expected)->toBe($object->value());
 }
 
 function testBooleanObject(MonkeyObject $object, bool $expected)
 {
-    assertInstanceOf(BooleanObject::class, $object);
-    assertSame(MonkeyObject::MO_BOOL, $object->type());
-    assertSame($expected, $object->value());
+    expect($object)->toBeInstanceOf(BooleanObject::class);
+    expect($object->type())->toBe(MonkeyObject::MO_BOOL);
+    expect($expected)->toBe($object->value());
 }
 
 test('eval integer expressions', function (string $input, $expected) {
@@ -203,11 +203,11 @@ test('function object', function () {
     /** @var FunctionObject $object */
     $object = evalProgram('fn(x) { x + 2; };');
 
-    assertInstanceOf(FunctionObject::class, $object);
-    assertCount(1, $object->parameters());
+    expect($object)->toBeInstanceOf(FunctionObject::class);
+    expect($object->parameters())->toHaveCount(1);
 
-    assertSame('x', $object->parameters()[0]->toString());
-    assertSame('(x + 2)', $object->body()->toString());
+    expect($object->parameters()[0]->toString())->toBe('x');
+    expect($object->body()->toString())->toBe('(x + 2)');
 });
 
 test('eval function', function (string $input, int $expected) {

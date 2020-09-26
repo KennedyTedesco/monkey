@@ -256,8 +256,8 @@ MONKEY;
 
         $token = $lexer->nextToken();
 
-        assertSame($type, $token->type());
-        assertSame($literal, $token->literal());
+        expect($token->type())->toBe($type);
+        expect($token->literal())->toBe($literal);
     }
 });
 
@@ -284,7 +284,7 @@ test('comparision operators', function () {
 
         $token = $lexer->nextToken();
 
-        assertSame($type, $token->type());
-        assertSame($literal, $token->literal());
+        expect($token->type())->toBe($type);
+        expect($token->literal())->toBe($literal);
     }
 });

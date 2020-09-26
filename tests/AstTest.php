@@ -22,5 +22,5 @@ test('toString', function () {
         )
     );
 
-    assertSame('let foo = 10;', $program->toString());
+    expect('let foo = 10;')->toBe($program->toString());
 });

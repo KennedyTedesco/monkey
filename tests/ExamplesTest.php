@@ -22,7 +22,7 @@ test('eval integer expressionss', function (string $filename) {
     evalProgram($details['file']);
     $output = \ob_get_clean();
 
-    assertSame($details['expect'], $output);
+    expect($details['expect'])->toBe($output);
 })->with(function () {
     foreach (\glob(__DIR__.'/examples/*.monkey') as $filename) {
         yield \basename($filename);

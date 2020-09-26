@@ -1,16 +1,13 @@
 {
   "name": "kennedytedesco/monkey",
   "description": "Monkey Programming Language",
-  "license": "proprietary",
-  "require": {
-    "ext-readline": "*"
-  },
+  "license": "MIT",
   "require-dev": {
     "roave/security-advisories": "dev-master",
     "friendsofphp/php-cs-fixer": "^2.0",
-    "pestphp/pest": "^0.1",
-    "phpstan/phpstan": "^0.12.25",
-    "phpunit/phpunit": "^9.0",
+    "pestphp/pest": "^v0.3.6",
+    "phpstan/phpstan": "^0.12",
+    "phpunit/phpunit": "^9.3",
     "thecodingmachine/phpstan-strict-rules": "^0.12.0"
   },
   "autoload": {

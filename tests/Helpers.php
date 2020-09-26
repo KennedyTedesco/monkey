@@ -19,7 +19,7 @@ use Monkey\Parser\ProgramParser;
  */
 function assertInfixExpression(Expression $expression, $leftValue, string $operator, $rightValue): void
 {
-    assertSame($operator, $expression->operator());
+    expect($expression->operator())->toBe($operator);
 
     /** @var IntegerLiteral|BooleanLiteral $right */
     $right = $expression->right();
@@ -27,8 +27,8 @@ function assertInfixExpression(Expression $expression, $leftValue, string $opera
     /** @var IntegerLiteral|BooleanLiteral $left */
     $left = $expression->left();
 
-    assertSame($leftValue, $left->value());
-    assertSame($rightValue, $right->value());
+    expect($leftValue)->toBe($left->value());
+    expect($rightValue)->toBe($right->value());
 }
 
 function newProgram(string $input): Program
