@@ -135,7 +135,7 @@ Running the tests:
 docker run --rm -v $(pwd):/monkey -w /monkey keinos/php8-jit ./vendor/bin/pest
 ```
 
-If you're using a fish-like shell:
+If you're using a fish-like shell, omit the `$`:
 
 ```bash
 docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit ./vendor/bin/pest
