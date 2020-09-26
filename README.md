@@ -121,12 +121,38 @@ The steps are:
     <img src="resources/how-it-works.png?raw=true" alt="How it works">
 </p>
 
+### Running with Docker (PHP 8 only)
+
+Pull the docker image:
+
+```bash
+docker pull keinos/php8-jit
+```
+
+Running the tests:
+
+```bash
+docker run --rm -v $(pwd):/monkey -w /monkey keinos/php8-jit ./vendor/bin/pest
+```
+
+If you're using a fish-like shell:
+
+```bash
+docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit ./vendor/bin/pest
+```
+
+Running from a file contents of the examples folder:
+
+```bash
+docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit ./monkey run examples/fibo_while.monkey
+```
+
 ### Using the REPL
 
 Clone this repository, execute `composer install`, then:
 
 ```bash
-$ ./monkey repl
+docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit ./monkey repl
 ```
 
 Example:
@@ -154,33 +180,7 @@ Example:
 Or, if you want to execute a file:
 
 ```bash
-./monkey run examples/closure.monkey
-```
-
-### Running with Docker
-
-Pull the docker image:
-
-```bash
-docker pull php:7.4-cli
-```
-
-Running the tests:
-
-```bash
-docker run --rm -v $(pwd):/monkey -w /monkey php:7.4-cli ./vendor/bin/pest
-```
-
-If you're using a fish-like shell:
-
-```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./vendor/bin/pest
-```
-
-Running from a file contents of the examples folder:
-
-```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:7.4-cli ./monkey run examples/fibo_while.monkey
+docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit ./monkey run examples/closure.monkey
 ```
 
 ### Contributing
