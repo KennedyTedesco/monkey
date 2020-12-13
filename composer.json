@@ -5,12 +5,12 @@
   "require-dev": {
     "roave/security-advisories": "dev-master",
     "friendsofphp/php-cs-fixer": "^2.0",
-    "pestphp/pest": "^v0.3.6",
+    "pestphp/pest": "^v0.3",
     "phpstan/phpstan": "^0.12",
-    "phpunit/phpunit": "^9.3",
-    "thecodingmachine/phpstan-strict-rules": "^0.12.0"
+    "phpunit/phpunit": "^9.5"
   },
   "require": {
+    "php": "^8.0",
     "ext-readline": "*"
   },
   "autoload": {
