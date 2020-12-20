@@ -16,15 +16,11 @@ final class EvalStringBinaryExpression
         StringObject $left,
         StringObject $right
     ): MonkeyObject {
-        switch ($operator) {
-            case '+':
-                return new StringObject("{$left->value()}{$right->value()}");
-            case '!=':
-                return BooleanObject::from($left->value() !== $right->value());
-            case '==':
-                return BooleanObject::from($left->value() === $right->value());
-            default:
-                return ErrorObject::unknownOperator($left->typeLiteral(), $operator, $right->typeLiteral());
-        }
+        return match ($operator) {
+            '+' => new StringObject("{$left->value()}{$right->value()}"),
+            '!=' => BooleanObject::from($left->value() !== $right->value()),
+            '==' => BooleanObject::from($left->value() === $right->value()),
+            default => ErrorObject::unknownOperator($left->typeLiteral(), $operator, $right->typeLiteral()),
+        };
     }
 }

@@ -12,8 +12,10 @@ use Monkey\Object\ReturnValueObject;
 
 final class EvalBlockStatement
 {
-    public function __construct(private Evaluator $evaluator, private Environment $env)
-    {
+    public function __construct(
+        private Evaluator $evaluator,
+        private Environment $env
+    ) {
     }
 
     public function __invoke(BlockStatement $node): MonkeyObject

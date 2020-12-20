@@ -12,15 +12,10 @@ final class EvalNotOperatorExpression
 {
     public function __invoke(MonkeyObject $right): MonkeyObject
     {
-        switch (true) {
-            case $right instanceof BooleanObject:
-                return BooleanObject::from(!$right->value());
-
-            case $right instanceof NullObject:
-                return BooleanObject::true();
-
-            default:
-                return BooleanObject::false();
-        }
+        return match (true) {
+            $right instanceof BooleanObject => BooleanObject::from(!$right->value()),
+            $right instanceof NullObject => BooleanObject::true(),
+            default => BooleanObject::false(),
+        };
     }
 }

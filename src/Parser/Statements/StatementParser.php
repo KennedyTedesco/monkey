@@ -12,15 +12,11 @@ final class StatementParser
 {
     public function __invoke(Parser $parser): Statement
     {
-        switch (true) {
-            case $parser->curToken->is(TokenType::T_IDENT) && $parser->peekToken->is(TokenType::T_ASSIGN):
-                return (new AssignStatementParser())($parser);
-            case $parser->curToken->is(TokenType::T_LET):
-                return (new LetStatementParser())($parser);
-            case $parser->curToken->is(TokenType::T_RETURN):
-                return (new ReturnStatementParser())($parser);
-            default:
-                return (new ExpressionStatementParser())($parser);
-        }
+        return match (true) {
+            $parser->curToken->is(TokenType::T_IDENT) && $parser->peekToken->is(TokenType::T_ASSIGN) => (new AssignStatementParser())($parser),
+            $parser->curToken->is(TokenType::T_LET) => (new LetStatementParser())($parser),
+            $parser->curToken->is(TokenType::T_RETURN) => (new ReturnStatementParser())($parser),
+            default => (new ExpressionStatementParser())($parser),
+        };
     }
 }

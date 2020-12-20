@@ -20,13 +20,10 @@ final class EvalLenFunction
 
         $object = $arguments[0];
 
-        switch (true) {
-            case $object instanceof StringObject:
-                return new IntegerObject(\mb_strlen($object->value()));
-            case $object instanceof ArrayObject:
-                return new IntegerObject(\count($object->value()));
-            default:
-                return ErrorObject::invalidArgument('len()', $object->typeLiteral());
-        }
+        return match (true) {
+            $object instanceof StringObject => new IntegerObject(\mb_strlen($object->value())),
+            $object instanceof ArrayObject => new IntegerObject(\count($object->value())),
+            default => ErrorObject::invalidArgument('len()', $object->typeLiteral()),
+        };
     }
 }

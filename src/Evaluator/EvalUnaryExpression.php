@@ -11,18 +11,11 @@ final class EvalUnaryExpression
 {
     public function __invoke(string $operator, MonkeyObject $right): MonkeyObject
     {
-        switch (true) {
-            case $right instanceof ErrorObject:
-                return $right;
-
-            case '!' === $operator:
-                return (new EvalNotOperatorExpression())($right);
-
-            case '-' === $operator:
-                return (new EvalMinusUnaryOperatorExpression())($right);
-
-            default:
-                return ErrorObject::unknownOperator($operator, $right->typeLiteral());
-        }
+        return match (true) {
+            $right instanceof ErrorObject => $right,
+            '!' === $operator => (new EvalNotOperatorExpression())($right),
+            '-' === $operator => (new EvalMinusUnaryOperatorExpression())($right),
+            default => ErrorObject::unknownOperator($operator, $right->typeLiteral()),
+        };
     }
 }

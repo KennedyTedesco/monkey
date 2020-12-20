@@ -15,11 +15,9 @@ final class EvalArrayBinaryExpression
         ArrayObject $left,
         ArrayObject $right
     ): MonkeyObject {
-        switch ($operator) {
-            case '+':
-                return new ArrayObject(\array_merge($left->value(), $right->value()));
-            default:
-                return ErrorObject::unknownOperator($left->typeLiteral(), $operator, $right->typeLiteral());
-        }
+        return match ($operator) {
+            '+' => new ArrayObject(\array_merge($left->value(), $right->value())),
+            default => ErrorObject::unknownOperator($left->typeLiteral(), $operator, $right->typeLiteral()),
+        };
     }
 }

@@ -15,33 +15,20 @@ final class EvalNumericBinaryExpression
         MonkeyObject $left,
         MonkeyObject $right
     ): MonkeyObject {
-        switch ($operator) {
-            case '+':
-                return new $left($left->value() + $right->value());
-            case '-':
-                return new $left($left->value() - $right->value());
-            case '*':
-                return new $left($left->value() * $right->value());
-            case '%':
-                return new $left($left->value() % $right->value());
-            case '**':
-                return new $left($left->value() ** $right->value());
-            case '/':
-                return new $left($left->value() / $right->value());
-            case '<':
-                return BooleanObject::from($left->value() < $right->value());
-            case '>':
-                return BooleanObject::from($left->value() > $right->value());
-            case '<=':
-                return BooleanObject::from($left->value() <= $right->value());
-            case '>=':
-                return BooleanObject::from($left->value() >= $right->value());
-            case '!=':
-                return BooleanObject::from($left->value() !== $right->value());
-            case '==':
-                return BooleanObject::from($left->value() === $right->value());
-            default:
-                return ErrorObject::unknownOperator($left->typeLiteral(), $operator, $right->typeLiteral());
-        }
+        return match ($operator) {
+            '+' => new $left($left->value() + $right->value()),
+            '-' => new $left($left->value() - $right->value()),
+            '*' => new $left($left->value() * $right->value()),
+            '%' => new $left($left->value() % $right->value()),
+            '**' => new $left($left->value() ** $right->value()),
+            '/' => new $left($left->value() / $right->value()),
+            '<' => BooleanObject::from($left->value() < $right->value()),
+            '>' => BooleanObject::from($left->value() > $right->value()),
+            '<=' => BooleanObject::from($left->value() <= $right->value()),
+            '>=' => BooleanObject::from($left->value() >= $right->value()),
+            '!=' => BooleanObject::from($left->value() !== $right->value()),
+            '==' => BooleanObject::from($left->value() === $right->value()),
+            default => ErrorObject::unknownOperator($left->typeLiteral(), $operator, $right->typeLiteral()),
+        };
     }
 }
