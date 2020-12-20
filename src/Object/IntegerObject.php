@@ -6,11 +6,9 @@ namespace Monkey\Object;
 
 final class IntegerObject extends MonkeyObject
 {
-    private int $value;
-
-    public function __construct(int $value)
-    {
-        $this->value = $value;
+    public function __construct(
+        private int $value
+    ) {
     }
 
     public function value(): int

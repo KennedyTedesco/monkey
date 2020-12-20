@@ -9,20 +9,13 @@ use Monkey\Token\Token;
 
 final class IfExpression extends Expression
 {
-    private Expression $condition;
-    private BlockStatement $consequence;
-    private ?BlockStatement $alternative;
-
     public function __construct(
         Token $token,
-        Expression $condition,
-        BlockStatement $consequence,
-        ?BlockStatement $alternative = null
+        private Expression $condition,
+        private BlockStatement $consequence,
+        private ?BlockStatement $alternative = null
     ) {
         $this->token = $token;
-        $this->condition = $condition;
-        $this->consequence = $consequence;
-        $this->alternative = $alternative;
     }
 
     public function condition(): Expression

@@ -7,11 +7,9 @@ namespace Monkey\Lexer;
 final class Input
 {
     private int $size;
-    private string $input;
 
-    public function __construct(string $input)
+    public function __construct(private string $input)
     {
-        $this->input = $input;
         $this->size = \mb_strlen($input);
     }
 

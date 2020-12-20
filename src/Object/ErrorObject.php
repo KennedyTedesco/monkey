@@ -6,11 +6,8 @@ namespace Monkey\Object;
 
 final class ErrorObject extends MonkeyObject
 {
-    private string $value;
-
-    public function __construct(string $value)
+    public function __construct(private string $value)
     {
-        $this->value = $value;
     }
 
     public function value(): string

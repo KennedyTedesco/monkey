@@ -9,13 +9,10 @@ use Monkey\Token\Token;
 
 final class ArrayLiteral extends Expression
 {
-    /** @var array<Expression> */
-    private array $elements;
-
-    public function __construct(Token $token, array $elements)
+    public function __construct(Token $token, /* @var array<Expression> */
+    private array $elements)
     {
         $this->token = $token;
-        $this->elements = $elements;
     }
 
     public function elements(): array

@@ -8,12 +8,9 @@ use Monkey\Token\Token;
 
 final class IdentifierExpression extends Expression
 {
-    private string $value;
-
-    public function __construct(Token $token, string $value)
+    public function __construct(Token $token, private string $value)
     {
         $this->token = $token;
-        $this->value = $value;
     }
 
     public function value(): string

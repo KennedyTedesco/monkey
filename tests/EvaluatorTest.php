@@ -224,8 +224,8 @@ test('eval function', function (string $input, int $expected) {
 test('eval closure', function () {
     $input = <<<MONKEY
         let newAdder = fn(x) {
-          fn(y) { 
-            x + y 
+          fn(y) {
+            x + y
           };
         };
 
@@ -294,7 +294,7 @@ test('eval while', function (string $input, int $expected) {
                 }
                 return x;
             };
-            
+
             foo();
         MONKEY,
         10,
@@ -308,7 +308,7 @@ test('eval while', function (string $input, int $expected) {
             }
             return x;
         };
-        
+
         foo();
         MONKEY,
         10,

@@ -10,17 +10,12 @@ use Monkey\Token\Token;
 
 final class LetStatement extends Statement
 {
-    private Expression $value;
-    private IdentifierExpression $name;
-
     public function __construct(
         Token $token,
-        IdentifierExpression $name,
-        Expression $value
+        private IdentifierExpression $name,
+        private Expression $value
     ) {
         $this->token = $token;
-        $this->name = $name;
-        $this->value = $value;
     }
 
     public function name(): IdentifierExpression

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Lexer;
 
+use JetBrains\PhpStorm\Pure;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
@@ -33,42 +34,41 @@ final class Lexer
     {
         $this->skipWhitespaces();
 
-        switch (true) {
-            case $this->curAndPeekCharIs('**'):
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_POWER);
-            case $this->curAndPeekCharIs('=='):
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ);
-            case $this->curAndPeekCharIs('!='):
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_NOT_EQ);
-            case $this->curAndPeekCharIs('>='):
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_GT_EQ);
-            case $this->curAndPeekCharIs('<='):
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ);
-            case $this->curAndPeekCharIs('&&'):
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_AND);
-            case $this->curAndPeekCharIs('||'):
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_OR);
-            case $this->curAndPeekCharIs('++'):
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_PLUS_PLUS);
-            case $this->curAndPeekCharIs('--'):
-                return $this->makeTwoCharTokenAndAdvance(TokenType::T_MINUS_MINUS);
-            case $this->curChar->is('"'):
-                return $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString());
-            case $this->curChar->isLetter():
-                return Token::from(
-                    TokenType::lookupToken($identifier = $this->readIdentifier()) ?? TokenType::T_IDENT, $identifier
-                );
-            case $this->curChar->isDigit():
-                return Token::from(\ctype_digit($number = $this->readNumber()) ? TokenType::T_INT : TokenType::T_FLOAT, $number);
-            case $this->curChar->is(self::EOF):
-                return Token::from(TokenType::T_EOF, self::EOF);
-            case TokenType::isSingleCharToken($this->curChar->toScalar()):
-                return $this->makeTokenAndAdvance(
-                    TokenType::lookupToken($this->curChar->toScalar()), $this->curChar->toScalar()
-                );
-            default:
-                return $this->makeTokenAndAdvance(TokenType::T_ILLEGAL, $this->curChar->toScalar());
-        }
+        return match (true) {
+            $this->curAndPeekCharIs('**') => $this->makeTwoCharTokenAndAdvance(TokenType::T_POWER),
+
+            $this->curAndPeekCharIs('==') => $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ),
+
+            $this->curAndPeekCharIs('!=') => $this->makeTwoCharTokenAndAdvance(TokenType::T_NOT_EQ),
+
+            $this->curAndPeekCharIs('>=') => $this->makeTwoCharTokenAndAdvance(TokenType::T_GT_EQ),
+
+            $this->curAndPeekCharIs('<=') => $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ),
+
+            $this->curAndPeekCharIs('&&') => $this->makeTwoCharTokenAndAdvance(TokenType::T_AND),
+
+            $this->curAndPeekCharIs('||') => $this->makeTwoCharTokenAndAdvance(TokenType::T_OR),
+
+            $this->curAndPeekCharIs('++') => $this->makeTwoCharTokenAndAdvance(TokenType::T_PLUS_PLUS),
+
+            $this->curAndPeekCharIs('--') => $this->makeTwoCharTokenAndAdvance(TokenType::T_MINUS_MINUS),
+
+            $this->curChar->is('"') => $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString()),
+
+            $this->curChar->isLetter() => Token::from(
+                TokenType::lookupToken($identifier = $this->readIdentifier()) ?? TokenType::T_IDENT, $identifier
+            ),
+
+            $this->curChar->isDigit() => Token::from(\ctype_digit($number = $this->readNumber()) ? TokenType::T_INT : TokenType::T_FLOAT, $number),
+
+            $this->curChar->is(self::EOF) => Token::from(TokenType::T_EOF, self::EOF),
+
+            TokenType::isSingleCharToken($this->curChar->toScalar()) => $this->makeTokenAndAdvance(
+                TokenType::lookupToken($this->curChar->toScalar()), $this->curChar->toScalar()
+            ),
+
+            default => $this->makeTokenAndAdvance(TokenType::T_ILLEGAL, $this->curChar->toScalar()),
+        };
     }
 
     private function curAndPeekCharIs(string $operators): bool

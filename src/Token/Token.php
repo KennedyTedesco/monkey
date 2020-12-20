@@ -6,13 +6,8 @@ namespace Monkey\Token;
 
 final class Token
 {
-    private int $type;
-    private string $literal;
-
-    public function __construct(int $type, string $literal)
+    public function __construct(private int $type, private string $literal)
     {
-        $this->type = $type;
-        $this->literal = $literal;
     }
 
     public static function from(int $type, string $literal): self

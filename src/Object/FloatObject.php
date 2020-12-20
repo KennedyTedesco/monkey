@@ -6,11 +6,8 @@ namespace Monkey\Object;
 
 final class FloatObject extends MonkeyObject
 {
-    private float $value;
-
-    public function __construct(float $value)
+    public function __construct(private float $value)
     {
-        $this->value = $value;
     }
 
     public function value(): float

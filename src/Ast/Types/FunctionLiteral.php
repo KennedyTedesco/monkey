@@ -12,15 +12,10 @@ use Monkey\Token\Token;
 
 final class FunctionLiteral extends Expression
 {
-    /** @var array<IdentifierExpression> */
-    private array $parameters;
-    private BlockStatement $body;
-
-    public function __construct(Token $token, array $parameters, BlockStatement $body)
+    public function __construct(Token $token, /* @var array<IdentifierExpression> */
+    private array $parameters, private BlockStatement $body)
     {
-        $this->body = $body;
         $this->token = $token;
-        $this->parameters = $parameters;
     }
 
     public function body(): BlockStatement

@@ -26,16 +26,11 @@ use Monkey\Token\TokenType;
 
 final class Parser
 {
-    private Lexer $lexer;
+    public ?Token $prevToken = null;
 
-    /** @var Token */
-    public $prevToken;
+    public ?Token $curToken = null;
 
-    /** @var Token */
-    public $curToken;
-
-    /** @var Token */
-    public $peekToken;
+    public ?Token $peekToken = null;
 
     /** @var array<int,string> */
     private array $errors = [];
@@ -69,10 +64,8 @@ final class Parser
         TokenType::T_POWER => Precedence::POWER,
     ];
 
-    public function __construct(Lexer $lexer)
+    public function __construct(private Lexer $lexer)
     {
-        $this->lexer = $lexer;
-
         $this->registerPrefix(TokenType::T_IDENT, new IdentifierParselet($this));
         $this->registerPrefix(TokenType::T_INT, new ScalarParselet($this));
         $this->registerPrefix(TokenType::T_FLOAT, new ScalarParselet($this));

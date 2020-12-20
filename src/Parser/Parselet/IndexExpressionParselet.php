@@ -12,11 +12,8 @@ use Monkey\Token\TokenType;
 
 final class IndexExpressionParselet implements InfixParselet
 {
-    private Parser $parser;
-
-    public function __construct(Parser $parser)
+    public function __construct(private Parser $parser)
     {
-        $this->parser = $parser;
     }
 
     public function parse(Expression $left): ?Expression

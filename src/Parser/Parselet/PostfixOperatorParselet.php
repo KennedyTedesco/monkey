@@ -10,11 +10,8 @@ use Monkey\Parser\Parser;
 
 final class PostfixOperatorParselet implements PostfixParselet
 {
-    private Parser $parser;
-
-    public function __construct(Parser $parser)
+    public function __construct(private Parser $parser)
     {
-        $this->parser = $parser;
     }
 
     public function parse(): Expression

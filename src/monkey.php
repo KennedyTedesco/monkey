@@ -28,13 +28,8 @@ if ($argc <= 1) {
     help();
 }
 
-switch ($argv[1]) {
-    case 'repl':
-        Repl::start();
-        break;
-    case 'run':
-        Repl::eval(\file_get_contents($argv[2]), new Environment());
-        break;
-    default:
-        help();
-}
+match ($argv[1]) {
+    'repl' => Repl::start(),
+    'run' => Repl::eval(\file_get_contents($argv[2]), new Environment()),
+    default => help(),
+};

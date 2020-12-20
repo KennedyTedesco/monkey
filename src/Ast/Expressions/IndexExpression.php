@@ -8,17 +8,12 @@ use Monkey\Token\Token;
 
 final class IndexExpression extends Expression
 {
-    private Expression $left;
-    private Expression $index;
-
     public function __construct(
         Token $token,
-        Expression $left,
-        Expression $index
+        private Expression $left,
+        private Expression $index
     ) {
-        $this->left = $left;
         $this->token = $token;
-        $this->index = $index;
     }
 
     public function left(): Expression

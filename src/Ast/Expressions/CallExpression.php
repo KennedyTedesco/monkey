@@ -8,19 +8,13 @@ use Monkey\Token\Token;
 
 final class CallExpression extends Expression
 {
-    private Expression $function;
-
-    /** @var array<Expression> */
-    private array $arguments;
-
     public function __construct(
         Token $token,
-        Expression $function,
-        array $arguments
+        private Expression $function,
+        /* @var array<Expression> */
+        private array $arguments
     ) {
         $this->token = $token;
-        $this->function = $function;
-        $this->arguments = $arguments;
     }
 
     public function function(): Expression

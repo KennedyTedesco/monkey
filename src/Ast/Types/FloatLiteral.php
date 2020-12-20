@@ -9,12 +9,9 @@ use Monkey\Token\Token;
 
 final class FloatLiteral extends Expression
 {
-    private float $value;
-
-    public function __construct(Token $token, float $value)
+    public function __construct(Token $token, private float $value)
     {
         $this->token = $token;
-        $this->value = $value;
     }
 
     public function value(): float

@@ -10,13 +10,10 @@ use Monkey\Token\Token;
 
 final class BlockStatement extends Statement
 {
-    /** @var array<Statement> */
-    private array $statements;
-
-    public function __construct(Token $token, array $statements)
+    public function __construct(Token $token, /* @var array<Statement> */
+    private array $statements)
     {
         $this->token = $token;
-        $this->statements = $statements;
     }
 
     public function statements(): array

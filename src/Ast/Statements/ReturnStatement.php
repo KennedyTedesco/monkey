@@ -11,14 +11,11 @@ use Monkey\Token\Token;
 
 final class ReturnStatement extends Statement
 {
-    private Expression $returnValue;
-
     public function __construct(
         Token $token,
-        Expression $returnValue
+        private Expression $returnValue
     ) {
         $this->token = $token;
-        $this->returnValue = $returnValue;
     }
 
     public function returnValue(): Expression

@@ -10,15 +10,8 @@ use Monkey\Object\MonkeyObject;
 
 final class EvalAssingStatement
 {
-    private Environment $env;
-    private Evaluator $evaluator;
-
-    public function __construct(
-        Evaluator $evaluator,
-        Environment $env
-    ) {
-        $this->env = $env;
-        $this->evaluator = $evaluator;
+    public function __construct(private Evaluator $evaluator, private Environment $env)
+    {
     }
 
     public function __invoke(AssignStatement $node): MonkeyObject

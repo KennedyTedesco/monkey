@@ -8,14 +8,11 @@ use Monkey\Object\MonkeyObject;
 
 final class Environment
 {
-    private ?Environment $outer;
-
     /** @var array<MonkeyObject> */
     private array $store = [];
 
-    public function __construct(?self $outer = null)
+    public function __construct(private ?self $outer = null)
     {
-        $this->outer = $outer;
     }
 
     public function set(string $name, MonkeyObject $object): void

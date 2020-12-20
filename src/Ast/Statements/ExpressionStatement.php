@@ -9,12 +9,9 @@ use Monkey\Token\Token;
 
 final class ExpressionStatement extends Statement
 {
-    private Expression $expression;
-
-    public function __construct(Token $token, Expression $expression)
+    public function __construct(Token $token, private Expression $expression)
     {
         $this->token = $token;
-        $this->expression = $expression;
     }
 
     public function expression(): Expression

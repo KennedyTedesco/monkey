@@ -8,12 +8,10 @@ use Monkey\Ast\Expressions\Expression;
 
 final class ArrayObject extends MonkeyObject
 {
-    /** @var array<Expression> */
-    private array $elements;
-
-    public function __construct(array $elements)
-    {
-        $this->elements = $elements;
+    public function __construct(
+        /* @var array<Expression> */
+        private array $elements
+    ) {
     }
 
     public function value(): array

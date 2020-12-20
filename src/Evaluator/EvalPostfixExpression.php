@@ -11,11 +11,8 @@ use Monkey\Object\MonkeyObject;
 
 final class EvalPostfixExpression
 {
-    private Environment $env;
-
-    public function __construct(Environment $env)
+    public function __construct(private Environment $env)
     {
-        $this->env = $env;
     }
 
     public function __invoke(PostfixExpression $node): MonkeyObject

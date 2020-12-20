@@ -10,11 +10,8 @@ use Monkey\Object\MonkeyObject;
 
 final class EvalIdentifier
 {
-    private Environment $env;
-
-    public function __construct(Environment $env)
+    public function __construct(private Environment $env)
     {
-        $this->env = $env;
     }
 
     public function __invoke(IdentifierExpression $node): MonkeyObject

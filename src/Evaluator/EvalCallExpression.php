@@ -14,15 +14,10 @@ use Monkey\Object\ReturnValueObject;
 
 final class EvalCallExpression
 {
-    private Environment $env;
-    private Evaluator $evaluator;
-
     public function __construct(
-        Evaluator $evaluator,
-        Environment $env
+        private Evaluator $evaluator,
+        private Environment $env
     ) {
-        $this->env = $env;
-        $this->evaluator = $evaluator;
     }
 
     public function __invoke(CallExpression $node): MonkeyObject

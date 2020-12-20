@@ -8,11 +8,8 @@ use Closure;
 
 final class BuiltinFunctionObject extends MonkeyObject
 {
-    private Closure $function;
-
-    public function __construct(Closure $function)
+    public function __construct(private Closure $function)
     {
-        $this->function = $function;
     }
 
     public function value(): Closure

@@ -13,11 +13,8 @@ use Monkey\Token\TokenType;
 
 final class IfExpressionParselet implements PrefixParselet
 {
-    private Parser $parser;
-
-    public function __construct(Parser $parser)
+    public function __construct(private Parser $parser)
     {
-        $this->parser = $parser;
     }
 
     public function parse(): ?Expression

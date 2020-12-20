@@ -10,19 +10,12 @@ use Monkey\Evaluator\Environment;
 
 final class FunctionObject extends MonkeyObject
 {
-    /** @var array<IdentifierExpression> */
-    private array $parameters;
-    private BlockStatement $body;
-    private Environment $environment;
-
     public function __construct(
-        array $parameters,
-        BlockStatement $body,
-        Environment $environment
+        /* @var array<IdentifierExpression> */
+        private array $parameters,
+        private BlockStatement $body,
+        private Environment $environment
     ) {
-        $this->body = $body;
-        $this->parameters = $parameters;
-        $this->environment = $environment;
     }
 
     public function environment(): Environment

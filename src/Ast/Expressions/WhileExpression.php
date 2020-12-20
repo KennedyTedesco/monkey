@@ -9,17 +9,12 @@ use Monkey\Token\Token;
 
 final class WhileExpression extends Expression
 {
-    private Expression $condition;
-    private BlockStatement $consequence;
-
     public function __construct(
         Token $token,
-        Expression $condition,
-        BlockStatement $consequence
+        private Expression $condition,
+        private BlockStatement $consequence
     ) {
         $this->token = $token;
-        $this->condition = $condition;
-        $this->consequence = $consequence;
     }
 
     public function condition(): Expression

@@ -13,11 +13,8 @@ use Monkey\Object\MonkeyObject;
 
 final class EvalMapFunction
 {
-    private Evaluator $evaluator;
-
-    public function __construct(Evaluator $evaluator)
+    public function __construct(private Evaluator $evaluator)
     {
-        $this->evaluator = $evaluator;
     }
 
     public function __invoke(MonkeyObject ...$arguments): MonkeyObject

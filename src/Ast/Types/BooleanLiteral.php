@@ -9,12 +9,9 @@ use Monkey\Token\Token;
 
 final class BooleanLiteral extends Expression
 {
-    private bool $value;
-
-    public function __construct(Token $token, bool $value)
+    public function __construct(Token $token, private bool $value)
     {
         $this->token = $token;
-        $this->value = $value;
     }
 
     public function value(): bool

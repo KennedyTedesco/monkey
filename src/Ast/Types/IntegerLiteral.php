@@ -9,12 +9,9 @@ use Monkey\Token\Token;
 
 final class IntegerLiteral extends Expression
 {
-    private int $value;
-
-    public function __construct(Token $token, int $value)
+    public function __construct(Token $token, private int $value)
     {
         $this->token = $token;
-        $this->value = $value;
     }
 
     public function value(): int

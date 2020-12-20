@@ -372,8 +372,8 @@ test('if else expression', function () {
 
 test('function literal', function () {
     $program = newProgram(<<<'MONKEY'
-        fn(x, y) { 
-            x + y; 
+        fn(x, y) {
+            x + y;
         }
     MONKEY);
 

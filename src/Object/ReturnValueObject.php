@@ -6,11 +6,8 @@ namespace Monkey\Object;
 
 final class ReturnValueObject extends MonkeyObject
 {
-    private MonkeyObject $value;
-
-    public function __construct(MonkeyObject $value)
+    public function __construct(private MonkeyObject $value)
     {
-        $this->value = $value;
     }
 
     public function value(): MonkeyObject

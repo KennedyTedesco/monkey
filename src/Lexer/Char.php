@@ -6,11 +6,8 @@ namespace Monkey\Lexer;
 
 final class Char
 {
-    private string $ch;
-
-    public function __construct(string $ch)
+    public function __construct(private string $ch)
     {
-        $this->ch = $ch;
     }
 
     public static function empty(): self

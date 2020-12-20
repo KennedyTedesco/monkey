@@ -8,14 +8,11 @@ use Monkey\Token\Token;
 
 final class PostfixExpression extends Expression
 {
-    private string $operator;
-
     public function __construct(
         Token $token,
-        string $operator
+        private string $operator
     ) {
         $this->token = $token;
-        $this->operator = $operator;
     }
 
     public function operator(): string

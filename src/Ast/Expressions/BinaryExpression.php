@@ -8,20 +8,13 @@ use Monkey\Token\Token;
 
 final class BinaryExpression extends Expression
 {
-    private string $operator;
-    private Expression $left;
-    private Expression $right;
-
     public function __construct(
         Token $token,
-        string $operator,
-        Expression $left,
-        Expression $right
+        private string $operator,
+        private Expression $left,
+        private Expression $right
     ) {
         $this->token = $token;
-        $this->right = $right;
-        $this->left = $left;
-        $this->operator = $operator;
     }
 
     public function left(): Expression

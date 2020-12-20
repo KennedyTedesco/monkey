@@ -42,7 +42,7 @@ test('basic tokens', function () {
         10 % 2;
         10.5 * 0.5;
         2 ** 2;
-        
+
         while (true) {
             1
         }
