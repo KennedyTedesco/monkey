@@ -23,11 +23,6 @@ final class Environment
 
     public function get(string $name): ?MonkeyObject
     {
-        return $this->map[$name] ?? (null !== $this->outer ? $this->outer->get($name) : null);
-    }
-
-    public function contains(string $name): bool
-    {
-        return \array_key_exists($name, $this->map) || ($this->outer && $this->outer->contains($name));
+        return $this->map[$name] ?? $this->outer?->get($name);
     }
 }

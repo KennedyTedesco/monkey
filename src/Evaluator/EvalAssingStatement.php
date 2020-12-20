@@ -24,7 +24,7 @@ final class EvalAssingStatement
 
         $name = $node->name()->value();
 
-        if (!$this->env->contains($name)) {
+        if (null === $this->env->get($name)) {
             return ErrorObject::identifierNotFound($name);
         }
 
