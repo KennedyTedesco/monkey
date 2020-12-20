@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Monkey\Lexer;
 
-use JetBrains\PhpStorm\Pure;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
