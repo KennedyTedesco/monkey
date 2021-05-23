@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Ast;
 
+use function count;
 use Monkey\Ast\Statements\Statement;
 
 final class Program extends Node
@@ -31,7 +32,7 @@ final class Program extends Node
 
     public function count(): int
     {
-        return \count($this->statements);
+        return count($this->statements);
     }
 
     public function tokenLiteral(): string

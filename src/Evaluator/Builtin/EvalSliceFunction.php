@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Monkey\Evaluator\Builtin;
 
+use function array_slice;
+use function count;
 use Monkey\Object\ArrayObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\IntegerObject;
@@ -14,7 +16,7 @@ final class EvalSliceFunction
 {
     public function __invoke(MonkeyObject ...$arguments): MonkeyObject
     {
-        $count = \count($arguments);
+        $count = count($arguments);
         if ($count < 2 || $count > 3) {
             return ErrorObject::wrongNumberOfArguments($count, 2);
         }
@@ -32,7 +34,7 @@ final class EvalSliceFunction
         $object = $arguments[0];
         if ($object instanceof ArrayObject) {
             return new ArrayObject(
-                \array_slice($object->value(), $offset->value(), (null !== $length ? $length->value() : null))
+                array_slice($object->value(), $offset->value(), (null !== $length ? $length->value() : null))
             );
         }
 
@@ -46,7 +48,7 @@ final class EvalSliceFunction
                 $params[] = $length->value();
             }
 
-            return new StringObject(\mb_substr(...$params));
+            return new StringObject(mb_substr(...$params));
         }
 
         return ErrorObject::invalidArgument('slice()', $object->typeLiteral());

@@ -407,7 +407,7 @@ test('function parameters', function (string $input, array $parameters) {
     $functionLiteral = $statement->expression();
     expect($functionLiteral)->toBeInstanceOf(FunctionLiteral::class);
 
-    $paramsTokenLiteral = \array_map(fn (IdentifierExpression $ident) => $ident->tokenLiteral(), $functionLiteral->parameters());
+    $paramsTokenLiteral = array_map(fn (IdentifierExpression $ident) => $ident->tokenLiteral(), $functionLiteral->parameters());
     expect($paramsTokenLiteral)->toBe($parameters);
 })->with([
     ['fn() {};', []],

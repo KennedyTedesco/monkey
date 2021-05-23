@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Types;
 
+use function count;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Statements\BlockStatement;
@@ -41,8 +42,8 @@ final class FunctionLiteral extends Expression
             $params[] = $parameter->toString();
         }
 
-        if (\count($params) > 0) {
-            $out .= \implode(',', $params);
+        if (count($params) > 0) {
+            $out .= implode(',', $params);
         }
 
         $out .= ") {$this->body->toString()}";

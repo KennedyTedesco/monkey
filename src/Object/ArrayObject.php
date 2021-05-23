@@ -42,6 +42,6 @@ final class ArrayObject extends MonkeyObject
             }
         }
 
-        return \sprintf('[%s]', \implode(', ', $elements));
+        return sprintf('[%s]', implode(', ', $elements));
     }
 }

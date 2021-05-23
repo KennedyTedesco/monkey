@@ -27,6 +27,6 @@ final class FloatObject extends MonkeyObject
 
     public function inspect(): string
     {
-        return \sprintf('%f', $this->value);
+        return sprintf('%f', $this->value);
     }
 }

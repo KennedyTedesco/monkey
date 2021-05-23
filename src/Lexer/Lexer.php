@@ -58,7 +58,7 @@ final class Lexer
                 TokenType::lookupToken($identifier = $this->readIdentifier()) ?? TokenType::T_IDENT, $identifier
             ),
 
-            $this->curChar->isDigit() => Token::from(\ctype_digit($number = $this->readNumber()) ? TokenType::T_INT : TokenType::T_FLOAT, $number),
+            $this->curChar->isDigit() => Token::from(ctype_digit($number = $this->readNumber()) ? TokenType::T_INT : TokenType::T_FLOAT, $number),
 
             $this->curChar->is(self::EOF) => Token::from(TokenType::T_EOF, self::EOF),
 

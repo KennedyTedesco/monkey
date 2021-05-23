@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Repl;
 
+use function count;
 use Monkey\Evaluator\Environment;
 use Monkey\Evaluator\Evaluator;
 use Monkey\Lexer\Lexer;
@@ -16,7 +17,7 @@ final class Repl
 {
     public static function start(): void
     {
-        \fwrite(\STDOUT, <<<TEXT
+        fwrite(\STDOUT, <<<TEXT
                     __,__
            .--.  .-"     "-.  .--.
           / .. \/  .-. .-.  \/ .. \
@@ -35,7 +36,7 @@ final class Repl
 
         $env = new Environment();
         while (true) {
-            $input = \readline("\n > ");
+            $input = readline("\n > ");
             if ('exit' === $input) {
                 return;
             }
@@ -48,7 +49,7 @@ final class Repl
     {
         $parser = new Parser(new Lexer($input));
 
-        if (\count($parser->errors()) > 0) {
+        if (count($parser->errors()) > 0) {
             echo self::getErrors($parser->errors());
 
             return null;

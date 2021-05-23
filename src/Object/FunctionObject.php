@@ -59,6 +59,6 @@ final class FunctionObject extends MonkeyObject
             $params[] = $parameter->toString();
         }
 
-        return \sprintf("fn(%s) {\n%s\n}", \implode(', ', $params), $this->body->toString());
+        return sprintf("fn(%s) {\n%s\n}", implode(', ', $params), $this->body->toString());
     }
 }

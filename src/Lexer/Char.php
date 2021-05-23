@@ -22,22 +22,22 @@ final class Char
 
     public function isWhitespace(): bool
     {
-        return \ctype_space($this->ch);
+        return ctype_space($this->ch);
     }
 
     public function isLetter(): bool
     {
-        return '_' === $this->ch || \ctype_alpha($this->ch);
+        return '_' === $this->ch || ctype_alpha($this->ch);
     }
 
     public function isAlphanumeric(): bool
     {
-        return '_' === $this->ch || \ctype_alnum($this->ch);
+        return '_' === $this->ch || ctype_alnum($this->ch);
     }
 
     public function isDigit(): bool
     {
-        return \ctype_digit($this->ch);
+        return ctype_digit($this->ch);
     }
 
     public function is(string $ch): bool

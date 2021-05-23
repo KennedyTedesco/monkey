@@ -1,19 +1,21 @@
 <?php
 
-$finder = Symfony\Component\Finder\Finder::create()
-    ->notPath('vendor')
-    ->in(__DIR__)
+$finder = PhpCsFixer\Finder::create()
+    ->in('src')
+    ->in('tests')
     ->name('*.php');
 
-return PhpCsFixer\Config::create()
-    ->setRules([
+$config = new PhpCsFixer\Config();
+
+return $config->setRules([
         '@Symfony' => true,
         '@Symfony:risky' => true,
+        'static_lambda' => false,
         'linebreak_after_opening_tag' => true,
         'blank_line_after_opening_tag' => true,
         'declare_strict_types' => true,
         'array_syntax' => ['syntax' => 'short'],
-        'ordered_imports' => ['sortAlgorithm' => 'alpha'],
+        'ordered_imports' => ['sort_algorithm' => 'alpha'],
         'no_unused_imports' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
@@ -38,7 +40,7 @@ return PhpCsFixer\Config::create()
             'space_before' => 'none',
         ],
         'global_namespace_import' => [
-            'import_functions' => false,
+            'import_functions' => true,
             'import_classes' => true,
         ],
         'fully_qualified_strict_types' => false,

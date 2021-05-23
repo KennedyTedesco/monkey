@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Token;
 
+use function is_string;
 use ReflectionClass;
 
 final class TokenType
@@ -108,11 +109,11 @@ final class TokenType
     public static function lexeme(int $type): string
     {
         static $constants;
-        $name = \array_search(
+        $name = array_search(
             $type, $constants ??= (new ReflectionClass(self::class))->getConstants(), true
         );
 
-        return \is_string($name) ? $name : 'T_ILLEGAL';
+        return is_string($name) ? $name : 'T_ILLEGAL';
     }
 
     public static function lookupToken(string $ch): ?int
@@ -122,6 +123,6 @@ final class TokenType
 
     public static function isSingleCharToken(string $ch): bool
     {
-        return 1 === \mb_strlen($ch) && self::lookupToken($ch);
+        return 1 === mb_strlen($ch) && self::lookupToken($ch);
     }
 }

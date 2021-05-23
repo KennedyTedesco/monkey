@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Evaluator\Builtin;
 
+use function count;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Evaluator\Evaluator;
 use Monkey\Object\ArrayObject;
@@ -19,8 +20,8 @@ final class EvalMapFunction
 
     public function __invoke(MonkeyObject ...$arguments): MonkeyObject
     {
-        if (2 !== \count($arguments)) {
-            return ErrorObject::wrongNumberOfArguments(\count($arguments), 2);
+        if (2 !== count($arguments)) {
+            return ErrorObject::wrongNumberOfArguments(count($arguments), 2);
         }
 
         $array = $arguments[0];
@@ -33,7 +34,7 @@ final class EvalMapFunction
             return ErrorObject::invalidArgument('map()', $callback->typeLiteral());
         }
 
-        if (1 !== \count($callback->parameters())) {
+        if (1 !== count($callback->parameters())) {
             return ErrorObject::error('the callback of map accepts one parameter only.');
         }
 

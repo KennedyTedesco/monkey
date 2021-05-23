@@ -28,6 +28,6 @@ final class IntegerObject extends MonkeyObject
 
     public function inspect(): string
     {
-        return \sprintf('%d', $this->value);
+        return sprintf('%d', $this->value);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Evaluator\Builtin;
 
+use function count;
 use Monkey\Object\ArrayObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\MonkeyObject;
@@ -13,8 +14,8 @@ final class EvalLastFunction
 {
     public function __invoke(MonkeyObject ...$arguments): MonkeyObject
     {
-        if (1 !== \count($arguments)) {
-            return ErrorObject::wrongNumberOfArguments(\count($arguments), 1);
+        if (1 !== count($arguments)) {
+            return ErrorObject::wrongNumberOfArguments(count($arguments), 1);
         }
 
         $object = $arguments[0];
@@ -23,8 +24,8 @@ final class EvalLastFunction
         }
 
         $elements = $object->value();
-        if (\count($elements) > 0) {
-            return \end($elements);
+        if (count($elements) > 0) {
+            return end($elements);
         }
 
         return NullObject::instance();
