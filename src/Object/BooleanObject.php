@@ -45,7 +45,7 @@ final class BooleanObject extends MonkeyObject
 
     public static function from(bool $value): self
     {
-        if (true === $value) {
+        if ($value) {
             return self::true();
         }
 

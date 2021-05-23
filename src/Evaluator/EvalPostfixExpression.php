@@ -20,7 +20,7 @@ final class EvalPostfixExpression
         $identifier = $node->tokenLiteral();
 
         $object = $this->env->get($identifier);
-        if (null === $object) {
+        if (!$object instanceof MonkeyObject) {
             return ErrorObject::identifierNotFound($identifier);
         }
 

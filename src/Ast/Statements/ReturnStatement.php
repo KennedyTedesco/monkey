@@ -29,7 +29,6 @@ final class ReturnStatement extends Statement
         if (null !== $this->returnValue) {
             $out .= $this->returnValue->toString();
         }
-        $out .= ';';
-        return $out;
+        return $out.';';
     }
 }

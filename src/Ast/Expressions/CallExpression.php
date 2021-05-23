@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Expressions;
 
-use function count;
 use Monkey\Token\Token;
 
 final class CallExpression extends Expression
@@ -38,12 +37,10 @@ final class CallExpression extends Expression
             $args[] = $argument->toString();
         }
 
-        if (count($args) > 0) {
+        if ([] !== $args) {
             $out .= implode(', ', $args);
         }
 
-        $out .= ')';
-
-        return $out;
+        return $out.')';
     }
 }

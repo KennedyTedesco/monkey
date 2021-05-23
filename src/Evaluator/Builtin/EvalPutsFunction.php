@@ -13,7 +13,7 @@ final class EvalPutsFunction
 {
     public function __invoke(MonkeyObject ...$arguments): MonkeyObject
     {
-        if (0 === count($arguments)) {
+        if ([] === $arguments) {
             return ErrorObject::wrongNumberOfArguments(count($arguments), 1);
         }
 

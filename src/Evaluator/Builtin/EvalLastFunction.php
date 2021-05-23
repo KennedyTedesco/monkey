@@ -24,7 +24,7 @@ final class EvalLastFunction
         }
 
         $elements = $object->value();
-        if (count($elements) > 0) {
+        if ([] !== $elements) {
             return end($elements);
         }
 

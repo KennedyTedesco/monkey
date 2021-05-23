@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Types;
 
-use function count;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Token\Token;
 
@@ -31,7 +30,7 @@ final class ArrayLiteral extends Expression
             $elements[] = $element->toString();
         }
 
-        if (count($elements) > 0) {
+        if ([] !== $elements) {
             $out .= implode(',', $elements);
         }
 

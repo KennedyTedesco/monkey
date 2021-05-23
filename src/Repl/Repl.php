@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Monkey\Repl;
 
-use function count;
 use Monkey\Evaluator\Environment;
 use Monkey\Evaluator\Evaluator;
 use Monkey\Lexer\Lexer;
@@ -49,7 +48,7 @@ final class Repl
     {
         $parser = new Parser(new Lexer($input));
 
-        if (count($parser->errors()) > 0) {
+        if ([] !== $parser->errors()) {
             echo self::getErrors($parser->errors());
 
             return null;

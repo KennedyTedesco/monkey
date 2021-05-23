@@ -23,8 +23,9 @@ final class EvalAssingStatement
         }
 
         $name = $node->name()->value();
+        $nameMonkeyObject = $this->env->get($name);
 
-        if (null === $this->env->get($name)) {
+        if (null === $nameMonkeyObject) {
             return ErrorObject::identifierNotFound($name);
         }
 
