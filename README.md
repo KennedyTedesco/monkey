@@ -4,6 +4,8 @@
 
 ## Monkey Programming Language
 
+[![tests](https://github.com/KennedyTedesco/monkey/actions/workflows/tests.yaml/badge.svg?branch=main)](https://github.com/KennedyTedesco/monkey/actions/workflows/tests.yaml)
+
 The Monkey Programming Language & Interpreter written in **PHP**.
 
 **Features:**
