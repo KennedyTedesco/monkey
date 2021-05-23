@@ -10,4 +10,3 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::CODE_QUALITY_STRICT);
     $containerConfigurator->import(SetList::PHP_80);
 };
-\Monkey\Object\
