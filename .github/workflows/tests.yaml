@@ -15,5 +15,7 @@ jobs:
           php-version: '8.0'
           tools: composer:v2
           coverage: none
+      - name: Install Dependencies
+        run: composer install --no-ansi --no-interaction --no-suggest --prefer-dist
       - name: Run Tests
         run: php vendor/bin/pest --colors=always --group=integration
