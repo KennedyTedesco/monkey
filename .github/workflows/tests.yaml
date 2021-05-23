@@ -1,0 +1,21 @@
+name: tests
+
+on: ['push', 'pull_request']
+
+jobs:
+  ci:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: composer:v2
+          coverage: none
+
+        - name: Unit Tests
+            run: php vendor/bin/pest --colors=always --exclude-group=integration
