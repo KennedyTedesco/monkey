@@ -16,4 +16,4 @@ jobs:
           tools: composer:v2
           coverage: none
       - name: Run Tests
-        run: php bin/pest --colors=always --group=integration
+        run: php vendor/bin/pest --colors=always --group=integration
