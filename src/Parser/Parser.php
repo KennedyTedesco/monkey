@@ -182,18 +182,18 @@ final class Parser
         $this->postfixParselets[$type] = $postfixParselet;
     }
 
-    private function prefixParserError(int $type): void
-    {
-        $this->errors[] = sprintf(
-            'no prefix parse function for %s found', TokenType::lexeme($type)
-        );
-    }
-
     private function peekError(int $type): void
     {
         $this->errors[] = sprintf(
             'expected next token to be %s, got %s instead',
             TokenType::lexeme($type), $this->peekToken->literal()
+        );
+    }
+
+    private function prefixParserError(int $type): void
+    {
+        $this->errors[] = sprintf(
+            'no prefix parse function for %s found', TokenType::lexeme($type)
         );
     }
 }

@@ -77,26 +77,6 @@ final class Lexer
         };
     }
 
-    private function curAndPeekCharIs(string $operators): bool
-    {
-        if (!$this->curChar->is($operators[0])) {
-            return false;
-        }
-
-        return $this->peekChar->is($operators[1]);
-    }
-
-    private function readIdentifier(): string
-    {
-        $position = $this->position;
-
-        while ($this->curChar->isAlphanumeric()) {
-            $this->readChar();
-        }
-
-        return $this->input->substr($position, $this->position - $position);
-    }
-
     private function readChar(): void
     {
         $this->prevChar = $this->curChar;
@@ -111,15 +91,36 @@ final class Lexer
         }
     }
 
-    private function readNumber(): string
+    private function skipWhitespaces(): void
     {
-        $position = $this->position;
-
-        while ($this->curChar->isDigit() || $this->curChar->is('.')) {
+        while ($this->curChar->isWhitespace()) {
             $this->readChar();
         }
+    }
 
-        return $this->input->substr($position, $this->position - $position);
+    private function curAndPeekCharIs(string $operators): bool
+    {
+        if (!$this->curChar->is($operators[0])) {
+            return false;
+        }
+
+        return $this->peekChar->is($operators[1]);
+    }
+
+    private function makeTwoCharTokenAndAdvance(int $type): Token
+    {
+        $this->readChar();
+        $token = Token::from($type, "{$this->prevChar->toScalar()}{$this->curChar->toScalar()}");
+        $this->readChar();
+
+        return $token;
+    }
+
+    private function makeTokenAndAdvance(int $type, string $literal): Token
+    {
+        $this->readChar();
+
+        return Token::from($type, $literal);
     }
 
     private function readString(): string
@@ -137,31 +138,30 @@ final class Lexer
         return $this->input->substr($position, $this->position - $position);
     }
 
-    private function skipWhitespaces(): void
-    {
-        while ($this->curChar->isWhitespace()) {
-            $this->readChar();
-        }
-    }
-
     public function isEnd(): bool
     {
         return $this->readPosition >= $this->input->size();
     }
 
-    private function makeTokenAndAdvance(int $type, string $literal): Token
+    private function readIdentifier(): string
     {
-        $this->readChar();
+        $position = $this->position;
 
-        return Token::from($type, $literal);
+        while ($this->curChar->isAlphanumeric()) {
+            $this->readChar();
+        }
+
+        return $this->input->substr($position, $this->position - $position);
     }
 
-    private function makeTwoCharTokenAndAdvance(int $type): Token
+    private function readNumber(): string
     {
-        $this->readChar();
-        $token = Token::from($type, "{$this->prevChar->toScalar()}{$this->curChar->toScalar()}");
-        $this->readChar();
+        $position = $this->position;
 
-        return $token;
+        while ($this->curChar->isDigit() || $this->curChar->is('.')) {
+            $this->readChar();
+        }
+
+        return $this->input->substr($position, $this->position - $position);
     }
 }
