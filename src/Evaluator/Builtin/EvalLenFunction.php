@@ -12,13 +12,13 @@ use Monkey\Object\StringObject;
 
 final class EvalLenFunction
 {
-    public function __invoke(MonkeyObject ...$arguments): MonkeyObject
+    public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
-        if (1 !== \count($arguments)) {
-            return ErrorObject::wrongNumberOfArguments(\count($arguments), 1);
+        if (1 !== \count($monkeyObject)) {
+            return ErrorObject::wrongNumberOfArguments(\count($monkeyObject), 1);
         }
 
-        $object = $arguments[0];
+        $object = $monkeyObject[0];
 
         return match (true) {
             $object instanceof StringObject => new IntegerObject(mb_strlen($object->value())),

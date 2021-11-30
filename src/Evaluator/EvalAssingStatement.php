@@ -10,26 +10,26 @@ use Monkey\Object\MonkeyObject;
 
 final class EvalAssingStatement
 {
-    public function __construct(private Evaluator $evaluator, private Environment $env)
+    public function __construct(private Evaluator $evaluator, private Environment $environment)
     {
     }
 
-    public function __invoke(AssignStatement $node): MonkeyObject
+    public function __invoke(AssignStatement $assignStatement): MonkeyObject
     {
-        $value = $this->evaluator->eval($node->value(), $this->env);
+        $value = $this->evaluator->eval($assignStatement->value(), $this->environment);
 
         if ($value instanceof ErrorObject) {
             return $value;
         }
 
-        $name = $node->name()->value();
-        $nameMonkeyObject = $this->env->get($name);
+        $name = $assignStatement->name()->value();
+        $nameMonkeyObject = $this->environment->get($name);
 
         if (!$nameMonkeyObject instanceof MonkeyObject) {
             return ErrorObject::identifierNotFound($name);
         }
 
-        $this->env->set($name, $value);
+        $this->environment->set($name, $value);
 
         return $value;
     }

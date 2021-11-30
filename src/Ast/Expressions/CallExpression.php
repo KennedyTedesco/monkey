@@ -10,7 +10,7 @@ final class CallExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private Expression $function,
+        private Expression $expression,
         /* @var array<Expression> */
         private array $arguments
     ) {
@@ -19,7 +19,7 @@ final class CallExpression extends Expression
 
     public function function(): Expression
     {
-        return $this->function;
+        return $this->expression;
     }
 
     public function arguments(): array
@@ -29,7 +29,7 @@ final class CallExpression extends Expression
 
     public function toString(): string
     {
-        $out = "{$this->function->toString()}(";
+        $out = "{$this->expression->toString()}(";
 
         $args = [];
         /** @var Expression $argument */

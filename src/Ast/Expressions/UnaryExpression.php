@@ -11,14 +11,14 @@ final class UnaryExpression extends Expression
     public function __construct(
         Token $token,
         private string $operator,
-        private Expression $right
+        private Expression $expression
     ) {
         $this->token = $token;
     }
 
     public function right(): Expression
     {
-        return $this->right;
+        return $this->expression;
     }
 
     public function operator(): string
@@ -28,6 +28,6 @@ final class UnaryExpression extends Expression
 
     public function toString(): string
     {
-        return "({$this->operator}{$this->right->toString()})";
+        return "({$this->operator}{$this->expression->toString()})";
     }
 }

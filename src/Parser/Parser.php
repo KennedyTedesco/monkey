@@ -167,19 +167,19 @@ final class Parser
         return $this->errors;
     }
 
-    private function registerPrefix(int $type, PrefixParselet $parselet): void
+    private function registerPrefix(int $type, PrefixParselet $prefixParselet): void
     {
-        $this->prefixParselets[$type] = $parselet;
+        $this->prefixParselets[$type] = $prefixParselet;
     }
 
-    private function registerInfix(int $type, InfixParselet $parselet): void
+    private function registerInfix(int $type, InfixParselet $infixParselet): void
     {
-        $this->infixParselets[$type] = $parselet;
+        $this->infixParselets[$type] = $infixParselet;
     }
 
-    private function registerPostfix(int $type, PostfixParselet $parselet): void
+    private function registerPostfix(int $type, PostfixParselet $postfixParselet): void
     {
-        $this->postfixParselets[$type] = $parselet;
+        $this->postfixParselets[$type] = $postfixParselet;
     }
 
     private function prefixParserError(int $type): void

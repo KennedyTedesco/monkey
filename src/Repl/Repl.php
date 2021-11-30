@@ -33,18 +33,18 @@ final class Repl
         -------------------------------\n\n
         TEXT);
 
-        $env = new Environment();
+        $environment = new Environment();
         while (true) {
             $input = readline("\n > ");
             if ('exit' === $input) {
                 return;
             }
 
-            self::evalAndInspect($input, $env);
+            self::evalAndInspect($input, $environment);
         }
     }
 
-    public static function eval(string $input, Environment $env): ?MonkeyObject
+    public static function eval(string $input, Environment $environment): ?MonkeyObject
     {
         $parser = new Parser(new Lexer($input));
 
@@ -54,12 +54,12 @@ final class Repl
             return null;
         }
 
-        return (new Evaluator())->eval((new ProgramParser())($parser), $env);
+        return (new Evaluator())->eval((new ProgramParser())($parser), $environment);
     }
 
-    public static function evalAndInspect(string $input, Environment $env): void
+    public static function evalAndInspect(string $input, Environment $environment): void
     {
-        $object = self::eval($input, $env);
+        $object = self::eval($input, $environment);
         if (!$object instanceof MonkeyObject) {
             return;
         }

@@ -10,11 +10,11 @@ use Monkey\Object\NullObject;
 
 final class EvalNotOperatorExpression
 {
-    public function __invoke(MonkeyObject $right): MonkeyObject
+    public function __invoke(MonkeyObject $monkeyObject): MonkeyObject
     {
         return match (true) {
-            $right instanceof BooleanObject => BooleanObject::from(!$right->value()),
-            $right instanceof NullObject => BooleanObject::true(),
+            $monkeyObject instanceof BooleanObject => BooleanObject::from(!$monkeyObject->value()),
+            $monkeyObject instanceof NullObject => BooleanObject::true(),
             default => BooleanObject::false(),
         };
     }

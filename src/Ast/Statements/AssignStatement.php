@@ -12,24 +12,24 @@ final class AssignStatement extends Statement
 {
     public function __construct(
         Token $token,
-        private IdentifierExpression $name,
-        private Expression $value
+        private IdentifierExpression $identifierExpression,
+        private Expression $expression
     ) {
         $this->token = $token;
     }
 
     public function name(): IdentifierExpression
     {
-        return $this->name;
+        return $this->identifierExpression;
     }
 
     public function value(): Expression
     {
-        return $this->value;
+        return $this->expression;
     }
 
     public function toString(): string
     {
-        return "{$this->name->tokenLiteral()} = {$this->value->toString()};";
+        return "{$this->identifierExpression->tokenLiteral()} = {$this->expression->toString()};";
     }
 }

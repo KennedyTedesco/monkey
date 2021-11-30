@@ -13,18 +13,18 @@ final class EvalIfExpression
 {
     public function __construct(
         private Evaluator $evaluator,
-        private Environment $env
+        private Environment $environment
     ) {
     }
 
-    public function __invoke(IfExpression $expression): MonkeyObject
+    public function __invoke(IfExpression $ifExpression): MonkeyObject
     {
-        $condition = $this->evaluator->eval($expression->condition(), $this->env);
+        $condition = $this->evaluator->eval($ifExpression->condition(), $this->environment);
 
         return match (true) {
             $condition instanceof ErrorObject => $condition,
-            (bool) $condition->value() => $this->evaluator->eval($expression->consequence(), $this->env),
-            null !== $expression->alternative() => $this->evaluator->eval($expression->alternative(), $this->env),
+            (bool) $condition->value() => $this->evaluator->eval($ifExpression->consequence(), $this->environment),
+            null !== $ifExpression->alternative() => $this->evaluator->eval($ifExpression->alternative(), $this->environment),
             default => NullObject::instance(),
         };
     }

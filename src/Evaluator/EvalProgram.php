@@ -12,16 +12,16 @@ use Monkey\Object\ReturnValueObject;
 
 final class EvalProgram
 {
-    public function __construct(private Evaluator $evaluator, private Environment $env)
+    public function __construct(private Evaluator $evaluator, private Environment $environment)
     {
     }
 
-    public function __invoke(Program $node): MonkeyObject
+    public function __invoke(Program $program): MonkeyObject
     {
         $result = NullObject::instance();
 
-        foreach ($node->statements() as $statement) {
-            $result = $this->evaluator->eval($statement, $this->env);
+        foreach ($program->statements() as $statement) {
+            $result = $this->evaluator->eval($statement, $this->environment);
             if (true == $result instanceof ReturnValueObject) {
                 return $result->value();
             }

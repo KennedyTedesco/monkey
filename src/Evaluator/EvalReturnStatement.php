@@ -11,13 +11,13 @@ use Monkey\Object\ReturnValueObject;
 
 final class EvalReturnStatement
 {
-    public function __construct(private Evaluator $evaluator, private Environment $env)
+    public function __construct(private Evaluator $evaluator, private Environment $environment)
     {
     }
 
-    public function __invoke(ReturnStatement $node): MonkeyObject
+    public function __invoke(ReturnStatement $returnStatement): MonkeyObject
     {
-        $object = $this->evaluator->eval($node->returnValue(), $this->env);
+        $object = $this->evaluator->eval($returnStatement->returnValue(), $this->environment);
 
         if ($object instanceof ErrorObject) {
             return $object;

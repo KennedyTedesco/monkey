@@ -16,7 +16,7 @@ final class IndexExpressionParselet implements InfixParselet
     {
     }
 
-    public function parse(Expression $left): ?Expression
+    public function parse(Expression $expression): ?Expression
     {
         $token = $this->parser->curToken;
 
@@ -28,6 +28,6 @@ final class IndexExpressionParselet implements InfixParselet
             return null;
         }
 
-        return new IndexExpression($token, $left, $index);
+        return new IndexExpression($token, $expression, $index);
     }
 }

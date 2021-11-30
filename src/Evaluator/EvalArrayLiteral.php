@@ -11,13 +11,13 @@ use Monkey\Object\MonkeyObject;
 
 final class EvalArrayLiteral
 {
-    public function __construct(private Evaluator $evaluator, private Environment $env)
+    public function __construct(private Evaluator $evaluator, private Environment $environment)
     {
     }
 
-    public function __invoke(ArrayLiteral $node): MonkeyObject
+    public function __invoke(ArrayLiteral $arrayLiteral): MonkeyObject
     {
-        $elements = $this->evaluator->evalExpressions($node->elements(), $this->env);
+        $elements = $this->evaluator->evalExpressions($arrayLiteral->elements(), $this->environment);
 
         if (1 === $elements && $elements[0] instanceof ErrorObject) {
             return $elements[0];

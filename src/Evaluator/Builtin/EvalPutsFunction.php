@@ -10,13 +10,13 @@ use Monkey\Object\NullObject;
 
 final class EvalPutsFunction
 {
-    public function __invoke(MonkeyObject ...$arguments): MonkeyObject
+    public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
-        if ([] === $arguments) {
-            return ErrorObject::wrongNumberOfArguments(\count($arguments), 1);
+        if ([] === $monkeyObject) {
+            return ErrorObject::wrongNumberOfArguments(\count($monkeyObject), 1);
         }
 
-        echo implode('', array_map(fn (MonkeyObject $argument): string => $argument->inspect(), $arguments));
+        echo implode('', array_map(fn (MonkeyObject $argument): string => $argument->inspect(), $monkeyObject));
 
         return NullObject::instance();
     }
