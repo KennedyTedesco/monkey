@@ -1,0 +1,9 @@
+includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+parameters:
+    paths:
+        - src
+    level: max
+    checkMissingIterableValueType: false
+    inferPrivatePropertyTypeFromConstructor: true
+    checkUninitializedProperties: true
