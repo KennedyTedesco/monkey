@@ -28,6 +28,7 @@ final class BlockStatement extends Statement
         foreach ($this->statements as $statement) {
             $out .= $statement->toString();
         }
+
         return $out;
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Monkey\Evaluator\Builtin;
 
-use function count;
 use Monkey\Object\ArrayObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\MonkeyObject;
@@ -13,8 +12,8 @@ final class EvalPushFunction
 {
     public function __invoke(MonkeyObject ...$arguments): MonkeyObject
     {
-        if (2 !== count($arguments)) {
-            return ErrorObject::wrongNumberOfArguments(count($arguments), 2);
+        if (2 !== \count($arguments)) {
+            return ErrorObject::wrongNumberOfArguments(\count($arguments), 2);
         }
 
         $object = $arguments[0];

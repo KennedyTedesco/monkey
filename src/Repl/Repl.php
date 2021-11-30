@@ -71,6 +71,7 @@ final class Repl
         foreach ($errors as $index => $error) {
             $out .= "{$index}) {$error}";
         }
+
         return $out;
     }
 }

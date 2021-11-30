@@ -33,12 +33,14 @@ final class EvalPostfixExpression
                 $this->env->set(
                     $identifier, $newObject = new IntegerObject($object->value() + 1)
                 );
+
                 return $newObject;
 
             case '--':
                 $this->env->set(
                     $identifier, $newObject = new IntegerObject($object->value() - 1)
                 );
+
                 return $newObject;
 
             default:

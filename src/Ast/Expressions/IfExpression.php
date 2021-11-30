@@ -39,6 +39,7 @@ final class IfExpression extends Expression
         if (null !== $this->alternative) {
             $out .= "else {$this->alternative->toString()}";
         }
+
         return $out;
     }
 }
