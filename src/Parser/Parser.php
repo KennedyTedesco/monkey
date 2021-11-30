@@ -134,7 +134,7 @@ final class Parser
         }
 
         $prefixParselet = $this->prefixParselets[$this->curToken->type()] ?? null;
-        if (!$prefixParselet instanceof \Monkey\Parser\Parselet\PrefixParselet) {
+        if (!$prefixParselet instanceof PrefixParselet) {
             $this->prefixParserError($this->curToken->type());
 
             return null;
@@ -145,7 +145,7 @@ final class Parser
 
         while (!$this->peekToken->is(TokenType::T_SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
             $infixParselet = $this->infixParselets[$this->peekToken->type()] ?? null;
-            if (!$infixParselet instanceof \Monkey\Parser\Parselet\InfixParselet) {
+            if (!$infixParselet instanceof InfixParselet) {
                 return $leftExpression;
             }
 

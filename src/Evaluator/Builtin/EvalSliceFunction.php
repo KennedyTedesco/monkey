@@ -15,7 +15,11 @@ final class EvalSliceFunction
     public function __invoke(MonkeyObject ...$arguments): MonkeyObject
     {
         $count = \count($arguments);
-        if ($count < 2 || $count > 3) {
+        if ($count < 2) {
+            return ErrorObject::wrongNumberOfArguments($count, 2);
+        }
+
+        if ($count > 3) {
             return ErrorObject::wrongNumberOfArguments($count, 2);
         }
 

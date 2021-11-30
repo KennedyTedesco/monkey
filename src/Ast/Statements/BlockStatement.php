@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Monkey\Ast;
 
+use Monkey\Ast\Statements\Statement;
+
 namespace Monkey\Ast\Statements;
 
 use Monkey\Token\Token;

@@ -60,9 +60,15 @@ final class Repl
     public static function evalAndInspect(string $input, Environment $env): void
     {
         $object = self::eval($input, $env);
-        if (null !== $object && !$object instanceof NullObject) {
-            echo $object->inspect().\PHP_EOL;
+        if (!$object instanceof MonkeyObject) {
+            return;
         }
+
+        if ($object instanceof NullObject) {
+            return;
+        }
+
+        echo $object->inspect().\PHP_EOL;
     }
 
     private static function getErrors(array $errors): string

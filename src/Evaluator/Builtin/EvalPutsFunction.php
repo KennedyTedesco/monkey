@@ -16,7 +16,7 @@ final class EvalPutsFunction
             return ErrorObject::wrongNumberOfArguments(\count($arguments), 1);
         }
 
-        echo implode('', array_map(fn (MonkeyObject $argument) => $argument->inspect(), $arguments));
+        echo implode('', array_map(fn (MonkeyObject $argument): string => $argument->inspect(), $arguments));
 
         return NullObject::instance();
     }

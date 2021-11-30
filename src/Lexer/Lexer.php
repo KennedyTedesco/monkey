@@ -9,14 +9,21 @@ use Monkey\Token\TokenType;
 
 final class Lexer
 {
+    /**
+     * @var string
+     */
     public const EOF = "\0";
 
     private Input $input;
+
     private Char $curChar;
+
     private Char $prevChar;
+
     private Char $peekChar;
 
     private int $position = 0;
+
     private int $readPosition = 0;
 
     public function __construct(string $input)
@@ -72,7 +79,11 @@ final class Lexer
 
     private function curAndPeekCharIs(string $operators): bool
     {
-        return $this->curChar->is($operators[0]) && $this->peekChar->is($operators[1]);
+        if (!$this->curChar->is($operators[0])) {
+            return false;
+        }
+
+        return $this->peekChar->is($operators[1]);
     }
 
     private function readIdentifier(): string
@@ -90,11 +101,7 @@ final class Lexer
     {
         $this->prevChar = $this->curChar;
 
-        if ($this->isEnd()) {
-            $this->curChar = Char::from(self::EOF);
-        } else {
-            $this->curChar = Char::from($this->input->char($this->readPosition));
-        }
+        $this->curChar = $this->isEnd() ? Char::from(self::EOF) : Char::from($this->input->char($this->readPosition));
 
         $this->position = $this->readPosition;
         ++$this->readPosition;

@@ -25,7 +25,7 @@ final class EvalAssingStatement
         $name = $node->name()->value();
         $nameMonkeyObject = $this->env->get($name);
 
-        if (null === $nameMonkeyObject) {
+        if (!$nameMonkeyObject instanceof MonkeyObject) {
             return ErrorObject::identifierNotFound($name);
         }
 

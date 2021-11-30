@@ -22,12 +22,12 @@ final class EvalProgram
 
         foreach ($node->statements() as $statement) {
             $result = $this->evaluator->eval($statement, $this->env);
+            if (true == $result instanceof ReturnValueObject) {
+                return $result->value();
+            }
 
-            switch (true) {
-                case $result instanceof ReturnValueObject:
-                    return $result->value();
-                case $result instanceof ErrorObject:
-                    return $result;
+            if (true == $result instanceof ErrorObject) {
+                return $result;
             }
         }
 

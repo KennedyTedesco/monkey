@@ -24,11 +24,12 @@ final class EvalBlockStatement
 
         foreach ($node->statements() as $statement) {
             $result = $this->evaluator->eval($statement, $this->env);
+            if (true == $result instanceof ErrorObject) {
+                return $result;
+            }
 
-            switch (true) {
-                case $result instanceof ErrorObject:
-                case $result instanceof ReturnValueObject:
-                    return $result;
+            if (true == $result instanceof ReturnValueObject) {
+                return $result;
             }
         }
 

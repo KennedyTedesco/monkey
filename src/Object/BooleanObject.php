@@ -7,6 +7,7 @@ namespace Monkey\Object;
 final class BooleanObject extends MonkeyObject
 {
     private static self $true;
+
     private static self $false;
 
     public function __construct(private bool $value)
