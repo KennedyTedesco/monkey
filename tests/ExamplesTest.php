@@ -8,6 +8,7 @@ function getExampleDetails(string $filename): array
 {
     $details = [];
     preg_match('/^--TEST--(.*)--FILE--(.*)--EXPECT--(.*)$/is', file_get_contents($filename), $details);
+
     return [
         'test' => trim($details[1]),
         'file' => trim($details[2]),
