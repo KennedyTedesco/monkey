@@ -20,7 +20,7 @@ final class LetStatementParser
             return null;
         }
 
-        $name = new IdentifierExpression(
+        $identifierExpression = new IdentifierExpression(
             $parser->curToken,
             $parser->curToken->literal()
         );
@@ -37,6 +37,6 @@ final class LetStatementParser
             $parser->nextToken();
         }
 
-        return new LetStatement($token, $name, $value);
+        return new LetStatement($token, $identifierExpression, $value);
     }
 }

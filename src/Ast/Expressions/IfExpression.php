@@ -11,7 +11,7 @@ final class IfExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private Expression $condition,
+        private Expression $expression,
         private BlockStatement $consequence,
         private ?BlockStatement $alternative = null
     ) {
@@ -20,7 +20,7 @@ final class IfExpression extends Expression
 
     public function condition(): Expression
     {
-        return $this->condition;
+        return $this->expression;
     }
 
     public function consequence(): BlockStatement
@@ -35,10 +35,11 @@ final class IfExpression extends Expression
 
     public function toString(): string
     {
-        $out = "if{$this->condition->toString()} {$this->consequence->toString()}";
+        $out = "if{$this->expression->toString()} {$this->consequence->toString()}";
         if (null !== $this->alternative) {
             $out .= "else {$this->alternative->toString()}";
         }
+
         return $out;
     }
 }

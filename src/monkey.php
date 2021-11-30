@@ -7,7 +7,7 @@ namespace Monkey;
 use Monkey\Evaluator\Environment;
 use Monkey\Repl\Repl;
 
-function help(): string
+function help(): never
 {
     echo <<<HELP
     Usage: monkey [command]

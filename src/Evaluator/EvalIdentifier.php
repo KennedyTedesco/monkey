@@ -10,18 +10,18 @@ use Monkey\Object\MonkeyObject;
 
 final class EvalIdentifier
 {
-    public function __construct(private Environment $env)
+    public function __construct(private Environment $environment)
     {
     }
 
-    public function __invoke(IdentifierExpression $node): MonkeyObject
+    public function __invoke(IdentifierExpression $identifierExpression): MonkeyObject
     {
-        $object = $this->env->get($node->value()) ?? BuiltinFunction::get($node->value());
+        $object = $this->environment->get($identifierExpression->value()) ?? BuiltinFunction::get($identifierExpression->value());
 
         if (null !== $object) {
             return $object;
         }
 
-        return ErrorObject::identifierNotFound($node->value());
+        return ErrorObject::identifierNotFound($identifierExpression->value());
     }
 }

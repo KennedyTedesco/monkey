@@ -16,10 +16,10 @@ final class CallExpressionParselet implements InfixParselet
     {
     }
 
-    public function parse(Expression $function): Expression
+    public function parse(Expression $expression): Expression
     {
         $arguments = (new ExpressionListParser())($this->parser, TokenType::T_RPAREN);
 
-        return new CallExpression($this->parser->curToken, $function, $arguments);
+        return new CallExpression($this->parser->curToken, $expression, $arguments);
     }
 }

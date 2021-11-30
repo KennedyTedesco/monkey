@@ -19,12 +19,12 @@ final class ExpressionStatementParser
         /** @var Expression $expression */
         $expression = $parser->parseExpression(Precedence::LOWEST);
 
-        $statement = new ExpressionStatement($token, $expression);
+        $expressionStatement = new ExpressionStatement($token, $expression);
 
         if ($parser->peekToken->is(TokenType::T_SEMICOLON)) {
             $parser->nextToken();
         }
 
-        return $statement;
+        return $expressionStatement;
     }
 }

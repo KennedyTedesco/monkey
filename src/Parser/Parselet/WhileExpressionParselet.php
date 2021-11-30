@@ -29,9 +29,11 @@ final class WhileExpressionParselet implements PrefixParselet
 
         /** @var Expression $condition */
         $condition = $this->parser->parseExpression(Precedence::LOWEST);
+        if (!$this->parser->expectPeek(TokenType::T_RPAREN)) {
+            return null;
+        }
 
-        if (!$this->parser->expectPeek(TokenType::T_RPAREN) ||
-            !$this->parser->expectPeek(TokenType::T_LBRACE)) {
+        if (!$this->parser->expectPeek(TokenType::T_LBRACE)) {
             return null;
         }
 

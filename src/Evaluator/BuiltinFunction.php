@@ -11,7 +11,7 @@ use Monkey\Object\MonkeyObject;
 final class BuiltinFunction
 {
     /** @var array<BuiltinFunctionObject> */
-    private static array $store;
+    private static array $store = [];
 
     public static function set(string $name, Closure $closure): void
     {

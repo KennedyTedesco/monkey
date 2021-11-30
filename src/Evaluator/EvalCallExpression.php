@@ -16,20 +16,20 @@ final class EvalCallExpression
 {
     public function __construct(
         private Evaluator $evaluator,
-        private Environment $env
+        private Environment $environment
     ) {
     }
 
-    public function __invoke(CallExpression $node): MonkeyObject
+    public function __invoke(CallExpression $callExpression): MonkeyObject
     {
         /** @var FunctionObject $function */
-        $function = $this->evaluator->eval($node->function(), $this->env);
+        $function = $this->evaluator->eval($callExpression->function(), $this->environment);
 
         if ($function instanceof ErrorObject) {
             return $function;
         }
 
-        $args = $this->evaluator->evalExpressions($node->arguments(), $this->env);
+        $args = $this->evaluator->evalExpressions($callExpression->arguments(), $this->environment);
 
         if (1 === $args && $args[0] instanceof ErrorObject) {
             return $args[0];
@@ -38,44 +38,44 @@ final class EvalCallExpression
         return $this->applyFunction($function, $args);
     }
 
-    private function applyFunction(MonkeyObject $function, array $args): MonkeyObject
+    private function applyFunction(MonkeyObject $monkeyObject, array $args): MonkeyObject
     {
-        if ($function instanceof FunctionObject) {
-            $extendedEnv = $this->extendFunctionEnv($function, $args);
+        if ($monkeyObject instanceof FunctionObject) {
+            $environment = $this->extendFunctionEnv($monkeyObject, $args);
 
             return $this->unwrapReturnValue(
-                $this->evaluator->eval($function->body(), $extendedEnv)
+                $this->evaluator->eval($monkeyObject->body(), $environment)
             );
         }
 
-        if ($function instanceof BuiltinFunctionObject) {
-            return $function->value()(...$args);
+        if ($monkeyObject instanceof BuiltinFunctionObject) {
+            return $monkeyObject->value()(...$args);
         }
 
-        return ErrorObject::notAFunction($function->typeLiteral());
+        return ErrorObject::notAFunction($monkeyObject->typeLiteral());
     }
 
     /**
      * @param array<MonkeyObject> $args
      */
-    private function extendFunctionEnv(FunctionObject $function, array $args): Environment
+    private function extendFunctionEnv(FunctionObject $functionObject, array $args): Environment
     {
-        $env = new Environment($function->environment());
+        $environment = new Environment($functionObject->environment());
 
-        /** @var IdentifierExpression $parameter */
-        foreach ($function->parameters() as $index => $parameter) {
-            $env->set($parameter->value(), $args[$index]);
+        /** @var IdentifierExpression $identifierExpression */
+        foreach ($functionObject->parameters() as $index => $identifierExpression) {
+            $environment->set($identifierExpression->value(), $args[$index]);
         }
 
-        return $env;
+        return $environment;
     }
 
-    private function unwrapReturnValue(MonkeyObject $object): MonkeyObject
+    private function unwrapReturnValue(MonkeyObject $monkeyObject): MonkeyObject
     {
-        if ($object instanceof ReturnValueObject) {
-            return $object->value();
+        if ($monkeyObject instanceof ReturnValueObject) {
+            return $monkeyObject->value();
         }
 
-        return $object;
+        return $monkeyObject;
     }
 }

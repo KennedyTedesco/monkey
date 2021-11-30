@@ -13,7 +13,7 @@ final class FunctionObject extends MonkeyObject
     public function __construct(
         /* @var array<IdentifierExpression> */
         private array $parameters,
-        private BlockStatement $body,
+        private BlockStatement $blockStatement,
         private Environment $environment
     ) {
     }
@@ -38,7 +38,7 @@ final class FunctionObject extends MonkeyObject
 
     public function body(): BlockStatement
     {
-        return $this->body;
+        return $this->blockStatement;
     }
 
     public function type(): int
@@ -59,6 +59,6 @@ final class FunctionObject extends MonkeyObject
             $params[] = $parameter->toString();
         }
 
-        return sprintf("fn(%s) {\n%s\n}", implode(', ', $params), $this->body->toString());
+        return sprintf("fn(%s) {\n%s\n}", implode(', ', $params), $this->blockStatement->toString());
     }
 }

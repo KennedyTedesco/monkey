@@ -134,7 +134,7 @@ final class Parser
         }
 
         $prefixParselet = $this->prefixParselets[$this->curToken->type()] ?? null;
-        if (!$prefixParselet instanceof \Monkey\Parser\Parselet\PrefixParselet) {
+        if (!$prefixParselet instanceof PrefixParselet) {
             $this->prefixParserError($this->curToken->type());
 
             return null;
@@ -145,7 +145,7 @@ final class Parser
 
         while (!$this->peekToken->is(TokenType::T_SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
             $infixParselet = $this->infixParselets[$this->peekToken->type()] ?? null;
-            if (!$infixParselet instanceof \Monkey\Parser\Parselet\InfixParselet) {
+            if (!$infixParselet instanceof InfixParselet) {
                 return $leftExpression;
             }
 
@@ -162,31 +162,27 @@ final class Parser
         return $this->precedences[$token->type()] ?? Precedence::LOWEST;
     }
 
+    /**
+     * @return string[]
+     */
     public function errors(): array
     {
         return $this->errors;
     }
 
-    private function registerPrefix(int $type, PrefixParselet $parselet): void
+    private function registerPrefix(int $type, PrefixParselet $prefixParselet): void
     {
-        $this->prefixParselets[$type] = $parselet;
+        $this->prefixParselets[$type] = $prefixParselet;
     }
 
-    private function registerInfix(int $type, InfixParselet $parselet): void
+    private function registerInfix(int $type, InfixParselet $infixParselet): void
     {
-        $this->infixParselets[$type] = $parselet;
+        $this->infixParselets[$type] = $infixParselet;
     }
 
-    private function registerPostfix(int $type, PostfixParselet $parselet): void
+    private function registerPostfix(int $type, PostfixParselet $postfixParselet): void
     {
-        $this->postfixParselets[$type] = $parselet;
-    }
-
-    private function prefixParserError(int $type): void
-    {
-        $this->errors[] = sprintf(
-            'no prefix parse function for %s found', TokenType::lexeme($type)
-        );
+        $this->postfixParselets[$type] = $postfixParselet;
     }
 
     private function peekError(int $type): void
@@ -194,6 +190,13 @@ final class Parser
         $this->errors[] = sprintf(
             'expected next token to be %s, got %s instead',
             TokenType::lexeme($type), $this->peekToken->literal()
+        );
+    }
+
+    private function prefixParserError(int $type): void
+    {
+        $this->errors[] = sprintf(
+            'no prefix parse function for %s found', TokenType::lexeme($type)
         );
     }
 }

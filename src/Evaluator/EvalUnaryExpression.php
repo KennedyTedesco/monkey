@@ -9,13 +9,13 @@ use Monkey\Object\MonkeyObject;
 
 final class EvalUnaryExpression
 {
-    public function __invoke(string $operator, MonkeyObject $right): MonkeyObject
+    public function __invoke(string $operator, MonkeyObject $monkeyObject): MonkeyObject
     {
         return match (true) {
-            $right instanceof ErrorObject => $right,
-            '!' === $operator => (new EvalNotOperatorExpression())($right),
-            '-' === $operator => (new EvalMinusUnaryOperatorExpression())($right),
-            default => ErrorObject::unknownOperator($operator, $right->typeLiteral()),
+            $monkeyObject instanceof ErrorObject => $monkeyObject,
+            '!' === $operator => (new EvalNotOperatorExpression())($monkeyObject),
+            '-' === $operator => (new EvalMinusUnaryOperatorExpression())($monkeyObject),
+            default => ErrorObject::unknownOperator($operator, $monkeyObject->typeLiteral()),
         };
     }
 }

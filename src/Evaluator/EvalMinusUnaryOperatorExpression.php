@@ -10,12 +10,12 @@ use Monkey\Object\MonkeyObject;
 
 final class EvalMinusUnaryOperatorExpression
 {
-    public function __invoke(MonkeyObject $right): MonkeyObject
+    public function __invoke(MonkeyObject $monkeyObject): MonkeyObject
     {
-        if (!$right instanceof IntegerObject) {
-            return ErrorObject::unknownOperator("-{$right->typeLiteral()}");
+        if (!$monkeyObject instanceof IntegerObject) {
+            return ErrorObject::unknownOperator("-{$monkeyObject->typeLiteral()}");
         }
 
-        return new IntegerObject($right->value() * (-1));
+        return new IntegerObject($monkeyObject->value() * (-1));
     }
 }

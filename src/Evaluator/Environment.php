@@ -16,9 +16,9 @@ final class Environment
     ) {
     }
 
-    public function set(string $name, MonkeyObject $object): void
+    public function set(string $name, MonkeyObject $monkeyObject): void
     {
-        $this->map[$name] = $object;
+        $this->map[$name] = $monkeyObject;
     }
 
     public function get(string $name): ?MonkeyObject

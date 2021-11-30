@@ -15,6 +15,9 @@ final class ArrayLiteral extends Expression
         $this->token = $token;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function elements(): array
     {
         return $this->elements;

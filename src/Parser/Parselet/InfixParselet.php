@@ -8,5 +8,5 @@ use Monkey\Ast\Expressions\Expression;
 
 interface InfixParselet
 {
-    public function parse(Expression $left): ?Expression;
+    public function parse(Expression $expression): ?Expression;
 }

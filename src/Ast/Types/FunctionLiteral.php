@@ -13,14 +13,14 @@ use Monkey\Token\Token;
 final class FunctionLiteral extends Expression
 {
     public function __construct(Token $token, /* @var array<IdentifierExpression> */
-    private array $parameters, private BlockStatement $body)
+    private array $parameters, private BlockStatement $blockStatement)
     {
         $this->token = $token;
     }
 
     public function body(): BlockStatement
     {
-        return $this->body;
+        return $this->blockStatement;
     }
 
     /**
@@ -45,6 +45,6 @@ final class FunctionLiteral extends Expression
             $out .= implode(',', $params);
         }
 
-        return $out.") {$this->body->toString()}";
+        return $out.") {$this->blockStatement->toString()}";
     }
 }

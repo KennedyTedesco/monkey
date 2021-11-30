@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast;
+namespace Monkey\Ast\Statements;
 
 namespace Monkey\Ast\Statements;
 
@@ -16,6 +16,9 @@ final class BlockStatement extends Statement
         $this->token = $token;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function statements(): array
     {
         return $this->statements;
@@ -28,6 +31,7 @@ final class BlockStatement extends Statement
         foreach ($this->statements as $statement) {
             $out .= $statement->toString();
         }
+
         return $out;
     }
 }

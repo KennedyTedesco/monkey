@@ -13,19 +13,19 @@ use Monkey\Object\NullObject;
 
 final class EvalIndexExpression
 {
-    public function __construct(private Evaluator $evaluator, private Environment $env)
+    public function __construct(private Evaluator $evaluator, private Environment $environment)
     {
     }
 
-    public function __invoke(IndexExpression $node): MonkeyObject
+    public function __invoke(IndexExpression $indexExpression): MonkeyObject
     {
-        $left = $this->evaluator->eval($node->left(), $this->env);
+        $left = $this->evaluator->eval($indexExpression->left(), $this->environment);
 
         if ($left instanceof ErrorObject) {
             return $left;
         }
 
-        $index = $this->evaluator->eval($node->index(), $this->env);
+        $index = $this->evaluator->eval($indexExpression->index(), $this->environment);
 
         if ($index instanceof ErrorObject) {
             return $index;

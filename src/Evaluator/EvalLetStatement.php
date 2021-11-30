@@ -10,20 +10,20 @@ use Monkey\Object\MonkeyObject;
 
 final class EvalLetStatement
 {
-    public function __construct(private Evaluator $evaluator, private Environment $env)
+    public function __construct(private Evaluator $evaluator, private Environment $environment)
     {
     }
 
-    public function __invoke(LetStatement $node): MonkeyObject
+    public function __invoke(LetStatement $letStatement): MonkeyObject
     {
-        $value = $this->evaluator->eval($node->value(), $this->env);
+        $value = $this->evaluator->eval($letStatement->value(), $this->environment);
 
         if ($value instanceof ErrorObject) {
             return $value;
         }
 
-        $this->env->set($node->name()->value(), $value);
+        $this->environment->set($letStatement->name()->value(), $value);
 
-        return $this->evaluator->eval($node->name(), $this->env);
+        return $this->evaluator->eval($letStatement->name(), $this->environment);
     }
 }
