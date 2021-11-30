@@ -162,6 +162,9 @@ final class Parser
         return $this->precedences[$token->type()] ?? Precedence::LOWEST;
     }
 
+    /**
+     * @return string[]
+     */
     public function errors(): array
     {
         return $this->errors;

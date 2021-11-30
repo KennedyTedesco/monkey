@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast;
+namespace Monkey\Ast\Statements;
 
 namespace Monkey\Ast\Statements;
 

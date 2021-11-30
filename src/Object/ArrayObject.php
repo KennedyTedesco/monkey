@@ -14,6 +14,9 @@ final class ArrayObject extends MonkeyObject
     ) {
     }
 
+    /**
+     * @return mixed[]
+     */
     public function value(): array
     {
         return $this->elements;

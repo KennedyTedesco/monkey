@@ -8,6 +8,9 @@ final class NullObject extends MonkeyObject
 {
     private static self $null;
 
+    /**
+     * @return null
+     */
     public function value()
     {
         return null;

@@ -22,6 +22,9 @@ final class CallExpression extends Expression
         return $this->expression;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function arguments(): array
     {
         return $this->arguments;

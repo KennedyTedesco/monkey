@@ -31,6 +31,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::ORDER);
     $containerConfigurator->import(SetList::EARLY_RETURN);
     $containerConfigurator->import(SetList::TYPE_DECLARATION_STRICT);
+    $containerConfigurator->import(SetList::TYPE_DECLARATION);
     $containerConfigurator->import(SetList::PHP_80);
     $containerConfigurator->import(SetList::PHP_81);
 };
