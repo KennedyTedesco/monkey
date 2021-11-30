@@ -123,30 +123,30 @@ The steps are:
     <img src="resources/how-it-works.png?raw=true" alt="How it works">
 </p>
 
-### Running with Docker (PHP 8 only)
+### Running with Docker (PHP ^8.1)
 
 Pull the docker image:
 
 ```bash
-docker pull keinos/php8-jit
+docker pull php:8.1-cli
 ```
 
 Running the tests:
 
 ```bash
-docker run --rm -v $(pwd):/monkey -w /monkey keinos/php8-jit ./vendor/bin/pest
+docker run --rm -v $(pwd):/monkey -w /monkey php:8.1-cli ./vendor/bin/pest
 ```
 
 If you're using a fish-like shell, omit the `$`:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit ./vendor/bin/pest
+docker run --rm -v (pwd):/monkey -w /monkey php:8.1-cli ./vendor/bin/pest
 ```
 
 Running from a file contents of the examples folder:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit ./monkey run examples/fibo_while.monkey
+docker run --rm -v (pwd):/monkey -w /monkey php:8.1-cli ./monkey run examples/fibo_while.monkey
 ```
 
 ### Using the REPL
@@ -154,7 +154,7 @@ docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit ./monkey run example
 Clone this repository, execute `composer install`, then:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit ./monkey repl
+docker run --rm -v (pwd):/monkey -w /monkey php:8.1-cli ./monkey repl
 ```
 
 Example:
@@ -182,7 +182,7 @@ Example:
 Or, if you want to execute a file:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey keinos/php8-jit ./monkey run examples/closure.monkey
+docker run --rm -v (pwd):/monkey -w /monkey php:8.1-cli ./monkey run examples/closure.monkey
 ```
 
 ### Contributing
