@@ -11,15 +11,15 @@ use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
-test('toString', function () {
+test('to string', function () {
     $program = new Program();
 
     $program->addStatement(
         new LetStatement(
             new Token(TokenType::T_LET, 'let'),
             new IdentifierExpression(new Token(TokenType::T_IDENT, 'foo'), 'foo'),
-            new IntegerLiteral(new Token(TokenType::T_INT, '10'), 10)
-        )
+            new IntegerLiteral(new Token(TokenType::T_INT, '10'), 10),
+        ),
     );
 
     expect('let foo = 10;')->toBe($program->toString());

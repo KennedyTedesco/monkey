@@ -11,9 +11,9 @@ final class IfExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private Expression $expression,
-        private BlockStatement $consequence,
-        private ?BlockStatement $alternative = null
+        private readonly Expression $expression,
+        private readonly BlockStatement $consequence,
+        private readonly ?BlockStatement $alternative = null,
     ) {
         $this->token = $token;
     }
@@ -36,7 +36,8 @@ final class IfExpression extends Expression
     public function toString(): string
     {
         $out = "if{$this->expression->toString()} {$this->consequence->toString()}";
-        if (null !== $this->alternative) {
+
+        if ($this->alternative instanceof BlockStatement) {
             $out .= "else {$this->alternative->toString()}";
         }
 

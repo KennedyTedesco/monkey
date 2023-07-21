@@ -11,10 +11,11 @@ use Monkey\Parser\Parser;
 use Monkey\Parser\Statements\BlockStatementParser;
 use Monkey\Token\TokenType;
 
-final class FunctionLiteralParselet implements PrefixParselet
+final readonly class FunctionLiteralParselet implements PrefixParselet
 {
-    public function __construct(private Parser $parser)
-    {
+    public function __construct(
+        private Parser $parser,
+    ) {
     }
 
     public function parse(): ?Expression

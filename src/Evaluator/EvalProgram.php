@@ -10,10 +10,12 @@ use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\ReturnValueObject;
 
-final class EvalProgram
+final readonly class EvalProgram
 {
-    public function __construct(private Evaluator $evaluator, private Environment $environment)
-    {
+    public function __construct(
+        private Evaluator $evaluator,
+        private Environment $environment,
+    ) {
     }
 
     public function __invoke(Program $program): MonkeyObject
@@ -22,11 +24,12 @@ final class EvalProgram
 
         foreach ($program->statements() as $statement) {
             $result = $this->evaluator->eval($statement, $this->environment);
-            if (true == $result instanceof ReturnValueObject) {
+
+            if ($result instanceof ReturnValueObject == true) {
                 return $result->value();
             }
 
-            if (true == $result instanceof ErrorObject) {
+            if ($result instanceof ErrorObject == true) {
                 return $result;
             }
         }

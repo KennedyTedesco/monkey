@@ -10,10 +10,11 @@ use Monkey\Parser\ExpressionListParser;
 use Monkey\Parser\Parser;
 use Monkey\Token\TokenType;
 
-final class ArrayParselet implements PrefixParselet
+final readonly class ArrayParselet implements PrefixParselet
 {
-    public function __construct(private Parser $parser)
-    {
+    public function __construct(
+        private Parser $parser,
+    ) {
     }
 
     public function parse(): Expression

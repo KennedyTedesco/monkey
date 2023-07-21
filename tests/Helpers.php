@@ -13,18 +13,14 @@ use Monkey\Object\MonkeyObject;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
 
-/**
- * @param mixed $leftValue
- * @param mixed $rightValue
- */
 function assertInfixExpression(Expression $expression, $leftValue, string $operator, $rightValue): void
 {
     expect($expression->operator())->toBe($operator);
 
-    /** @var IntegerLiteral|BooleanLiteral $right */
+    /** @var BooleanLiteral|IntegerLiteral $right */
     $right = $expression->right();
 
-    /** @var IntegerLiteral|BooleanLiteral $left */
+    /** @var BooleanLiteral|IntegerLiteral $left */
     $left = $expression->left();
 
     expect($leftValue)->toBe($left->value());
@@ -35,7 +31,7 @@ function newProgram(string $input): Program
 {
     return (new ProgramParser())(
         new Parser(
-            new Lexer($input)
+            new Lexer($input),
         )
     );
 }

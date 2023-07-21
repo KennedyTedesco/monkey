@@ -9,9 +9,10 @@ use Monkey\Token\Token;
 
 final class ArrayLiteral extends Expression
 {
-    public function __construct(Token $token, /* @var array<Expression> */
-    private array $elements)
-    {
+    public function __construct(
+        Token $token, /* @var array<Expression> */
+        private readonly array $elements,
+    ) {
         $this->token = $token;
     }
 
@@ -33,7 +34,7 @@ final class ArrayLiteral extends Expression
             $elements[] = $element->toString();
         }
 
-        if ([] !== $elements) {
+        if ($elements !== []) {
             $out .= implode(',', $elements);
         }
 

@@ -9,8 +9,10 @@ use Monkey\Token\Token;
 
 final class StringLiteral extends Expression
 {
-    public function __construct(Token $token, private string $value)
-    {
+    public function __construct(
+        Token $token,
+        private readonly string $value,
+    ) {
         $this->token = $token;
     }
 

@@ -12,7 +12,7 @@ final class Environment
     private array $map = [];
 
     public function __construct(
-        private ?self $outer = null
+        private readonly ?self $outer = null,
     ) {
     }
 

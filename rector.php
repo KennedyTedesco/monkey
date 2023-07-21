@@ -2,36 +2,27 @@
 
 declare(strict_types=1);
 
-use Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector;
-use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
-use Rector\Core\Configuration\Option;
+use Rector\Config\RectorConfig;
+use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $parameters = $containerConfigurator->parameters();
+return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->parallel();
+    $rectorConfig->importNames();
+    $rectorConfig->removeUnusedImports();
+    $rectorConfig->importShortClasses();
 
-    $parameters->set(Option::AUTO_IMPORT_NAMES, true);
-    $parameters->set(Option::IMPORT_DOC_BLOCKS, false);
-    $parameters->set(Option::IMPORT_SHORT_CLASSES, true);
-
-    $parameters->set(Option::PATHS, [
-        __DIR__.'/src',
+    $rectorConfig->autoloadPaths([
+        __DIR__ . '/src',
+        __DIR__ . '/tests',
     ]);
 
-    $parameters->set(Option::SKIP, [
-        UnSpreadOperatorRector::class,
-        EncapsedStringsToSprintfRector::class,
-    ]);
-
-    $containerConfigurator->import(SetList::DEAD_CODE);
-    $containerConfigurator->import(SetList::CODE_QUALITY);
-    $containerConfigurator->import(SetList::CODING_STYLE);
-    $containerConfigurator->import(SetList::NAMING);
-    $containerConfigurator->import(SetList::ORDER);
-    $containerConfigurator->import(SetList::EARLY_RETURN);
-    $containerConfigurator->import(SetList::TYPE_DECLARATION_STRICT);
-    $containerConfigurator->import(SetList::TYPE_DECLARATION);
-    $containerConfigurator->import(SetList::PHP_80);
-    $containerConfigurator->import(SetList::PHP_81);
+    $rectorConfig->import(SetList::NAMING);
+    $rectorConfig->import(SetList::CODE_QUALITY);
+    $rectorConfig->import(SetList::EARLY_RETURN);
+    $rectorConfig->import(SetList::TYPE_DECLARATION);
+    $rectorConfig->import(LevelSetList::UP_TO_PHP_82);
+    $rectorConfig->import(SetList::DEAD_CODE);
+    $rectorConfig->import(SetList::STRICT_BOOLEANS);
+    $rectorConfig->import(SetList::INSTANCEOF);
 };

@@ -9,12 +9,9 @@ use Monkey\Token\TokenType;
 
 final class Lexer
 {
-    /**
-     * @var string
-     */
     public const EOF = "\0";
 
-    private Input $input;
+    private readonly Input $input;
 
     private Char $curChar;
 
@@ -62,7 +59,8 @@ final class Lexer
             $this->curChar->is('"') => $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString()),
 
             $this->curChar->isLetter() => Token::from(
-                TokenType::lookupToken($identifier = $this->readIdentifier()) ?? TokenType::T_IDENT, $identifier
+                TokenType::lookupToken($identifier = $this->readIdentifier()) ?? TokenType::T_IDENT,
+                $identifier,
             ),
 
             $this->curChar->isDigit() => Token::from(ctype_digit($number = $this->readNumber()) ? TokenType::T_INT : TokenType::T_FLOAT, $number),
@@ -70,7 +68,8 @@ final class Lexer
             $this->curChar->is(self::EOF) => Token::from(TokenType::T_EOF, self::EOF),
 
             TokenType::isSingleCharToken($this->curChar->toScalar()) => $this->makeTokenAndAdvance(
-                TokenType::lookupToken($this->curChar->toScalar()), $this->curChar->toScalar()
+                TokenType::lookupToken($this->curChar->toScalar()),
+                $this->curChar->toScalar(),
             ),
 
             default => $this->makeTokenAndAdvance(TokenType::T_ILLEGAL, $this->curChar->toScalar()),
@@ -84,7 +83,7 @@ final class Lexer
         $this->curChar = $this->isEnd() ? Char::from(self::EOF) : Char::from($this->input->char($this->readPosition));
 
         $this->position = $this->readPosition;
-        ++$this->readPosition;
+        $this->readPosition++;
 
         if (!$this->isEnd()) {
             $this->peekChar = Char::from($this->input->char($this->readPosition));

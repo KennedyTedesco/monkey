@@ -3,16 +3,13 @@
   "description": "Monkey Programming Language",
   "license": "MIT",
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^3.0",
-    "pestphp/pest": "^v1.21",
-    "phpstan/phpstan": "^1.2",
-    "phpunit/phpunit": "^9.5",
-    "rector/rector": "^0.12",
-    "roave/security-advisories": "dev-master"
+    "laravel/pint": "^1.10",
+    "pestphp/pest": "^2.9.3",
+    "phpstan/phpstan": "^1.10.26",
+    "rector/rector": "^0.17.6"
   },
   "require": {
-    "php": "^8.1",
-    "ext-readline": "*"
+    "php": "^8.2"
   },
   "autoload": {
     "psr-4": {
@@ -25,15 +22,22 @@
     }
   },
   "scripts": {
-    "pest": "pest",
-    "cs": "php-cs-fixer fix --allow-risky yes",
+    "test": "./vendor/bin/pest --parallel",
+    "fix": [
+      "@rector",
+      "@pint"
+    ],
+    "pint": "vendor/bin/pint",
     "rector": "vendor/bin/rector process src",
-    "phpstan": "phpstan analyse -c phpstan.neon --memory-limit=2G"
+    "check": "phpstan analyse -c phpstan.neon --memory-limit=2G"
   },
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true

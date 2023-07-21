@@ -4,19 +4,13 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-use Monkey\Ast\Expressions\Expression;
-
-final class ArrayObject extends MonkeyObject
+final readonly class ArrayObject extends MonkeyObject
 {
     public function __construct(
-        /* @var array<Expression> */
-        private array $elements
+        private array $elements,
     ) {
     }
 
-    /**
-     * @return mixed[]
-     */
     public function value(): array
     {
         return $this->elements;
@@ -38,7 +32,7 @@ final class ArrayObject extends MonkeyObject
 
         /** @var MonkeyObject $element */
         foreach ($this->elements as $element) {
-            $elements[] = self::MO_STRING === $element->type() ? '"'.$element->inspect().'"' : $element->inspect();
+            $elements[] = $element->type() === self::MO_STRING ? '"' . $element->inspect() . '"' : $element->inspect();
         }
 
         return sprintf('[%s]', implode(', ', $elements));

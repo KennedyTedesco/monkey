@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class IntegerObject extends MonkeyObject
+final readonly class IntegerObject extends MonkeyObject
 {
     public function __construct(
-        private int $value
+        private int $value,
     ) {
     }
 

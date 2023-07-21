@@ -10,11 +10,11 @@ use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\ReturnValueObject;
 
-final class EvalBlockStatement
+final readonly class EvalBlockStatement
 {
     public function __construct(
         private Evaluator $evaluator,
-        private Environment $environment
+        private Environment $environment,
     ) {
     }
 
@@ -24,11 +24,12 @@ final class EvalBlockStatement
 
         foreach ($blockStatement->statements() as $statement) {
             $result = $this->evaluator->eval($statement, $this->environment);
-            if (true == $result instanceof ErrorObject) {
+
+            if ($result instanceof ErrorObject == true) {
                 return $result;
             }
 
-            if (true == $result instanceof ReturnValueObject) {
+            if ($result instanceof ReturnValueObject == true) {
                 return $result;
             }
         }

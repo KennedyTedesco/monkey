@@ -12,30 +12,30 @@ use Monkey\Object\FunctionObject;
 use Monkey\Object\MonkeyObject;
 use Monkey\Object\ReturnValueObject;
 
-final class EvalCallExpression
+final readonly class EvalCallExpression
 {
     public function __construct(
         private Evaluator $evaluator,
-        private Environment $environment
+        private Environment $environment,
     ) {
     }
 
     public function __invoke(CallExpression $callExpression): MonkeyObject
     {
-        /** @var FunctionObject $function */
-        $function = $this->evaluator->eval($callExpression->function(), $this->environment);
+        /** @var FunctionObject $monkeyObject */
+        $monkeyObject = $this->evaluator->eval($callExpression->function(), $this->environment);
 
-        if ($function instanceof ErrorObject) {
-            return $function;
+        if ($monkeyObject instanceof ErrorObject) {
+            return $monkeyObject;
         }
 
         $args = $this->evaluator->evalExpressions($callExpression->arguments(), $this->environment);
 
-        if (1 === $args && $args[0] instanceof ErrorObject) {
+        if ($args === 1 && $args[0] instanceof ErrorObject) {
             return $args[0];
         }
 
-        return $this->applyFunction($function, $args);
+        return $this->applyFunction($monkeyObject, $args);
     }
 
     private function applyFunction(MonkeyObject $monkeyObject, array $args): MonkeyObject
@@ -44,7 +44,7 @@ final class EvalCallExpression
             $environment = $this->extendFunctionEnv($monkeyObject, $args);
 
             return $this->unwrapReturnValue(
-                $this->evaluator->eval($monkeyObject->body(), $environment)
+                $this->evaluator->eval($monkeyObject->body(), $environment),
             );
         }
 

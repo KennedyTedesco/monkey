@@ -12,20 +12,23 @@ use Monkey\Object\NullObject;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
 
+use const PHP_EOL;
+use const STDOUT;
+
 final class Repl
 {
     public static function start(): void
     {
-        fwrite(\STDOUT, <<<TEXT
+        fwrite(STDOUT, <<<TEXT
                     __,__
            .--.  .-"     "-.  .--.
-          / .. \/  .-. .-.  \/ .. \
-         | |  '|  /   Y   \  |'  | |
-         | \   \  \ 0 | 0 /  /   / |
-          \ '- ,\.-"`` ``"-./, -' /
-           `'-' /_   ^ ^   _\ '-'`
-               |  \._   _./  |
-               \   \ `~` /   /
+          / .. \\/  .-. .-.  \\/ .. \\
+         | |  '|  /   Y   \\  |'  | |
+         | \\   \\  \\ 0 | 0 /  /   / |
+          \\ '- ,\\.-"`` ``"-./, -' /
+           `'-' /_   ^ ^   _\\ '-'`
+               |  \\._   _./  |
+               \\   \\ `~` /   /
                 '._ '-=-' _.'
                    '~---~'
         -------------------------------
@@ -34,9 +37,11 @@ final class Repl
         TEXT);
 
         $environment = new Environment();
+
         while (true) {
             $input = readline("\n > ");
-            if ('exit' === $input) {
+
+            if ($input === 'exit') {
                 return;
             }
 
@@ -48,7 +53,7 @@ final class Repl
     {
         $parser = new Parser(new Lexer($input));
 
-        if ([] !== $parser->errors()) {
+        if ($parser->errors() !== []) {
             echo self::getErrors($parser->errors());
 
             return null;
@@ -59,21 +64,23 @@ final class Repl
 
     public static function evalAndInspect(string $input, Environment $environment): void
     {
-        $object = self::eval($input, $environment);
-        if (!$object instanceof MonkeyObject) {
+        $monkeyObject = self::eval($input, $environment);
+
+        if (!$monkeyObject instanceof MonkeyObject) {
             return;
         }
 
-        if ($object instanceof NullObject) {
+        if ($monkeyObject instanceof NullObject) {
             return;
         }
 
-        echo $object->inspect().\PHP_EOL;
+        echo $monkeyObject->inspect() . PHP_EOL;
     }
 
     private static function getErrors(array $errors): string
     {
         $out = '';
+
         foreach ($errors as $index => $error) {
             $out .= "{$index}) {$error}";
         }

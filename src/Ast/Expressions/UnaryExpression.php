@@ -10,8 +10,8 @@ final class UnaryExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private string $operator,
-        private Expression $expression
+        private readonly string $operator,
+        private readonly Expression $expression,
     ) {
         $this->token = $token;
     }

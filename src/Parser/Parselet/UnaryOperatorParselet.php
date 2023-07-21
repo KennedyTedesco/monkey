@@ -9,10 +9,11 @@ use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Parser\Parser;
 use Monkey\Parser\Precedence;
 
-final class UnaryOperatorParselet implements PrefixParselet
+final readonly class UnaryOperatorParselet implements PrefixParselet
 {
-    public function __construct(private Parser $parser)
-    {
+    public function __construct(
+        private Parser $parser,
+    ) {
     }
 
     public function parse(): Expression

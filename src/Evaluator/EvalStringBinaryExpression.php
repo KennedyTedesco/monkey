@@ -14,7 +14,7 @@ final class EvalStringBinaryExpression
     public function __invoke(
         string $operator,
         StringObject $left,
-        StringObject $right
+        StringObject $right,
     ): MonkeyObject {
         return match ($operator) {
             '+' => new StringObject("{$left->value()}{$right->value()}"),

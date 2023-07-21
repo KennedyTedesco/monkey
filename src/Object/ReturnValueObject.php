@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class ReturnValueObject extends MonkeyObject
+final readonly class ReturnValueObject extends MonkeyObject
 {
-    public function __construct(private MonkeyObject $monkeyObject)
-    {
+    public function __construct(
+        private MonkeyObject $monkeyObject,
+    ) {
     }
 
     public function value(): MonkeyObject

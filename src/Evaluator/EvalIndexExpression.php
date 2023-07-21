@@ -11,18 +11,20 @@ use Monkey\Object\IntegerObject;
 use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 
-final class EvalIndexExpression
+final readonly class EvalIndexExpression
 {
-    public function __construct(private Evaluator $evaluator, private Environment $environment)
-    {
+    public function __construct(
+        private Evaluator $evaluator,
+        private Environment $environment,
+    ) {
     }
 
     public function __invoke(IndexExpression $indexExpression): MonkeyObject
     {
-        $left = $this->evaluator->eval($indexExpression->left(), $this->environment);
+        $monkeyObject = $this->evaluator->eval($indexExpression->left(), $this->environment);
 
-        if ($left instanceof ErrorObject) {
-            return $left;
+        if ($monkeyObject instanceof ErrorObject) {
+            return $monkeyObject;
         }
 
         $index = $this->evaluator->eval($indexExpression->index(), $this->environment);
@@ -31,8 +33,8 @@ final class EvalIndexExpression
             return $index;
         }
 
-        if ($left instanceof ArrayObject && $index instanceof IntegerObject) {
-            return $left->value()[$index->value()] ?? NullObject::instance();
+        if ($monkeyObject instanceof ArrayObject && $index instanceof IntegerObject) {
+            return $monkeyObject->value()[$index->value()] ?? NullObject::instance();
         }
 
         return ErrorObject::invalidIndexOperator($index->typeLiteral());

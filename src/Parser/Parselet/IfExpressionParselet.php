@@ -11,10 +11,11 @@ use Monkey\Parser\Precedence;
 use Monkey\Parser\Statements\BlockStatementParser;
 use Monkey\Token\TokenType;
 
-final class IfExpressionParselet implements PrefixParselet
+final readonly class IfExpressionParselet implements PrefixParselet
 {
-    public function __construct(private Parser $parser)
-    {
+    public function __construct(
+        private Parser $parser,
+    ) {
     }
 
     public function parse(): ?Expression
@@ -41,6 +42,7 @@ final class IfExpressionParselet implements PrefixParselet
         $consequence = (new BlockStatementParser())($this->parser);
 
         $alternative = null;
+
         if ($this->parser->peekToken->is(TokenType::T_ELSE)) {
             $this->parser->nextToken();
 

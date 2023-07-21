@@ -12,9 +12,11 @@ use Monkey\Token\Token;
 
 final class FunctionLiteral extends Expression
 {
-    public function __construct(Token $token, /* @var array<IdentifierExpression> */
-    private array $parameters, private BlockStatement $blockStatement)
-    {
+    public function __construct(
+        Token $token, /* @var array<IdentifierExpression> */
+        private readonly array $parameters,
+        private readonly BlockStatement $blockStatement,
+    ) {
         $this->token = $token;
     }
 
@@ -41,10 +43,10 @@ final class FunctionLiteral extends Expression
             $params[] = $parameter->toString();
         }
 
-        if ([] !== $params) {
+        if ($params !== []) {
             $out .= implode(',', $params);
         }
 
-        return $out.") {$this->blockStatement->toString()}";
+        return $out . ") {$this->blockStatement->toString()}";
     }
 }

@@ -34,7 +34,7 @@ test('let statements', function (string $input, string $name, $value) {
     expect($letStatement->tokenLiteral())->toBe('let');
     expect($letStatement->name()->tokenLiteral())->toBe($name);
 
-    /** @var IntegerLiteral|BooleanLiteral $valueExpression */
+    /** @var BooleanLiteral|IntegerLiteral $valueExpression */
     $valueExpression = $letStatement->value();
     expect($valueExpression->value())->toBe($value);
 })->with([
@@ -53,7 +53,7 @@ test('assign statements', function (string $input, string $name, $value) {
     expect($assignStatement)->toBeInstanceOf(AssignStatement::class);
     expect($assignStatement->name()->tokenLiteral())->toBe($name);
 
-    /** @var IntegerLiteral|BooleanLiteral $valueExpression */
+    /** @var BooleanLiteral|IntegerLiteral $valueExpression */
     $valueExpression = $assignStatement->value();
     expect($valueExpression->value())->toBe($value);
 })->with([
@@ -71,7 +71,7 @@ test('return statement', function (string $input, $value) {
     expect($returnStatement)->toBeInstanceOf(ReturnStatement::class);
     expect($returnStatement->tokenLiteral())->toBe('return');
 
-    /** @var IntegerLiteral|BooleanLiteral $valueExpression */
+    /** @var BooleanLiteral|IntegerLiteral $valueExpression */
     $valueExpression = $returnStatement->returnValue();
     expect($valueExpression->value())->toBe($value);
 })->with([
@@ -187,7 +187,7 @@ test('prefix expression', function (string $input, string $operator, $value) {
     $expression = $statement->expression();
     expect($expression->operator())->toBe($operator);
 
-    /** @var IntegerLiteral|BooleanLiteral $right */
+    /** @var BooleanLiteral|IntegerLiteral $right */
     $right = $expression->right();
     expect($right->value())->toBe($value);
 })->with([

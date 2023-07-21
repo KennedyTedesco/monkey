@@ -10,10 +10,11 @@ use Monkey\Parser\ExpressionListParser;
 use Monkey\Parser\Parser;
 use Monkey\Token\TokenType;
 
-final class CallExpressionParselet implements InfixParselet
+final readonly class CallExpressionParselet implements InfixParselet
 {
-    public function __construct(private Parser $parser)
-    {
+    public function __construct(
+        private Parser $parser,
+    ) {
     }
 
     public function parse(Expression $expression): Expression

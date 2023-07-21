@@ -8,10 +8,11 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\PostfixExpression;
 use Monkey\Parser\Parser;
 
-final class PostfixOperatorParselet implements PostfixParselet
+final readonly class PostfixOperatorParselet implements PostfixParselet
 {
-    public function __construct(private Parser $parser)
-    {
+    public function __construct(
+        private Parser $parser,
+    ) {
     }
 
     public function parse(): Expression

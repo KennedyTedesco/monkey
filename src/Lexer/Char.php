@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Monkey\Lexer;
 
-final class Char
+final readonly class Char
 {
-    public function __construct(private string $ch)
-    {
+    public function __construct(
+        private string $ch,
+    ) {
     }
 
     public static function empty(): self
@@ -27,12 +28,12 @@ final class Char
 
     public function isLetter(): bool
     {
-        return '_' === $this->ch || ctype_alpha($this->ch);
+        return $this->ch === '_' || ctype_alpha($this->ch);
     }
 
     public function isAlphanumeric(): bool
     {
-        return '_' === $this->ch || ctype_alnum($this->ch);
+        return $this->ch === '_' || ctype_alnum($this->ch);
     }
 
     public function isDigit(): bool

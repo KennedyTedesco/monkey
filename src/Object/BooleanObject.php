@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class BooleanObject extends MonkeyObject
+final readonly class BooleanObject extends MonkeyObject
 {
-    private static self $true;
-
-    private static self $false;
-
-    public function __construct(private bool $value)
-    {
+    public function __construct(
+        private bool $value,
+    ) {
     }
 
     public function value(): bool
@@ -36,12 +33,12 @@ final class BooleanObject extends MonkeyObject
 
     public static function true(): self
     {
-        return self::$true ??= new self(true);
+        return new self(true);
     }
 
     public static function false(): self
     {
-        return self::$false ??= new self(false);
+        return new self(false);
     }
 
     public static function from(bool $value): self

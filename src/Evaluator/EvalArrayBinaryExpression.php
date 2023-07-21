@@ -13,7 +13,7 @@ final class EvalArrayBinaryExpression
     public function __invoke(
         string $operator,
         ArrayObject $left,
-        ArrayObject $right
+        ArrayObject $right,
     ): MonkeyObject {
         return match ($operator) {
             '+' => new ArrayObject(array_merge($left->value(), $right->value())),

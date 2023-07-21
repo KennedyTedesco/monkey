@@ -8,10 +8,11 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Parser\Parser;
 
-final class IdentifierParselet implements PrefixParselet
+final readonly class IdentifierParselet implements PrefixParselet
 {
-    public function __construct(private Parser $parser)
-    {
+    public function __construct(
+        private Parser $parser,
+    ) {
     }
 
     public function parse(): Expression

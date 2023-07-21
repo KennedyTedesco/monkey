@@ -9,21 +9,25 @@ use Monkey\Object\ErrorObject;
 use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 
+use function count;
+
 final class EvalLastFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
-        if (1 !== \count($monkeyObject)) {
-            return ErrorObject::wrongNumberOfArguments(\count($monkeyObject), 1);
+        if (count($monkeyObject) !== 1) {
+            return ErrorObject::wrongNumberOfArguments(count($monkeyObject), 1);
         }
 
         $object = $monkeyObject[0];
+
         if (!$object instanceof ArrayObject) {
             return ErrorObject::invalidArgument('last()', $object->typeLiteral());
         }
 
         $elements = $object->value();
-        if ([] !== $elements) {
+
+        if ($elements !== []) {
             return end($elements);
         }
 

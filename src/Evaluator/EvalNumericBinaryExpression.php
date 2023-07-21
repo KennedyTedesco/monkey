@@ -13,7 +13,7 @@ final class EvalNumericBinaryExpression
     public function __invoke(
         string $operator,
         MonkeyObject $left,
-        MonkeyObject $right
+        MonkeyObject $right,
     ): MonkeyObject {
         return match ($operator) {
             '+' => new $left($left->value() + $right->value()),

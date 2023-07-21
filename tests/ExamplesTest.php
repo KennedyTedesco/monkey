@@ -17,7 +17,7 @@ function getExampleDetails(string $filename): array
 }
 
 test('eval integer expressionss', function (string $filename) {
-    $details = getExampleDetails(__DIR__."/examples/{$filename}");
+    $details = getExampleDetails(__DIR__ . "/examples/{$filename}");
 
     ob_start();
     evalProgram($details['file']);
@@ -25,7 +25,7 @@ test('eval integer expressionss', function (string $filename) {
 
     expect($details['expect'])->toBe($output);
 })->with(function () {
-    foreach (glob(__DIR__.'/examples/*.monkey') as $filename) {
+    foreach (glob(__DIR__ . '/examples/*.monkey') as $filename) {
         yield basename($filename);
     }
 });

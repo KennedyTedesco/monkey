@@ -12,8 +12,8 @@ final class AssignStatement extends Statement
 {
     public function __construct(
         Token $token,
-        private IdentifierExpression $identifierExpression,
-        private Expression $expression
+        private readonly IdentifierExpression $identifierExpression,
+        private readonly Expression $expression,
     ) {
         $this->token = $token;
     }

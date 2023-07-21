@@ -11,8 +11,8 @@ final class WhileExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private Expression $expression,
-        private BlockStatement $blockStatement
+        private readonly Expression $expression,
+        private readonly BlockStatement $blockStatement,
     ) {
         $this->token = $token;
     }

@@ -13,7 +13,7 @@ final class ReturnStatement extends Statement
 {
     public function __construct(
         Token $token,
-        private Expression $expression
+        private readonly Expression $expression,
     ) {
         $this->token = $token;
     }
@@ -26,10 +26,8 @@ final class ReturnStatement extends Statement
     public function toString(): string
     {
         $out = "{$this->tokenLiteral()} ";
-        if (null !== $this->expression) {
-            $out .= $this->expression->toString();
-        }
+        $out .= $this->expression->toString();
 
-        return $out.';';
+        return $out . ';';
     }
 }

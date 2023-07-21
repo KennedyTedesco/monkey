@@ -119,7 +119,7 @@ final class Evaluator
     private function registerBuiltinFunctions(): void
     {
         foreach ($this->builtinFunctions as $funcName => $className) {
-            BuiltinFunction::set($funcName, fn (MonkeyObject ...$arguments) => (new $className($this))(...$arguments));
+            BuiltinFunction::set($funcName, fn (MonkeyObject ...$monkeyObject) => (new $className($this))(...$monkeyObject));
         }
     }
 }

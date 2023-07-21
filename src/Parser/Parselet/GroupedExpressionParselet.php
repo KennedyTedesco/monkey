@@ -9,10 +9,11 @@ use Monkey\Parser\Parser;
 use Monkey\Parser\Precedence;
 use Monkey\Token\TokenType;
 
-final class GroupedExpressionParselet implements PrefixParselet
+final readonly class GroupedExpressionParselet implements PrefixParselet
 {
-    public function __construct(private Parser $parser)
-    {
+    public function __construct(
+        private Parser $parser,
+    ) {
     }
 
     public function parse(): ?Expression

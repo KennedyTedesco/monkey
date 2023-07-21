@@ -10,8 +10,8 @@ final class IndexExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private Expression $left,
-        private Expression $index
+        private readonly Expression $left,
+        private readonly Expression $index,
     ) {
         $this->token = $token;
     }

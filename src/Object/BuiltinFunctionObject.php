@@ -6,10 +6,11 @@ namespace Monkey\Object;
 
 use Closure;
 
-final class BuiltinFunctionObject extends MonkeyObject
+final readonly class BuiltinFunctionObject extends MonkeyObject
 {
-    public function __construct(private Closure $function)
-    {
+    public function __construct(
+        private Closure $function,
+    ) {
     }
 
     public function value(): Closure

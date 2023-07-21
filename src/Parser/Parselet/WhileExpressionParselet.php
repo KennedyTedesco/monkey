@@ -11,10 +11,11 @@ use Monkey\Parser\Precedence;
 use Monkey\Parser\Statements\BlockStatementParser;
 use Monkey\Token\TokenType;
 
-final class WhileExpressionParselet implements PrefixParselet
+final readonly class WhileExpressionParselet implements PrefixParselet
 {
-    public function __construct(private Parser $parser)
-    {
+    public function __construct(
+        private Parser $parser,
+    ) {
     }
 
     public function parse(): ?Expression
@@ -29,6 +30,7 @@ final class WhileExpressionParselet implements PrefixParselet
 
         /** @var Expression $condition */
         $condition = $this->parser->parseExpression(Precedence::LOWEST);
+
         if (!$this->parser->expectPeek(TokenType::T_RPAREN)) {
             return null;
         }

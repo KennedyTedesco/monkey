@@ -10,9 +10,9 @@ final class CallExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private Expression $expression,
+        private readonly Expression $expression,
         /* @var array<Expression> */
-        private array $arguments
+        private readonly array $arguments,
     ) {
         $this->token = $token;
     }
@@ -40,10 +40,10 @@ final class CallExpression extends Expression
             $args[] = $argument->toString();
         }
 
-        if ([] !== $args) {
+        if ($args !== []) {
             $out .= implode(', ', $args);
         }
 
-        return $out.')';
+        return $out . ')';
     }
 }

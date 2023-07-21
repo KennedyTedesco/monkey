@@ -22,7 +22,7 @@ final class LetStatementParser
 
         $identifierExpression = new IdentifierExpression(
             $parser->curToken,
-            $parser->curToken->literal()
+            $parser->curToken->literal(),
         );
 
         if (!$parser->expectPeek(TokenType::T_ASSIGN)) {

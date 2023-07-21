@@ -8,7 +8,7 @@ use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\MonkeyObject;
 
-final class EvalIdentifier
+final readonly class EvalIdentifier
 {
     public function __construct(private Environment $environment)
     {
@@ -18,7 +18,7 @@ final class EvalIdentifier
     {
         $object = $this->environment->get($identifierExpression->value()) ?? BuiltinFunction::get($identifierExpression->value());
 
-        if (null !== $object) {
+        if ($object instanceof MonkeyObject) {
             return $object;
         }
 

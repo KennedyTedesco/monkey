@@ -14,4 +14,4 @@ let fibonacci = fn(num) {
     return a;
 };
 
-puts(fibonacci(32));
+puts(fibonacci(90));

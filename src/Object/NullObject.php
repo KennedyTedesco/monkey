@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class NullObject extends MonkeyObject
+final readonly class NullObject extends MonkeyObject
 {
-    private static self $null;
-
-    /**
-     * @return null
-     */
     public function value()
     {
         return null;
@@ -33,6 +28,6 @@ final class NullObject extends MonkeyObject
 
     public static function instance(): self
     {
-        return self::$null ??= new self();
+        return new self();
     }
 }

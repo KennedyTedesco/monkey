@@ -10,11 +10,15 @@ use Monkey\Object\IntegerObject;
 use Monkey\Object\MonkeyObject;
 use Monkey\Object\StringObject;
 
+use function array_slice;
+use function count;
+
 final class EvalSliceFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
-        $count = \count($monkeyObject);
+        $count = count($monkeyObject);
+
         if ($count < 2) {
             return ErrorObject::wrongNumberOfArguments($count, 2);
         }
@@ -24,19 +28,22 @@ final class EvalSliceFunction
         }
 
         $offset = $monkeyObject[1];
+
         if (!$offset instanceof IntegerObject) {
             return ErrorObject::invalidArgument('slice(offset)', $offset->typeLiteral());
         }
 
         $length = $monkeyObject[2] ?? null;
-        if (null !== $length && !$length instanceof IntegerObject) {
+
+        if ($length instanceof MonkeyObject && !$length instanceof IntegerObject) {
             return ErrorObject::invalidArgument('slice(..., length)', $length->typeLiteral());
         }
 
         $object = $monkeyObject[0];
+
         if ($object instanceof ArrayObject) {
             return new ArrayObject(
-                \array_slice($object->value(), $offset->value(), (null !== $length ? $length->value() : null))
+                array_slice($object->value(), $offset->value(), $length instanceof IntegerObject ? $length->value() : null),
             );
         }
 
@@ -46,7 +53,7 @@ final class EvalSliceFunction
                 $offset->value(),
             ];
 
-            if (null !== $length) {
+            if ($length instanceof IntegerObject) {
                 $params[] = $length->value();
             }
 

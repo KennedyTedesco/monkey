@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class StringObject extends MonkeyObject
+final readonly class StringObject extends MonkeyObject
 {
     private string $value;
 
-    public function __construct(string $value)
-    {
+    public function __construct(
+        string $value,
+    ) {
         $this->value = str_replace('\n', "\n", $value);
     }
 

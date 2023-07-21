@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class FloatObject extends MonkeyObject
+final readonly class FloatObject extends MonkeyObject
 {
-    public function __construct(private float $value)
-    {
+    public function __construct(
+        private float $value,
+    ) {
     }
 
     public function value(): float

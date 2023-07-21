@@ -9,20 +9,22 @@ use Monkey\Object\ErrorObject;
 use Monkey\Object\MonkeyObject;
 use Monkey\Object\ReturnValueObject;
 
-final class EvalReturnStatement
+final readonly class EvalReturnStatement
 {
-    public function __construct(private Evaluator $evaluator, private Environment $environment)
-    {
+    public function __construct(
+        private Evaluator $evaluator,
+        private Environment $environment,
+    ) {
     }
 
     public function __invoke(ReturnStatement $returnStatement): MonkeyObject
     {
-        $object = $this->evaluator->eval($returnStatement->returnValue(), $this->environment);
+        $monkeyObject = $this->evaluator->eval($returnStatement->returnValue(), $this->environment);
 
-        if ($object instanceof ErrorObject) {
-            return $object;
+        if ($monkeyObject instanceof ErrorObject) {
+            return $monkeyObject;
         }
 
-        return new ReturnValueObject($object);
+        return new ReturnValueObject($monkeyObject);
     }
 }

@@ -8,13 +8,13 @@ use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Evaluator\Environment;
 
-final class FunctionObject extends MonkeyObject
+final readonly class FunctionObject extends MonkeyObject
 {
     public function __construct(
         /* @var array<IdentifierExpression> */
         private array $parameters,
         private BlockStatement $blockStatement,
-        private Environment $environment
+        private Environment $environment,
     ) {
     }
 
@@ -54,7 +54,7 @@ final class FunctionObject extends MonkeyObject
     public function inspect(): string
     {
         $params = [];
-        /** @var IdentifierExpression $parameter */
+
         foreach ($this->parameters as $parameter) {
             $params[] = $parameter->toString();
         }

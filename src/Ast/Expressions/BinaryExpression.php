@@ -10,9 +10,9 @@ final class BinaryExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private string $operator,
-        private Expression $left,
-        private Expression $right
+        private readonly string $operator,
+        private readonly Expression $left,
+        private readonly Expression $right,
     ) {
         $this->token = $token;
     }

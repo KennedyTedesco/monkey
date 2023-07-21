@@ -10,10 +10,11 @@ use Monkey\Parser\Parser;
 use Monkey\Parser\Precedence;
 use Monkey\Token\TokenType;
 
-final class IndexExpressionParselet implements InfixParselet
+final readonly class IndexExpressionParselet implements InfixParselet
 {
-    public function __construct(private Parser $parser)
-    {
+    public function __construct(
+        private Parser $parser,
+    ) {
     }
 
     public function parse(Expression $expression): ?Expression

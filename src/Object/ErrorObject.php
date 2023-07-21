@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
-final class ErrorObject extends MonkeyObject
+final readonly class ErrorObject extends MonkeyObject
 {
-    public function __construct(private string $value)
-    {
+    public function __construct(
+        private string $value,
+    ) {
     }
 
     public function value(): string
@@ -37,12 +38,12 @@ final class ErrorObject extends MonkeyObject
 
     public static function unknownOperator(string ...$args): self
     {
-        return new self('unknown operator: '.implode(' ', $args));
+        return new self('unknown operator: ' . implode(' ', $args));
     }
 
     public static function typeMismatch(string ...$args): self
     {
-        return new self('type mismatch: '.implode(' ', $args));
+        return new self('type mismatch: ' . implode(' ', $args));
     }
 
     public static function identifierNotFound(string $name): self

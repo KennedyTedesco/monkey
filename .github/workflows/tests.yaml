@@ -1,7 +1,8 @@
 name: tests
-
-on: [ 'push', 'pull_request' ]
-
+on: [
+  'push',
+  'pull_request'
+]
 jobs:
   ci:
     name: Tests
@@ -12,9 +13,10 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
           tools: composer:v2
           coverage: none
+          ini-values: opcache.enable_cli=1, opcache.jit=tracing, opcache.jit_buffer_size=64M
       - name: Install Dependencies
         run: composer update --no-interaction --no-progress
       - name: Run Tests

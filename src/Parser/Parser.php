@@ -64,8 +64,9 @@ final class Parser
         TokenType::T_POWER => Precedence::POWER,
     ];
 
-    public function __construct(private Lexer $lexer)
-    {
+    public function __construct(
+        private readonly Lexer $lexer,
+    ) {
         $this->registerPrefix(TokenType::T_IDENT, new IdentifierParselet($this));
         $this->registerPrefix(TokenType::T_INT, new ScalarParselet($this));
         $this->registerPrefix(TokenType::T_FLOAT, new ScalarParselet($this));
@@ -129,11 +130,13 @@ final class Parser
     {
         /** @var PostfixParselet|null $postfixParselet */
         $postfixParselet = $this->postfixParselets[$this->curToken->type()] ?? null;
-        if (null !== $postfixParselet) {
+
+        if ($postfixParselet instanceof PostfixParselet) {
             return $postfixParselet->parse();
         }
 
         $prefixParselet = $this->prefixParselets[$this->curToken->type()] ?? null;
+
         if (!$prefixParselet instanceof PrefixParselet) {
             $this->prefixParserError($this->curToken->type());
 
@@ -145,6 +148,7 @@ final class Parser
 
         while (!$this->peekToken->is(TokenType::T_SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
             $infixParselet = $this->infixParselets[$this->peekToken->type()] ?? null;
+
             if (!$infixParselet instanceof InfixParselet) {
                 return $leftExpression;
             }
@@ -189,14 +193,16 @@ final class Parser
     {
         $this->errors[] = sprintf(
             'expected next token to be %s, got %s instead',
-            TokenType::lexeme($type), $this->peekToken->literal()
+            TokenType::lexeme($type),
+            $this->peekToken->literal(),
         );
     }
 
     private function prefixParserError(int $type): void
     {
         $this->errors[] = sprintf(
-            'no prefix parse function for %s found', TokenType::lexeme($type)
+            'no prefix parse function for %s found',
+            TokenType::lexeme($type),
         );
     }
 }

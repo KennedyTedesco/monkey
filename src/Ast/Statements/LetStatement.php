@@ -11,11 +11,10 @@ use Monkey\Token\Token;
 final class LetStatement extends Statement
 {
     public function __construct(
-        Token $token,
-        private IdentifierExpression $identifierExpression,
-        private Expression $expression
+        public Token $token,
+        private readonly IdentifierExpression $identifierExpression,
+        private readonly Expression $expression,
     ) {
-        $this->token = $token;
     }
 
     public function name(): IdentifierExpression

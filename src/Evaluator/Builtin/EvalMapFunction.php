@@ -11,29 +11,34 @@ use Monkey\Object\ErrorObject;
 use Monkey\Object\FunctionObject;
 use Monkey\Object\MonkeyObject;
 
-final class EvalMapFunction
+use function count;
+
+final readonly class EvalMapFunction
 {
-    public function __construct(private Evaluator $evaluator)
-    {
+    public function __construct(
+        private Evaluator $evaluator,
+    ) {
     }
 
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
-        if (2 !== \count($monkeyObject)) {
-            return ErrorObject::wrongNumberOfArguments(\count($monkeyObject), 2);
+        if (count($monkeyObject) !== 2) {
+            return ErrorObject::wrongNumberOfArguments(count($monkeyObject), 2);
         }
 
         $array = $monkeyObject[0];
+
         if (!$array instanceof ArrayObject) {
             return ErrorObject::invalidArgument('map()', $array->typeLiteral());
         }
 
         $callback = $monkeyObject[1];
+
         if (!$callback instanceof FunctionObject) {
             return ErrorObject::invalidArgument('map()', $callback->typeLiteral());
         }
 
-        if (1 !== \count($callback->parameters())) {
+        if (1 !== (is_countable($callback->parameters()) ? count($callback->parameters()) : 0)) {
             return ErrorObject::error('the callback of map accepts one parameter only.');
         }
 
@@ -43,6 +48,7 @@ final class EvalMapFunction
         $identifierExpression = $callback->parameter(0);
 
         $elements = [];
+
         foreach ($array->value() as $value) {
             $environment->set($identifierExpression->value(), $value);
 

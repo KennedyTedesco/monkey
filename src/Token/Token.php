@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Monkey\Token;
 
-final class Token
+final readonly class Token
 {
-    public function __construct(private int $type, private string $literal)
-    {
+    public function __construct(
+        private int $type,
+        private string $literal,
+    ) {
     }
 
     public static function from(int $type, string $literal): self
