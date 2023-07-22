@@ -13,7 +13,8 @@ use Monkey\Token\Token;
 final class FunctionLiteral extends Expression
 {
     public function __construct(
-        Token $token, /* @var array<IdentifierExpression> */
+        Token $token,
+        /* @var array<IdentifierExpression> */
         private readonly array $parameters,
         private readonly BlockStatement $blockStatement,
     ) {

@@ -48,7 +48,6 @@ final class Program extends Node
     public function toString(): string
     {
         $out = '';
-        /** @var Statement $statement */
         foreach ($this->statements as $statement) {
             $out .= $statement->toString();
         }
