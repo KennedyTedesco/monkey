@@ -143,15 +143,15 @@ test('array literal expression', function () {
 
     /** @var ArrayLiteral $array */
     $array = $statement->expression();
-    expect($array->elements())->toHaveCount(3);
+    expect($array->elements)->toHaveCount(3);
 
     /** @var IntegerLiteral $firstElement */
-    $firstElement = $array->elements()[0];
+    $firstElement = $array->elements[0];
     expect($firstElement)->toBeInstanceOf(IntegerLiteral::class);
     expect($firstElement->value())->toBe(1);
 
-    assertInfixExpression($array->elements()[1], 2, '*', 2);
-    assertInfixExpression($array->elements()[2], 3, '+', 3);
+    assertInfixExpression($array->elements[1], 2, '*', 2);
+    assertInfixExpression($array->elements[2], 3, '+', 3);
 });
 
 test('array index expression', function () {
