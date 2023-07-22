@@ -25,7 +25,7 @@ final class EvalLastFunction
             return ErrorObject::invalidArgument('last()', $object->typeLiteral());
         }
 
-        $elements = $object->value();
+        $elements = $object->value;
 
         if ($elements !== []) {
             return end($elements);

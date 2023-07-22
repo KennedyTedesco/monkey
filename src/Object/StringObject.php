@@ -6,17 +6,12 @@ namespace Monkey\Object;
 
 final readonly class StringObject extends MonkeyObject
 {
-    private string $value;
+    public string $value;
 
     public function __construct(
         string $value,
     ) {
         $this->value = str_replace('\n', "\n", $value);
-    }
-
-    public function value(): string
-    {
-        return $this->value;
     }
 
     public function type(): int

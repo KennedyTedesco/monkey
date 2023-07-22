@@ -21,11 +21,6 @@ final class FunctionLiteral extends Expression
         $this->token = $token;
     }
 
-    public function body(): BlockStatement
-    {
-        return $this->body;
-    }
-
     public function toString(): string
     {
         $out = "{$this->tokenLiteral()}(";

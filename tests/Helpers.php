@@ -15,13 +15,13 @@ use Monkey\Parser\ProgramParser;
 
 function assertInfixExpression(Expression $expression, $leftValue, string $operator, $rightValue): void
 {
-    expect($expression->operator())->toBe($operator);
+    expect($expression->operator)->toBe($operator);
 
     /** @var BooleanLiteral|IntegerLiteral $right */
-    $right = $expression->right();
+    $right = $expression->right;
 
     /** @var BooleanLiteral|IntegerLiteral $left */
-    $left = $expression->left();
+    $left = $expression->left;
 
     expect($leftValue)->toBe($left->value);
     expect($rightValue)->toBe($right->value);

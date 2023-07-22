@@ -7,8 +7,8 @@ namespace Monkey\Token;
 final readonly class Token
 {
     public function __construct(
-        private int $type,
-        private string $literal,
+        public int $type,
+        public string $literal,
     ) {
     }
 

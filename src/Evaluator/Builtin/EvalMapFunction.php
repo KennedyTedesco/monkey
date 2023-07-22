@@ -16,7 +16,7 @@ use function count;
 final readonly class EvalMapFunction
 {
     public function __construct(
-        private Evaluator $evaluator,
+        public Evaluator $evaluator,
     ) {
     }
 
@@ -38,21 +38,21 @@ final readonly class EvalMapFunction
             return ErrorObject::invalidArgument('map()', $callback->typeLiteral());
         }
 
-        if (1 !== (is_countable($callback->parameters()) ? count($callback->parameters()) : 0)) {
+        if (1 !== (is_countable($callback->parameters) ? count($callback->parameters) : 0)) {
             return ErrorObject::error('the callback of map accepts one parameter only.');
         }
 
-        $environment = clone $callback->environment();
+        $environment = clone $callback->environment;
 
         /** @var IdentifierExpression $identifierExpression */
         $identifierExpression = $callback->parameter(0);
 
         $elements = [];
 
-        foreach ($array->value() as $value) {
+        foreach ($array->value as $value) {
             $environment->set($identifierExpression->value, $value);
 
-            $elements[] = $this->evaluator->eval($callback->body(), $environment);
+            $elements[] = $this->evaluator->eval($callback->body, $environment);
         }
 
         return new ArrayObject($elements);

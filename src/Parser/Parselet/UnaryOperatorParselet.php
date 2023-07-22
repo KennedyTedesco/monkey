@@ -12,7 +12,7 @@ use Monkey\Parser\Precedence;
 final readonly class UnaryOperatorParselet implements PrefixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 

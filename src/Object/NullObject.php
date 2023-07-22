@@ -6,9 +6,11 @@ namespace Monkey\Object;
 
 final readonly class NullObject extends MonkeyObject
 {
-    public function value()
+    public null $value;
+    
+    public function __construct()
     {
-        return null;
+        $this->value = null;
     }
 
     public function type(): int

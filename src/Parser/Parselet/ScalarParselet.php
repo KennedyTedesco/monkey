@@ -15,7 +15,7 @@ use Monkey\Token\TokenType;
 final readonly class ScalarParselet implements PrefixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 

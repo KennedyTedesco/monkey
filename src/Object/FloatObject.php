@@ -7,13 +7,8 @@ namespace Monkey\Object;
 final readonly class FloatObject extends MonkeyObject
 {
     public function __construct(
-        private float $value,
+        public float $value,
     ) {
-    }
-
-    public function value(): float
-    {
-        return $this->value;
     }
 
     public function type(): int

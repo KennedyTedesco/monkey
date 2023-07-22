@@ -10,14 +10,9 @@ final class PostfixExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private readonly string $operator,
+        public readonly string $operator,
     ) {
         $this->token = $token;
-    }
-
-    public function operator(): string
-    {
-        return $this->operator;
     }
 
     public function toString(): string

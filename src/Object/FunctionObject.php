@@ -12,33 +12,15 @@ final readonly class FunctionObject extends MonkeyObject
 {
     public function __construct(
         /* @var array<IdentifierExpression> */
-        private array $parameters,
-        private BlockStatement $blockStatement,
-        private Environment $environment,
+        public array $parameters,
+        public BlockStatement $body,
+        public Environment $environment,
     ) {
-    }
-
-    public function environment(): Environment
-    {
-        return $this->environment;
-    }
-
-    /**
-     * @return array<IdentifierExpression>
-     */
-    public function parameters(): array
-    {
-        return $this->parameters;
     }
 
     public function parameter(int $index): IdentifierExpression
     {
         return $this->parameters[$index];
-    }
-
-    public function body(): BlockStatement
-    {
-        return $this->blockStatement;
     }
 
     public function type(): int
@@ -59,6 +41,6 @@ final readonly class FunctionObject extends MonkeyObject
             $params[] = $parameter->toString();
         }
 
-        return sprintf("fn(%s) {\n%s\n}", implode(', ', $params), $this->blockStatement->toString());
+        return sprintf("fn(%s) {\n%s\n}", implode(', ', $params), $this->body->toString());
     }
 }

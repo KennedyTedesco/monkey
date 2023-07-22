@@ -44,7 +44,7 @@ use Monkey\Object\StringObject;
 
 final class Evaluator
 {
-    private array $builtinFunctions = [
+    public array $builtinFunctions = [
         'map' => EvalMapFunction::class,
         'len' => EvalLenFunction::class,
         'last' => EvalLastFunction::class,
@@ -71,19 +71,19 @@ final class Evaluator
             $node instanceof IfExpression => (new EvalIfExpression($this, $environment))($node),
             $node instanceof WhileExpression => (new EvalWhileExpression($this, $environment))($node),
             $node instanceof FunctionLiteral => new FunctionObject($node->parameters, $node->body, $environment),
-            $node instanceof ExpressionStatement => $this->eval($node->expression(), $environment),
+            $node instanceof ExpressionStatement => $this->eval($node->expression, $environment),
             $node instanceof ReturnStatement => (new EvalReturnStatement($this, $environment))($node),
             $node instanceof CallExpression => (new EvalCallExpression($this, $environment))($node),
             $node instanceof ArrayLiteral => (new EvalArrayLiteral($this, $environment))($node),
             $node instanceof IndexExpression => (new EvalIndexExpression($this, $environment))($node),
             $node instanceof UnaryExpression => (new EvalUnaryExpression())(
-                $node->operator(),
-                $this->eval($node->right(), $environment)
+                $node->operator,
+                $this->eval($node->right, $environment)
             ),
             $node instanceof BinaryExpression => (new EvalBinaryExpression())(
-                $node->operator(),
-                $this->eval($node->left(), $environment),
-                $this->eval($node->right(), $environment)
+                $node->operator,
+                $this->eval($node->left, $environment),
+                $this->eval($node->right, $environment)
             ),
             $node instanceof LetStatement => (new EvalLetStatement($this, $environment))($node),
             $node instanceof AssignStatement => (new EvalAssingStatement($this, $environment))($node),
@@ -116,7 +116,7 @@ final class Evaluator
         return $result;
     }
 
-    private function registerBuiltinFunctions(): void
+    public function registerBuiltinFunctions(): void
     {
         foreach ($this->builtinFunctions as $funcName => $className) {
             BuiltinFunction::set($funcName, fn (MonkeyObject ...$monkeyObject) => (new $className($this))(...$monkeyObject));

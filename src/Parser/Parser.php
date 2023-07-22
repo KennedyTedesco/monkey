@@ -33,19 +33,19 @@ final class Parser
     public ?Token $peekToken = null;
 
     /** @var array<int,string> */
-    private array $errors = [];
+    public array $errors = [];
 
     /** @var array<int,InfixParselet> */
-    private array $infixParselets = [];
+    public array $infixParselets = [];
 
     /** @var array<int,PrefixParselet> */
-    private array $prefixParselets = [];
+    public array $prefixParselets = [];
 
     /** @var array<int,PrefixParselet> */
-    private array $postfixParselets = [];
+    public array $postfixParselets = [];
 
     /** @var array<int,int> */
-    private array $precedences = [
+    public array $precedences = [
         TokenType::T_EQ => Precedence::EQUALS,
         TokenType::T_NOT_EQ => Precedence::EQUALS,
         TokenType::T_LT => Precedence::LESS_GREATER,
@@ -65,7 +65,7 @@ final class Parser
     ];
 
     public function __construct(
-        private readonly Lexer $lexer,
+        public readonly Lexer $lexer,
     ) {
         $this->registerPrefix(TokenType::T_IDENT, new IdentifierParselet($this));
         $this->registerPrefix(TokenType::T_INT, new ScalarParselet($this));
@@ -174,22 +174,22 @@ final class Parser
         return $this->errors;
     }
 
-    private function registerPrefix(int $type, PrefixParselet $prefixParselet): void
+    public function registerPrefix(int $type, PrefixParselet $prefixParselet): void
     {
         $this->prefixParselets[$type] = $prefixParselet;
     }
 
-    private function registerInfix(int $type, InfixParselet $infixParselet): void
+    public function registerInfix(int $type, InfixParselet $infixParselet): void
     {
         $this->infixParselets[$type] = $infixParselet;
     }
 
-    private function registerPostfix(int $type, PostfixParselet $postfixParselet): void
+    public function registerPostfix(int $type, PostfixParselet $postfixParselet): void
     {
         $this->postfixParselets[$type] = $postfixParselet;
     }
 
-    private function peekError(int $type): void
+    public function peekError(int $type): void
     {
         $this->errors[] = sprintf(
             'expected next token to be %s, got %s instead',
@@ -198,7 +198,7 @@ final class Parser
         );
     }
 
-    private function prefixParserError(int $type): void
+    public function prefixParserError(int $type): void
     {
         $this->errors[] = sprintf(
             'no prefix parse function for %s found',

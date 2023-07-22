@@ -11,7 +11,7 @@ use Monkey\Parser\Parser;
 final readonly class PostfixOperatorParselet implements PostfixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 

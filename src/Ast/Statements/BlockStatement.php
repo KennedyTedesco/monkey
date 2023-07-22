@@ -12,17 +12,9 @@ final class BlockStatement extends Statement
 {
     public function __construct(
         Token $token,
-        private readonly array $statements,
+        public readonly array $statements,
     ) {
         $this->token = $token;
-    }
-
-    /**
-     * @return mixed[]
-     */
-    public function statements(): array
-    {
-        return $this->statements;
     }
 
     public function toString(): string

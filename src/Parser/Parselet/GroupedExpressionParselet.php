@@ -12,7 +12,7 @@ use Monkey\Token\TokenType;
 final readonly class GroupedExpressionParselet implements PrefixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 

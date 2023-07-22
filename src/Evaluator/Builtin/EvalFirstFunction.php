@@ -25,7 +25,7 @@ final class EvalFirstFunction
             return ErrorObject::invalidArgument('first()', $object->typeLiteral());
         }
 
-        $elements = $object->value();
+        $elements = $object->value;
 
         if ($elements !== []) {
             return reset($elements);

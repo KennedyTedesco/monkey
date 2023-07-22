@@ -11,17 +11,17 @@ final class Lexer
 {
     public const EOF = "\0";
 
-    private readonly Input $input;
+    public readonly Input $input;
 
-    private Char $curChar;
+    public Char $curChar;
 
-    private Char $prevChar;
+    public Char $prevChar;
 
-    private Char $peekChar;
+    public Char $peekChar;
 
-    private int $position = 0;
+    public int $position = 0;
 
-    private int $readPosition = 0;
+    public int $readPosition = 0;
 
     public function __construct(string $input)
     {
@@ -76,7 +76,7 @@ final class Lexer
         };
     }
 
-    private function readChar(): void
+    public function readChar(): void
     {
         $this->prevChar = $this->curChar;
 
@@ -90,14 +90,14 @@ final class Lexer
         }
     }
 
-    private function skipWhitespaces(): void
+    public function skipWhitespaces(): void
     {
         while ($this->curChar->isWhitespace()) {
             $this->readChar();
         }
     }
 
-    private function curAndPeekCharIs(string $operators): bool
+    public function curAndPeekCharIs(string $operators): bool
     {
         if (!$this->curChar->is($operators[0])) {
             return false;
@@ -106,7 +106,7 @@ final class Lexer
         return $this->peekChar->is($operators[1]);
     }
 
-    private function makeTwoCharTokenAndAdvance(int $type): Token
+    public function makeTwoCharTokenAndAdvance(int $type): Token
     {
         $this->readChar();
         $token = Token::from($type, "{$this->prevChar->toScalar()}{$this->curChar->toScalar()}");
@@ -115,14 +115,14 @@ final class Lexer
         return $token;
     }
 
-    private function makeTokenAndAdvance(int $type, string $literal): Token
+    public function makeTokenAndAdvance(int $type, string $literal): Token
     {
         $this->readChar();
 
         return Token::from($type, $literal);
     }
 
-    private function readString(): string
+    public function readString(): string
     {
         $position = $this->position + 1;
 
@@ -142,7 +142,7 @@ final class Lexer
         return $this->readPosition >= $this->input->size();
     }
 
-    private function readIdentifier(): string
+    public function readIdentifier(): string
     {
         $position = $this->position;
 
@@ -153,7 +153,7 @@ final class Lexer
         return $this->input->substr($position, $this->position - $position);
     }
 
-    private function readNumber(): string
+    public function readNumber(): string
     {
         $position = $this->position;
 

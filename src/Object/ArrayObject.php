@@ -7,13 +7,8 @@ namespace Monkey\Object;
 final readonly class ArrayObject extends MonkeyObject
 {
     public function __construct(
-        private array $elements,
+        public array $value,
     ) {
-    }
-
-    public function value(): array
-    {
-        return $this->elements;
     }
 
     public function type(): int
@@ -31,7 +26,7 @@ final readonly class ArrayObject extends MonkeyObject
         $elements = [];
 
         /** @var MonkeyObject $element */
-        foreach ($this->elements as $element) {
+        foreach ($this->value as $element) {
             $elements[] = $element->type() === self::MO_STRING ? '"' . $element->inspect() . '"' : $element->inspect();
         }
 

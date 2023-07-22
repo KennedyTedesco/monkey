@@ -13,7 +13,7 @@ use Monkey\Token\TokenType;
 final readonly class ArrayParselet implements PrefixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 

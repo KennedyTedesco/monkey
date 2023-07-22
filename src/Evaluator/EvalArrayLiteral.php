@@ -14,8 +14,8 @@ use function count;
 final readonly class EvalArrayLiteral
 {
     public function __construct(
-        private Evaluator $evaluator,
-        private Environment $environment,
+        public Evaluator $evaluator,
+        public Environment $environment,
     ) {
     }
 

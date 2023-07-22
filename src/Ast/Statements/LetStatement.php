@@ -12,23 +12,13 @@ final class LetStatement extends Statement
 {
     public function __construct(
         public Token $token,
-        private readonly IdentifierExpression $identifierExpression,
-        private readonly Expression $expression,
+        public readonly IdentifierExpression $name,
+        public readonly Expression $value,
     ) {
-    }
-
-    public function name(): IdentifierExpression
-    {
-        return $this->identifierExpression;
-    }
-
-    public function value(): Expression
-    {
-        return $this->expression;
     }
 
     public function toString(): string
     {
-        return "{$this->tokenLiteral()} {$this->identifierExpression->tokenLiteral()} = {$this->expression->toString()};";
+        return "{$this->tokenLiteral()} {$this->name->tokenLiteral()} = {$this->value->toString()};";
     }
 }

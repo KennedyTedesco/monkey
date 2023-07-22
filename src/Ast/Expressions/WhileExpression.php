@@ -11,24 +11,14 @@ final class WhileExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private readonly Expression $expression,
-        private readonly BlockStatement $blockStatement,
+        public readonly Expression $condition,
+        public readonly BlockStatement $consequence,
     ) {
         $this->token = $token;
     }
 
-    public function condition(): Expression
-    {
-        return $this->expression;
-    }
-
-    public function consequence(): BlockStatement
-    {
-        return $this->blockStatement;
-    }
-
     public function toString(): string
     {
-        return "while{$this->expression->toString()} {$this->blockStatement->toString()}";
+        return "while{$this->condition->toString()} {$this->consequence->toString()}";
     }
 }

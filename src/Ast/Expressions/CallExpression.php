@@ -10,29 +10,16 @@ final class CallExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private readonly Expression $expression,
+        public readonly Expression $function,
         /* @var array<Expression> */
-        private readonly array $arguments,
+        public readonly array $arguments,
     ) {
         $this->token = $token;
     }
 
-    public function function(): Expression
-    {
-        return $this->expression;
-    }
-
-    /**
-     * @return mixed[]
-     */
-    public function arguments(): array
-    {
-        return $this->arguments;
-    }
-
     public function toString(): string
     {
-        $out = "{$this->expression->toString()}(";
+        $out = "{$this->function->toString()}(";
 
         $args = [];
         /** @var Expression $argument */

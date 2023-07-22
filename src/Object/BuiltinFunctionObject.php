@@ -9,13 +9,8 @@ use Closure;
 final readonly class BuiltinFunctionObject extends MonkeyObject
 {
     public function __construct(
-        private Closure $function,
+        public Closure $value,
     ) {
-    }
-
-    public function value(): Closure
-    {
-        return $this->function;
     }
 
     public function type(): int

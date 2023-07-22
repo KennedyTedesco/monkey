@@ -7,7 +7,7 @@ namespace Monkey\Lexer;
 final readonly class Char
 {
     public function __construct(
-        private string $ch,
+        public string $ch,
     ) {
     }
 

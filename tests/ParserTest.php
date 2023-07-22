@@ -32,10 +32,10 @@ test('let statements', function (string $input, string $name, $value) {
     expect($letStatement)->toBeInstanceOf(LetStatement::class);
 
     expect($letStatement->tokenLiteral())->toBe('let');
-    expect($letStatement->name()->tokenLiteral())->toBe($name);
+    expect($letStatement->name->tokenLiteral())->toBe($name);
 
     /** @var BooleanLiteral|IntegerLiteral $valueExpression */
-    $valueExpression = $letStatement->value();
+    $valueExpression = $letStatement->value;
     expect($valueExpression->value)->toBe($value);
 })->with([
     ['let x = 5;', 'x', 5],
@@ -51,10 +51,10 @@ test('assign statements', function (string $input, string $name, $value) {
     /** @var AssignStatement $assignStatement */
     $assignStatement = $program->statement(0);
     expect($assignStatement)->toBeInstanceOf(AssignStatement::class);
-    expect($assignStatement->name()->tokenLiteral())->toBe($name);
+    expect($assignStatement->name->tokenLiteral())->toBe($name);
 
     /** @var BooleanLiteral|IntegerLiteral $valueExpression */
-    $valueExpression = $assignStatement->value();
+    $valueExpression = $assignStatement->value;
     expect($valueExpression->value)->toBe($value);
 })->with([
     ['x = 5;', 'x', 5],
@@ -72,7 +72,7 @@ test('return statement', function (string $input, $value) {
     expect($returnStatement->tokenLiteral())->toBe('return');
 
     /** @var BooleanLiteral|IntegerLiteral $valueExpression */
-    $valueExpression = $returnStatement->returnValue();
+    $valueExpression = $returnStatement->value;
     expect($valueExpression->value)->toBe($value);
 })->with([
     ['return 10;', 10],
@@ -93,7 +93,7 @@ test('identifier expression', function () {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var IdentifierExpression $identifier */
-    $identifier = $statement->expression();
+    $identifier = $statement->expression;
 
     expect($identifier->value)->toBe('foobar');
     expect($identifier->tokenLiteral())->toBe('foobar');
@@ -110,7 +110,7 @@ test('integer literal expression', function () {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var IntegerLiteral $integer */
-    $integer = $statement->expression();
+    $integer = $statement->expression;
 
     expect($integer->value)->toBe(10);
     expect($integer->tokenLiteral())->toBe('10');
@@ -127,7 +127,7 @@ test('string literal expression', function () {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var StringLiteral $string */
-    $string = $statement->expression();
+    $string = $statement->expression;
     expect($string->value)->toBe('foobar');
 });
 
@@ -142,7 +142,7 @@ test('array literal expression', function () {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var ArrayLiteral $array */
-    $array = $statement->expression();
+    $array = $statement->expression;
     expect($array->elements)->toHaveCount(3);
 
     /** @var IntegerLiteral $firstElement */
@@ -165,14 +165,14 @@ test('array index expression', function () {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var IndexExpression $indexExpression */
-    $indexExpression = $statement->expression();
+    $indexExpression = $statement->expression;
     expect($indexExpression)->toBeInstanceOf(IndexExpression::class);
 
     /** @var IdentifierExpression $identifier */
-    $identifier = $indexExpression->left();
+    $identifier = $indexExpression->left;
     expect($identifier->value)->toBe('foo');
 
-    assertInfixExpression($indexExpression->index(), 1, '+', 2);
+    assertInfixExpression($indexExpression->index, 1, '+', 2);
 });
 
 test('prefix expression', function (string $input, string $operator, $value) {
@@ -184,11 +184,11 @@ test('prefix expression', function (string $input, string $operator, $value) {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var UnaryExpression $expression */
-    $expression = $statement->expression();
-    expect($expression->operator())->toBe($operator);
+    $expression = $statement->expression;
+    expect($expression->operator)->toBe($operator);
 
     /** @var BooleanLiteral|IntegerLiteral $right */
-    $right = $expression->right();
+    $right = $expression->right;
     expect($right->value)->toBe($value);
 })->with([
     ['!5;', '!', 5],
@@ -206,7 +206,7 @@ test('infix expressions', function (string $input, $leftValue, string $operator,
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var BinaryExpression $expression */
-    $expression = $statement->expression();
+    $expression = $statement->expression;
 
     assertInfixExpression($expression, $leftValue, $operator, $rightValue);
 })->with([
@@ -237,9 +237,9 @@ test('postfix expressions', function (string $input, string $operator) {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var PostfixExpression $expression */
-    $expression = $statement->expression();
+    $expression = $statement->expression;
     expect($expression)->toBeInstanceOf(PostfixExpression::class);
-    expect($expression->operator())->toBe($operator);
+    expect($expression->operator)->toBe($operator);
 })->with([
     ['a++;', '++'],
     ['1--;', '--'],
@@ -298,18 +298,18 @@ test('if expression', function () {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var IfExpression $ifExpression */
-    $ifExpression = $statement->expression();
+    $ifExpression = $statement->expression;
     expect($ifExpression)->toBeInstanceOf(IfExpression::class);
 
     // condition
-    assertInfixExpression($ifExpression->condition(), 'x', '<', 10);
+    assertInfixExpression($ifExpression->condition, 'x', '<', 10);
 
     // consequence
-    expect($ifExpression->consequence()->statements())->toHaveCount(1);
-    expect($ifExpression->alternative())->toBeNull();
+    expect($ifExpression->consequence->statements)->toHaveCount(1);
+    expect($ifExpression->alternative)->toBeNull();
 
     /** @var ExpressionStatement $firstExpression */
-    $firstExpression = $ifExpression->consequence()->statements()[0];
+    $firstExpression = $ifExpression->consequence->statements[0];
     expect($firstExpression)->toBeInstanceOf(ExpressionStatement::class);
     expect($firstExpression->tokenLiteral())->toBe('x');
 });
@@ -328,17 +328,17 @@ test('while expression', function () {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var WhileExpression $whileExpression */
-    $whileExpression = $statement->expression();
+    $whileExpression = $statement->expression;
     expect($whileExpression)->toBeInstanceOf(WhileExpression::class);
 
     // condition
-    assertInfixExpression($whileExpression->condition(), 'x', '<', 10);
+    assertInfixExpression($whileExpression->condition, 'x', '<', 10);
 
     // consequence
-    expect($whileExpression->consequence()->statements())->toHaveCount(1);
+    expect($whileExpression->consequence->statements)->toHaveCount(1);
 
     /** @var ExpressionStatement $firstExpression */
-    $firstExpression = $whileExpression->consequence()->statements()[0];
+    $firstExpression = $whileExpression->consequence->statements[0];
     expect($firstExpression)->toBeInstanceOf(ExpressionStatement::class);
     expect($firstExpression->tokenLiteral())->toBe('x');
 });
@@ -359,15 +359,15 @@ test('if else expression', function () {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var IfExpression $ifExpression */
-    $ifExpression = $statement->expression();
+    $ifExpression = $statement->expression;
     expect($ifExpression)->toBeInstanceOf(IfExpression::class);
 
     // consequence
-    expect($ifExpression->consequence()->statements())->toHaveCount(1);
+    expect($ifExpression->consequence->statements)->toHaveCount(1);
 
     /** @var BlockStatement $alternative */
-    $alternative = $ifExpression->alternative();
-    expect($alternative->statements())->toHaveCount(1);
+    $alternative = $ifExpression->alternative;
+    expect($alternative->statements)->toHaveCount(1);
 });
 
 test('function literal', function () {
@@ -384,15 +384,15 @@ test('function literal', function () {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var FunctionLiteral $functionLiteral */
-    $functionLiteral = $statement->expression();
+    $functionLiteral = $statement->expression;
 
     expect($functionLiteral)->toBeInstanceOf(FunctionLiteral::class);
     expect($functionLiteral->parameters)->toHaveCount(2);
     expect($functionLiteral->parameters[0]->value)->toBe('x');
     expect($functionLiteral->parameters[1]->value)->toBe('y');
-    expect($functionLiteral->body()->statements())->toHaveCount(1);
+    expect($functionLiteral->body->statements)->toHaveCount(1);
 
-    assertInfixExpression($functionLiteral->body->statements()[0]->expression(), 'x', '+', 'y');
+    assertInfixExpression($functionLiteral->body->statements[0]->expression, 'x', '+', 'y');
 });
 
 test('function parameters', function (string $input, array $parameters) {
@@ -404,7 +404,7 @@ test('function parameters', function (string $input, array $parameters) {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var FunctionLiteral $functionLiteral */
-    $functionLiteral = $statement->expression();
+    $functionLiteral = $statement->expression;
     expect($functionLiteral)->toBeInstanceOf(FunctionLiteral::class);
 
     $paramsTokenLiteral = array_map(fn (IdentifierExpression $ident) => $ident->tokenLiteral(), $functionLiteral->parameters);
@@ -424,15 +424,15 @@ test('call expression', function () {
     expect($statement)->toBeInstanceOf(ExpressionStatement::class);
 
     /** @var CallExpression $callExpression */
-    $callExpression = $statement->expression();
+    $callExpression = $statement->expression;
     expect($callExpression)->toBeInstanceOf(CallExpression::class);
 
-    expect($callExpression->function()->tokenLiteral())->toBe('add');
-    expect($callExpression->arguments())->toHaveCount(3);
+    expect($callExpression->function->tokenLiteral())->toBe('add');
+    expect($callExpression->arguments)->toHaveCount(3);
 
-    expect($callExpression->arguments()[0]->value)->toBe(1);
-    assertInfixExpression($callExpression->arguments()[1], 2, '*', 3);
-    assertInfixExpression($callExpression->arguments()[2], 4, '+', 5);
+    expect($callExpression->arguments[0]->value)->toBe(1);
+    assertInfixExpression($callExpression->arguments[1], 2, '*', 3);
+    assertInfixExpression($callExpression->arguments[2], 4, '+', 5);
 });
 
 test('program to string', function () {
@@ -449,7 +449,7 @@ test('program statements', function () {
     $expression = $program->statement(0);
 
     /** @var IntegerLiteral $integerLiteral */
-    $integerLiteral = $expression->expression();
+    $integerLiteral = $expression->expression;
     expect($integerLiteral)->toBeInstanceOf(IntegerLiteral::class);
     expect($integerLiteral->value)->toBe(5);
 });

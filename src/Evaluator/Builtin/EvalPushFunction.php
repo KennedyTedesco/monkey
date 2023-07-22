@@ -24,7 +24,7 @@ final class EvalPushFunction
             return ErrorObject::invalidArgument('push()', $object->typeLiteral());
         }
 
-        $elements = $object->value();
+        $elements = $object->value;
         $elements[] = $monkeyObject[1];
 
         return new ArrayObject($elements);

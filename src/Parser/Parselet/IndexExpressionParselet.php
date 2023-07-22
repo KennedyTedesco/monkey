@@ -13,7 +13,7 @@ use Monkey\Token\TokenType;
 final readonly class IndexExpressionParselet implements InfixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 

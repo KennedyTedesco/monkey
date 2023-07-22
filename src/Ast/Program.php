@@ -12,7 +12,7 @@ use function count;
 
 final class Program extends Node
 {
-    private array $statements = [];
+    public array $statements = [];
 
     public function statement(int $index): Statement
     {

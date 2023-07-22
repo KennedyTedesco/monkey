@@ -138,7 +138,7 @@ final class TokenType
     public const T_WHILE = 0x707;
 
     /** @var array<string, int> */
-    private const TOKEN_MAP = [
+    public const TOKEN_MAP = [
         '=' => self::T_ASSIGN,
         '+' => self::T_PLUS,
         '-' => self::T_MINUS,
