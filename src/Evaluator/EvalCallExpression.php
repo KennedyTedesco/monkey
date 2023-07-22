@@ -64,7 +64,7 @@ final readonly class EvalCallExpression
 
         /** @var IdentifierExpression $identifierExpression */
         foreach ($functionObject->parameters() as $index => $identifierExpression) {
-            $environment->set($identifierExpression->value(), $args[$index]);
+            $environment->set($identifierExpression->value, $args[$index]);
         }
 
         return $environment;

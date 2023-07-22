@@ -15,23 +15,15 @@ final class FunctionLiteral extends Expression
     public function __construct(
         Token $token,
         /* @var array<IdentifierExpression> */
-        private readonly array $parameters,
-        private readonly BlockStatement $blockStatement,
+        public readonly array $parameters,
+        public readonly BlockStatement $body,
     ) {
         $this->token = $token;
     }
 
     public function body(): BlockStatement
     {
-        return $this->blockStatement;
-    }
-
-    /**
-     * @return array<IdentifierExpression>
-     */
-    public function parameters(): array
-    {
-        return $this->parameters;
+        return $this->body;
     }
 
     public function toString(): string
@@ -48,6 +40,6 @@ final class FunctionLiteral extends Expression
             $out .= implode(',', $params);
         }
 
-        return $out . ") {$this->blockStatement->toString()}";
+        return $out . ") {$this->body->toString()}";
     }
 }

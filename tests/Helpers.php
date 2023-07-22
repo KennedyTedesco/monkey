@@ -23,8 +23,8 @@ function assertInfixExpression(Expression $expression, $leftValue, string $opera
     /** @var BooleanLiteral|IntegerLiteral $left */
     $left = $expression->left();
 
-    expect($leftValue)->toBe($left->value());
-    expect($rightValue)->toBe($right->value());
+    expect($leftValue)->toBe($left->value);
+    expect($rightValue)->toBe($right->value);
 }
 
 function newProgram(string $input): Program

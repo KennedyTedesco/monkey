@@ -50,7 +50,7 @@ final readonly class EvalMapFunction
         $elements = [];
 
         foreach ($array->value() as $value) {
-            $environment->set($identifierExpression->value(), $value);
+            $environment->set($identifierExpression->value, $value);
 
             $elements[] = $this->evaluator->eval($callback->body(), $environment);
         }

@@ -16,12 +16,12 @@ final readonly class EvalIdentifier
 
     public function __invoke(IdentifierExpression $identifierExpression): MonkeyObject
     {
-        $object = $this->environment->get($identifierExpression->value()) ?? BuiltinFunction::get($identifierExpression->value());
+        $object = $this->environment->get($identifierExpression->value) ?? BuiltinFunction::get($identifierExpression->value());
 
         if ($object instanceof MonkeyObject) {
             return $object;
         }
 
-        return ErrorObject::identifierNotFound($identifierExpression->value());
+        return ErrorObject::identifierNotFound($identifierExpression->value);
     }
 }

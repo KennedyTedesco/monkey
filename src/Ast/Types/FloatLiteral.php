@@ -11,14 +11,9 @@ final class FloatLiteral extends Expression
 {
     public function __construct(
         Token $token,
-        private readonly float $value,
+        public readonly float $value,
     ) {
         $this->token = $token;
-    }
-
-    public function value(): float
-    {
-        return $this->value;
     }
 
     public function toString(): string

@@ -11,14 +11,9 @@ final class BooleanLiteral extends Expression
 {
     public function __construct(
         Token $token,
-        private readonly bool $value,
+        public readonly bool $value,
     ) {
         $this->token = $token;
-    }
-
-    public function value(): bool
-    {
-        return $this->value;
     }
 
     public function toString(): string

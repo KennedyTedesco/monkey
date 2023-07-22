@@ -24,7 +24,7 @@ final readonly class EvalLetStatement
             return $monkeyObject;
         }
 
-        $this->environment->set($letStatement->name()->value(), $monkeyObject);
+        $this->environment->set($letStatement->name()->value, $monkeyObject);
 
         return $this->evaluator->eval($letStatement->name(), $this->environment);
     }

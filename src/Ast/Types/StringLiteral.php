@@ -11,14 +11,9 @@ final class StringLiteral extends Expression
 {
     public function __construct(
         Token $token,
-        private readonly string $value,
+        public readonly string $value,
     ) {
         $this->token = $token;
-    }
-
-    public function value(): string
-    {
-        return $this->value;
     }
 
     public function toString(): string

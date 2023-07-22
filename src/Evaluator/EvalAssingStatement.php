@@ -22,7 +22,7 @@ final readonly class EvalAssingStatement
             return $monkeyObject;
         }
 
-        $name = $assignStatement->name()->value();
+        $name = $assignStatement->name()->value;
         $nameMonkeyObject = $this->environment->get($name);
 
         if (!$nameMonkeyObject instanceof MonkeyObject) {

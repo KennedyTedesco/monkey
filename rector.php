@@ -17,7 +17,6 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests',
     ]);
 
-    $rectorConfig->import(SetList::NAMING);
     $rectorConfig->import(SetList::CODE_QUALITY);
     $rectorConfig->import(SetList::EARLY_RETURN);
     $rectorConfig->import(SetList::TYPE_DECLARATION);

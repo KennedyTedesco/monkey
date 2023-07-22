@@ -10,7 +10,7 @@ final class IdentifierExpression extends Expression
 {
     public function __construct(
         Token $token,
-        private readonly string $value,
+        public readonly string $value,
     ) {
         $this->token = $token;
     }
