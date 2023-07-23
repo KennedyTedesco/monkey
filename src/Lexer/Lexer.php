@@ -97,13 +97,9 @@ final class Lexer
         }
     }
 
-    public function curAndPeekCharIs(string $operators): bool
+    public function curAndPeekCharIs(string $operator): bool
     {
-        if (!$this->curChar->is($operators[0])) {
-            return false;
-        }
-
-        return $this->peekChar->is($operators[1]);
+        return "{$this->curChar}{$this->peekChar}" === $operator;
     }
 
     public function makeTwoCharTokenAndAdvance(TokenType $type): Token
