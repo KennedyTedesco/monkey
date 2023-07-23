@@ -16,7 +16,7 @@ final class Input
 
     public function char(int $position): string
     {
-        return $this->input[$position];
+        return mb_substr($this->input, $position, 1);
     }
 
     public function substr(int $start, int $length): string
