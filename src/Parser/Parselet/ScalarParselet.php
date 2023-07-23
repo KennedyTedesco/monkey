@@ -11,7 +11,6 @@ use Monkey\Ast\Types\FloatLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Ast\Types\StringLiteral;
 use Monkey\Parser\Parser;
-use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
 final class ScalarParselet implements PrefixParselet
@@ -23,8 +22,7 @@ final class ScalarParselet implements PrefixParselet
 
     public function parse(): Expression
     {
-        /** @var Token $token */
-        $token = $this->parser->curToken;
+        $token = $this->parser->curToken();
 
         return match ($token->type()) {
             TokenType::INT => new IntegerLiteral($token, (int)$token->literal()),

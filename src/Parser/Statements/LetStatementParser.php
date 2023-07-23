@@ -14,7 +14,7 @@ final class LetStatementParser
 {
     public function __invoke(Parser $parser): ?LetStatement
     {
-        $token = $parser->curToken;
+        $token = $parser->curToken();
 
         if (!$parser->expectPeek(TokenType::IDENT)) {
             return null;

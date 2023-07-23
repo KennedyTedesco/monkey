@@ -14,7 +14,7 @@ final class ExpressionStatementParser
 {
     public function __invoke(Parser $parser): ExpressionStatement
     {
-        $token = $parser->curToken;
+        $token = $parser->curToken();
 
         /** @var Expression $expression */
         $expression = $parser->parseExpression(Precedence::LOWEST);

@@ -26,12 +26,6 @@ use Monkey\Token\TokenType;
 
 final class Parser
 {
-    public ?Token $prevToken = null;
-
-    public ?Token $curToken = null;
-
-    public ?Token $peekToken = null;
-
     /** @var array<int,string> */
     public array $errors = [];
 
@@ -63,6 +57,11 @@ final class Parser
         TokenType::OR->value => Precedence::OR,
         TokenType::POWER->value => Precedence::POWER,
     ];
+    private ?Token $prevToken = null;
+
+    private ?Token $curToken = null;
+
+    private ?Token $peekToken = null;
 
     public function __construct(
         public readonly Lexer $lexer,
@@ -202,6 +201,14 @@ final class Parser
     {
         /** @var Token $token */
         $token = $this->curToken;
+
+        return $token;
+    }
+
+    public function prevToken(): Token
+    {
+        /** @var Token $token */
+        $token = $this->prevToken;
 
         return $token;
     }

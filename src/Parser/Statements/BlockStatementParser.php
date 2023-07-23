@@ -13,7 +13,7 @@ final class BlockStatementParser
 {
     public function __invoke(Parser $parser): BlockStatement
     {
-        $token = $parser->curToken;
+        $token = $parser->curToken();
 
         $parser->nextToken();
 

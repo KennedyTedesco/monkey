@@ -7,7 +7,6 @@ namespace Monkey\Parser\Parselet;
 use Monkey\Ast\Expressions\BinaryExpression;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Parser\Parser;
-use Monkey\Token\Token;
 
 final readonly class BinaryOperatorParselet implements InfixParselet
 {
@@ -18,8 +17,7 @@ final readonly class BinaryOperatorParselet implements InfixParselet
 
     public function parse(Expression $expression): Expression
     {
-        /** @var Token $token */
-        $token = $this->parser->curToken;
+        $token = $this->parser->curToken();
 
         $this->parser->nextToken();
 

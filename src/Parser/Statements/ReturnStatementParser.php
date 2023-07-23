@@ -13,7 +13,7 @@ final class ReturnStatementParser
 {
     public function __invoke(Parser $parser): ReturnStatement
     {
-        $token = $parser->curToken;
+        $token = $parser->curToken();
 
         $parser->nextToken();
 

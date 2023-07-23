@@ -14,7 +14,7 @@ final class AssignStatementParser
 {
     public function __invoke(Parser $parser): ?AssignStatement
     {
-        $token = $parser->curToken;
+        $token = $parser->curToken();
 
         if (!$parser->expectPeek(TokenType::ASSIGN)) {
             return null;
