@@ -41,7 +41,7 @@ final class Repl
         while (true) {
             $input = readline("\n > ");
 
-            if ($input === 'exit' || ! is_string($input)) {
+            if ($input === 'exit' || $input === false) {
                 return;
             }
 
