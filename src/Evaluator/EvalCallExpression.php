@@ -13,6 +13,7 @@ use Monkey\Object\MonkeyObject;
 use Monkey\Object\ReturnValueObject;
 
 use function call_user_func;
+use function count;
 
 final readonly class EvalCallExpression
 {
@@ -33,7 +34,7 @@ final readonly class EvalCallExpression
 
         $args = $this->evaluator->evalExpressions($callExpression->arguments, $this->environment);
 
-        if ($args === 1 && $args[0] instanceof ErrorObject) {
+        if (count($args) === 1 && $args[0] instanceof ErrorObject) {
             return $args[0];
         }
 
