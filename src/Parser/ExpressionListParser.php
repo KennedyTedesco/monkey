@@ -37,6 +37,6 @@ final class ExpressionListParser
             return [];
         }
 
-        return $args;
+        return array_filter($args);
     }
 }
