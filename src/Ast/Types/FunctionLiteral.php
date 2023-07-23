@@ -7,8 +7,10 @@ namespace Monkey\Ast\Types;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Statements\BlockStatement;
-use Monkey\Ast\Statements\Statement;
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
+
+use function count;
 
 final class FunctionLiteral extends Expression
 {
@@ -23,18 +25,17 @@ final class FunctionLiteral extends Expression
 
     public function toString(): string
     {
-        $out = "{$this->tokenLiteral()}(";
+        $stringBuilder = StringBuilder::new($this->tokenLiteral())
+            ->append('(');
 
-        $params = [];
-        /** @var Statement $parameter */
-        foreach ($this->parameters as $parameter) {
-            $params[] = $parameter->toString();
+        $count = count($this->parameters);
+
+        foreach ($this->parameters as $index => $parameter) {
+            $separator = $index !== $count - 1 ? ',' : '';
+
+            $stringBuilder->append("{$parameter}{$separator}");
         }
 
-        if ($params !== []) {
-            $out .= implode(',', $params);
-        }
-
-        return $out . ") {$this->body->toString()}";
+        return $stringBuilder->append(") {$this->body}")->toString();
     }
 }
