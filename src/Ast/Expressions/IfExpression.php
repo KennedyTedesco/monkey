@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Ast\Expressions;
 
 use Monkey\Ast\Statements\BlockStatement;
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class IfExpression extends Expression
@@ -20,12 +21,16 @@ final class IfExpression extends Expression
 
     public function toString(): string
     {
-        $out = "if{$this->condition->toString()} {$this->consequence->toString()}";
+        $builder = StringBuilder::new("if")
+            ->append($this->condition)
+            ->append(" ")
+            ->append($this->consequence);
 
         if ($this->alternative instanceof BlockStatement) {
-            $out .= "else {$this->alternative->toString()}";
+            $builder->append("else ")
+                ->append($this->alternative);
         }
 
-        return $out;
+        return $builder->toString();
     }
 }
