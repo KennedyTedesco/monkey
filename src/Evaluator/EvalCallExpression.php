@@ -24,7 +24,7 @@ final readonly class EvalCallExpression
 
     public function __invoke(CallExpression $callExpression): MonkeyObject
     {
-        /** @var FunctionObject $monkeyObject */
+        /** @var ErrorObject|FunctionObject $monkeyObject */
         $monkeyObject = $this->evaluator->eval($callExpression->function, $this->environment);
 
         if ($monkeyObject instanceof ErrorObject) {
