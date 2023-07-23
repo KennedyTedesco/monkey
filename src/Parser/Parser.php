@@ -35,7 +35,7 @@ final class Parser
     /** @var array<int,PrefixParselet> */
     public array $prefixParselets = [];
 
-    /** @var array<int,PrefixParselet> */
+    /** @var array<int,PostfixParselet> */
     public array $postfixParselets = [];
 
     /** @var array<int, Precedence> */
@@ -145,7 +145,7 @@ final class Parser
         /** @var Expression $leftExpression */
         $leftExpression = $prefixParselet->parse();
 
-        while (!$this->peekToken()->is(TokenType::SEMICOLON) && $precedence->value < $this->precedence($this->peekToken)->value) {
+        while (!$this->peekToken()->is(TokenType::SEMICOLON) && $precedence->value < $this->precedence($this->peekToken())->value) {
             $infixParselet = $this->infixParselets[$this->peekToken()->type()->value] ?? null;
 
             if (!$infixParselet instanceof InfixParselet) {
@@ -154,6 +154,7 @@ final class Parser
 
             $this->nextToken();
 
+            /** @var Expression $leftExpression */
             $leftExpression = $infixParselet->parse($leftExpression);
         }
 
