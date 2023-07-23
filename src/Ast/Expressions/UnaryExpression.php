@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Expressions;
 
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class UnaryExpression extends Expression
@@ -18,6 +19,11 @@ final class UnaryExpression extends Expression
 
     public function toString(): string
     {
-        return "({$this->operator}{$this->right->toString()})";
+        return StringBuilder::new()
+            ->append('(')
+            ->append($this->operator)
+            ->append($this->right)
+            ->append(')')
+            ->toString();
     }
 }
