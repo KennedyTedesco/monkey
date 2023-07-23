@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Expressions;
 
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class PostfixExpression extends Expression
@@ -17,6 +18,11 @@ final class PostfixExpression extends Expression
 
     public function toString(): string
     {
-        return "({$this->tokenLiteral()}{$this->operator})";
+        return StringBuilder::new()
+            ->append('(')
+            ->append($this->tokenLiteral())
+            ->append($this->operator)
+            ->append(')')
+            ->toString();
     }
 }
