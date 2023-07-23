@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
+use function count;
+
 final readonly class ArrayObject extends MonkeyObject
 {
     public function __construct(
@@ -14,6 +16,11 @@ final readonly class ArrayObject extends MonkeyObject
     public function type(): int
     {
         return self::MO_ARRAY;
+    }
+
+    public function count(): int
+    {
+        return count($this->value);
     }
 
     public function typeLiteral(): string

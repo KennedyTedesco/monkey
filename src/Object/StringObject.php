@@ -19,6 +19,11 @@ final readonly class StringObject extends MonkeyObject
         return self::MO_STRING;
     }
 
+    public function count(): int
+    {
+        return mb_strlen($this->value);
+    }
+
     public function typeLiteral(): string
     {
         return 'STRING';
