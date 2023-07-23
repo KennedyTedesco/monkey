@@ -24,8 +24,13 @@ final readonly class EvalIfExpression
 
         return match (true) {
             $monkeyObject instanceof ErrorObject => $monkeyObject,
-            (bool)$monkeyObject->value => $this->evaluator->eval($ifExpression->consequence, $this->environment),
-            $ifExpression->alternative instanceof BlockStatement => $this->evaluator->eval($ifExpression->alternative, $this->environment),
+
+            (bool)$monkeyObject->value() =>
+                $this->evaluator->eval($ifExpression->consequence, $this->environment),
+
+            $ifExpression->alternative instanceof BlockStatement =>
+                $this->evaluator->eval($ifExpression->alternative, $this->environment),
+
             default => NullObject::instance(),
         };
     }
