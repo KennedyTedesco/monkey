@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Ast\Expressions;
 
 use Monkey\Ast\Statements\BlockStatement;
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class WhileExpression extends Expression
@@ -19,6 +20,10 @@ final class WhileExpression extends Expression
 
     public function toString(): string
     {
-        return "while{$this->condition->toString()} {$this->consequence->toString()}";
+        return StringBuilder::new("while")
+            ->append($this->condition)
+            ->appendSpace()
+            ->append($this->consequence)
+            ->toString();
     }
 }
