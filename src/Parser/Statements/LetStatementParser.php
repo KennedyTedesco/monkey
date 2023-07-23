@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Parser\Statements;
 
+use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Statements\LetStatement;
 use Monkey\Parser\Parser;
@@ -31,6 +32,7 @@ final class LetStatementParser
 
         $parser->nextToken();
 
+        /** @var Expression $value */
         $value = $parser->parseExpression(Precedence::LOWEST);
 
         if ($parser->peekToken()->is(TokenType::SEMICOLON)) {

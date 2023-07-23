@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Parser;
 
 use Monkey\Ast\Program;
+use Monkey\Ast\Statements\Statement;
 use Monkey\Parser\Statements\StatementParser;
 use Monkey\Token\TokenType;
 
@@ -16,7 +17,10 @@ final class ProgramParser
 
         while (!$parser->curToken()->is(TokenType::EOF)) {
             $statement = (new StatementParser())($parser);
-            $program->addStatement($statement);
+
+            if ($statement instanceof Statement) {
+                $program->addStatement($statement);
+            }
 
             $parser->nextToken();
         }

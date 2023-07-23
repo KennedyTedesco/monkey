@@ -21,7 +21,11 @@ final class BlockStatementParser
         $statements = [];
 
         while (!$parser->curToken()->is(TokenType::RBRACE) && !$parser->curToken()->is(TokenType::EOF)) {
-            $statements[] = (new StatementParser())($parser);
+            $statement = (new StatementParser())($parser);
+
+            if ($statement instanceof Statement) {
+                $statements[] = $statement;
+            }
 
             $parser->nextToken();
         }
