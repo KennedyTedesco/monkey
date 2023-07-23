@@ -13,7 +13,7 @@ use Monkey\Object\StringObject;
 use function array_slice;
 use function count;
 
-final class EvalSliceFunction
+final readonly class EvalSliceFunction extends EvalBuiltinFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {

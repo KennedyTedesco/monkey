@@ -10,7 +10,7 @@ use Monkey\Object\NullObject;
 
 use function count;
 
-final class EvalPutsFunction
+final readonly class EvalPutsFunction extends EvalBuiltinFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {

@@ -26,6 +26,7 @@ use Monkey\Ast\Types\FloatLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Ast\Types\StringLiteral;
+use Monkey\Evaluator\Builtin\EvalBuiltinFunction;
 use Monkey\Evaluator\Builtin\EvalFirstFunction;
 use Monkey\Evaluator\Builtin\EvalLastFunction;
 use Monkey\Evaluator\Builtin\EvalLenFunction;
@@ -44,16 +45,6 @@ use Monkey\Object\StringObject;
 
 final class Evaluator
 {
-    public array $builtinFunctions = [
-        'map' => EvalMapFunction::class,
-        'len' => EvalLenFunction::class,
-        'last' => EvalLastFunction::class,
-        'push' => EvalPushFunction::class,
-        'first' => EvalFirstFunction::class,
-        'slice' => EvalSliceFunction::class,
-        'puts' => EvalPutsFunction::class,
-    ];
-
     public function __construct()
     {
         $this->registerBuiltinFunctions();
@@ -117,8 +108,23 @@ final class Evaluator
 
     public function registerBuiltinFunctions(): void
     {
-        foreach ($this->builtinFunctions as $funcName => $className) {
-            BuiltinFunction::set($funcName, fn (MonkeyObject ...$monkeyObject) => (new $className($this))(...$monkeyObject));
+        $builtinFunctions = [
+            'map' => EvalMapFunction::class,
+            'len' => EvalLenFunction::class,
+            'last' => EvalLastFunction::class,
+            'push' => EvalPushFunction::class,
+            'first' => EvalFirstFunction::class,
+            'slice' => EvalSliceFunction::class,
+            'puts' => EvalPutsFunction::class,
+        ];
+
+        foreach ($builtinFunctions as $funcName => $className) {
+            BuiltinFunction::set($funcName, function (MonkeyObject ...$monkeyObject) use ($className): MonkeyObject {
+                /** @var EvalBuiltinFunction $evalFunction */
+                $evalFunction = new $className($this);
+
+                return $evalFunction(...$monkeyObject);
+            });
         }
     }
 }

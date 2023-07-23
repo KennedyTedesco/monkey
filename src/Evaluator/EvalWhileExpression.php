@@ -26,7 +26,7 @@ final readonly class EvalWhileExpression
                 return $condition;
             }
 
-            if ((bool)$condition->value) {
+            if ($condition->value()) {
                 $evaluated = $this->evaluator->eval($whileExpression->consequence, $this->environment);
 
                 if ($evaluated instanceof ErrorObject) {

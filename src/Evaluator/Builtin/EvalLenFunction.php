@@ -12,7 +12,7 @@ use Monkey\Object\StringObject;
 
 use function count;
 
-final class EvalLenFunction
+final readonly class EvalLenFunction extends EvalBuiltinFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {

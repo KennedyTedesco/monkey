@@ -11,7 +11,7 @@ use Monkey\Object\NullObject;
 
 use function count;
 
-final class EvalLastFunction
+final readonly class EvalLastFunction extends EvalBuiltinFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {

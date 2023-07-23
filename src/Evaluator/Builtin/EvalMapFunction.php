@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Monkey\Evaluator\Builtin;
 
 use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Evaluator\Evaluator;
 use Monkey\Object\ArrayObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FunctionObject;
@@ -13,13 +12,8 @@ use Monkey\Object\MonkeyObject;
 
 use function count;
 
-final readonly class EvalMapFunction
+final readonly class EvalMapFunction extends EvalBuiltinFunction
 {
-    public function __construct(
-        public Evaluator $evaluator,
-    ) {
-    }
-
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
         if (count($monkeyObject) !== 2) {
