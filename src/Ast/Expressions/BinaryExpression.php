@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Expressions;
 
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class BinaryExpression extends Expression
@@ -19,6 +20,14 @@ final class BinaryExpression extends Expression
 
     public function toString(): string
     {
-        return "({$this->left->toString()} {$this->operator} {$this->right->toString()})";
+        return StringBuilder::new()
+            ->append('(')
+            ->append($this->left)
+            ->appendSpace()
+            ->append($this->operator)
+            ->appendSpace()
+            ->append($this->right)
+            ->append(')')
+            ->toString();
     }
 }

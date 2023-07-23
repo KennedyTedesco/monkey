@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Expressions;
 
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class IndexExpression extends Expression
@@ -18,6 +19,12 @@ final class IndexExpression extends Expression
 
     public function toString(): string
     {
-        return "({$this->left->toString()}[{$this->index->toString()}])";
+        return StringBuilder::new()
+            ->append('(')
+            ->append($this->left)
+            ->append('[')
+            ->append($this->index)
+            ->append('])')
+            ->toString();
     }
 }

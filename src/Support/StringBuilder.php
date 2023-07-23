@@ -25,6 +25,13 @@ final class StringBuilder implements Stringable
         return $this;
     }
 
+    public function appendSpace(): self
+    {
+        $this->string .= ' ';
+
+        return $this;
+    }
+
     public function toString(): string
     {
         return $this->string;
