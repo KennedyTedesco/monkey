@@ -12,9 +12,11 @@ use function count;
 
 final class ArrayLiteral extends Expression
 {
+    /**
+     * @param array<Expression> $elements
+     */
     public function __construct(
         public readonly Token $token,
-        /* @var array<Expression> */
         public readonly array $elements,
     ) {
     }

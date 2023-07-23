@@ -14,9 +14,11 @@ use function count;
 
 final class FunctionLiteral extends Expression
 {
+    /**
+     * @param array<IdentifierExpression> $parameters
+     */
     public function __construct(
         public readonly Token $token,
-        /* @var array<IdentifierExpression> */
         public readonly array $parameters,
         public readonly BlockStatement $body,
     ) {

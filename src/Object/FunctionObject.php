@@ -10,6 +10,9 @@ use Monkey\Evaluator\Environment;
 
 final readonly class FunctionObject extends MonkeyObject
 {
+    /**
+     * @param array<IdentifierExpression> $parameters
+     */
     public function __construct(
         /* @var array<IdentifierExpression> */
         public array $parameters,
