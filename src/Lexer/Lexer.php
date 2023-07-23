@@ -59,7 +59,7 @@ final class Lexer
             $this->curChar->is('"') => $this->makeTokenAndAdvance(TokenType::STRING, $this->readString()),
 
             $this->curChar->isLetter() => Token::from(
-                TokenType::lookupToken($identifier = $this->readIdentifier()) ?? TokenType::IDENT,
+                TokenType::fromChar($identifier = $this->readIdentifier()) ?? TokenType::IDENT,
                 $identifier,
             ),
 
@@ -67,8 +67,8 @@ final class Lexer
 
             $this->curChar->is(self::EOF) => Token::from(TokenType::EOF, self::EOF),
 
-            TokenType::isSingleCharToken($this->curChar->toScalar()) => $this->makeTokenAndAdvance(
-                TokenType::lookupToken($this->curChar->toScalar()),
+            $this->curChar->isSingleChar() && TokenType::fromChar($this->curChar->toScalar()) instanceof TokenType => $this->makeTokenAndAdvance(
+                TokenType::fromChar($this->curChar->toScalar()),
                 $this->curChar->toScalar(),
             ),
 

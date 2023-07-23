@@ -4,52 +4,10 @@ declare(strict_types=1);
 
 namespace Monkey\Token;
 
-use function is_string;
+use Monkey\Lexer\Char;
 
 enum TokenType: int
 {
-    private const TOKEN_MAP = [
-        '=' => self::ASSIGN,
-        '+' => self::PLUS,
-        '-' => self::MINUS,
-        '!' => self::NOT,
-        '*' => self::ASTERISK,
-        '%' => self::MODULO,
-        '**' => self::POWER,
-        '/' => self::SLASH,
-        '++' => self::PLUS_PLUS,
-        '--' => self::MINUS_MINUS,
-
-        ',' => self::COMMA,
-        ';' => self::SEMICOLON,
-
-        '(' => self::LPAREN,
-        ')' => self::RPAREN,
-        '{' => self::LBRACE,
-        '}' => self::RBRACE,
-        '<' => self::LT,
-        '>' => self::GT,
-        '[' => self::LBRACKET,
-        ']' => self::RBRACKET,
-
-        '>=' => self::GT_EQ,
-        '<=' => self::LT_EQ,
-        '==' => self::EQ,
-        '!=' => self::NOT_EQ,
-
-        '&&' => self::AND,
-        '||' => self::OR,
-
-        'if' => self::IF,
-        'fn' => self::FN,
-        'let' => self::LET,
-        'true' => self::TRUE,
-        'else' => self::ELSE,
-        'while' => self::WHILE,
-        'false' => self::FALSE,
-        'return' => self::RETURN,
-    ];
-
     // Special tokens
     case EOF = 0;
     case ILLEGAL = -1;
@@ -108,18 +66,86 @@ enum TokenType: int
 
     public function lexeme(): string
     {
-        $lexeme = array_search($this, self::TOKEN_MAP, true);
+        return match ($this) {
+            self::ASSIGN => '=',
+            self::PLUS => '+',
+            self::MINUS => '-',
+            self::NOT => '!',
+            self::ASTERISK => '*',
+            self::MODULO => '%',
+            self::POWER => '**',
+            self::SLASH => '/',
+            self::PLUS_PLUS => '++',
+            self::MINUS_MINUS => '--',
 
-        return is_string($lexeme) ? $lexeme : 'T_ILLEGAL';
+            self::COMMA => ',',
+            self::SEMICOLON => ';',
+
+            self::LPAREN => '(',
+            self::RPAREN => ')',
+            self::LBRACE => '{',
+            self::RBRACE => '}',
+            self::LT => '<',
+            self::GT => '>',
+            self::LBRACKET => '[',
+            self::RBRACKET => ']',
+
+            self::GT_EQ => '>=',
+            self::LT_EQ => '<=',
+            self::EQ => '==',
+            self::NOT_EQ => '!=',
+
+            self::AND => '&&',
+            self::OR => '||',
+
+            default => 'T_ILLEGAL',
+        };
     }
 
-    public static function lookupToken(string $ch): ?self
+    public static function fromChar(string | Char $char): ?self
     {
-        return self::TOKEN_MAP[$ch] ?? null;
-    }
+        return match ($char) {
+            '=' => self::ASSIGN,
+            '+' => self::PLUS,
+            '-' => self::MINUS,
+            '!' => self::NOT,
+            '*' => self::ASTERISK,
+            '%' => self::MODULO,
+            '**' => self::POWER,
+            '/' => self::SLASH,
+            '++' => self::PLUS_PLUS,
+            '--' => self::MINUS_MINUS,
 
-    public static function isSingleCharToken(string $ch): bool
-    {
-        return mb_strlen($ch) === 1 && self::lookupToken($ch) instanceof TokenType;
+            ',' => self::COMMA,
+            ';' => self::SEMICOLON,
+
+            '(' => self::LPAREN,
+            ')' => self::RPAREN,
+            '{' => self::LBRACE,
+            '}' => self::RBRACE,
+            '<' => self::LT,
+            '>' => self::GT,
+            '[' => self::LBRACKET,
+            ']' => self::RBRACKET,
+
+            '>=' => self::GT_EQ,
+            '<=' => self::LT_EQ,
+            '==' => self::EQ,
+            '!=' => self::NOT_EQ,
+
+            '&&' => self::AND,
+            '||' => self::OR,
+
+            'if' => self::IF,
+            'fn' => self::FN,
+            'let' => self::LET,
+            'true' => self::TRUE,
+            'else' => self::ELSE,
+            'while' => self::WHILE,
+            'false' => self::FALSE,
+            'return' => self::RETURN,
+
+            default => null,
+        };
     }
 }
