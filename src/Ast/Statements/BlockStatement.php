@@ -11,6 +11,9 @@ use Monkey\Token\Token;
 
 final class BlockStatement extends Statement
 {
+    /**
+     * @param array<Statement> $statements
+     */
     public function __construct(
         public readonly Token $token,
         public readonly array $statements,
