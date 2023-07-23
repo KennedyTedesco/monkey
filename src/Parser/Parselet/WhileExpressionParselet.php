@@ -9,6 +9,7 @@ use Monkey\Ast\Expressions\WhileExpression;
 use Monkey\Parser\Parser;
 use Monkey\Parser\Precedence;
 use Monkey\Parser\Statements\BlockStatementParser;
+use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
 final readonly class WhileExpressionParselet implements PrefixParselet
@@ -20,6 +21,7 @@ final readonly class WhileExpressionParselet implements PrefixParselet
 
     public function parse(): ?Expression
     {
+        /** @var Token $token */
         $token = $this->parser->curToken;
 
         if (!$this->parser->expectPeek(TokenType::LPAREN)) {

@@ -8,6 +8,7 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\UnaryExpression;
 use Monkey\Parser\Parser;
 use Monkey\Parser\Precedence;
+use Monkey\Token\Token;
 
 final readonly class UnaryOperatorParselet implements PrefixParselet
 {
@@ -18,6 +19,7 @@ final readonly class UnaryOperatorParselet implements PrefixParselet
 
     public function parse(): Expression
     {
+        /** @var Token $token */
         $token = $this->parser->curToken;
 
         $this->parser->nextToken();

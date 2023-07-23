@@ -8,6 +8,7 @@ use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IndexExpression;
 use Monkey\Parser\Parser;
 use Monkey\Parser\Precedence;
+use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
 final readonly class IndexExpressionParselet implements InfixParselet
@@ -19,6 +20,7 @@ final readonly class IndexExpressionParselet implements InfixParselet
 
     public function parse(Expression $expression): ?Expression
     {
+        /** @var Token $token */
         $token = $this->parser->curToken;
 
         $this->parser->nextToken();

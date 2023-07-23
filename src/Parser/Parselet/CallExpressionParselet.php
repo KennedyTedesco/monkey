@@ -8,6 +8,7 @@ use Monkey\Ast\Expressions\CallExpression;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Parser\ExpressionListParser;
 use Monkey\Parser\Parser;
+use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
 final readonly class CallExpressionParselet implements InfixParselet
@@ -19,8 +20,11 @@ final readonly class CallExpressionParselet implements InfixParselet
 
     public function parse(Expression $expression): Expression
     {
+        /** @var Token $token */
+        $token = $this->parser->curToken;
+
         $arguments = (new ExpressionListParser())($this->parser, TokenType::RPAREN);
 
-        return new CallExpression($this->parser->curToken, $expression, $arguments);
+        return new CallExpression($token, $expression, $arguments);
     }
 }
