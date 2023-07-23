@@ -77,6 +77,9 @@ final class Repl
         echo $monkeyObject->inspect() . PHP_EOL;
     }
 
+    /**
+     * @param array<string> $errors
+     */
     public static function getErrors(array $errors): string
     {
         $out = '';

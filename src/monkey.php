@@ -30,6 +30,6 @@ if ($argc <= 1) {
 
 match ($argv[1]) {
     'repl' => Repl::start(),
-    'run' => Repl::eval(file_get_contents($argv[2]), new Environment()),
+    'run' => Repl::eval((string)file_get_contents($argv[2]), new Environment()),
     default => help(),
 };
