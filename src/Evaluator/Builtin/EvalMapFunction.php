@@ -38,7 +38,7 @@ final readonly class EvalMapFunction
             return ErrorObject::invalidArgument('map()', $callback->typeLiteral());
         }
 
-        if (1 !== (is_countable($callback->parameters) ? count($callback->parameters) : 0)) {
+        if (count($callback->parameters) !== 1) {
             return ErrorObject::error('the callback of map accepts one parameter only.');
         }
 
