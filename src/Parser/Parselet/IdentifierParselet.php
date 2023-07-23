@@ -17,6 +17,6 @@ final readonly class IdentifierParselet implements PrefixParselet
 
     public function parse(): Expression
     {
-        return new IdentifierExpression($this->parser->curToken, $this->parser->curToken()->literal());
+        return new IdentifierExpression($this->parser->curToken(), $this->parser->curToken()->literal());
     }
 }

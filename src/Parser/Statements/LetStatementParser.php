@@ -21,7 +21,7 @@ final class LetStatementParser
         }
 
         $identifierExpression = new IdentifierExpression(
-            $parser->curToken,
+            $parser->curToken(),
             $parser->curToken()->literal(),
         );
 
