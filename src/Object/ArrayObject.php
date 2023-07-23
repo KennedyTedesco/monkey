@@ -8,6 +8,9 @@ use function count;
 
 final readonly class ArrayObject extends MonkeyObject
 {
+    /**
+     * @param array<MonkeyObject> $value
+     */
     public function __construct(
         public array $value,
     ) {
@@ -40,6 +43,9 @@ final readonly class ArrayObject extends MonkeyObject
         return sprintf('[%s]', implode(', ', $elements));
     }
 
+    /**
+     * @return array<MonkeyObject>
+     */
     public function value(): array
     {
         return $this->value;
