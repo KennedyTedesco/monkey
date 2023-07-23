@@ -45,7 +45,7 @@ final readonly class IfExpressionParselet implements PrefixParselet
 
         $alternative = null;
 
-        if ($this->parser->peekToken->is(TokenType::ELSE)) {
+        if ($this->parser->peekToken()->is(TokenType::ELSE)) {
             $this->parser->nextToken();
 
             if (!$this->parser->expectPeek(TokenType::LBRACE)) {

@@ -14,7 +14,7 @@ final class ProgramParser
     {
         $program = new Program();
 
-        while (!$parser->curToken->is(TokenType::EOF)) {
+        while (!$parser->curToken()->is(TokenType::EOF)) {
             $statement = (new StatementParser())($parser);
             $program->addStatement($statement);
 

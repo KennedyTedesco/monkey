@@ -19,7 +19,7 @@ final class ReturnStatementParser
 
         $valueExpression = $parser->parseExpression(Precedence::LOWEST);
 
-        if ($parser->peekToken->is(TokenType::SEMICOLON)) {
+        if ($parser->peekToken()->is(TokenType::SEMICOLON)) {
             $parser->nextToken();
         }
 

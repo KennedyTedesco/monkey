@@ -17,7 +17,7 @@ final class ExpressionListParser
         /** @var array<Expression> $args */
         $args = [];
 
-        if ($parser->peekToken->is($endTokenType)) {
+        if ($parser->peekToken()->is($endTokenType)) {
             $parser->nextToken();
 
             return $args;
@@ -27,7 +27,7 @@ final class ExpressionListParser
 
         $args[] = $parser->parseExpression(Precedence::LOWEST);
 
-        while ($parser->peekToken->is(TokenType::COMMA)) {
+        while ($parser->peekToken()->is(TokenType::COMMA)) {
             $parser->nextToken(2);
 
             $args[] = $parser->parseExpression(Precedence::LOWEST);

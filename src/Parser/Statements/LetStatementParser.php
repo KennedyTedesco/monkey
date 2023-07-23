@@ -22,7 +22,7 @@ final class LetStatementParser
 
         $identifierExpression = new IdentifierExpression(
             $parser->curToken,
-            $parser->curToken->literal(),
+            $parser->curToken()->literal(),
         );
 
         if (!$parser->expectPeek(TokenType::ASSIGN)) {
@@ -33,7 +33,7 @@ final class LetStatementParser
 
         $value = $parser->parseExpression(Precedence::LOWEST);
 
-        if ($parser->peekToken->is(TokenType::SEMICOLON)) {
+        if ($parser->peekToken()->is(TokenType::SEMICOLON)) {
             $parser->nextToken();
         }
 

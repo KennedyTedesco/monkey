@@ -115,7 +115,7 @@ final class Parser
 
     public function expectPeek(TokenType $type): bool
     {
-        if ($this->peekToken->is($type)) {
+        if ($this->peekToken()->is($type)) {
             $this->nextToken();
 
             return true;
@@ -129,16 +129,16 @@ final class Parser
     public function parseExpression(Precedence $precedence): ?Expression
     {
         /** @var PostfixParselet|null $postfixParselet */
-        $postfixParselet = $this->postfixParselets[$this->curToken->type()->value] ?? null;
+        $postfixParselet = $this->postfixParselets[$this->curToken()->type()->value] ?? null;
 
         if ($postfixParselet instanceof PostfixParselet) {
             return $postfixParselet->parse();
         }
 
-        $prefixParselet = $this->prefixParselets[$this->curToken->type()->value] ?? null;
+        $prefixParselet = $this->prefixParselets[$this->curToken()->type()->value] ?? null;
 
         if (!$prefixParselet instanceof PrefixParselet) {
-            $this->prefixParserError($this->curToken->type());
+            $this->prefixParserError($this->curToken()->type());
 
             return null;
         }
@@ -146,8 +146,8 @@ final class Parser
         /** @var Expression $leftExpression */
         $leftExpression = $prefixParselet->parse();
 
-        while (!$this->peekToken->is(TokenType::SEMICOLON) && $precedence->value < $this->precedence($this->peekToken)->value) {
-            $infixParselet = $this->infixParselets[$this->peekToken->type()->value] ?? null;
+        while (!$this->peekToken()->is(TokenType::SEMICOLON) && $precedence->value < $this->precedence($this->peekToken)->value) {
+            $infixParselet = $this->infixParselets[$this->peekToken()->type()->value] ?? null;
 
             if (!$infixParselet instanceof InfixParselet) {
                 return $leftExpression;
@@ -194,8 +194,24 @@ final class Parser
         $this->errors[] = sprintf(
             'expected next token to be %s, got %s instead',
             $type->lexeme(),
-            $this->peekToken->literal(),
+            $this->peekToken()->literal(),
         );
+    }
+
+    public function curToken(): Token
+    {
+        /** @var Token $token */
+        $token = $this->curToken;
+
+        return $token;
+    }
+
+    public function peekToken(): Token
+    {
+        /** @var Token $token */
+        $token = $this->peekToken;
+
+        return $token;
     }
 
     public function prefixParserError(TokenType $type): void
