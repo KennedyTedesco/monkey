@@ -20,6 +20,9 @@ final class Program extends Node
         return $this->statements[$index];
     }
 
+    /**
+     * @return Statement[]
+     */
     public function statements(): array
     {
         return $this->statements;
