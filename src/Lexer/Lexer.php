@@ -38,23 +38,23 @@ final class Lexer
         $this->skipWhitespaces();
 
         return match (true) {
-            $this->curAndPeekCharIs('**') => $this->makeTwoCharTokenAndAdvance(TokenType::POWER),
+            $this->currentAndPeekCharIs('*', '*') => $this->makeTwoCharTokenAndAdvance(TokenType::POWER),
 
-            $this->curAndPeekCharIs('==') => $this->makeTwoCharTokenAndAdvance(TokenType::EQ),
+            $this->currentAndPeekCharIs('=', '=') => $this->makeTwoCharTokenAndAdvance(TokenType::EQ),
 
-            $this->curAndPeekCharIs('!=') => $this->makeTwoCharTokenAndAdvance(TokenType::NOT_EQ),
+            $this->currentAndPeekCharIs('!', '=') => $this->makeTwoCharTokenAndAdvance(TokenType::NOT_EQ),
 
-            $this->curAndPeekCharIs('>=') => $this->makeTwoCharTokenAndAdvance(TokenType::GT_EQ),
+            $this->currentAndPeekCharIs('>', '=') => $this->makeTwoCharTokenAndAdvance(TokenType::GT_EQ),
 
-            $this->curAndPeekCharIs('<=') => $this->makeTwoCharTokenAndAdvance(TokenType::LT_EQ),
+            $this->currentAndPeekCharIs('<', '=') => $this->makeTwoCharTokenAndAdvance(TokenType::LT_EQ),
 
-            $this->curAndPeekCharIs('&&') => $this->makeTwoCharTokenAndAdvance(TokenType::AND),
+            $this->currentAndPeekCharIs('&', '&') => $this->makeTwoCharTokenAndAdvance(TokenType::AND),
 
-            $this->curAndPeekCharIs('||') => $this->makeTwoCharTokenAndAdvance(TokenType::OR),
+            $this->currentAndPeekCharIs('|', '|') => $this->makeTwoCharTokenAndAdvance(TokenType::OR),
 
-            $this->curAndPeekCharIs('++') => $this->makeTwoCharTokenAndAdvance(TokenType::PLUS_PLUS),
+            $this->currentAndPeekCharIs('+', '+') => $this->makeTwoCharTokenAndAdvance(TokenType::PLUS_PLUS),
 
-            $this->curAndPeekCharIs('--') => $this->makeTwoCharTokenAndAdvance(TokenType::MINUS_MINUS),
+            $this->currentAndPeekCharIs('-', '-') => $this->makeTwoCharTokenAndAdvance(TokenType::MINUS_MINUS),
 
             $this->curChar->is('"') => $this->makeTokenAndAdvance(TokenType::STRING, $this->readString()),
 
@@ -97,13 +97,11 @@ final class Lexer
         }
     }
 
-    public function curAndPeekCharIs(string $operators): bool
-    {
-        if (!$this->curChar->is($operators[0])) {
-            return false;
-        }
-
-        return $this->peekChar->is($operators[1]);
+    public function currentAndPeekCharIs(
+        string $firstOperator,
+        string $secondOperator,
+    ): bool {
+        return $this->curChar->is($firstOperator) && $this->peekChar->is($secondOperator);
     }
 
     public function makeTwoCharTokenAndAdvance(TokenType $type): Token
