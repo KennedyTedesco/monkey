@@ -26,7 +26,6 @@ use Monkey\Ast\Types\FloatLiteral;
 use Monkey\Ast\Types\FunctionLiteral;
 use Monkey\Ast\Types\IntegerLiteral;
 use Monkey\Ast\Types\StringLiteral;
-use Monkey\Evaluator\Builtin\EvalBuiltinFunction;
 use Monkey\Evaluator\Builtin\EvalFirstFunction;
 use Monkey\Evaluator\Builtin\EvalLastFunction;
 use Monkey\Evaluator\Builtin\EvalLenFunction;
@@ -42,6 +41,8 @@ use Monkey\Object\IntegerObject;
 use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\StringObject;
+
+use function call_user_func;
 
 final class Evaluator
 {
@@ -118,13 +119,8 @@ final class Evaluator
             'puts' => EvalPutsFunction::class,
         ];
 
-        foreach ($builtinFunctions as $funcName => $className) {
-            BuiltinFunction::set($funcName, function (MonkeyObject ...$monkeyObject) use ($className): MonkeyObject {
-                /** @var EvalBuiltinFunction $evalFunction */
-                $evalFunction = new $className($this);
-
-                return $evalFunction(...$monkeyObject);
-            });
+        foreach ($builtinFunctions as $funcName => $evalClassName) {
+            BuiltinFunction::set($funcName, fn (MonkeyObject ...$monkeyObject): MonkeyObject => call_user_func(new $evalClassName($this), ...$monkeyObject));
         }
     }
 }
