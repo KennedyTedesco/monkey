@@ -7,6 +7,7 @@ namespace Monkey\Ast\Statements;
 namespace Monkey\Ast\Statements;
 
 use Monkey\Ast\Expressions\Expression;
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class ReturnStatement extends Statement
@@ -20,9 +21,11 @@ final class ReturnStatement extends Statement
 
     public function toString(): string
     {
-        $out = "{$this->tokenLiteral()} ";
-        $out .= $this->value->toString();
-
-        return $out . ';';
+        return StringBuilder::new()
+            ->append($this->tokenLiteral())
+            ->appendSpace()
+            ->append($this->value)
+            ->append(';')
+            ->toString();
     }
 }
