@@ -67,12 +67,12 @@ final class Lexer
 
             $this->curChar->is(self::EOF) => Token::from(TokenType::EOF, self::EOF),
 
-            $this->curChar->isSingleChar() && TokenType::fromChar($this->curChar->toScalar()) instanceof TokenType => $this->makeTokenAndAdvance(
-                TokenType::fromChar($this->curChar->toScalar()),
-                $this->curChar->toScalar(),
+            $this->curChar->isSingleChar() && TokenType::fromChar($this->curChar) instanceof TokenType => $this->makeTokenAndAdvance(
+                TokenType::fromChar($this->curChar),
+                $this->curChar->toString(),
             ),
 
-            default => $this->makeTokenAndAdvance(TokenType::ILLEGAL, $this->curChar->toScalar()),
+            default => $this->makeTokenAndAdvance(TokenType::ILLEGAL, $this->curChar->toString()),
         };
     }
 
@@ -109,7 +109,7 @@ final class Lexer
     public function makeTwoCharTokenAndAdvance(TokenType $type): Token
     {
         $this->readChar();
-        $token = Token::from($type, "{$this->prevChar->toScalar()}{$this->curChar->toScalar()}");
+        $token = Token::from($type, "{$this->prevChar}{$this->curChar}");
         $this->readChar();
 
         return $token;

@@ -104,7 +104,7 @@ enum TokenType: int
 
     public static function fromChar(string | Char $char): ?self
     {
-        return match ($char) {
+        return match ((string)$char) {
             '=' => self::ASSIGN,
             '+' => self::PLUS,
             '-' => self::MINUS,

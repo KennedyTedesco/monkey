@@ -48,7 +48,7 @@ final readonly class Char implements Stringable
         return strlen($this->ch) === 1;
     }
 
-    public function toScalar(): string
+    public function toString(): string
     {
         return $this->ch;
     }
