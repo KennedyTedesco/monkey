@@ -22,7 +22,7 @@ final readonly class WhileExpressionParselet implements PrefixParselet
     {
         $token = $this->parser->curToken;
 
-        if (!$this->parser->expectPeek(TokenType::T_LPAREN)) {
+        if (!$this->parser->expectPeek(TokenType::LPAREN)) {
             return null;
         }
 
@@ -31,11 +31,11 @@ final readonly class WhileExpressionParselet implements PrefixParselet
         /** @var Expression $condition */
         $condition = $this->parser->parseExpression(Precedence::LOWEST);
 
-        if (!$this->parser->expectPeek(TokenType::T_RPAREN)) {
+        if (!$this->parser->expectPeek(TokenType::RPAREN)) {
             return null;
         }
 
-        if (!$this->parser->expectPeek(TokenType::T_LBRACE)) {
+        if (!$this->parser->expectPeek(TokenType::LBRACE)) {
             return null;
         }
 

@@ -21,7 +21,7 @@ final readonly class ArrayParselet implements PrefixParselet
     {
         $token = $this->parser->curToken;
 
-        $elements = (new ExpressionListParser())($this->parser, TokenType::T_RBRACKET);
+        $elements = (new ExpressionListParser())($this->parser, TokenType::RBRACKET);
 
         return new ArrayLiteral($token, $elements);
     }

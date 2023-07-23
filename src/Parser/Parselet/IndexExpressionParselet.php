@@ -25,7 +25,7 @@ final readonly class IndexExpressionParselet implements InfixParselet
 
         $index = $this->parser->parseExpression(Precedence::LOWEST);
 
-        if (!$this->parser->expectPeek(TokenType::T_RBRACKET)) {
+        if (!$this->parser->expectPeek(TokenType::RBRACKET)) {
             return null;
         }
 

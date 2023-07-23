@@ -23,7 +23,7 @@ final readonly class GroupedExpressionParselet implements PrefixParselet
         /** @var Expression $expression */
         $expression = $this->parser->parseExpression(Precedence::LOWEST);
 
-        if (!$this->parser->expectPeek(TokenType::T_RPAREN)) {
+        if (!$this->parser->expectPeek(TokenType::RPAREN)) {
             return null;
         }
 

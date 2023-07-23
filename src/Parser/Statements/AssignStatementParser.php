@@ -16,7 +16,7 @@ final class AssignStatementParser
     {
         $token = $parser->curToken;
 
-        if (!$parser->expectPeek(TokenType::T_ASSIGN)) {
+        if (!$parser->expectPeek(TokenType::ASSIGN)) {
             return null;
         }
 
@@ -24,7 +24,7 @@ final class AssignStatementParser
 
         $value = $parser->parseExpression(Precedence::LOWEST);
 
-        if ($parser->peekToken->is(TokenType::T_SEMICOLON)) {
+        if ($parser->peekToken->is(TokenType::SEMICOLON)) {
             $parser->nextToken();
         }
 

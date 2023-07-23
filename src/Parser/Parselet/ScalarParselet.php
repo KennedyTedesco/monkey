@@ -23,19 +23,19 @@ final readonly class ScalarParselet implements PrefixParselet
     {
         $token = $this->parser->curToken;
 
-        if ($token->is(TokenType::T_INT)) {
+        if ($token->is(TokenType::INT)) {
             return new IntegerLiteral($token, (int)$token->literal());
         }
 
-        if ($token->is(TokenType::T_FLOAT)) {
+        if ($token->is(TokenType::FLOAT)) {
             return new FloatLiteral($token, (float)$token->literal());
         }
 
-        if ($token->is(TokenType::T_FALSE) || $token->is(TokenType::T_TRUE)) {
-            return new BooleanLiteral($token, $token->is(TokenType::T_TRUE));
+        if ($token->is(TokenType::FALSE) || $token->is(TokenType::TRUE)) {
+            return new BooleanLiteral($token, $token->is(TokenType::TRUE));
         }
 
-        if ($token->is(TokenType::T_STRING)) {
+        if ($token->is(TokenType::STRING)) {
             return new StringLiteral($token, $token->literal());
         }
     }

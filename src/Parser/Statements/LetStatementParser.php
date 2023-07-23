@@ -16,7 +16,7 @@ final class LetStatementParser
     {
         $token = $parser->curToken;
 
-        if (!$parser->expectPeek(TokenType::T_IDENT)) {
+        if (!$parser->expectPeek(TokenType::IDENT)) {
             return null;
         }
 
@@ -25,7 +25,7 @@ final class LetStatementParser
             $parser->curToken->literal(),
         );
 
-        if (!$parser->expectPeek(TokenType::T_ASSIGN)) {
+        if (!$parser->expectPeek(TokenType::ASSIGN)) {
             return null;
         }
 
@@ -33,7 +33,7 @@ final class LetStatementParser
 
         $value = $parser->parseExpression(Precedence::LOWEST);
 
-        if ($parser->peekToken->is(TokenType::T_SEMICOLON)) {
+        if ($parser->peekToken->is(TokenType::SEMICOLON)) {
             $parser->nextToken();
         }
 
