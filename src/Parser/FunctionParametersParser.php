@@ -26,12 +26,12 @@ final class FunctionParametersParser
 
         $parser->nextToken();
 
-        $identifiers[] = new IdentifierExpression($parser->curToken, $parser->curToken()->literal());
+        $identifiers[] = new IdentifierExpression($parser->curToken(), $parser->curToken()->literal());
 
         while ($parser->peekToken()->is(TokenType::COMMA)) {
             $parser->nextToken(2);
 
-            $identifiers[] = new IdentifierExpression($parser->curToken, $parser->curToken()->literal());
+            $identifiers[] = new IdentifierExpression($parser->curToken(), $parser->curToken()->literal());
         }
 
         if (!$parser->expectPeek(TokenType::RPAREN)) {
