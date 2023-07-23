@@ -27,15 +27,11 @@ final class ArrayLiteral extends Expression
         $count = count($this->elements);
 
         foreach ($this->elements as $index => $element) {
-            $stringBuilder->append($element);
+            $separator = $index !== $count - 1 ? ',' : '';
 
-            if ($index !== $count - 1) {
-                $stringBuilder->append(',');
-            }
+            $stringBuilder->append("{$element}{$separator}");
         }
 
-        $stringBuilder->append(']');
-
-        return $stringBuilder->toString();
+        return $stringBuilder->append(']')->toString();
     }
 }

@@ -15,7 +15,7 @@ final class StringBuilder implements Stringable
 
     public static function new(string | Stringable $str = ''): self
     {
-        return new self($str);
+        return new self((string)$str);
     }
 
     public function append(string | Stringable $str): self

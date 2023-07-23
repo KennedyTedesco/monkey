@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Expressions;
 
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
+
+use function count;
 
 final class CallExpression extends Expression
 {
@@ -19,18 +22,16 @@ final class CallExpression extends Expression
 
     public function toString(): string
     {
-        $out = "{$this->function->toString()}(";
+        $stringBuilder = StringBuilder::new($this->function)->append('(');
 
-        $args = [];
-        /** @var Expression $argument */
-        foreach ($this->arguments as $argument) {
-            $args[] = $argument->toString();
+        $count = count($this->arguments);
+
+        foreach ($this->arguments as $index => $argument) {
+            $separator = $index !== $count - 1 ? ', ' : '';
+
+            $stringBuilder->append("{$argument}{$separator}");
         }
 
-        if ($args !== []) {
-            $out .= implode(', ', $args);
-        }
-
-        return $out . ')';
+        return $stringBuilder->append(')')->toString();
     }
 }
