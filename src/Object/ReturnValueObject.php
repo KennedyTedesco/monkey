@@ -25,4 +25,9 @@ final readonly class ReturnValueObject extends MonkeyObject
     {
         return $this->value->inspect();
     }
+
+    public function value(): MonkeyObject
+    {
+        return $this->value;
+    }
 }

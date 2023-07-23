@@ -65,4 +65,9 @@ final readonly class ErrorObject extends MonkeyObject
     {
         return new self($error);
     }
+
+    public function value(): string
+    {
+        return $this->value;
+    }
 }

@@ -44,4 +44,9 @@ final readonly class BooleanObject extends MonkeyObject
 
         return self::false();
     }
+
+    public function value(): bool
+    {
+        return $this->value;
+    }
 }

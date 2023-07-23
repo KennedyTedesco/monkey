@@ -27,4 +27,9 @@ final readonly class BuiltinFunctionObject extends MonkeyObject
     {
         return 'builtin function';
     }
+
+    public function value(): Closure
+    {
+        return $this->value;
+    }
 }

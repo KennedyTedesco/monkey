@@ -33,4 +33,9 @@ final readonly class StringObject extends MonkeyObject
     {
         return $this->value;
     }
+
+    public function value(): string
+    {
+        return $this->value;
+    }
 }

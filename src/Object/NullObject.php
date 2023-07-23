@@ -30,4 +30,9 @@ final readonly class NullObject extends MonkeyObject
     {
         return new self();
     }
+
+    public function value(): null
+    {
+        return $this->value;
+    }
 }

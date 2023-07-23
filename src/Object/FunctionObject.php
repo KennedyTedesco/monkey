@@ -46,4 +46,9 @@ final readonly class FunctionObject extends MonkeyObject
 
         return sprintf("fn(%s) {\n%s\n}", implode(', ', $params), $this->body->toString());
     }
+
+    public function value(): mixed
+    {
+        return null;
+    }
 }

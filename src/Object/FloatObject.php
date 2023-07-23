@@ -25,4 +25,9 @@ final readonly class FloatObject extends MonkeyObject
     {
         return sprintf('%f', $this->value);
     }
+
+    public function value(): float
+    {
+        return $this->value;
+    }
 }

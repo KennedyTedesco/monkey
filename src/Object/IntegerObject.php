@@ -25,4 +25,9 @@ final readonly class IntegerObject extends MonkeyObject
     {
         return sprintf('%d', $this->value);
     }
+
+    public function value(): int
+    {
+        return $this->value;
+    }
 }

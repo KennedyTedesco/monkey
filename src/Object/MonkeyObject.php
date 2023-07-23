@@ -41,6 +41,8 @@ abstract readonly class MonkeyObject
 
     abstract public function type(): int;
 
+    abstract public function value(): mixed;
+
     abstract public function inspect(): string;
 
     abstract public function typeLiteral(): string;

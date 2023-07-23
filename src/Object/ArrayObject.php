@@ -39,4 +39,9 @@ final readonly class ArrayObject extends MonkeyObject
 
         return sprintf('[%s]', implode(', ', $elements));
     }
+
+    public function value(): array
+    {
+        return $this->value;
+    }
 }
