@@ -44,7 +44,7 @@ final class Parser
     /** @var array<int,PrefixParselet> */
     public array $postfixParselets = [];
 
-    /** @var array<int, int> */
+    /** @var array<int, Precedence> */
     public array $precedences = [
         TokenType::EQ->value => Precedence::EQUALS,
         TokenType::NOT_EQ->value => Precedence::EQUALS,
@@ -126,7 +126,7 @@ final class Parser
         return false;
     }
 
-    public function parseExpression(int $precedence): ?Expression
+    public function parseExpression(Precedence $precedence): ?Expression
     {
         /** @var PostfixParselet|null $postfixParselet */
         $postfixParselet = $this->postfixParselets[$this->curToken->type()->value] ?? null;
@@ -146,7 +146,7 @@ final class Parser
         /** @var Expression $leftExpression */
         $leftExpression = $prefixParselet->parse();
 
-        while (!$this->peekToken->is(TokenType::SEMICOLON) && $precedence < $this->precedence($this->peekToken)) {
+        while (!$this->peekToken->is(TokenType::SEMICOLON) && $precedence->value < $this->precedence($this->peekToken)->value) {
             $infixParselet = $this->infixParselets[$this->peekToken->type()->value] ?? null;
 
             if (!$infixParselet instanceof InfixParselet) {
@@ -161,7 +161,7 @@ final class Parser
         return $leftExpression;
     }
 
-    public function precedence(Token $token): int
+    public function precedence(Token $token): Precedence
     {
         return $this->precedences[$token->type()->value] ?? Precedence::LOWEST;
     }
