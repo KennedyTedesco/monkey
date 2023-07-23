@@ -78,14 +78,15 @@ final class Lexer
 
     public function readChar(): void
     {
-        $this->prevChar = $this->curChar;
+        $isEof = $this->isEof();
 
-        $this->curChar = $this->isEnd() ? Char::from(self::EOF) : Char::from($this->input->char($this->readPosition));
+        $this->prevChar = $this->curChar;
+        $this->curChar = $isEof ? Char::from(self::EOF) : Char::from($this->input->char($this->readPosition));
 
         $this->position = $this->readPosition;
         $this->readPosition++;
 
-        if (!$this->isEnd()) {
+        if (!$isEof) {
             $this->peekChar = Char::from($this->input->char($this->readPosition));
         }
     }
@@ -120,7 +121,7 @@ final class Lexer
         while (true) {
             $this->readChar();
 
-            if ($this->curChar->is('"') || $this->isEnd()) {
+            if ($this->curChar->is('"') || $this->isEof()) {
                 break;
             }
         }
@@ -128,7 +129,7 @@ final class Lexer
         return $this->input->substr($position, $this->position - $position);
     }
 
-    public function isEnd(): bool
+    public function isEof(): bool
     {
         return $this->readPosition >= $this->input->size();
     }
