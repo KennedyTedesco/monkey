@@ -12,7 +12,7 @@ use function count;
 final class CallExpression extends Expression
 {
     /**
-     * @param array<int, Expression> $arguments
+     * @param array<Expression> $arguments
      */
     public function __construct(
         Token $token,
