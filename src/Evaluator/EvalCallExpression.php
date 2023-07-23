@@ -41,8 +41,13 @@ final readonly class EvalCallExpression
         return $this->applyFunction($monkeyObject, $args);
     }
 
-    public function applyFunction(MonkeyObject $monkeyObject, array $args): MonkeyObject
-    {
+    /**
+     * @param array<MonkeyObject> $args
+     */
+    public function applyFunction(
+        MonkeyObject $monkeyObject,
+        array $args,
+    ): MonkeyObject {
         if ($monkeyObject instanceof FunctionObject) {
             $environment = $this->extendFunctionEnv($monkeyObject, $args);
 
