@@ -6,6 +6,7 @@ namespace Monkey\Ast\Statements;
 
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class AssignStatement extends Statement
@@ -20,6 +21,11 @@ final class AssignStatement extends Statement
 
     public function toString(): string
     {
-        return "{$this->name->tokenLiteral()} = {$this->value->toString()};";
+        return StringBuilder::new()
+            ->append($this->name->tokenLiteral())
+            ->append(' = ')
+            ->append($this->value->toString())
+            ->append(';')
+            ->toString();
     }
 }

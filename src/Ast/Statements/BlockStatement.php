@@ -6,6 +6,7 @@ namespace Monkey\Ast\Statements;
 
 namespace Monkey\Ast\Statements;
 
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class BlockStatement extends Statement
@@ -19,12 +20,12 @@ final class BlockStatement extends Statement
 
     public function toString(): string
     {
-        $out = '';
-        /** @var Statement $statement */
+        $builder = StringBuilder::new();
+
         foreach ($this->statements as $statement) {
-            $out .= $statement->toString();
+            $builder->append($statement);
         }
 
-        return $out;
+        return $builder->toString();
     }
 }
