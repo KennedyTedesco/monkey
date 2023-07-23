@@ -11,10 +11,12 @@ use function count;
 
 final class CallExpression extends Expression
 {
+    /**
+     * @param array<int, Expression> $arguments
+     */
     public function __construct(
         Token $token,
         public readonly Expression $function,
-        /* @var array<Expression> */
         public readonly array $arguments,
     ) {
         $this->token = $token;
