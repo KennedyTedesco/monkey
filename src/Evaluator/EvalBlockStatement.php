@@ -13,8 +13,8 @@ use Monkey\Object\ReturnValueObject;
 final readonly class EvalBlockStatement
 {
     public function __construct(
-        private Evaluator $evaluator,
-        private Environment $environment,
+        public Evaluator $evaluator,
+        public Environment $environment,
     ) {
     }
 
@@ -22,7 +22,7 @@ final readonly class EvalBlockStatement
     {
         $result = NullObject::instance();
 
-        foreach ($blockStatement->statements() as $statement) {
+        foreach ($blockStatement->statements as $statement) {
             $result = $this->evaluator->eval($statement, $this->environment);
 
             if ($result instanceof ErrorObject == true) {

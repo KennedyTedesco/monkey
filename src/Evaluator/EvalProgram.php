@@ -13,8 +13,8 @@ use Monkey\Object\ReturnValueObject;
 final readonly class EvalProgram
 {
     public function __construct(
-        private Evaluator $evaluator,
-        private Environment $environment,
+        public Evaluator $evaluator,
+        public Environment $environment,
     ) {
     }
 
@@ -26,7 +26,7 @@ final readonly class EvalProgram
             $result = $this->evaluator->eval($statement, $this->environment);
 
             if ($result instanceof ReturnValueObject == true) {
-                return $result->value();
+                return $result->value;
             }
 
             if ($result instanceof ErrorObject == true) {

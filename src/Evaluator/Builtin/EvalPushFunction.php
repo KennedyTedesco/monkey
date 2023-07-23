@@ -10,7 +10,7 @@ use Monkey\Object\MonkeyObject;
 
 use function count;
 
-final class EvalPushFunction
+final readonly class EvalPushFunction extends EvalBuiltinFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
@@ -24,7 +24,7 @@ final class EvalPushFunction
             return ErrorObject::invalidArgument('push()', $object->typeLiteral());
         }
 
-        $elements = $object->value();
+        $elements = $object->value;
         $elements[] = $monkeyObject[1];
 
         return new ArrayObject($elements);

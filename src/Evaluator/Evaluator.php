@@ -42,18 +42,10 @@ use Monkey\Object\MonkeyObject;
 use Monkey\Object\NullObject;
 use Monkey\Object\StringObject;
 
+use function call_user_func;
+
 final class Evaluator
 {
-    private array $builtinFunctions = [
-        'map' => EvalMapFunction::class,
-        'len' => EvalLenFunction::class,
-        'last' => EvalLastFunction::class,
-        'push' => EvalPushFunction::class,
-        'first' => EvalFirstFunction::class,
-        'slice' => EvalSliceFunction::class,
-        'puts' => EvalPutsFunction::class,
-    ];
-
     public function __construct()
     {
         $this->registerBuiltinFunctions();
@@ -63,27 +55,27 @@ final class Evaluator
     {
         return match (true) {
             $node instanceof Program => (new EvalProgram($this, $environment))($node),
-            $node instanceof IntegerLiteral => new IntegerObject($node->value()),
-            $node instanceof FloatLiteral => new FloatObject($node->value()),
-            $node instanceof StringLiteral => new StringObject($node->value()),
-            $node instanceof BooleanLiteral => BooleanObject::from($node->value()),
+            $node instanceof IntegerLiteral => new IntegerObject($node->value),
+            $node instanceof FloatLiteral => new FloatObject($node->value),
+            $node instanceof StringLiteral => new StringObject($node->value),
+            $node instanceof BooleanLiteral => BooleanObject::from($node->value),
             $node instanceof BlockStatement => (new EvalBlockStatement($this, $environment))($node),
             $node instanceof IfExpression => (new EvalIfExpression($this, $environment))($node),
             $node instanceof WhileExpression => (new EvalWhileExpression($this, $environment))($node),
-            $node instanceof FunctionLiteral => new FunctionObject($node->parameters(), $node->body(), $environment),
-            $node instanceof ExpressionStatement => $this->eval($node->expression(), $environment),
+            $node instanceof FunctionLiteral => new FunctionObject($node->parameters, $node->body, $environment),
+            $node instanceof ExpressionStatement => $this->eval($node->expression, $environment),
             $node instanceof ReturnStatement => (new EvalReturnStatement($this, $environment))($node),
             $node instanceof CallExpression => (new EvalCallExpression($this, $environment))($node),
             $node instanceof ArrayLiteral => (new EvalArrayLiteral($this, $environment))($node),
             $node instanceof IndexExpression => (new EvalIndexExpression($this, $environment))($node),
             $node instanceof UnaryExpression => (new EvalUnaryExpression())(
-                $node->operator(),
-                $this->eval($node->right(), $environment)
+                $node->operator,
+                $this->eval($node->right, $environment)
             ),
             $node instanceof BinaryExpression => (new EvalBinaryExpression())(
-                $node->operator(),
-                $this->eval($node->left(), $environment),
-                $this->eval($node->right(), $environment)
+                $node->operator,
+                $this->eval($node->left, $environment),
+                $this->eval($node->right, $environment)
             ),
             $node instanceof LetStatement => (new EvalLetStatement($this, $environment))($node),
             $node instanceof AssignStatement => (new EvalAssingStatement($this, $environment))($node),
@@ -102,7 +94,6 @@ final class Evaluator
     {
         $result = [];
 
-        /** @var Expression $expression */
         foreach ($expressions as $expression) {
             $object = $this->eval($expression, $environment);
 
@@ -116,10 +107,22 @@ final class Evaluator
         return $result;
     }
 
-    private function registerBuiltinFunctions(): void
+    public function registerBuiltinFunctions(): void
     {
-        foreach ($this->builtinFunctions as $funcName => $className) {
-            BuiltinFunction::set($funcName, fn (MonkeyObject ...$monkeyObject) => (new $className($this))(...$monkeyObject));
+        $builtinFunctions = [
+            'map' => EvalMapFunction::class,
+            'len' => EvalLenFunction::class,
+            'last' => EvalLastFunction::class,
+            'push' => EvalPushFunction::class,
+            'first' => EvalFirstFunction::class,
+            'slice' => EvalSliceFunction::class,
+            'puts' => EvalPutsFunction::class,
+        ];
+
+        foreach ($builtinFunctions as $funcName => $evalClassName) {
+            BuiltinFunction::set($funcName, function (MonkeyObject ...$monkeyObject) use ($evalClassName): MonkeyObject {
+                return call_user_func(new $evalClassName($this), ...$monkeyObject);
+            });
         }
     }
 }

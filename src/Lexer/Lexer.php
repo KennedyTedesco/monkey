@@ -11,17 +11,17 @@ final class Lexer
 {
     public const EOF = "\0";
 
-    private readonly Input $input;
+    public readonly Input $input;
 
-    private Char $curChar;
+    public Char $curChar;
 
-    private Char $prevChar;
+    public Char $prevChar;
 
-    private Char $peekChar;
+    public Char $peekChar;
 
-    private int $position = 0;
+    public int $position = 0;
 
-    private int $readPosition = 0;
+    public int $readPosition = 0;
 
     public function __construct(string $input)
     {
@@ -38,98 +38,90 @@ final class Lexer
         $this->skipWhitespaces();
 
         return match (true) {
-            $this->curAndPeekCharIs('**') => $this->makeTwoCharTokenAndAdvance(TokenType::T_POWER),
+            $this->curChar->is('*') && $this->peekChar->is('*') => $this->makeTwoCharTokenAndAdvance(TokenType::POWER),
 
-            $this->curAndPeekCharIs('==') => $this->makeTwoCharTokenAndAdvance(TokenType::T_EQ),
+            $this->curChar->is('=') && $this->peekChar->is('=') => $this->makeTwoCharTokenAndAdvance(TokenType::EQ),
 
-            $this->curAndPeekCharIs('!=') => $this->makeTwoCharTokenAndAdvance(TokenType::T_NOT_EQ),
+            $this->curChar->is('!') && $this->peekChar->is('=') => $this->makeTwoCharTokenAndAdvance(TokenType::NOT_EQ),
 
-            $this->curAndPeekCharIs('>=') => $this->makeTwoCharTokenAndAdvance(TokenType::T_GT_EQ),
+            $this->curChar->is('>') && $this->peekChar->is('=') => $this->makeTwoCharTokenAndAdvance(TokenType::GT_EQ),
 
-            $this->curAndPeekCharIs('<=') => $this->makeTwoCharTokenAndAdvance(TokenType::T_LT_EQ),
+            $this->curChar->is('<') && $this->peekChar->is('=') => $this->makeTwoCharTokenAndAdvance(TokenType::LT_EQ),
 
-            $this->curAndPeekCharIs('&&') => $this->makeTwoCharTokenAndAdvance(TokenType::T_AND),
+            $this->curChar->is('&') && $this->peekChar->is('&') => $this->makeTwoCharTokenAndAdvance(TokenType::AND),
 
-            $this->curAndPeekCharIs('||') => $this->makeTwoCharTokenAndAdvance(TokenType::T_OR),
+            $this->curChar->is('|') && $this->peekChar->is('|') => $this->makeTwoCharTokenAndAdvance(TokenType::OR),
 
-            $this->curAndPeekCharIs('++') => $this->makeTwoCharTokenAndAdvance(TokenType::T_PLUS_PLUS),
+            $this->curChar->is('+') && $this->peekChar->is('+') => $this->makeTwoCharTokenAndAdvance(TokenType::PLUS_PLUS),
 
-            $this->curAndPeekCharIs('--') => $this->makeTwoCharTokenAndAdvance(TokenType::T_MINUS_MINUS),
+            $this->curChar->is('-') && $this->peekChar->is('-') => $this->makeTwoCharTokenAndAdvance(TokenType::MINUS_MINUS),
 
-            $this->curChar->is('"') => $this->makeTokenAndAdvance(TokenType::T_STRING, $this->readString()),
+            $this->curChar->is('"') => $this->makeTokenAndAdvance(TokenType::STRING, $this->readString()),
 
             $this->curChar->isLetter() => Token::from(
-                TokenType::lookupToken($identifier = $this->readIdentifier()) ?? TokenType::T_IDENT,
+                TokenType::fromChar($identifier = $this->readIdentifier()) ?? TokenType::IDENT,
                 $identifier,
             ),
 
-            $this->curChar->isDigit() => Token::from(ctype_digit($number = $this->readNumber()) ? TokenType::T_INT : TokenType::T_FLOAT, $number),
+            $this->curChar->isDigit() => Token::from(ctype_digit($number = $this->readNumber()) ? TokenType::INT : TokenType::FLOAT, $number),
 
-            $this->curChar->is(self::EOF) => Token::from(TokenType::T_EOF, self::EOF),
+            $this->curChar->is(self::EOF) => Token::from(TokenType::EOF, self::EOF),
 
-            TokenType::isSingleCharToken($this->curChar->toScalar()) => $this->makeTokenAndAdvance(
-                TokenType::lookupToken($this->curChar->toScalar()),
-                $this->curChar->toScalar(),
+            $this->curChar->isSingleChar() && TokenType::fromChar($this->curChar) instanceof TokenType => $this->makeTokenAndAdvance(
+                TokenType::fromChar($this->curChar),
+                $this->curChar->toString(),
             ),
 
-            default => $this->makeTokenAndAdvance(TokenType::T_ILLEGAL, $this->curChar->toScalar()),
+            default => $this->makeTokenAndAdvance(TokenType::ILLEGAL, $this->curChar->toString()),
         };
     }
 
-    private function readChar(): void
+    public function readChar(): void
     {
-        $this->prevChar = $this->curChar;
+        $isEof = $this->isEof();
 
-        $this->curChar = $this->isEnd() ? Char::from(self::EOF) : Char::from($this->input->char($this->readPosition));
+        $this->prevChar = $this->curChar;
+        $this->curChar = $isEof ? Char::from(self::EOF) : Char::from($this->input->char($this->readPosition));
 
         $this->position = $this->readPosition;
         $this->readPosition++;
 
-        if (!$this->isEnd()) {
+        if (!$isEof) {
             $this->peekChar = Char::from($this->input->char($this->readPosition));
         }
     }
 
-    private function skipWhitespaces(): void
+    public function skipWhitespaces(): void
     {
         while ($this->curChar->isWhitespace()) {
             $this->readChar();
         }
     }
 
-    private function curAndPeekCharIs(string $operators): bool
-    {
-        if (!$this->curChar->is($operators[0])) {
-            return false;
-        }
-
-        return $this->peekChar->is($operators[1]);
-    }
-
-    private function makeTwoCharTokenAndAdvance(int $type): Token
+    public function makeTwoCharTokenAndAdvance(TokenType $type): Token
     {
         $this->readChar();
-        $token = Token::from($type, "{$this->prevChar->toScalar()}{$this->curChar->toScalar()}");
+        $token = Token::from($type, "{$this->prevChar}{$this->curChar}");
         $this->readChar();
 
         return $token;
     }
 
-    private function makeTokenAndAdvance(int $type, string $literal): Token
+    public function makeTokenAndAdvance(TokenType $type, string $literal): Token
     {
         $this->readChar();
 
         return Token::from($type, $literal);
     }
 
-    private function readString(): string
+    public function readString(): string
     {
         $position = $this->position + 1;
 
         while (true) {
             $this->readChar();
 
-            if ($this->curChar->is('"') || $this->isEnd()) {
+            if ($this->curChar->is('"') || $this->isEof()) {
                 break;
             }
         }
@@ -137,12 +129,12 @@ final class Lexer
         return $this->input->substr($position, $this->position - $position);
     }
 
-    public function isEnd(): bool
+    public function isEof(): bool
     {
         return $this->readPosition >= $this->input->size();
     }
 
-    private function readIdentifier(): string
+    public function readIdentifier(): string
     {
         $position = $this->position;
 
@@ -153,7 +145,7 @@ final class Lexer
         return $this->input->substr($position, $this->position - $position);
     }
 
-    private function readNumber(): string
+    public function readNumber(): string
     {
         $position = $this->position;
 

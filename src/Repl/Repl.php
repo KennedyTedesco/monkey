@@ -41,7 +41,7 @@ final class Repl
         while (true) {
             $input = readline("\n > ");
 
-            if ($input === 'exit') {
+            if ($input === 'exit' || $input === false) {
                 return;
             }
 
@@ -77,7 +77,10 @@ final class Repl
         echo $monkeyObject->inspect() . PHP_EOL;
     }
 
-    private static function getErrors(array $errors): string
+    /**
+     * @param array<string> $errors
+     */
+    public static function getErrors(array $errors): string
     {
         $out = '';
 

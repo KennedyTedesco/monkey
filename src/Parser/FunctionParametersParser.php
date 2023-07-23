@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace Monkey\Parser;
 
-use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Token\TokenType;
 
 final class FunctionParametersParser
 {
     /**
-     * @return array<Expression>
+     * @return array<IdentifierExpression>
      */
     public function __invoke(Parser $parser): array
     {
         /** @var array<IdentifierExpression> $identifiers */
         $identifiers = [];
 
-        if ($parser->peekToken->is(TokenType::T_RPAREN)) {
+        if ($parser->peekToken()->is(TokenType::RPAREN)) {
             $parser->nextToken();
 
             return $identifiers;
@@ -26,15 +25,15 @@ final class FunctionParametersParser
 
         $parser->nextToken();
 
-        $identifiers[] = new IdentifierExpression($parser->curToken, $parser->curToken->literal());
+        $identifiers[] = new IdentifierExpression($parser->curToken(), $parser->curToken()->literal());
 
-        while ($parser->peekToken->is(TokenType::T_COMMA)) {
+        while ($parser->peekToken()->is(TokenType::COMMA)) {
             $parser->nextToken(2);
 
-            $identifiers[] = new IdentifierExpression($parser->curToken, $parser->curToken->literal());
+            $identifiers[] = new IdentifierExpression($parser->curToken(), $parser->curToken()->literal());
         }
 
-        if (!$parser->expectPeek(TokenType::T_RPAREN)) {
+        if (!$parser->expectPeek(TokenType::RPAREN)) {
             return [];
         }
 

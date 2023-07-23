@@ -13,19 +13,23 @@ use Monkey\Token\TokenType;
 final readonly class IndexExpressionParselet implements InfixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 
     public function parse(Expression $expression): ?Expression
     {
-        $token = $this->parser->curToken;
+        $token = $this->parser->curToken();
 
         $this->parser->nextToken();
 
         $index = $this->parser->parseExpression(Precedence::LOWEST);
 
-        if (!$this->parser->expectPeek(TokenType::T_RBRACKET)) {
+        if (!$index instanceof Expression) {
+            return null;
+        }
+
+        if (!$this->parser->expectPeek(TokenType::RBRACKET)) {
             return null;
         }
 

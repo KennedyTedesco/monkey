@@ -13,15 +13,15 @@ use Monkey\Token\TokenType;
 final readonly class ArrayParselet implements PrefixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 
     public function parse(): Expression
     {
-        $token = $this->parser->curToken;
+        $token = $this->parser->curToken();
 
-        $elements = (new ExpressionListParser())($this->parser, TokenType::T_RBRACKET);
+        $elements = (new ExpressionListParser())($this->parser, TokenType::RBRACKET);
 
         return new ArrayLiteral($token, $elements);
     }

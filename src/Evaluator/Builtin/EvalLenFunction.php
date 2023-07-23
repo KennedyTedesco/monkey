@@ -12,7 +12,7 @@ use Monkey\Object\StringObject;
 
 use function count;
 
-final class EvalLenFunction
+final readonly class EvalLenFunction extends EvalBuiltinFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
@@ -23,8 +23,8 @@ final class EvalLenFunction
         $object = $monkeyObject[0];
 
         return match (true) {
-            $object instanceof StringObject => new IntegerObject(mb_strlen($object->value())),
-            $object instanceof ArrayObject => new IntegerObject(count($object->value())),
+            $object instanceof StringObject => new IntegerObject($object->count()),
+            $object instanceof ArrayObject => new IntegerObject($object->count()),
             default => ErrorObject::invalidArgument('len()', $object->typeLiteral()),
         };
     }

@@ -7,22 +7,22 @@ namespace Monkey\Token;
 final readonly class Token
 {
     public function __construct(
-        private int $type,
-        private string $literal,
+        public TokenType $type,
+        public string $literal,
     ) {
     }
 
-    public static function from(int $type, string $literal): self
+    public static function from(TokenType $type, string $literal): self
     {
         return new self($type, $literal);
     }
 
-    public function is(int $type): bool
+    public function is(TokenType $type): bool
     {
         return $type === $this->type;
     }
 
-    public function type(): int
+    public function type(): TokenType
     {
         return $this->type;
     }

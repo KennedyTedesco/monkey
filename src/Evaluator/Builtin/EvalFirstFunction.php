@@ -11,7 +11,7 @@ use Monkey\Object\NullObject;
 
 use function count;
 
-final class EvalFirstFunction
+final readonly class EvalFirstFunction extends EvalBuiltinFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
@@ -25,7 +25,7 @@ final class EvalFirstFunction
             return ErrorObject::invalidArgument('first()', $object->typeLiteral());
         }
 
-        $elements = $object->value();
+        $elements = $object->value;
 
         if ($elements !== []) {
             return reset($elements);

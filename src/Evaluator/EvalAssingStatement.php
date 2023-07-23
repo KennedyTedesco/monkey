@@ -10,19 +10,19 @@ use Monkey\Object\MonkeyObject;
 
 final readonly class EvalAssingStatement
 {
-    public function __construct(private Evaluator $evaluator, private Environment $environment)
+    public function __construct(public Evaluator $evaluator, public Environment $environment)
     {
     }
 
     public function __invoke(AssignStatement $assignStatement): MonkeyObject
     {
-        $monkeyObject = $this->evaluator->eval($assignStatement->value(), $this->environment);
+        $monkeyObject = $this->evaluator->eval($assignStatement->value, $this->environment);
 
         if ($monkeyObject instanceof ErrorObject) {
             return $monkeyObject;
         }
 
-        $name = $assignStatement->name()->value();
+        $name = $assignStatement->name->value;
         $nameMonkeyObject = $this->environment->get($name);
 
         if (!$nameMonkeyObject instanceof MonkeyObject) {

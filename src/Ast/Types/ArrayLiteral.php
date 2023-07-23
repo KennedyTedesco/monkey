@@ -5,39 +5,34 @@ declare(strict_types=1);
 namespace Monkey\Ast\Types;
 
 use Monkey\Ast\Expressions\Expression;
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
+
+use function count;
 
 final class ArrayLiteral extends Expression
 {
-    public function __construct(
-        Token $token, /* @var array<Expression> */
-        private readonly array $elements,
-    ) {
-        $this->token = $token;
-    }
-
     /**
-     * @return mixed[]
+     * @param array<Expression> $elements
      */
-    public function elements(): array
-    {
-        return $this->elements;
+    public function __construct(
+        public readonly Token $token,
+        public readonly array $elements,
+    ) {
     }
 
     public function toString(): string
     {
-        $out = '';
-        $elements = [];
+        $stringBuilder = StringBuilder::new('[');
 
-        /** @var Expression $element */
-        foreach ($this->elements as $element) {
-            $elements[] = $element->toString();
+        $count = count($this->elements);
+
+        foreach ($this->elements as $index => $element) {
+            $separator = $index !== $count - 1 ? ',' : '';
+
+            $stringBuilder->append("{$element}{$separator}");
         }
 
-        if ($elements !== []) {
-            $out .= implode(',', $elements);
-        }
-
-        return "[{$out}]";
+        return $stringBuilder->append(']')->toString();
     }
 }

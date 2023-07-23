@@ -6,7 +6,7 @@ namespace Monkey\Object;
 
 final readonly class StringObject extends MonkeyObject
 {
-    private string $value;
+    public string $value;
 
     public function __construct(
         string $value,
@@ -14,14 +14,14 @@ final readonly class StringObject extends MonkeyObject
         $this->value = str_replace('\n', "\n", $value);
     }
 
-    public function value(): string
-    {
-        return $this->value;
-    }
-
     public function type(): int
     {
         return self::MO_STRING;
+    }
+
+    public function count(): int
+    {
+        return mb_strlen($this->value);
     }
 
     public function typeLiteral(): string
@@ -30,6 +30,11 @@ final readonly class StringObject extends MonkeyObject
     }
 
     public function inspect(): string
+    {
+        return $this->value;
+    }
+
+    public function value(): string
     {
         return $this->value;
     }

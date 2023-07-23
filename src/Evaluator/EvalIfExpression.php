@@ -13,19 +13,24 @@ use Monkey\Object\NullObject;
 final readonly class EvalIfExpression
 {
     public function __construct(
-        private Evaluator $evaluator,
-        private Environment $environment,
+        public Evaluator $evaluator,
+        public Environment $environment,
     ) {
     }
 
     public function __invoke(IfExpression $ifExpression): MonkeyObject
     {
-        $monkeyObject = $this->evaluator->eval($ifExpression->condition(), $this->environment);
+        $monkeyObject = $this->evaluator->eval($ifExpression->condition, $this->environment);
 
         return match (true) {
             $monkeyObject instanceof ErrorObject => $monkeyObject,
-            (bool)$monkeyObject->value() => $this->evaluator->eval($ifExpression->consequence(), $this->environment),
-            $ifExpression->alternative() instanceof BlockStatement => $this->evaluator->eval($ifExpression->alternative(), $this->environment),
+
+            (bool)$monkeyObject->value() =>
+                $this->evaluator->eval($ifExpression->consequence, $this->environment),
+
+            $ifExpression->alternative instanceof BlockStatement =>
+                $this->evaluator->eval($ifExpression->alternative, $this->environment),
+
             default => NullObject::instance(),
         };
     }

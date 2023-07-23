@@ -4,50 +4,56 @@ declare(strict_types=1);
 
 namespace Monkey\Lexer;
 
-final readonly class Char
+use Stringable;
+
+use function strlen;
+
+final readonly class Char implements Stringable
 {
     public function __construct(
-        private string $ch,
+        public string $char,
     ) {
     }
-
     public static function empty(): self
     {
         return new self('');
     }
-
-    public static function from(string $ch): self
+    public static function from(string $char): self
     {
-        return new self($ch);
+        return new self($char);
     }
-
     public function isWhitespace(): bool
     {
-        return ctype_space($this->ch);
+        return ctype_space($this->char);
     }
-
     public function isLetter(): bool
     {
-        return $this->ch === '_' || ctype_alpha($this->ch);
+        return $this->char === '_' || ctype_alpha($this->char);
     }
-
     public function isAlphanumeric(): bool
     {
-        return $this->ch === '_' || ctype_alnum($this->ch);
+        return $this->char === '_' || ctype_alnum($this->char);
     }
-
     public function isDigit(): bool
     {
-        return ctype_digit($this->ch);
+        return ctype_digit($this->char);
+    }
+    public function is(string $char): bool
+    {
+        return $char === $this->char;
     }
 
-    public function is(string $ch): bool
+    public function isSingleChar(): bool
     {
-        return $ch === $this->ch;
+        return strlen($this->char) === 1;
     }
 
-    public function toScalar(): string
+    public function toString(): string
     {
-        return $this->ch;
+        return $this->char;
+    }
+    public function __toString(): string
+    {
+        return $this->char;
     }
 }

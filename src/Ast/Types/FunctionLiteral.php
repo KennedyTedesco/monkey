@@ -7,46 +7,36 @@ namespace Monkey\Ast\Types;
 use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Statements\BlockStatement;
-use Monkey\Ast\Statements\Statement;
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
+
+use function count;
 
 final class FunctionLiteral extends Expression
 {
-    public function __construct(
-        Token $token, /* @var array<IdentifierExpression> */
-        private readonly array $parameters,
-        private readonly BlockStatement $blockStatement,
-    ) {
-        $this->token = $token;
-    }
-
-    public function body(): BlockStatement
-    {
-        return $this->blockStatement;
-    }
-
     /**
-     * @return array<IdentifierExpression>
+     * @param array<IdentifierExpression> $parameters
      */
-    public function parameters(): array
-    {
-        return $this->parameters;
+    public function __construct(
+        public readonly Token $token,
+        public readonly array $parameters,
+        public readonly BlockStatement $body,
+    ) {
     }
 
     public function toString(): string
     {
-        $out = "{$this->tokenLiteral()}(";
+        $stringBuilder = StringBuilder::new($this->token->literal)
+            ->append('(');
 
-        $params = [];
-        /** @var Statement $parameter */
-        foreach ($this->parameters as $parameter) {
-            $params[] = $parameter->toString();
+        $count = count($this->parameters);
+
+        foreach ($this->parameters as $index => $parameter) {
+            $separator = $index !== $count - 1 ? ',' : '';
+
+            $stringBuilder->append("{$parameter}{$separator}");
         }
 
-        if ($params !== []) {
-            $out .= implode(',', $params);
-        }
-
-        return $out . ") {$this->blockStatement->toString()}";
+        return $stringBuilder->append(") {$this->body}")->toString();
     }
 }

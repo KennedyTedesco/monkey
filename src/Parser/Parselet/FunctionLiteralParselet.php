@@ -14,21 +14,21 @@ use Monkey\Token\TokenType;
 final readonly class FunctionLiteralParselet implements PrefixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 
     public function parse(): ?Expression
     {
-        $token = $this->parser->curToken;
+        $token = $this->parser->curToken();
 
-        if (!$this->parser->expectPeek(TokenType::T_LPAREN)) {
+        if (!$this->parser->expectPeek(TokenType::LPAREN)) {
             return null;
         }
 
         $parameters = (new FunctionParametersParser())($this->parser);
 
-        if (!$this->parser->expectPeek(TokenType::T_LBRACE)) {
+        if (!$this->parser->expectPeek(TokenType::LBRACE)) {
             return null;
         }
 

@@ -16,9 +16,9 @@ test('to string', function () {
 
     $program->addStatement(
         new LetStatement(
-            new Token(TokenType::T_LET, 'let'),
-            new IdentifierExpression(new Token(TokenType::T_IDENT, 'foo'), 'foo'),
-            new IntegerLiteral(new Token(TokenType::T_INT, '10'), 10),
+            new Token(TokenType::LET, 'let'),
+            new IdentifierExpression(new Token(TokenType::IDENT, 'foo'), 'foo'),
+            new IntegerLiteral(new Token(TokenType::INT, '10'), 10),
         ),
     );
 

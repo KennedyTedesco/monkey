@@ -7,13 +7,8 @@ namespace Monkey\Object;
 final readonly class ReturnValueObject extends MonkeyObject
 {
     public function __construct(
-        private MonkeyObject $monkeyObject,
+        public MonkeyObject $value,
     ) {
-    }
-
-    public function value(): MonkeyObject
-    {
-        return $this->monkeyObject;
     }
 
     public function type(): int
@@ -28,6 +23,11 @@ final readonly class ReturnValueObject extends MonkeyObject
 
     public function inspect(): string
     {
-        return $this->monkeyObject->inspect();
+        return $this->value->inspect();
+    }
+
+    public function value(): MonkeyObject
+    {
+        return $this->value;
     }
 }

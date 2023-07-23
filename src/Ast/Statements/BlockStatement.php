@@ -6,33 +6,28 @@ namespace Monkey\Ast\Statements;
 
 namespace Monkey\Ast\Statements;
 
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class BlockStatement extends Statement
 {
-    public function __construct(
-        Token $token,
-        private readonly array $statements,
-    ) {
-        $this->token = $token;
-    }
-
     /**
-     * @return mixed[]
+     * @param array<Statement> $statements
      */
-    public function statements(): array
-    {
-        return $this->statements;
+    public function __construct(
+        public readonly Token $token,
+        public readonly array $statements,
+    ) {
     }
 
     public function toString(): string
     {
-        $out = '';
-        /** @var Statement $statement */
+        $builder = StringBuilder::new();
+
         foreach ($this->statements as $statement) {
-            $out .= $statement->toString();
+            $builder->append($statement);
         }
 
-        return $out;
+        return $builder->toString();
     }
 }

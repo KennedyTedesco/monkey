@@ -11,13 +11,13 @@ use Monkey\Parser\Parser;
 final readonly class BinaryOperatorParselet implements InfixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 
     public function parse(Expression $expression): Expression
     {
-        $token = $this->parser->curToken;
+        $token = $this->parser->curToken();
 
         $this->parser->nextToken();
 

@@ -16,6 +16,6 @@ final class EvalMinusUnaryOperatorExpression
             return ErrorObject::unknownOperator("-{$monkeyObject->typeLiteral()}");
         }
 
-        return new IntegerObject($monkeyObject->value() * (-1));
+        return new IntegerObject($monkeyObject->value * (-1));
     }
 }

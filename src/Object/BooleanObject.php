@@ -7,13 +7,8 @@ namespace Monkey\Object;
 final readonly class BooleanObject extends MonkeyObject
 {
     public function __construct(
-        private bool $value,
+        public bool $value,
     ) {
-    }
-
-    public function value(): bool
-    {
-        return $this->value;
     }
 
     public function type(): int
@@ -48,5 +43,10 @@ final readonly class BooleanObject extends MonkeyObject
         }
 
         return self::false();
+    }
+
+    public function value(): bool
+    {
+        return $this->value;
     }
 }

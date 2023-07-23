@@ -20,4 +20,4 @@ jobs:
       - name: Install Dependencies
         run: composer update --no-interaction --no-progress
       - name: Run Tests
-        run: composer pest
+        run: composer test

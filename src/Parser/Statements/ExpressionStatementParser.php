@@ -14,14 +14,14 @@ final class ExpressionStatementParser
 {
     public function __invoke(Parser $parser): ExpressionStatement
     {
-        $token = $parser->curToken;
+        $token = $parser->curToken();
 
         /** @var Expression $expression */
         $expression = $parser->parseExpression(Precedence::LOWEST);
 
         $expressionStatement = new ExpressionStatement($token, $expression);
 
-        if ($parser->peekToken->is(TokenType::T_SEMICOLON)) {
+        if ($parser->peekToken()->is(TokenType::SEMICOLON)) {
             $parser->nextToken();
         }
 

@@ -11,21 +11,21 @@ use Monkey\Object\MonkeyObject;
 final readonly class EvalLetStatement
 {
     public function __construct(
-        private Evaluator $evaluator,
-        private Environment $environment,
+        public Evaluator $evaluator,
+        public Environment $environment,
     ) {
     }
 
     public function __invoke(LetStatement $letStatement): MonkeyObject
     {
-        $monkeyObject = $this->evaluator->eval($letStatement->value(), $this->environment);
+        $monkeyObject = $this->evaluator->eval($letStatement->value, $this->environment);
 
         if ($monkeyObject instanceof ErrorObject) {
             return $monkeyObject;
         }
 
-        $this->environment->set($letStatement->name()->value(), $monkeyObject);
+        $this->environment->set($letStatement->name->value, $monkeyObject);
 
-        return $this->evaluator->eval($letStatement->name(), $this->environment);
+        return $this->evaluator->eval($letStatement->name, $this->environment);
     }
 }

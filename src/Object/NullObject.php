@@ -6,9 +6,9 @@ namespace Monkey\Object;
 
 final readonly class NullObject extends MonkeyObject
 {
-    public function value()
-    {
-        return null;
+    public function __construct(
+        public null $value = null,
+    ) {
     }
 
     public function type(): int
@@ -29,5 +29,10 @@ final readonly class NullObject extends MonkeyObject
     public static function instance(): self
     {
         return new self();
+    }
+
+    public function value(): null
+    {
+        return $this->value;
     }
 }

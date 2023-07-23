@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Monkey\Parser\Statements;
 
+use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Statements\AssignStatement;
 use Monkey\Parser\Parser;
@@ -14,17 +15,18 @@ final class AssignStatementParser
 {
     public function __invoke(Parser $parser): ?AssignStatement
     {
-        $token = $parser->curToken;
+        $token = $parser->curToken();
 
-        if (!$parser->expectPeek(TokenType::T_ASSIGN)) {
+        if (!$parser->expectPeek(TokenType::ASSIGN)) {
             return null;
         }
 
         $parser->nextToken();
 
+        /** @var Expression $value */
         $value = $parser->parseExpression(Precedence::LOWEST);
 
-        if ($parser->peekToken->is(TokenType::T_SEMICOLON)) {
+        if ($parser->peekToken()->is(TokenType::SEMICOLON)) {
             $parser->nextToken();
         }
 

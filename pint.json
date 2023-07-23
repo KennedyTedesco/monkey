@@ -171,6 +171,7 @@
       "equal": false,
       "identical": false,
       "less_and_greater": false
-    }
+    },
+    "no_multiline_whitespace_around_double_arrow": false
   }
 }

@@ -10,19 +10,13 @@ use Monkey\Token\Token;
 final class IntegerLiteral extends Expression
 {
     public function __construct(
-        Token $token,
-        private readonly int $value,
+        public readonly Token $token,
+        public readonly int $value,
     ) {
-        $this->token = $token;
-    }
-
-    public function value(): int
-    {
-        return $this->value;
     }
 
     public function toString(): string
     {
-        return $this->tokenLiteral();
+        return $this->token->literal;
     }
 }

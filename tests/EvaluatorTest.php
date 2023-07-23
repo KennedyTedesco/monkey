@@ -23,9 +23,9 @@ function testObjectValue(MonkeyObject $object, $expected)
     } elseif ($object instanceof StringObject) {
         testStringObject($object, $expected);
     } elseif ($object instanceof ErrorObject) {
-        expect($expected)->toBe($object->value());
+        expect($expected)->toBe($object->value);
     } elseif ($object instanceof NullObject) {
-        expect($expected)->toBe($object->value());
+        expect($expected)->toBe($object->value);
     } elseif ($object instanceof BooleanObject) {
         testBooleanObject($object, $expected);
     }
@@ -35,28 +35,28 @@ function testIntegerObject(MonkeyObject $object, int $expected)
 {
     expect($object)->toBeInstanceOf(IntegerObject::class);
     expect($object->type())->toBe(MonkeyObject::MO_INT);
-    expect($expected)->toBe($object->value());
+    expect($expected)->toBe($object->value);
 }
 
 function testStringObject(MonkeyObject $object, string $expected)
 {
     expect($object)->toBeInstanceOf(StringObject::class);
     expect($object->type())->toBe(MonkeyObject::MO_STRING);
-    expect($expected)->toBe($object->value());
+    expect($expected)->toBe($object->value);
 }
 
 function testFloatObject(MonkeyObject $object, float $expected)
 {
     expect($object)->toBeInstanceOf(FloatObject::class);
     expect($object->type())->toBe(MonkeyObject::MO_FLOAT);
-    expect($expected)->toBe($object->value());
+    expect($expected)->toBe($object->value);
 }
 
 function testBooleanObject(MonkeyObject $object, bool $expected)
 {
     expect($object)->toBeInstanceOf(BooleanObject::class);
     expect($object->type())->toBe(MonkeyObject::MO_BOOL);
-    expect($expected)->toBe($object->value());
+    expect($expected)->toBe($object->value);
 }
 
 test('eval integer expressions', function (string $input, $expected) {
@@ -204,10 +204,10 @@ test('function object', function () {
     $object = evalProgram('fn(x) { x + 2; };');
 
     expect($object)->toBeInstanceOf(FunctionObject::class);
-    expect($object->parameters())->toHaveCount(1);
+    expect($object->parameters)->toHaveCount(1);
 
-    expect($object->parameters()[0]->toString())->toBe('x');
-    expect($object->body()->toString())->toBe('(x + 2)');
+    expect($object->parameters[0]->toString())->toBe('x');
+    expect($object->body->toString())->toBe('(x + 2)');
 });
 
 test('eval function', function (string $input, int $expected) {
@@ -256,7 +256,7 @@ test('eval array literals', function (string $input, $expected) {
     $arrayObject = evalProgram($input);
 
     /** @var MonkeyObject $element */
-    foreach ($arrayObject->value() as $index => $element) {
+    foreach ($arrayObject->value as $index => $element) {
         testObjectValue($element, $expected[$index]);
     }
 })->with([

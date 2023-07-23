@@ -13,7 +13,7 @@ final class EvalNotOperatorExpression
     public function __invoke(MonkeyObject $monkeyObject): MonkeyObject
     {
         return match (true) {
-            $monkeyObject instanceof BooleanObject => BooleanObject::from(!$monkeyObject->value()),
+            $monkeyObject instanceof BooleanObject => BooleanObject::from(!$monkeyObject->value),
             $monkeyObject instanceof NullObject => BooleanObject::true(),
             default => BooleanObject::false(),
         };

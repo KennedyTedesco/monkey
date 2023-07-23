@@ -12,12 +12,12 @@ final class ExpressionListParser
     /**
      * @return array<Expression>
      */
-    public function __invoke(Parser $parser, int $endTokenType): array
+    public function __invoke(Parser $parser, TokenType $endTokenType): array
     {
         /** @var array<Expression> $args */
         $args = [];
 
-        if ($parser->peekToken->is($endTokenType)) {
+        if ($parser->peekToken()->is($endTokenType)) {
             $parser->nextToken();
 
             return $args;
@@ -27,7 +27,7 @@ final class ExpressionListParser
 
         $args[] = $parser->parseExpression(Precedence::LOWEST);
 
-        while ($parser->peekToken->is(TokenType::T_COMMA)) {
+        while ($parser->peekToken()->is(TokenType::COMMA)) {
             $parser->nextToken(2);
 
             $args[] = $parser->parseExpression(Precedence::LOWEST);
@@ -37,6 +37,6 @@ final class ExpressionListParser
             return [];
         }
 
-        return $args;
+        return array_filter($args);
     }
 }

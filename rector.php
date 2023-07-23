@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 
@@ -17,7 +18,10 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests',
     ]);
 
-    $rectorConfig->import(SetList::NAMING);
+    $rectorConfig->skip([
+        ClosureToArrowFunctionRector::class,
+    ]);
+
     $rectorConfig->import(SetList::CODE_QUALITY);
     $rectorConfig->import(SetList::EARLY_RETURN);
     $rectorConfig->import(SetList::TYPE_DECLARATION);

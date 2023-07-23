@@ -11,7 +11,7 @@ use Monkey\Object\NullObject;
 
 use function count;
 
-final class EvalLastFunction
+final readonly class EvalLastFunction extends EvalBuiltinFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
@@ -25,7 +25,7 @@ final class EvalLastFunction
             return ErrorObject::invalidArgument('last()', $object->typeLiteral());
         }
 
-        $elements = $object->value();
+        $elements = $object->value;
 
         if ($elements !== []) {
             return end($elements);

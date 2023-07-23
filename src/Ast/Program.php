@@ -6,6 +6,8 @@ namespace Monkey\Ast;
 
 use Monkey\Ast\Statements\Statement;
 
+use Monkey\Support\StringBuilder;
+
 use function count;
 
 final class Program extends Node
@@ -13,13 +15,13 @@ final class Program extends Node
     /** @var array<Statement> */
     private array $statements = [];
 
-    public function statement(int $index): Node
+    public function statement(int $index): Statement
     {
         return $this->statements[$index];
     }
 
     /**
-     * @return array<Statement>
+     * @return Statement[]
      */
     public function statements(): array
     {
@@ -36,23 +38,14 @@ final class Program extends Node
         return count($this->statements);
     }
 
-    public function tokenLiteral(): string
-    {
-        if ($this->count() <= 0) {
-            return '';
-        }
-
-        return $this->statement(0)->tokenLiteral();
-    }
-
     public function toString(): string
     {
-        $out = '';
-        /** @var Statement $statement */
+        $stringBuilder = StringBuilder::new();
+
         foreach ($this->statements as $statement) {
-            $out .= $statement->toString();
+            $stringBuilder->append($statement);
         }
 
-        return $out;
+        return $stringBuilder->toString();
     }
 }

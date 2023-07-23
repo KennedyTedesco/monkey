@@ -11,12 +11,12 @@ use Monkey\Parser\Parser;
 final readonly class IdentifierParselet implements PrefixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 
     public function parse(): Expression
     {
-        return new IdentifierExpression($this->parser->curToken, $this->parser->curToken->literal());
+        return new IdentifierExpression($this->parser->curToken(), $this->parser->curToken()->literal());
     }
 }

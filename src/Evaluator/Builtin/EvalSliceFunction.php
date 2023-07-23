@@ -13,7 +13,7 @@ use Monkey\Object\StringObject;
 use function array_slice;
 use function count;
 
-final class EvalSliceFunction
+final readonly class EvalSliceFunction extends EvalBuiltinFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
@@ -43,18 +43,18 @@ final class EvalSliceFunction
 
         if ($object instanceof ArrayObject) {
             return new ArrayObject(
-                array_slice($object->value(), $offset->value(), $length instanceof IntegerObject ? $length->value() : null),
+                array_slice($object->value, $offset->value, $length instanceof IntegerObject ? $length->value : null),
             );
         }
 
         if ($object instanceof StringObject) {
             $params = [
-                $object->value(),
-                $offset->value(),
+                $object->value,
+                $offset->value,
             ];
 
             if ($length instanceof IntegerObject) {
-                $params[] = $length->value();
+                $params[] = $length->value;
             }
 
             return new StringObject(mb_substr(...$params));

@@ -12,13 +12,13 @@ use Monkey\Parser\Precedence;
 final readonly class UnaryOperatorParselet implements PrefixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 
     public function parse(): Expression
     {
-        $token = $this->parser->curToken;
+        $token = $this->parser->curToken();
 
         $this->parser->nextToken();
 

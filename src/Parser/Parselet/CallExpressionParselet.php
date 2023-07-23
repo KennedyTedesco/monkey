@@ -13,14 +13,16 @@ use Monkey\Token\TokenType;
 final readonly class CallExpressionParselet implements InfixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 
     public function parse(Expression $expression): Expression
     {
-        $arguments = (new ExpressionListParser())($this->parser, TokenType::T_RPAREN);
+        $token = $this->parser->curToken();
 
-        return new CallExpression($this->parser->curToken, $expression, $arguments);
+        $arguments = (new ExpressionListParser())($this->parser, TokenType::RPAREN);
+
+        return new CallExpression($token, $expression, $arguments);
     }
 }

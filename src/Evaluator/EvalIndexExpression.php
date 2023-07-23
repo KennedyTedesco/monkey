@@ -14,27 +14,27 @@ use Monkey\Object\NullObject;
 final readonly class EvalIndexExpression
 {
     public function __construct(
-        private Evaluator $evaluator,
-        private Environment $environment,
+        public Evaluator $evaluator,
+        public Environment $environment,
     ) {
     }
 
     public function __invoke(IndexExpression $indexExpression): MonkeyObject
     {
-        $monkeyObject = $this->evaluator->eval($indexExpression->left(), $this->environment);
+        $monkeyObject = $this->evaluator->eval($indexExpression->left, $this->environment);
 
         if ($monkeyObject instanceof ErrorObject) {
             return $monkeyObject;
         }
 
-        $index = $this->evaluator->eval($indexExpression->index(), $this->environment);
+        $index = $this->evaluator->eval($indexExpression->index, $this->environment);
 
         if ($index instanceof ErrorObject) {
             return $index;
         }
 
         if ($monkeyObject instanceof ArrayObject && $index instanceof IntegerObject) {
-            return $monkeyObject->value()[$index->value()] ?? NullObject::instance();
+            return $monkeyObject->value[$index->value] ?? NullObject::instance();
         }
 
         return ErrorObject::invalidIndexOperator($index->typeLiteral());

@@ -4,30 +4,25 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Expressions;
 
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
 
 final class UnaryExpression extends Expression
 {
     public function __construct(
-        Token $token,
-        private readonly string $operator,
-        private readonly Expression $expression,
+        public readonly Token $token,
+        public readonly string $operator,
+        public readonly Expression $right,
     ) {
-        $this->token = $token;
-    }
-
-    public function right(): Expression
-    {
-        return $this->expression;
-    }
-
-    public function operator(): string
-    {
-        return $this->operator;
     }
 
     public function toString(): string
     {
-        return "({$this->operator}{$this->expression->toString()})";
+        return StringBuilder::new()
+            ->append('(')
+            ->append($this->operator)
+            ->append($this->right)
+            ->append(')')
+            ->toString();
     }
 }

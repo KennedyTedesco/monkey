@@ -11,12 +11,12 @@ use Monkey\Parser\Parser;
 final readonly class PostfixOperatorParselet implements PostfixParselet
 {
     public function __construct(
-        private Parser $parser,
+        public Parser $parser,
     ) {
     }
 
     public function parse(): Expression
     {
-        return new PostfixExpression($this->parser->prevToken, $this->parser->curToken->literal());
+        return new PostfixExpression($this->parser->prevToken(), $this->parser->curToken()->literal());
     }
 }

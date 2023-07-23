@@ -10,7 +10,7 @@ use Monkey\Object\NullObject;
 
 use function count;
 
-final class EvalPutsFunction
+final readonly class EvalPutsFunction extends EvalBuiltinFunction
 {
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
@@ -18,7 +18,9 @@ final class EvalPutsFunction
             return ErrorObject::wrongNumberOfArguments(count($monkeyObject), 1);
         }
 
-        echo implode('', array_map(fn (MonkeyObject $monkeyObject): string => $monkeyObject->inspect(), $monkeyObject));
+        echo implode('', array_map(function (MonkeyObject $monkeyObject): string {
+            return $monkeyObject->inspect();
+        }, $monkeyObject));
 
         return NullObject::instance();
     }

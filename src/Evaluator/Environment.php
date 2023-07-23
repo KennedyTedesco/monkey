@@ -9,10 +9,10 @@ use Monkey\Object\MonkeyObject;
 final class Environment
 {
     /** @var array<MonkeyObject> */
-    private array $map = [];
+    public array $map = [];
 
     public function __construct(
-        private readonly ?self $outer = null,
+        public readonly ?self $outer = null,
     ) {
     }
 

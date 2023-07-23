@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Monkey\Evaluator\Builtin;
 
 use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Evaluator\Evaluator;
 use Monkey\Object\ArrayObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FunctionObject;
@@ -13,13 +12,8 @@ use Monkey\Object\MonkeyObject;
 
 use function count;
 
-final readonly class EvalMapFunction
+final readonly class EvalMapFunction extends EvalBuiltinFunction
 {
-    public function __construct(
-        private Evaluator $evaluator,
-    ) {
-    }
-
     public function __invoke(MonkeyObject ...$monkeyObject): MonkeyObject
     {
         if (count($monkeyObject) !== 2) {
@@ -38,21 +32,21 @@ final readonly class EvalMapFunction
             return ErrorObject::invalidArgument('map()', $callback->typeLiteral());
         }
 
-        if (1 !== (is_countable($callback->parameters()) ? count($callback->parameters()) : 0)) {
+        if (count($callback->parameters) !== 1) {
             return ErrorObject::error('the callback of map accepts one parameter only.');
         }
 
-        $environment = clone $callback->environment();
+        $environment = clone $callback->environment;
 
         /** @var IdentifierExpression $identifierExpression */
         $identifierExpression = $callback->parameter(0);
 
         $elements = [];
 
-        foreach ($array->value() as $value) {
-            $environment->set($identifierExpression->value(), $value);
+        foreach ($array->value as $value) {
+            $environment->set($identifierExpression->value, $value);
 
-            $elements[] = $this->evaluator->eval($callback->body(), $environment);
+            $elements[] = $this->evaluator->eval($callback->body, $environment);
         }
 
         return new ArrayObject($elements);

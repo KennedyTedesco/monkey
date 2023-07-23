@@ -4,46 +4,35 @@ declare(strict_types=1);
 
 namespace Monkey\Ast\Expressions;
 
+use Monkey\Support\StringBuilder;
 use Monkey\Token\Token;
+
+use function count;
 
 final class CallExpression extends Expression
 {
-    public function __construct(
-        Token $token,
-        private readonly Expression $expression,
-        /* @var array<Expression> */
-        private readonly array $arguments,
-    ) {
-        $this->token = $token;
-    }
-
-    public function function(): Expression
-    {
-        return $this->expression;
-    }
-
     /**
-     * @return mixed[]
+     * @param array<Expression> $arguments
      */
-    public function arguments(): array
-    {
-        return $this->arguments;
+    public function __construct(
+        public readonly Token $token,
+        public readonly Expression $function,
+        public readonly array $arguments,
+    ) {
     }
 
     public function toString(): string
     {
-        $out = "{$this->expression->toString()}(";
+        $stringBuilder = StringBuilder::new($this->function)->append('(');
 
-        $args = [];
-        /** @var Expression $argument */
-        foreach ($this->arguments as $argument) {
-            $args[] = $argument->toString();
+        $count = count($this->arguments);
+
+        foreach ($this->arguments as $index => $argument) {
+            $separator = $index !== $count - 1 ? ', ' : '';
+
+            $stringBuilder->append("{$argument}{$separator}");
         }
 
-        if ($args !== []) {
-            $out .= implode(', ', $args);
-        }
-
-        return $out . ')';
+        return $stringBuilder->append(')')->toString();
     }
 }
