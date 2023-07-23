@@ -11,49 +11,49 @@ use function strlen;
 final readonly class Char implements Stringable
 {
     public function __construct(
-        public string $ch,
+        public string $char,
     ) {
     }
     public static function empty(): self
     {
         return new self('');
     }
-    public static function from(string $ch): self
+    public static function from(string $char): self
     {
-        return new self($ch);
+        return new self($char);
     }
     public function isWhitespace(): bool
     {
-        return ctype_space($this->ch);
+        return ctype_space($this->char);
     }
     public function isLetter(): bool
     {
-        return $this->ch === '_' || ctype_alpha($this->ch);
+        return $this->char === '_' || ctype_alpha($this->char);
     }
     public function isAlphanumeric(): bool
     {
-        return $this->ch === '_' || ctype_alnum($this->ch);
+        return $this->char === '_' || ctype_alnum($this->char);
     }
     public function isDigit(): bool
     {
-        return ctype_digit($this->ch);
+        return ctype_digit($this->char);
     }
-    public function is(string $ch): bool
+    public function is(string $char): bool
     {
-        return $ch === $this->ch;
+        return $char === $this->char;
     }
 
     public function isSingleChar(): bool
     {
-        return strlen($this->ch) === 1;
+        return strlen($this->char) === 1;
     }
 
     public function toString(): string
     {
-        return $this->ch;
+        return $this->char;
     }
     public function __toString(): string
     {
-        return $this->ch;
+        return $this->char;
     }
 }
