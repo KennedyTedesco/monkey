@@ -18,7 +18,9 @@ final readonly class EvalPutsFunction extends EvalBuiltinFunction
             return ErrorObject::wrongNumberOfArguments(count($monkeyObject), 1);
         }
 
-        echo implode('', array_map(fn (MonkeyObject $monkeyObject): string => $monkeyObject->inspect(), $monkeyObject));
+        echo implode('', array_map(function (MonkeyObject $monkeyObject): string {
+            return $monkeyObject->inspect();
+        }, $monkeyObject));
 
         return NullObject::instance();
     }
