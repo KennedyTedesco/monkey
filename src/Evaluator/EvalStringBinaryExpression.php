@@ -17,9 +17,9 @@ final class EvalStringBinaryExpression
         StringObject $right,
     ): MonkeyObject {
         return match ($operator) {
-            '+' => new StringObject("{$left->value}{$right->value}"),
-            '!=' => BooleanObject::from($left->value !== $right->value),
-            '==' => BooleanObject::from($left->value === $right->value),
+            '+' => new StringObject("{$left->value()}{$right->value()}"),
+            '!=' => BooleanObject::from($left->value() !== $right->value()),
+            '==' => BooleanObject::from($left->value() === $right->value()),
             default => ErrorObject::unknownOperator($left->typeLiteral(), $operator, $right->typeLiteral()),
         };
     }
