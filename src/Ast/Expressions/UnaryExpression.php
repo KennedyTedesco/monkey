@@ -10,11 +10,10 @@ use Monkey\Token\Token;
 final class UnaryExpression extends Expression
 {
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         public readonly string $operator,
         public readonly Expression $right,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string

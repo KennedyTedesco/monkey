@@ -11,12 +11,11 @@ use Monkey\Token\Token;
 final class IfExpression extends Expression
 {
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         public readonly Expression $condition,
         public readonly BlockStatement $consequence,
         public readonly ?BlockStatement $alternative = null,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string

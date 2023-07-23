@@ -7,7 +7,3 @@ parameters:
     checkMissingIterableValueType: true
     inferPrivatePropertyTypeFromConstructor: true
     checkUninitializedProperties: true
-    unused_public:
-        methods: true
-        properties: true
-        constants: true

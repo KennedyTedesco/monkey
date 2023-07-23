@@ -12,10 +12,9 @@ use Monkey\Token\Token;
 final class BlockStatement extends Statement
 {
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         public readonly array $statements,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string

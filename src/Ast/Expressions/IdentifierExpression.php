@@ -9,10 +9,9 @@ use Monkey\Token\Token;
 final class IdentifierExpression extends Expression
 {
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         public readonly string $value,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string

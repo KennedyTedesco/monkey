@@ -12,17 +12,16 @@ use Monkey\Token\Token;
 final class AssignStatement extends Statement
 {
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         public readonly IdentifierExpression $name,
         public readonly Expression $value,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string
     {
         return StringBuilder::new()
-            ->append($this->name->tokenLiteral())
+            ->append($this->token->literal)
             ->append(' = ')
             ->append($this->value->toString())
             ->append(';')

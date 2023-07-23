@@ -10,11 +10,10 @@ use Monkey\Token\Token;
 final class IndexExpression extends Expression
 {
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         public readonly Expression $left,
         public readonly Expression $index,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string

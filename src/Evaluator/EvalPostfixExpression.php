@@ -18,7 +18,7 @@ final readonly class EvalPostfixExpression
 
     public function __invoke(PostfixExpression $postfixExpression): MonkeyObject
     {
-        $identifier = $postfixExpression->tokenLiteral();
+        $identifier = $postfixExpression->token->literal;
 
         $monkeyObject = $this->environment->get($identifier);
 

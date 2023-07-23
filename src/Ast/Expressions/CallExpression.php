@@ -15,11 +15,10 @@ final class CallExpression extends Expression
      * @param array<Expression> $arguments
      */
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         public readonly Expression $function,
         public readonly array $arguments,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string

@@ -12,7 +12,8 @@ use function count;
 
 final class Program extends Node
 {
-    public array $statements = [];
+    /** @var array<Statement> */
+    private array $statements = [];
 
     public function statement(int $index): Statement
     {
@@ -32,15 +33,6 @@ final class Program extends Node
     public function count(): int
     {
         return count($this->statements);
-    }
-
-    public function tokenLiteral(): string
-    {
-        if ($this->count() <= 0) {
-            return '';
-        }
-
-        return $this->statement(0)->tokenLiteral();
     }
 
     public function toString(): string

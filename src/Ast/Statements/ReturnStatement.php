@@ -13,16 +13,15 @@ use Monkey\Token\Token;
 final class ReturnStatement extends Statement
 {
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         public readonly Expression $value,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string
     {
         return StringBuilder::new()
-            ->append($this->tokenLiteral())
+            ->append($this->token->literal)
             ->appendSpace()
             ->append($this->value)
             ->append(';')

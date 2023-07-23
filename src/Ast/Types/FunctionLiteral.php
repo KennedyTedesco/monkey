@@ -15,17 +15,16 @@ use function count;
 final class FunctionLiteral extends Expression
 {
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         /* @var array<IdentifierExpression> */
         public readonly array $parameters,
         public readonly BlockStatement $body,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string
     {
-        $stringBuilder = StringBuilder::new($this->tokenLiteral())
+        $stringBuilder = StringBuilder::new($this->token->literal)
             ->append('(');
 
         $count = count($this->parameters);

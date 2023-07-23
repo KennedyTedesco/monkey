@@ -10,14 +10,13 @@ use Monkey\Token\Token;
 final class BooleanLiteral extends Expression
 {
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         public readonly bool $value,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string
     {
-        return $this->tokenLiteral();
+        return $this->token->literal;
     }
 }

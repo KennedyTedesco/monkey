@@ -12,7 +12,7 @@ use Monkey\Token\Token;
 final class LetStatement extends Statement
 {
     public function __construct(
-        public Token $token,
+        public readonly Token $token,
         public readonly IdentifierExpression $name,
         public readonly Expression $value,
     ) {
@@ -21,9 +21,9 @@ final class LetStatement extends Statement
     public function toString(): string
     {
         return StringBuilder::new()
-            ->append($this->tokenLiteral())
+            ->append($this->token->literal)
             ->appendSpace()
-            ->append($this->name->tokenLiteral())
+            ->append($this->name->token->literal)
             ->append(' = ')
             ->append($this->value)
             ->append(';')

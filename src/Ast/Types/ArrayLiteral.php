@@ -13,11 +13,10 @@ use function count;
 final class ArrayLiteral extends Expression
 {
     public function __construct(
-        Token $token,
+        public readonly Token $token,
         /* @var array<Expression> */
         public readonly array $elements,
     ) {
-        $this->token = $token;
     }
 
     public function toString(): string
