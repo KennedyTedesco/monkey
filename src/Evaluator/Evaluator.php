@@ -102,7 +102,6 @@ final class Evaluator
     {
         $result = [];
 
-        /** @var Expression $expression */
         foreach ($expressions as $expression) {
             $object = $this->eval($expression, $environment);
 
