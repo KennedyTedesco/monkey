@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Monkey\Parser;
 
-use Monkey\Ast\Expressions\Expression;
 use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Token\TokenType;
 
 final class FunctionParametersParser
 {
     /**
-     * @return array<Expression>
+     * @return array<IdentifierExpression>
      */
     public function __invoke(Parser $parser): array
     {
