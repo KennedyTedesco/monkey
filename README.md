@@ -37,15 +37,13 @@ The Monkey Programming Language & Interpreter written in **PHP**.
 A Fibonacci sequence using recursion:
 
 ```javascript
-let fibonacci = fn(x)
-{
+let fibonacci = fn(x) {
     if (x == 0 || x == 1) {
         return x;
     }
 
     return fibonacci(x - 1) + fibonacci(x - 2);
-}
-;
+};
 
 puts(fibonacci(10));
 ```
@@ -53,8 +51,7 @@ puts(fibonacci(10));
 A Fibonacci sequence using loop (much faster):
 
 ```javascript
-let fibonacci = fn(num)
-{
+let fibonacci = fn(num) {
     let a = 0;
     let b = 1;
     let temp = 0;
@@ -67,8 +64,7 @@ let fibonacci = fn(num)
     }
 
     return a;
-}
-;
+};
 
 puts(fibonacci(32));
 ```
@@ -76,28 +72,21 @@ puts(fibonacci(32));
 A raw implementation of mapping an array:
 
 ```javascript
-let rawMap = fn(arr, callback)
-{
-    let iter = fn(arr, accumulated)
-    {
+let rawMap = fn(arr, callback) {
+    let iter = fn(arr, accumulated) {
         if (len(arr) == 0) {
             return accumulated;
         }
 
         return iter(slice(arr, 1), push(accumulated, callback(first(arr))));
-    }
-    ;
+    };
 
     return iter(arr, []);
-}
-;
+};
 
-let foo = rawMap([1, 2, 3, 4], fn(x)
-{
+let foo = rawMap([1, 2, 3, 4], fn(x) {
     x * 2
-}
-)
-;
+});
 
 puts(foo); // [2, 4, 6, 8]
 ```
@@ -105,12 +94,9 @@ puts(foo); // [2, 4, 6, 8]
 Or, you can just use the builtin function `map()`:
 
 ```javascript
-let foo = map([1, 2, 3, 4], fn(x)
-{
+let foo = map([1, 2, 3, 4], fn(x) {
     x * 2
-}
-)
-;
+});
 
 puts(foo); // [2, 4, 6, 8]
 ```
