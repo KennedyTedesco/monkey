@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.4'
           tools: composer:v2
           coverage: none
-          ini-values: opcache.enable_cli=1, opcache.jit=tracing, opcache.jit_buffer_size=64M
+          ini-values: opcache.enable_cli=1, opcache.jit=tracing, opcache.jit_buffer_size=256M
       - name: Install Dependencies
         run: composer update --no-interaction --no-progress
       - name: Run Tests
