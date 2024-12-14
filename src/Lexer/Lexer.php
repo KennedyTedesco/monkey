@@ -58,12 +58,21 @@ final class Lexer
 
             $this->curChar->is('"') => $this->makeTokenAndAdvance(TokenType::STRING, $this->readString()),
 
-            $this->curChar->isLetter() => Token::from(
-                TokenType::fromChar($identifier = $this->readIdentifier()) ?? TokenType::IDENT,
-                $identifier,
-            ),
+            $this->curChar->isLetter() => (function (): Token {
+                $identifier = $this->readIdentifier();
 
-            $this->curChar->isDigit() => Token::from(ctype_digit($number = $this->readNumber()) ? TokenType::INT : TokenType::FLOAT, $number),
+                $type = TokenType::fromChar($identifier) ?? TokenType::IDENT;
+
+                return Token::from($type, $identifier);
+            })(),
+
+            $this->curChar->isDigit() => (function (): Token {
+                $number = $this->readNumber();
+
+                $type = ctype_digit($number) ? TokenType::INT : TokenType::FLOAT;
+
+                return Token::from($type, $number);
+            })(),
 
             $this->curChar->is(self::EOF) => Token::from(TokenType::EOF, self::EOF),
 

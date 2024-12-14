@@ -7,13 +7,13 @@ namespace Monkey\Object;
 final readonly class NullObject extends MonkeyObject
 {
     public function __construct(
-        public null $value = null,
+        public null $value,
     ) {
     }
 
     public static function instance(): self
     {
-        return new self();
+        return new self(null);
     }
 
     public function type(): int

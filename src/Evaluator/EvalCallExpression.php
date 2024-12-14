@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Monkey\Evaluator;
 
 use Monkey\Ast\Expressions\CallExpression;
-use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Object\BuiltinFunctionObject;
 use Monkey\Object\ErrorObject;
 use Monkey\Object\FunctionObject;
@@ -57,6 +56,7 @@ final readonly class EvalCallExpression
         }
 
         if ($monkeyObject instanceof BuiltinFunctionObject) {
+            /** @phpstan-ignore-next-line */
             return call_user_func($monkeyObject->value, ...$args);
         }
 
@@ -70,7 +70,6 @@ final readonly class EvalCallExpression
     {
         $environment = new Environment($functionObject->environment);
 
-        /** @var IdentifierExpression $identifierExpression */
         foreach ($functionObject->parameters as $index => $identifierExpression) {
             $environment->set($identifierExpression->value, $args[$index]);
         }
