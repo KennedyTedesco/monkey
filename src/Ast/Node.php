@@ -12,5 +12,6 @@ abstract class Node implements Stringable
     {
         return $this->toString();
     }
+
     abstract public function toString(): string;
 }

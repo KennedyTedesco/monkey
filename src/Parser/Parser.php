@@ -59,6 +59,7 @@ final class Parser
         TokenType::OR->value => Precedence::OR,
         TokenType::POWER->value => Precedence::POWER,
     ];
+
     private ?Token $prevToken = null;
 
     private ?Token $curToken = null;

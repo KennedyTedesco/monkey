@@ -9,7 +9,7 @@ use Monkey\Token\TokenType;
 
 final class Lexer
 {
-    public const EOF = "\0";
+    public const string EOF = "\0";
 
     public readonly Input $input;
 

@@ -120,9 +120,7 @@ final class Evaluator
         ];
 
         foreach ($builtinFunctions as $funcName => $evalClassName) {
-            BuiltinFunction::set($funcName, function (MonkeyObject ...$monkeyObject) use ($evalClassName): MonkeyObject {
-                return call_user_func(new $evalClassName($this), ...$monkeyObject);
-            });
+            BuiltinFunction::set($funcName, fn (MonkeyObject ...$monkeyObject): MonkeyObject => call_user_func(new $evalClassName($this), ...$monkeyObject));
         }
     }
 }
