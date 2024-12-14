@@ -9,7 +9,8 @@
     "rector/rector": "^2.0.3"
   },
   "require": {
-    "php": "^8.4"
+    "php": "^8.4",
+    "ext-readline": "*"
   },
   "autoload": {
     "psr-4": {

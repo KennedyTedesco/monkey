@@ -3,10 +3,17 @@
 
 declare(strict_types=1);
 
+require 'vendor/autoload.php';
+
+use Monkey\Monkey;
+
 if (PHP_SAPI !== 'cli') {
     exit;
 }
 
-require 'vendor/autoload.php';
+if (!isset($GLOBALS['argv']) || !is_array($GLOBALS['argv'])) {
+    exit(1);
+}
 
-require __DIR__ . '/src/monkey.php';
+$cli = new Monkey();
+exit($cli->run($GLOBALS['argv']));

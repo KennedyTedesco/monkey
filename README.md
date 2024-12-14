@@ -152,28 +152,16 @@ docker run --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey run examples/fi
 Clone this repository, execute `composer install`, then:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey repl
+docker run -it --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey repl
 ```
 
 Example:
 
 ```text
-            __,__
-   .--.  .-"     "-.  .--.
-  / .. \/  .-. .-.  \/ .. \
- | |  '|  /   Y   \  |'  | |
- | \   \  \ 0 | 0 /  /   / |
-  \ '- ,\.-"`` ``"-./, -' /
-   `'-' /_   ^ ^   _\ '-'`
-       |  \._   _./  |
-       \   \ `~` /   /
-        '._ '-=-' _.'
-           '~---~'
--------------------------------
-| Monkey Programming Language |
--------------------------------
+🐒 Monkey Programming Language v1.0.0
+Type ':h' for help, ':c' for clear, ':q' to quit
 
- > let a = 20 + fn(x){ return x + 10; }(2);
+➜ let a = 20 + fn(x){ return x + 10; }(2);
 32
 ```
 
