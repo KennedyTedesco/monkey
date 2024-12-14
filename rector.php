@@ -17,16 +17,13 @@ return RectorConfig::configure()
         codeQuality: true,
         codingStyle: true,
         typeDeclarations: true,
+        privatization: true,
         instanceOf: true,
         earlyReturn: true,
         strictBooleans: true,
-        carbon: true,
         rectorPreset: true,
     )
     ->withPhpPolyfill()
-    ->withAttributesSets(
-        all: true,
-    )
     ->withSets([
         LevelSetList::UP_TO_PHP_84,
     ])
@@ -34,6 +31,6 @@ return RectorConfig::configure()
         EncapsedStringsToSprintfRector::class,
     ])
     ->withPaths([
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
+        __DIR__.'/src',
+        __DIR__.'/tests',
     ]);
