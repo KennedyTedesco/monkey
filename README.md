@@ -1,5 +1,5 @@
 <p style="text-align: center">
-    <img src="resources/money-php-logo.webp?raw=true" width="400" alt="Monkey Programming Language" style="display: inline">
+    <img src="resources/money-php-logo.webp?raw=true" width="250" alt="Monkey Programming Language">
 </p>
 
 ## Monkey Programming Language
