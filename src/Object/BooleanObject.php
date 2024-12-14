@@ -11,21 +11,6 @@ final readonly class BooleanObject extends MonkeyObject
     ) {
     }
 
-    public function type(): int
-    {
-        return self::MO_BOOL;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'BOOL';
-    }
-
-    public function inspect(): string
-    {
-        return $this->value ? 'true' : 'false';
-    }
-
     public static function true(): self
     {
         return new self(true);
@@ -43,6 +28,21 @@ final readonly class BooleanObject extends MonkeyObject
         }
 
         return self::false();
+    }
+
+    public function type(): int
+    {
+        return self::MO_BOOL;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'BOOL';
+    }
+
+    public function inspect(): string
+    {
+        return $this->value ? 'true' : 'false';
     }
 
     public function value(): bool

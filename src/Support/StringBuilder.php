@@ -13,6 +13,11 @@ final class StringBuilder implements Stringable
     ) {
     }
 
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+
     public static function new(string | Stringable $str = ''): self
     {
         return new self((string)$str);
@@ -35,10 +40,5 @@ final class StringBuilder implements Stringable
     public function toString(): string
     {
         return $this->string;
-    }
-
-    public function __toString(): string
-    {
-        return $this->toString();
     }
 }

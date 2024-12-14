@@ -14,6 +14,10 @@ final readonly class Char implements Stringable
         public string $char,
     ) {
     }
+    public function __toString(): string
+    {
+        return $this->char;
+    }
     public static function empty(): self
     {
         return new self('');
@@ -49,10 +53,6 @@ final readonly class Char implements Stringable
     }
 
     public function toString(): string
-    {
-        return $this->char;
-    }
-    public function __toString(): string
     {
         return $this->char;
     }

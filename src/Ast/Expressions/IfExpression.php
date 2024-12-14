@@ -20,13 +20,13 @@ final class IfExpression extends Expression
 
     public function toString(): string
     {
-        $builder = StringBuilder::new("if")
+        $builder = StringBuilder::new('if')
             ->append($this->condition)
-            ->append(" ")
+            ->append(' ')
             ->append($this->consequence);
 
         if ($this->alternative instanceof BlockStatement) {
-            $builder->append("else ")
+            $builder->append('else ')
                 ->append($this->alternative);
         }
 

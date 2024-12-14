@@ -64,44 +64,6 @@ enum TokenType: int
     case RETURN = 0x706;
     case WHILE = 0x707;
 
-    public function lexeme(): string
-    {
-        return match ($this) {
-            self::ASSIGN => '=',
-            self::PLUS => '+',
-            self::MINUS => '-',
-            self::NOT => '!',
-            self::ASTERISK => '*',
-            self::MODULO => '%',
-            self::POWER => '**',
-            self::SLASH => '/',
-            self::PLUS_PLUS => '++',
-            self::MINUS_MINUS => '--',
-
-            self::COMMA => ',',
-            self::SEMICOLON => ';',
-
-            self::LPAREN => '(',
-            self::RPAREN => ')',
-            self::LBRACE => '{',
-            self::RBRACE => '}',
-            self::LT => '<',
-            self::GT => '>',
-            self::LBRACKET => '[',
-            self::RBRACKET => ']',
-
-            self::GT_EQ => '>=',
-            self::LT_EQ => '<=',
-            self::EQ => '==',
-            self::NOT_EQ => '!=',
-
-            self::AND => '&&',
-            self::OR => '||',
-
-            default => 'T_ILLEGAL',
-        };
-    }
-
     public static function fromChar(string | Char $char): ?self
     {
         return match ((string)$char) {
@@ -146,6 +108,44 @@ enum TokenType: int
             'return' => self::RETURN,
 
             default => null,
+        };
+    }
+
+    public function lexeme(): string
+    {
+        return match ($this) {
+            self::ASSIGN => '=',
+            self::PLUS => '+',
+            self::MINUS => '-',
+            self::NOT => '!',
+            self::ASTERISK => '*',
+            self::MODULO => '%',
+            self::POWER => '**',
+            self::SLASH => '/',
+            self::PLUS_PLUS => '++',
+            self::MINUS_MINUS => '--',
+
+            self::COMMA => ',',
+            self::SEMICOLON => ';',
+
+            self::LPAREN => '(',
+            self::RPAREN => ')',
+            self::LBRACE => '{',
+            self::RBRACE => '}',
+            self::LT => '<',
+            self::GT => '>',
+            self::LBRACKET => '[',
+            self::RBRACKET => ']',
+
+            self::GT_EQ => '>=',
+            self::LT_EQ => '<=',
+            self::EQ => '==',
+            self::NOT_EQ => '!=',
+
+            self::AND => '&&',
+            self::OR => '||',
+
+            default => 'T_ILLEGAL',
         };
     }
 }

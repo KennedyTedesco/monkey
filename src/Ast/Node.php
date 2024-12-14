@@ -8,10 +8,9 @@ use Stringable;
 
 abstract class Node implements Stringable
 {
-    abstract public function toString(): string;
-
     public function __toString(): string
     {
         return $this->toString();
     }
+    abstract public function toString(): string;
 }

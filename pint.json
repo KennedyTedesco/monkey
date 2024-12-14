@@ -3,7 +3,10 @@
   "rules": {
     "@Symfony": true,
     "@Symfony:risky": true,
-    "protected_to_private": false,
+    "array_push": true,
+    "backtick_to_shell_exec": true,
+    "protected_to_private": true,
+    "no_unused_imports": true,
     "trailing_comma_in_multiline": {
       "elements": [
         "arrays",
@@ -65,7 +68,7 @@
     "method_argument_space": {
       "on_multiline": "ensure_fully_multiline"
     },
-    "method_chaining_indentation": false,
+    "method_chaining_indentation": true,
     "modernize_types_casting": true,
     "multiline_comment_opening_closing": true,
     "multiline_whitespace_before_semicolons": true,
@@ -103,13 +106,27 @@
     "ordered_class_elements": {
       "order": [
         "use_trait",
+        "case",
+        "constant",
         "constant_public",
         "constant_protected",
         "constant_private",
         "property_public",
         "property_protected",
-        "property_private"
-      ]
+        "property_private",
+        "construct",
+        "destruct",
+        "magic",
+        "phpunit",
+        "method_abstract",
+        "method_public_static",
+        "method_public",
+        "method_protected_static",
+        "method_protected",
+        "method_private_static",
+        "method_private"
+      ],
+      "sort_algorithm": "none"
     },
     "ordered_imports": {
       "imports_order": [
@@ -151,7 +168,7 @@
     "simplified_null_return": false,
     "single_class_element_per_statement": true,
     "single_line_throw": false,
-    "single_quote": false,
+    "single_quote": true,
     "single_trait_insert_per_statement": true,
     "space_after_semicolon": {
       "remove_in_empty_for_expressions": true
@@ -172,6 +189,9 @@
       "identical": false,
       "less_and_greater": false
     },
+    "ordered_traits": true,
+    "ordered_interfaces": true,
+    "strict_comparison": true,
     "no_multiline_whitespace_around_double_arrow": false
   }
 }

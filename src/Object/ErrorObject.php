@@ -13,21 +13,6 @@ final readonly class ErrorObject extends MonkeyObject
     ) {
     }
 
-    public function type(): int
-    {
-        return self::MO_BOOL;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'ERROR';
-    }
-
-    public function inspect(): string
-    {
-        return "ERROR: {$this->value}";
-    }
-
     public static function notAFunction(string $name): self
     {
         return new self("not a function: {$name}");
@@ -66,6 +51,21 @@ final readonly class ErrorObject extends MonkeyObject
     public static function error(string $error): self
     {
         return new self($error);
+    }
+
+    public function type(): int
+    {
+        return self::MO_BOOL;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'ERROR';
+    }
+
+    public function inspect(): string
+    {
+        return "ERROR: {$this->value}";
     }
 
     public function value(): string
