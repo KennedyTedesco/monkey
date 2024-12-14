@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Monkey;
 
-use JetBrains\PhpStorm\NoReturn;
 use Monkey\Evaluator\Environment;
 use Monkey\Evaluator\Evaluator;
 use Monkey\Lexer\Lexer;
@@ -136,7 +135,7 @@ final class Monkey
         };
     }
 
-    #[NoReturn] private function handleQuit(): bool
+    private function handleQuit(): bool
     {
         echo 'Goodbye!' . PHP_EOL;
 
