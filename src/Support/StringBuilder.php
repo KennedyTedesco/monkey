@@ -9,13 +9,13 @@ use Stringable;
 final class StringBuilder implements Stringable
 {
     public function __construct(
-        protected string $string = '',
+        private string $string = '',
     ) {
     }
 
     public function __toString(): string
     {
-        return $this->toString();
+        return $this->string;
     }
 
     public static function new(string | Stringable $str = ''): self
