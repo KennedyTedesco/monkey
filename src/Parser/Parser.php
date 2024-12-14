@@ -24,6 +24,8 @@ use Monkey\Parser\Parselet\WhileExpressionParselet;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
+use function sprintf;
+
 final class Parser
 {
     /** @var array<int,string> */
@@ -57,6 +59,7 @@ final class Parser
         TokenType::OR->value => Precedence::OR,
         TokenType::POWER->value => Precedence::POWER,
     ];
+
     private ?Token $prevToken = null;
 
     private ?Token $curToken = null;

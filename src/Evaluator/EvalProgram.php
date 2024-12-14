@@ -25,11 +25,11 @@ final readonly class EvalProgram
         foreach ($program->statements() as $statement) {
             $result = $this->evaluator->eval($statement, $this->environment);
 
-            if ($result instanceof ReturnValueObject == true) {
+            if ($result instanceof ReturnValueObject) {
                 return $result->value;
             }
 
-            if ($result instanceof ErrorObject == true) {
+            if ($result instanceof ErrorObject) {
                 return $result;
             }
         }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
+use function sprintf;
+
 final readonly class FloatObject extends MonkeyObject
 {
     public function __construct(

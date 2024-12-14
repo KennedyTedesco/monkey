@@ -1,6 +1,6 @@
-<p style="text-align: center">
-    <img src="resources/monkey-php.png?raw=true" alt="Monkey Programming Language">
-</p>
+<div align="center">
+  <img src="resources/monkey-php-logo.svg?raw=true" alt="Monkey Programming Language">
+</div>
 
 ## Monkey Programming Language
 
@@ -133,24 +133,18 @@ The steps are:
     <img src="resources/how-it-works.png?raw=true" alt="How it works">
 </p>
 
-### Running with Docker (PHP ^8.1)
-
-Pull the docker image:
-
-```bash
-docker pull php:8.2-cli
-```
+### Running with Docker (PHP ^8.4)
 
 Running the tests:
 
 ```bash
-docker run --rm -v $(pwd):/monkey -w /monkey php:8.2-cli ./vendor/bin/pest
+docker run --rm -v $(pwd):/monkey -w /monkey php:8.4-cli ./vendor/bin/pest
 ```
 
 Running from a file contents of the examples folder:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:8.2-cli ./monkey run examples/fibo_while.monkey
+docker run --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey run examples/fibo_while.monkey
 ```
 
 ### Using the REPL
@@ -158,7 +152,7 @@ docker run --rm -v (pwd):/monkey -w /monkey php:8.2-cli ./monkey run examples/fi
 Clone this repository, execute `composer install`, then:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:8.2-cli ./monkey repl
+docker run --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey repl
 ```
 
 Example:
@@ -186,7 +180,7 @@ Example:
 Or, if you want to execute a file:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:8.2-cli ./monkey run examples/closure.monkey
+docker run --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey run examples/closure.monkey
 ```
 
 ### Contributing

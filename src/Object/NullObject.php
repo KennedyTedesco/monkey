@@ -11,6 +11,11 @@ final readonly class NullObject extends MonkeyObject
     ) {
     }
 
+    public static function instance(): self
+    {
+        return new self();
+    }
+
     public function type(): int
     {
         return self::MO_NULL;
@@ -24,11 +29,6 @@ final readonly class NullObject extends MonkeyObject
     public function inspect(): string
     {
         return 'null';
-    }
-
-    public static function instance(): self
-    {
-        return new self();
     }
 
     public function value(): null

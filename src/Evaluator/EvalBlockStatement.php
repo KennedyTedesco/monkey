@@ -25,11 +25,11 @@ final readonly class EvalBlockStatement
         foreach ($blockStatement->statements as $statement) {
             $result = $this->evaluator->eval($statement, $this->environment);
 
-            if ($result instanceof ErrorObject == true) {
+            if ($result instanceof ErrorObject) {
                 return $result;
             }
 
-            if ($result instanceof ReturnValueObject == true) {
+            if ($result instanceof ReturnValueObject) {
                 return $result;
             }
         }

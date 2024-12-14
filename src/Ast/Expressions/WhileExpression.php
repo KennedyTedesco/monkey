@@ -19,7 +19,7 @@ final class WhileExpression extends Expression
 
     public function toString(): string
     {
-        return StringBuilder::new("while")
+        return StringBuilder::new('while')
             ->append($this->condition)
             ->appendSpace()
             ->append($this->consequence)

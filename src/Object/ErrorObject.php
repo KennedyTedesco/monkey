@@ -4,26 +4,13 @@ declare(strict_types=1);
 
 namespace Monkey\Object;
 
+use function sprintf;
+
 final readonly class ErrorObject extends MonkeyObject
 {
     public function __construct(
         public string $value,
     ) {
-    }
-
-    public function type(): int
-    {
-        return self::MO_BOOL;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'ERROR';
-    }
-
-    public function inspect(): string
-    {
-        return "ERROR: {$this->value}";
     }
 
     public static function notAFunction(string $name): self
@@ -64,6 +51,21 @@ final readonly class ErrorObject extends MonkeyObject
     public static function error(string $error): self
     {
         return new self($error);
+    }
+
+    public function type(): int
+    {
+        return self::MO_BOOL;
+    }
+
+    public function typeLiteral(): string
+    {
+        return 'ERROR';
+    }
+
+    public function inspect(): string
+    {
+        return "ERROR: {$this->value}";
     }
 
     public function value(): string

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Object;
 
 use function count;
+use function sprintf;
 
 final readonly class ArrayObject extends MonkeyObject
 {
