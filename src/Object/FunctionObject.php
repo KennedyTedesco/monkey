@@ -8,6 +8,8 @@ use Monkey\Ast\Expressions\IdentifierExpression;
 use Monkey\Ast\Statements\BlockStatement;
 use Monkey\Evaluator\Environment;
 
+use function sprintf;
+
 final readonly class FunctionObject extends MonkeyObject
 {
     /**

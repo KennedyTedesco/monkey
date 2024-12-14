@@ -24,6 +24,8 @@ use Monkey\Parser\Parselet\WhileExpressionParselet;
 use Monkey\Token\Token;
 use Monkey\Token\TokenType;
 
+use function sprintf;
+
 final class Parser
 {
     /** @var array<int,string> */

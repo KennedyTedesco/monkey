@@ -186,7 +186,7 @@ Example:
 Or, if you want to execute a file:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:8.2-cli ./monkey run examples/closure.monkey
+docker run --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey run examples/closure.monkey
 ```
 
 ### Contributing
