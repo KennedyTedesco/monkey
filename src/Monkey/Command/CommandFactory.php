@@ -15,9 +15,9 @@ final class CommandFactory
     private array $commands = [];
 
     public function __construct(
+        private readonly ReplManager $replManager,
         private readonly OutputFormatter $outputFormatter,
         private readonly PerformanceTracker $performanceTracker,
-        private readonly ReplManager $replManager,
     ) {
         $this->registerCommands();
     }

@@ -55,7 +55,8 @@ final class ReplManager
                 $input = $this->inputReader->readLine();
 
                 if ($input === false) {
-                    $this->outputFormatter->write("\nGoodbye!");
+                    $this->outputFormatter->write('');
+                    $this->outputFormatter->write("Goodbye!");
 
                     return 0;
                 }
@@ -147,7 +148,8 @@ final class ReplManager
     private function handleQuit(): bool
     {
         $this->running = false;
-        $this->outputFormatter->write('Goodbye!');
+        $this->outputFormatter->write('');
+        $this->outputFormatter->write("Goodbye!");
 
         return true;
     }

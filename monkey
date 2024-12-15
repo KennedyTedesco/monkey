@@ -40,21 +40,24 @@ try {
     $performanceTracker = new PerformanceTracker();
     
     $replManager = new ReplManager(
-        $inputReader,
-        $outputFormatter,
-        $performanceTracker
+        inputReader: $inputReader,
+        outputFormatter: $outputFormatter,
+        performanceTracker: $performanceTracker
     );
 
     $commandFactory = new CommandFactory(
-        $outputFormatter,
-        $performanceTracker,
-        $replManager
+        replManager: $replManager,
+        outputFormatter: $outputFormatter,
+        performanceTracker: $performanceTracker
     );
 
     $configManager = new ConfigurationManager();
     $commandRunner = new CommandRunner($commandFactory);
 
-    $monkey = new Monkey($commandRunner, $configManager);
+    $monkey = new Monkey(
+        commandRunner: $commandRunner, 
+        configManager: $configManager
+    );
     
     exit($monkey->run($argv));
 } catch (Throwable $e) {
