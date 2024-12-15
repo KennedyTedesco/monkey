@@ -13,10 +13,14 @@ use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
 use RuntimeException;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableStyle;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Throwable;
 
 use function count;
@@ -35,6 +39,10 @@ final class Monkey
 
     private readonly OutputInterface $output;
 
+    private readonly InputInterface $input;
+
+    private readonly QuestionHelper $questionHelper;
+
     private bool $debugMode = false;
 
     private bool $showStats = false;
@@ -50,10 +58,14 @@ final class Monkey
         $this->startMemory = memory_get_usage();
 
         $this->output = new ConsoleOutput();
+        $this->input = new StringInput('');
+        $this->questionHelper = new QuestionHelper();
+
         $this->output->getFormatter()->setStyle('title', new OutputFormatterStyle('white', null, ['bold']));
         $this->output->getFormatter()->setStyle('memory', new OutputFormatterStyle('green'));
         $this->output->getFormatter()->setStyle('peak', new OutputFormatterStyle('yellow'));
         $this->output->getFormatter()->setStyle('time', new OutputFormatterStyle('blue'));
+        $this->output->getFormatter()->setStyle('prompt', new OutputFormatterStyle('cyan'));
     }
 
     /**
@@ -175,10 +187,11 @@ final class Monkey
         $this->showWelcomeBanner();
 
         while (true) {
+            $this->output->writeln(''); // Add newline before prompt
             $input = $this->readInput();
 
             if ($input === false) {
-                echo PHP_EOL . 'Goodbye!' . PHP_EOL;
+                $this->output->writeln(PHP_EOL . 'Goodbye!');
 
                 return 0;
             }
@@ -301,7 +314,15 @@ final class Monkey
 
     private function readInput(): string | false
     {
-        return readline("\n➜ ");
+        $question = new Question('<prompt>➜</prompt> ');
+
+        try {
+            $answer = $this->questionHelper->ask($this->input, $this->output, $question);
+
+            return $answer ?? false;
+        } catch (Throwable) {
+            return false;
+        }
     }
 
     private function showVersion(): int
