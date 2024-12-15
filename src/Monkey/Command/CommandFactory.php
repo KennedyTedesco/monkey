@@ -34,7 +34,7 @@ final class CommandFactory
     private function registerCommands(): void
     {
         $this->commands = [
-            'repl' => new ReplCommand($this->replManager, $this->outputFormatter),
+            'repl' => new ReplCommand($this->replManager),
             'run' => new RunFileCommand($this->outputFormatter, $this->performanceTracker),
             'help' => new HelpCommand($this->outputFormatter),
             'version' => new VersionCommand($this->outputFormatter),
