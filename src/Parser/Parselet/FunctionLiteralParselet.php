@@ -26,13 +26,13 @@ final readonly class FunctionLiteralParselet implements PrefixParselet
             return null;
         }
 
-        $parameters = (new FunctionParametersParser())($this->parser);
+        $parameters = new FunctionParametersParser()($this->parser);
 
         if (!$this->parser->expectPeek(TokenType::LBRACE)) {
             return null;
         }
 
-        $body = (new BlockStatementParser())($this->parser);
+        $body = new BlockStatementParser()($this->parser);
 
         return new FunctionLiteral($token, $parameters, $body);
     }

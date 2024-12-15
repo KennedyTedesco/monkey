@@ -54,33 +54,33 @@ final class Evaluator
     public function eval(Node $node, Environment $environment): MonkeyObject
     {
         return match (true) {
-            $node instanceof Program => (new EvalProgram($this, $environment))($node),
+            $node instanceof Program => new EvalProgram($this, $environment)($node),
             $node instanceof IntegerLiteral => new IntegerObject($node->value),
             $node instanceof FloatLiteral => new FloatObject($node->value),
             $node instanceof StringLiteral => new StringObject($node->value),
             $node instanceof BooleanLiteral => BooleanObject::from($node->value),
-            $node instanceof BlockStatement => (new EvalBlockStatement($this, $environment))($node),
-            $node instanceof IfExpression => (new EvalIfExpression($this, $environment))($node),
-            $node instanceof WhileExpression => (new EvalWhileExpression($this, $environment))($node),
+            $node instanceof BlockStatement => new EvalBlockStatement($this, $environment)($node),
+            $node instanceof IfExpression => new EvalIfExpression($this, $environment)($node),
+            $node instanceof WhileExpression => new EvalWhileExpression($this, $environment)($node),
             $node instanceof FunctionLiteral => new FunctionObject($node->parameters, $node->body, $environment),
             $node instanceof ExpressionStatement => $this->eval($node->expression, $environment),
-            $node instanceof ReturnStatement => (new EvalReturnStatement($this, $environment))($node),
-            $node instanceof CallExpression => (new EvalCallExpression($this, $environment))($node),
-            $node instanceof ArrayLiteral => (new EvalArrayLiteral($this, $environment))($node),
-            $node instanceof IndexExpression => (new EvalIndexExpression($this, $environment))($node),
-            $node instanceof UnaryExpression => (new EvalUnaryExpression())(
+            $node instanceof ReturnStatement => new EvalReturnStatement($this, $environment)($node),
+            $node instanceof CallExpression => new EvalCallExpression($this, $environment)($node),
+            $node instanceof ArrayLiteral => new EvalArrayLiteral($this, $environment)($node),
+            $node instanceof IndexExpression => new EvalIndexExpression($this, $environment)($node),
+            $node instanceof UnaryExpression => new EvalUnaryExpression()(
                 $node->operator,
                 $this->eval($node->right, $environment)
             ),
-            $node instanceof BinaryExpression => (new EvalBinaryExpression())(
+            $node instanceof BinaryExpression => new EvalBinaryExpression()(
                 $node->operator,
                 $this->eval($node->left, $environment),
                 $this->eval($node->right, $environment)
             ),
-            $node instanceof LetStatement => (new EvalLetStatement($this, $environment))($node),
-            $node instanceof AssignStatement => (new EvalAssingStatement($this, $environment))($node),
-            $node instanceof IdentifierExpression => (new EvalIdentifier($environment))($node),
-            $node instanceof PostfixExpression => (new EvalPostfixExpression($environment))($node),
+            $node instanceof LetStatement => new EvalLetStatement($this, $environment)($node),
+            $node instanceof AssignStatement => new EvalAssingStatement($this, $environment)($node),
+            $node instanceof IdentifierExpression => new EvalIdentifier($environment)($node),
+            $node instanceof PostfixExpression => new EvalPostfixExpression($environment)($node),
             default => NullObject::instance(),
         };
     }

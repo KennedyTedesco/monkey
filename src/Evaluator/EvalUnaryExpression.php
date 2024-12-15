@@ -13,8 +13,8 @@ final class EvalUnaryExpression
     {
         return match (true) {
             $monkeyObject instanceof ErrorObject => $monkeyObject,
-            $operator === '!' => (new EvalNotOperatorExpression())($monkeyObject),
-            $operator === '-' => (new EvalMinusUnaryOperatorExpression())($monkeyObject),
+            $operator === '!' => new EvalNotOperatorExpression()($monkeyObject),
+            $operator === '-' => new EvalMinusUnaryOperatorExpression()($monkeyObject),
             default => ErrorObject::unknownOperator($operator, $monkeyObject->typeLiteral()),
         };
     }

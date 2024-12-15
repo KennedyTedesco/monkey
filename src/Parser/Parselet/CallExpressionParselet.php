@@ -21,7 +21,7 @@ final readonly class CallExpressionParselet implements InfixParselet
     {
         $token = $this->parser->curToken();
 
-        $arguments = (new ExpressionListParser())($this->parser, TokenType::RPAREN);
+        $arguments = new ExpressionListParser()($this->parser, TokenType::RPAREN);
 
         return new CallExpression($token, $expression, $arguments);
     }

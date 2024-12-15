@@ -39,7 +39,7 @@ final readonly class WhileExpressionParselet implements PrefixParselet
             return null;
         }
 
-        $consequence = (new BlockStatementParser())($this->parser);
+        $consequence = new BlockStatementParser()($this->parser);
 
         return new WhileExpression($token, $condition, $consequence);
     }

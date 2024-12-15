@@ -39,7 +39,7 @@ final readonly class IfExpressionParselet implements PrefixParselet
             return null;
         }
 
-        $consequence = (new BlockStatementParser())($this->parser);
+        $consequence = new BlockStatementParser()($this->parser);
 
         $alternative = null;
 
@@ -50,7 +50,7 @@ final readonly class IfExpressionParselet implements PrefixParselet
                 return null;
             }
 
-            $alternative = (new BlockStatementParser())($this->parser);
+            $alternative = new BlockStatementParser()($this->parser);
         }
 
         return new IfExpression($token, $condition, $consequence, $alternative);

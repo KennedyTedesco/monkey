@@ -14,15 +14,15 @@ final class StatementParser
     {
         return match (true) {
             $parser->curToken()->is(TokenType::IDENT) && $parser->peekToken()->is(TokenType::ASSIGN) =>
-                (new AssignStatementParser())($parser),
+                new AssignStatementParser()($parser),
 
             $parser->curToken()->is(TokenType::LET) =>
-                (new LetStatementParser())($parser),
+                new LetStatementParser()($parser),
 
             $parser->curToken()->is(TokenType::RETURN) =>
-                (new ReturnStatementParser())($parser),
+                new ReturnStatementParser()($parser),
 
-            default => (new ExpressionStatementParser())($parser),
+            default => new ExpressionStatementParser()($parser),
         };
     }
 }
