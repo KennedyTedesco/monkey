@@ -30,14 +30,9 @@ final readonly class BooleanObject extends MonkeyObject
         return self::false();
     }
 
-    public function type(): int
+    public function type(): MonkeyObjectType
     {
-        return self::MO_BOOL;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'BOOL';
+        return MonkeyObjectType::BOOL;
     }
 
     public function inspect(): string

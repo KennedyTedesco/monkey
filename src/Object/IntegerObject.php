@@ -13,14 +13,9 @@ final readonly class IntegerObject extends MonkeyObject
     ) {
     }
 
-    public function type(): int
+    public function type(): MonkeyObjectType
     {
-        return self::MO_INT;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'INTEGER';
+        return MonkeyObjectType::INTEGER;
     }
 
     public function inspect(): string

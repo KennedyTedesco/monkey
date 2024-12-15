@@ -11,14 +11,9 @@ final readonly class ReturnValueObject extends MonkeyObject
     ) {
     }
 
-    public function type(): int
+    public function type(): MonkeyObjectType
     {
-        return self::MO_RETURN_VALUE;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'RETURN_VALUE';
+        return MonkeyObjectType::RETURN_VALUE;
     }
 
     public function inspect(): string

@@ -14,19 +14,14 @@ final readonly class StringObject extends MonkeyObject
         $this->value = str_replace('\n', "\n", $value);
     }
 
-    public function type(): int
+    public function type(): MonkeyObjectType
     {
-        return self::MO_STRING;
+        return MonkeyObjectType::STRING;
     }
 
     public function count(): int
     {
         return mb_strlen($this->value);
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'STRING';
     }
 
     public function inspect(): string

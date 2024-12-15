@@ -17,9 +17,9 @@ final readonly class ArrayObject extends MonkeyObject
     ) {
     }
 
-    public function type(): int
+    public function type(): MonkeyObjectType
     {
-        return self::MO_ARRAY;
+        return MonkeyObjectType::ARRAY;
     }
 
     public function count(): int
@@ -27,18 +27,12 @@ final readonly class ArrayObject extends MonkeyObject
         return count($this->value);
     }
 
-    public function typeLiteral(): string
-    {
-        return 'ARRAY';
-    }
-
     public function inspect(): string
     {
         $elements = [];
 
-        /** @var MonkeyObject $element */
         foreach ($this->value as $element) {
-            $elements[] = $element->type() === self::MO_STRING ? '"' . $element->inspect() . '"' : $element->inspect();
+            $elements[] = $element->type() === MonkeyObjectType::STRING ? '"' . $element->inspect() . '"' : $element->inspect();
         }
 
         return sprintf('[%s]', implode(', ', $elements));

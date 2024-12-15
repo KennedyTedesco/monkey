@@ -53,14 +53,9 @@ final readonly class ErrorObject extends MonkeyObject
         return new self($error);
     }
 
-    public function type(): int
+    public function type(): MonkeyObjectType
     {
-        return self::MO_BOOL;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'ERROR';
+        return MonkeyObjectType::ERROR;
     }
 
     public function inspect(): string

@@ -11,6 +11,7 @@ use Monkey\Object\FloatObject;
 use Monkey\Object\FunctionObject;
 use Monkey\Object\IntegerObject;
 use Monkey\Object\MonkeyObject;
+use Monkey\Object\MonkeyObjectType;
 use Monkey\Object\NullObject;
 use Monkey\Object\StringObject;
 
@@ -34,28 +35,28 @@ function testObjectValue(MonkeyObject $object, $expected)
 function testIntegerObject(MonkeyObject $object, int $expected)
 {
     expect($object)->toBeInstanceOf(IntegerObject::class);
-    expect($object->type())->toBe(MonkeyObject::MO_INT);
+    expect($object->type())->toBe(MonkeyObjectType::INTEGER);
     expect($expected)->toBe($object->value);
 }
 
 function testStringObject(MonkeyObject $object, string $expected)
 {
     expect($object)->toBeInstanceOf(StringObject::class);
-    expect($object->type())->toBe(MonkeyObject::MO_STRING);
+    expect($object->type())->toBe(MonkeyObjectType::STRING);
     expect($expected)->toBe($object->value);
 }
 
 function testFloatObject(MonkeyObject $object, float $expected)
 {
     expect($object)->toBeInstanceOf(FloatObject::class);
-    expect($object->type())->toBe(MonkeyObject::MO_FLOAT);
+    expect($object->type())->toBe(MonkeyObjectType::FLOAT);
     expect($expected)->toBe($object->value);
 }
 
 function testBooleanObject(MonkeyObject $object, bool $expected)
 {
     expect($object)->toBeInstanceOf(BooleanObject::class);
-    expect($object->type())->toBe(MonkeyObject::MO_BOOL);
+    expect($object->type())->toBe(MonkeyObjectType::BOOL);
     expect($expected)->toBe($object->value);
 }
 

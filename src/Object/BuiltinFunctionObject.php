@@ -13,14 +13,9 @@ final readonly class BuiltinFunctionObject extends MonkeyObject
     ) {
     }
 
-    public function type(): int
+    public function type(): MonkeyObjectType
     {
-        return self::MO_BUILTIN;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'BUILTIN_FUNCTION';
+        return MonkeyObjectType::BUILTIN_FUNCTION;
     }
 
     public function inspect(): string

@@ -28,14 +28,9 @@ final readonly class FunctionObject extends MonkeyObject
         return $this->parameters[$index];
     }
 
-    public function type(): int
+    public function type(): MonkeyObjectType
     {
-        return self::MO_FUNCTION;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'FUNCTION';
+        return MonkeyObjectType::FUNCTION;
     }
 
     public function inspect(): string

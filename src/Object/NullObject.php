@@ -16,14 +16,9 @@ final readonly class NullObject extends MonkeyObject
         return new self(null);
     }
 
-    public function type(): int
+    public function type(): MonkeyObjectType
     {
-        return self::MO_NULL;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'NULL';
+        return MonkeyObjectType::NULL;
     }
 
     public function inspect(): string

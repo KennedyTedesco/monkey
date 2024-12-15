@@ -13,14 +13,9 @@ final readonly class FloatObject extends MonkeyObject
     ) {
     }
 
-    public function type(): int
+    public function type(): MonkeyObjectType
     {
-        return self::MO_FLOAT;
-    }
-
-    public function typeLiteral(): string
-    {
-        return 'FLOAT';
+        return MonkeyObjectType::FLOAT;
     }
 
     public function inspect(): string
