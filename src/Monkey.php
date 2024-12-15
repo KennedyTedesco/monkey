@@ -26,6 +26,8 @@ use Throwable;
 use function count;
 
 use function in_array;
+use function is_scalar;
+
 use function sprintf;
 
 use const PHP_EOL;
@@ -47,15 +49,13 @@ final class Monkey
 
     private bool $showStats = false;
 
-    private readonly float $startTime;
+    private ?float $evalStartTime = null;
 
-    private readonly int $startMemory;
+    private ?int $evalStartMemory = null;
 
     public function __construct()
     {
         $this->environment = new Environment();
-        $this->startTime = microtime(true);
-        $this->startMemory = memory_get_usage();
 
         $this->output = new ConsoleOutput();
         $this->input = new StringInput('');
@@ -117,13 +117,29 @@ final class Monkey
         }
     }
 
+    private function startPerfTracking(): void
+    {
+        $this->evalStartTime = microtime(true);
+        $this->evalStartMemory = memory_get_usage();
+    }
+
+    private function stopPerfTracking(): void
+    {
+        $this->evalStartTime = null;
+        $this->evalStartMemory = null;
+    }
+
     private function printPerformanceStats(): void
     {
+        if ($this->evalStartTime === null || $this->evalStartMemory === null) {
+            return;
+        }
+
         $timeEnd = microtime(true);
         $memEnd = memory_get_usage();
-        $memUsed = $memEnd - $this->startMemory;
+        $memUsed = $memEnd - $this->evalStartMemory;
         $peakMem = memory_get_peak_usage(true);
-        $timeTaken = $timeEnd - $this->startTime;
+        $timeTaken = $timeEnd - $this->evalStartTime;
 
         $this->output->writeln('');
         $this->output->writeln('');
@@ -148,6 +164,8 @@ final class Monkey
         $table->render();
 
         $this->output->writeln('');
+
+        $this->stopPerfTracking();
     }
 
     private function writeOutput(MonkeyObject $result): void
@@ -235,19 +253,32 @@ final class Monkey
 
     private function evaluate(string $input): MonkeyObject
     {
-        $lexer = new Lexer($input);
-        $parser = new Parser($lexer);
+        try {
+            $this->startPerfTracking();
 
-        $errors = $parser->errors();
+            $lexer = new Lexer($input);
+            $parser = new Parser($lexer);
 
-        if ($errors !== []) {
-            throw new RuntimeException("Parser errors:\n" . implode("\n", $errors));
+            $errors = $parser->errors();
+
+            if ($errors !== []) {
+                throw new RuntimeException("Parser errors:\n" . implode("\n", $errors));
+            }
+
+            $program = new ProgramParser()($parser);
+            $evaluator = new Evaluator();
+            $result = $evaluator->eval($program, $this->environment);
+
+            if ($this->showStats) {
+                $this->printPerformanceStats();
+            }
+
+            return $result;
+        } catch (Throwable $throwable) {
+            $this->stopPerfTracking();
+
+            throw $throwable;
         }
-
-        $program = new ProgramParser()($parser);
-        $evaluator = new Evaluator();
-
-        return $evaluator->eval($program, $this->environment);
     }
 
     private function handleSpecialCommand(string $input): bool
@@ -319,7 +350,11 @@ final class Monkey
         try {
             $answer = $this->questionHelper->ask($this->input, $this->output, $question);
 
-            return $answer ?? false;
+            if (!is_scalar($answer)) {
+                return false;
+            }
+
+            return (string)$answer;
         } catch (Throwable) {
             return false;
         }
