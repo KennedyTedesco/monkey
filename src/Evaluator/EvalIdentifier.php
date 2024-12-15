@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
-use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Object\ErrorObject;
-use Monkey\Object\MonkeyObject;
+use MonkeyLang\Ast\Expressions\IdentifierExpression;
+use MonkeyLang\Object\ErrorObject;
+use MonkeyLang\Object\MonkeyObject;
 
 final readonly class EvalIdentifier
 {

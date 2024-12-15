@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Object;
+namespace MonkeyLang\Object;
 
 final readonly class BooleanObject extends MonkeyObject
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey\Exceptions;
+namespace MonkeyLang\Monkey\Exceptions;
 
 use RuntimeException;
 

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator\Builtin;
+namespace MonkeyLang\Evaluator\Builtin;
 
-use Monkey\Evaluator\Evaluator;
-use Monkey\Object\MonkeyObject;
+use MonkeyLang\Evaluator\Evaluator;
+use MonkeyLang\Object\MonkeyObject;
 
 abstract readonly class EvalBuiltinFunction
 {

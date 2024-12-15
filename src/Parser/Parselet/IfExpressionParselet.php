@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser\Parselet;
+namespace MonkeyLang\Parser\Parselet;
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\IfExpression;
-use Monkey\Parser\Parser;
-use Monkey\Parser\Precedence;
-use Monkey\Parser\Statements\BlockStatementParser;
-use Monkey\Token\TokenType;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Expressions\IfExpression;
+use MonkeyLang\Parser\Parser;
+use MonkeyLang\Parser\Precedence;
+use MonkeyLang\Parser\Statements\BlockStatementParser;
+use MonkeyLang\Token\TokenType;
 
 final readonly class IfExpressionParselet implements PrefixParselet
 {

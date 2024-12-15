@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
-use Monkey\Ast\Expressions\CallExpression;
-use Monkey\Object\BuiltinFunctionObject;
-use Monkey\Object\ErrorObject;
-use Monkey\Object\FunctionObject;
-use Monkey\Object\MonkeyObject;
-use Monkey\Object\ReturnValueObject;
+use MonkeyLang\Ast\Expressions\CallExpression;
+use MonkeyLang\Object\BuiltinFunctionObject;
+use MonkeyLang\Object\ErrorObject;
+use MonkeyLang\Object\FunctionObject;
+use MonkeyLang\Object\MonkeyObject;
+use MonkeyLang\Object\ReturnValueObject;
 
 use function call_user_func;
 use function count;

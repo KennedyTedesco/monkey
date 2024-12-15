@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser;
+namespace MonkeyLang\Parser;
 
-use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Token\TokenType;
+use MonkeyLang\Ast\Expressions\IdentifierExpression;
+use MonkeyLang\Token\TokenType;
 
 final class FunctionParametersParser
 {

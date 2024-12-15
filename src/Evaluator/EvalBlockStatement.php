@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
-use Monkey\Ast\Statements\BlockStatement;
-use Monkey\Object\ErrorObject;
-use Monkey\Object\MonkeyObject;
-use Monkey\Object\NullObject;
-use Monkey\Object\ReturnValueObject;
+use MonkeyLang\Ast\Statements\BlockStatement;
+use MonkeyLang\Object\ErrorObject;
+use MonkeyLang\Object\MonkeyObject;
+use MonkeyLang\Object\NullObject;
+use MonkeyLang\Object\ReturnValueObject;
 
 final readonly class EvalBlockStatement
 {

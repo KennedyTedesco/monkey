@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser;
+namespace MonkeyLang\Parser;
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Lexer\Lexer;
-use Monkey\Parser\Parselet\ArrayParselet;
-use Monkey\Parser\Parselet\BinaryOperatorParselet;
-use Monkey\Parser\Parselet\CallExpressionParselet;
-use Monkey\Parser\Parselet\FunctionLiteralParselet;
-use Monkey\Parser\Parselet\GroupedExpressionParselet;
-use Monkey\Parser\Parselet\IdentifierParselet;
-use Monkey\Parser\Parselet\IfExpressionParselet;
-use Monkey\Parser\Parselet\IndexExpressionParselet;
-use Monkey\Parser\Parselet\InfixParselet;
-use Monkey\Parser\Parselet\PostfixOperatorParselet;
-use Monkey\Parser\Parselet\PostfixParselet;
-use Monkey\Parser\Parselet\PrefixParselet;
-use Monkey\Parser\Parselet\ScalarParselet;
-use Monkey\Parser\Parselet\UnaryOperatorParselet;
-use Monkey\Parser\Parselet\WhileExpressionParselet;
-use Monkey\Token\Token;
-use Monkey\Token\TokenType;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Lexer\Lexer;
+use MonkeyLang\Parser\Parselet\ArrayParselet;
+use MonkeyLang\Parser\Parselet\BinaryOperatorParselet;
+use MonkeyLang\Parser\Parselet\CallExpressionParselet;
+use MonkeyLang\Parser\Parselet\FunctionLiteralParselet;
+use MonkeyLang\Parser\Parselet\GroupedExpressionParselet;
+use MonkeyLang\Parser\Parselet\IdentifierParselet;
+use MonkeyLang\Parser\Parselet\IfExpressionParselet;
+use MonkeyLang\Parser\Parselet\IndexExpressionParselet;
+use MonkeyLang\Parser\Parselet\InfixParselet;
+use MonkeyLang\Parser\Parselet\PostfixOperatorParselet;
+use MonkeyLang\Parser\Parselet\PostfixParselet;
+use MonkeyLang\Parser\Parselet\PrefixParselet;
+use MonkeyLang\Parser\Parselet\ScalarParselet;
+use MonkeyLang\Parser\Parselet\UnaryOperatorParselet;
+use MonkeyLang\Parser\Parselet\WhileExpressionParselet;
+use MonkeyLang\Token\Token;
+use MonkeyLang\Token\TokenType;
 
 use function sprintf;
 

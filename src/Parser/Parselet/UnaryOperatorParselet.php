@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser\Parselet;
+namespace MonkeyLang\Parser\Parselet;
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\UnaryExpression;
-use Monkey\Parser\Parser;
-use Monkey\Parser\Precedence;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Expressions\UnaryExpression;
+use MonkeyLang\Parser\Parser;
+use MonkeyLang\Parser\Precedence;
 
 final readonly class UnaryOperatorParselet implements PrefixParselet
 {

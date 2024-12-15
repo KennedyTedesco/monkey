@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Object;
+namespace MonkeyLang\Object;
 
-use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Ast\Statements\BlockStatement;
-use Monkey\Evaluator\Environment;
+use MonkeyLang\Ast\Expressions\IdentifierExpression;
+use MonkeyLang\Ast\Statements\BlockStatement;
+use MonkeyLang\Evaluator\Environment;
 
 use function sprintf;
 

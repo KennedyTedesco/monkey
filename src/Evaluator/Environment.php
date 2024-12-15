@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
-use Monkey\Object\MonkeyObject;
+use MonkeyLang\Object\MonkeyObject;
 
 final class Environment
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast\Types;
+namespace MonkeyLang\Ast\Types;
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Ast\Statements\BlockStatement;
-use Monkey\Support\StringBuilder;
-use Monkey\Token\Token;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Expressions\IdentifierExpression;
+use MonkeyLang\Ast\Statements\BlockStatement;
+use MonkeyLang\Support\StringBuilder;
+use MonkeyLang\Token\Token;
 
 use function count;
 

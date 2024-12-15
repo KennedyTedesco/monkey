@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey\IO;
+namespace MonkeyLang\Monkey\IO;
 
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;

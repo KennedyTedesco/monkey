@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser\Parselet;
+namespace MonkeyLang\Parser\Parselet;
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Types\ArrayLiteral;
-use Monkey\Parser\ExpressionListParser;
-use Monkey\Parser\Parser;
-use Monkey\Token\TokenType;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Types\ArrayLiteral;
+use MonkeyLang\Parser\ExpressionListParser;
+use MonkeyLang\Parser\Parser;
+use MonkeyLang\Token\TokenType;
 
 final readonly class ArrayParselet implements PrefixParselet
 {

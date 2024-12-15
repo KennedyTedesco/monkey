@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey\Command;
+namespace MonkeyLang\Monkey\Command;
 
-use Monkey\Monkey\Config\Configuration;
-use Monkey\Monkey\IO\OutputFormatter;
+use MonkeyLang\Monkey\Config\Configuration;
+use MonkeyLang\Monkey\IO\OutputFormatter;
 
 final readonly class VersionCommand implements Command
 {

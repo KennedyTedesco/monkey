@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Token;
+namespace MonkeyLang\Token;
 
-use Monkey\Lexer\Char;
-use Monkey\Parser\Precedence;
+use MonkeyLang\Lexer\Char;
+use MonkeyLang\Parser\Precedence;
 
 enum TokenType: int
 {

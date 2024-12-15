@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey;
+namespace MonkeyLang\Monkey;
 
-use Monkey\Monkey\Command\CommandRunner;
-use Monkey\Monkey\Config\ConfigurationManager;
+use MonkeyLang\Monkey\Command\CommandRunner;
+use MonkeyLang\Monkey\Config\ConfigurationManager;
 use Throwable;
 
 use const STDERR;

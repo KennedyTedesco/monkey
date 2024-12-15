@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey\Command;
+namespace MonkeyLang\Monkey\Command;
 
-use Monkey\Monkey\Config\Configuration;
+use MonkeyLang\Monkey\Config\Configuration;
 
 interface Command
 {

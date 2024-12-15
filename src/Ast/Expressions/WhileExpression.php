@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast\Expressions;
+namespace MonkeyLang\Ast\Expressions;
 
-use Monkey\Ast\Statements\BlockStatement;
-use Monkey\Support\StringBuilder;
-use Monkey\Token\Token;
+use MonkeyLang\Ast\Statements\BlockStatement;
+use MonkeyLang\Support\StringBuilder;
+use MonkeyLang\Token\Token;
 
 final class WhileExpression extends Expression
 {

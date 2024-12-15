@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser\Parselet;
+namespace MonkeyLang\Parser\Parselet;
 
-use Monkey\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Expressions\Expression;
 
 interface PostfixParselet
 {

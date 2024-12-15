@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Monkey\\": "src"
+      "MonkeyLang\\": "src"
     }
   },
   "autoload-dev": {

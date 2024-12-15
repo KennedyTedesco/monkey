@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
-use Monkey\Ast\Types\ArrayLiteral;
-use Monkey\Object\ArrayObject;
-use Monkey\Object\ErrorObject;
-use Monkey\Object\MonkeyObject;
+use MonkeyLang\Ast\Types\ArrayLiteral;
+use MonkeyLang\Object\ArrayObject;
+use MonkeyLang\Object\ErrorObject;
+use MonkeyLang\Object\MonkeyObject;
 
 use function count;
 

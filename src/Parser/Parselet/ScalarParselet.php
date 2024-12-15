@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser\Parselet;
+namespace MonkeyLang\Parser\Parselet;
 
 use InvalidArgumentException;
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Types\BooleanLiteral;
-use Monkey\Ast\Types\FloatLiteral;
-use Monkey\Ast\Types\IntegerLiteral;
-use Monkey\Ast\Types\StringLiteral;
-use Monkey\Parser\Parser;
-use Monkey\Token\TokenType;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Types\BooleanLiteral;
+use MonkeyLang\Ast\Types\FloatLiteral;
+use MonkeyLang\Ast\Types\IntegerLiteral;
+use MonkeyLang\Ast\Types\StringLiteral;
+use MonkeyLang\Parser\Parser;
+use MonkeyLang\Token\TokenType;
 
 final class ScalarParselet implements PrefixParselet
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser\Parselet;
+namespace MonkeyLang\Parser\Parselet;
 
-use Monkey\Ast\Expressions\BinaryExpression;
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Parser\Parser;
+use MonkeyLang\Ast\Expressions\BinaryExpression;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Parser\Parser;
 
 final readonly class BinaryOperatorParselet implements InfixParselet
 {

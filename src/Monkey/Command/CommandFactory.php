@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey\Command;
+namespace MonkeyLang\Monkey\Command;
 
-use Monkey\Monkey\IO\OutputFormatter;
-use Monkey\Monkey\Performance\PerformanceTracker;
-use Monkey\Monkey\Repl\ReplManager;
+use MonkeyLang\Monkey\IO\OutputFormatter;
+use MonkeyLang\Monkey\Performance\PerformanceTracker;
+use MonkeyLang\Monkey\Repl\ReplManager;
 use RuntimeException;
 
 final class CommandFactory

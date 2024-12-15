@@ -5,15 +5,15 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Monkey\Monkey\Command\CommandFactory;
-use Monkey\Monkey\Command\CommandRunner;
-use Monkey\Monkey\Config\ConfigurationManager;
-use Monkey\Monkey\IO\ConsoleOutput;
-use Monkey\Monkey\IO\InputReader;
-use Monkey\Monkey\IO\OutputFormatter;
-use Monkey\Monkey\Monkey;
-use Monkey\Monkey\Performance\PerformanceTracker;
-use Monkey\Monkey\Repl\ReplManager;
+use MonkeyLang\Monkey\Command\CommandFactory;
+use MonkeyLang\Monkey\Command\CommandRunner;
+use MonkeyLang\Monkey\Config\ConfigurationManager;
+use MonkeyLang\Monkey\IO\ConsoleOutput;
+use MonkeyLang\Monkey\IO\InputReader;
+use MonkeyLang\Monkey\IO\OutputFormatter;
+use MonkeyLang\Monkey\Monkey;
+use MonkeyLang\Monkey\Performance\PerformanceTracker;
+use MonkeyLang\Monkey\Repl\ReplManager;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 

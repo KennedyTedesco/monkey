@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast\Expressions;
+namespace MonkeyLang\Ast\Expressions;
 
-use Monkey\Support\StringBuilder;
-use Monkey\Token\Token;
+use MonkeyLang\Support\StringBuilder;
+use MonkeyLang\Token\Token;
 
 final class UnaryExpression extends Expression
 {

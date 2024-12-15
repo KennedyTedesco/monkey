@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast\Statements;
+namespace MonkeyLang\Ast\Statements;
 
-use Monkey\Ast\Node;
+use MonkeyLang\Ast\Node;
 
 abstract class Statement extends Node
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser\Parselet;
+namespace MonkeyLang\Parser\Parselet;
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Types\FunctionLiteral;
-use Monkey\Parser\FunctionParametersParser;
-use Monkey\Parser\Parser;
-use Monkey\Parser\Statements\BlockStatementParser;
-use Monkey\Token\TokenType;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Types\FunctionLiteral;
+use MonkeyLang\Parser\FunctionParametersParser;
+use MonkeyLang\Parser\Parser;
+use MonkeyLang\Parser\Statements\BlockStatementParser;
+use MonkeyLang\Token\TokenType;
 
 final readonly class FunctionLiteralParselet implements PrefixParselet
 {

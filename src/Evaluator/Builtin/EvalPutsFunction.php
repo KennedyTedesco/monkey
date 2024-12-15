@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator\Builtin;
+namespace MonkeyLang\Evaluator\Builtin;
 
-use Monkey\Object\ErrorObject;
-use Monkey\Object\MonkeyObject;
-use Monkey\Object\NullObject;
+use MonkeyLang\Object\ErrorObject;
+use MonkeyLang\Object\MonkeyObject;
+use MonkeyLang\Object\NullObject;
 
 use function count;
 

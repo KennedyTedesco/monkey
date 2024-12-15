@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast\Types;
+namespace MonkeyLang\Ast\Types;
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Support\StringBuilder;
-use Monkey\Token\Token;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Support\StringBuilder;
+use MonkeyLang\Token\Token;
 
 use function count;
 

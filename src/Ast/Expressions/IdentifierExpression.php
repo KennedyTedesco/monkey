@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast\Expressions;
+namespace MonkeyLang\Ast\Expressions;
 
-use Monkey\Token\Token;
+use MonkeyLang\Token\Token;
 
 final class IdentifierExpression extends Expression
 {

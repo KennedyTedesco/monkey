@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast;
+namespace MonkeyLang\Ast;
 
-use Monkey\Ast\Statements\Statement;
+use MonkeyLang\Ast\Statements\Statement;
 
-use Monkey\Support\StringBuilder;
+use MonkeyLang\Support\StringBuilder;
 
 use function count;
 

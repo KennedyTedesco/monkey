@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey\Performance;
+namespace MonkeyLang\Monkey\Performance;
 
 final readonly class PerformanceMetrics
 {

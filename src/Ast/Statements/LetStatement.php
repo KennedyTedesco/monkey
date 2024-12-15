@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast\Statements;
+namespace MonkeyLang\Ast\Statements;
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Support\StringBuilder;
-use Monkey\Token\Token;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Expressions\IdentifierExpression;
+use MonkeyLang\Support\StringBuilder;
+use MonkeyLang\Token\Token;
 
 final class LetStatement extends Statement
 {

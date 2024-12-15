@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Lexer;
+namespace MonkeyLang\Lexer;
 
 final class Input
 {

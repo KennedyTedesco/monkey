@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
-use Monkey\Ast\Expressions\IfExpression;
-use Monkey\Ast\Statements\BlockStatement;
-use Monkey\Object\ErrorObject;
-use Monkey\Object\MonkeyObject;
-use Monkey\Object\NullObject;
+use MonkeyLang\Ast\Expressions\IfExpression;
+use MonkeyLang\Ast\Statements\BlockStatement;
+use MonkeyLang\Object\ErrorObject;
+use MonkeyLang\Object\MonkeyObject;
+use MonkeyLang\Object\NullObject;
 
 final readonly class EvalIfExpression
 {

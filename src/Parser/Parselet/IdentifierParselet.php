@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser\Parselet;
+namespace MonkeyLang\Parser\Parselet;
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Parser\Parser;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Expressions\IdentifierExpression;
+use MonkeyLang\Parser\Parser;
 
 final readonly class IdentifierParselet implements PrefixParselet
 {

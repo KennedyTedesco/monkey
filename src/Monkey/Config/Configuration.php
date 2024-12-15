@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey\Config;
+namespace MonkeyLang\Monkey\Config;
 
 final readonly class Configuration
 {

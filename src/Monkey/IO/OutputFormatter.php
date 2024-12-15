@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey\IO;
+namespace MonkeyLang\Monkey\IO;
 
-use Monkey\Monkey\Performance\PerformanceMetrics;
-use Monkey\Object\MonkeyObject;
-use Monkey\Object\NullObject;
+use MonkeyLang\Monkey\Performance\PerformanceMetrics;
+use MonkeyLang\Object\MonkeyObject;
+use MonkeyLang\Object\NullObject;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableStyle;

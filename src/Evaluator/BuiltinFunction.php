@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
 use Closure;
-use Monkey\Object\BuiltinFunctionObject;
-use Monkey\Object\MonkeyObject;
+use MonkeyLang\Object\BuiltinFunctionObject;
+use MonkeyLang\Object\MonkeyObject;
 
 final class BuiltinFunction
 {

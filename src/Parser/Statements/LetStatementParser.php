@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser\Statements;
+namespace MonkeyLang\Parser\Statements;
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Ast\Statements\LetStatement;
-use Monkey\Parser\Parser;
-use Monkey\Parser\Precedence;
-use Monkey\Token\TokenType;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Expressions\IdentifierExpression;
+use MonkeyLang\Ast\Statements\LetStatement;
+use MonkeyLang\Parser\Parser;
+use MonkeyLang\Parser\Precedence;
+use MonkeyLang\Token\TokenType;
 
 final class LetStatementParser
 {

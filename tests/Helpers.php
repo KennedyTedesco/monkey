@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-use Monkey\Ast\Expressions\Expression;
-use Monkey\Ast\Program;
-use Monkey\Ast\Types\BooleanLiteral;
-use Monkey\Ast\Types\IntegerLiteral;
-use Monkey\Evaluator\Environment;
-use Monkey\Evaluator\Evaluator;
-use Monkey\Lexer\Lexer;
-use Monkey\Object\MonkeyObject;
-use Monkey\Parser\Parser;
-use Monkey\Parser\ProgramParser;
+use MonkeyLang\Ast\Expressions\Expression;
+use MonkeyLang\Ast\Program;
+use MonkeyLang\Ast\Types\BooleanLiteral;
+use MonkeyLang\Ast\Types\IntegerLiteral;
+use MonkeyLang\Evaluator\Environment;
+use MonkeyLang\Evaluator\Evaluator;
+use MonkeyLang\Lexer\Lexer;
+use MonkeyLang\Object\MonkeyObject;
+use MonkeyLang\Parser\Parser;
+use MonkeyLang\Parser\ProgramParser;
 
 function assertInfixExpression(Expression $expression, $leftValue, string $operator, $rightValue): void
 {

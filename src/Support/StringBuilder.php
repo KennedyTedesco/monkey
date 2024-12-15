@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Support;
+namespace MonkeyLang\Support;
 
 use Stringable;
 

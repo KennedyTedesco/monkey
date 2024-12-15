@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
-use Monkey\Ast\Statements\LetStatement;
-use Monkey\Object\ErrorObject;
-use Monkey\Object\MonkeyObject;
+use MonkeyLang\Ast\Statements\LetStatement;
+use MonkeyLang\Object\ErrorObject;
+use MonkeyLang\Object\MonkeyObject;
 
 final readonly class EvalLetStatement
 {

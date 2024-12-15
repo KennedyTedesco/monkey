@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
-use Monkey\Object\BooleanObject;
-use Monkey\Object\MonkeyObject;
-use Monkey\Object\NullObject;
+use MonkeyLang\Object\BooleanObject;
+use MonkeyLang\Object\MonkeyObject;
+use MonkeyLang\Object\NullObject;
 
 final class EvalNotOperatorExpression
 {

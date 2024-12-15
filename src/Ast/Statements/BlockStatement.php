@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast\Statements;
+namespace MonkeyLang\Ast\Statements;
 
-namespace Monkey\Ast\Statements;
+namespace MonkeyLang\Ast\Statements;
 
-use Monkey\Support\StringBuilder;
-use Monkey\Token\Token;
+use MonkeyLang\Support\StringBuilder;
+use MonkeyLang\Token\Token;
 
 final class BlockStatement extends Statement
 {

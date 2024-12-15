@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator\Builtin;
+namespace MonkeyLang\Evaluator\Builtin;
 
-use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Object\ArrayObject;
-use Monkey\Object\ErrorObject;
-use Monkey\Object\FunctionObject;
-use Monkey\Object\MonkeyObject;
+use MonkeyLang\Ast\Expressions\IdentifierExpression;
+use MonkeyLang\Object\ArrayObject;
+use MonkeyLang\Object\ErrorObject;
+use MonkeyLang\Object\FunctionObject;
+use MonkeyLang\Object\MonkeyObject;
 
 use function count;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Token;
+namespace MonkeyLang\Token;
 
 final readonly class Token
 {

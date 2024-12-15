@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Ast\Expressions;
+namespace MonkeyLang\Ast\Expressions;
 
-use Monkey\Ast\Node;
+use MonkeyLang\Ast\Node;
 
 abstract class Expression extends Node
 {

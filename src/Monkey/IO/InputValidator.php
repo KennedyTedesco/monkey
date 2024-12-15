@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey\IO;
+namespace MonkeyLang\Monkey\IO;
 
-use Monkey\Monkey\Exceptions\MonkeyRuntimeException;
+use MonkeyLang\Monkey\Exceptions\MonkeyRuntimeException;
 
 use function in_array;
 use function sprintf;

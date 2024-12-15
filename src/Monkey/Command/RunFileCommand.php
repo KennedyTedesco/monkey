@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Monkey\Command;
+namespace MonkeyLang\Monkey\Command;
 
-use Monkey\Evaluator\Environment;
-use Monkey\Evaluator\Evaluator;
-use Monkey\Lexer\Lexer;
-use Monkey\Monkey\Config\Configuration;
-use Monkey\Monkey\IO\OutputFormatter;
-use Monkey\Monkey\Performance\PerformanceTracker;
-use Monkey\Object\MonkeyObject;
-use Monkey\Parser\Parser;
-use Monkey\Parser\ProgramParser;
+use MonkeyLang\Evaluator\Environment;
+use MonkeyLang\Evaluator\Evaluator;
+use MonkeyLang\Lexer\Lexer;
+use MonkeyLang\Monkey\Config\Configuration;
+use MonkeyLang\Monkey\IO\OutputFormatter;
+use MonkeyLang\Monkey\Performance\PerformanceTracker;
+use MonkeyLang\Object\MonkeyObject;
+use MonkeyLang\Parser\Parser;
+use MonkeyLang\Parser\ProgramParser;
 use RuntimeException;
 use Throwable;
 

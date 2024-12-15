@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
-use Monkey\Ast\Expressions\IndexExpression;
-use Monkey\Object\ArrayObject;
-use Monkey\Object\ErrorObject;
-use Monkey\Object\IntegerObject;
-use Monkey\Object\MonkeyObject;
-use Monkey\Object\NullObject;
+use MonkeyLang\Ast\Expressions\IndexExpression;
+use MonkeyLang\Object\ArrayObject;
+use MonkeyLang\Object\ErrorObject;
+use MonkeyLang\Object\IntegerObject;
+use MonkeyLang\Object\MonkeyObject;
+use MonkeyLang\Object\NullObject;
 
 final readonly class EvalIndexExpression
 {

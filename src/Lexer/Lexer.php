@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Lexer;
+namespace MonkeyLang\Lexer;
 
-use Monkey\Token\Token;
-use Monkey\Token\TokenType;
+use MonkeyLang\Token\Token;
+use MonkeyLang\Token\TokenType;
 
 final class Lexer
 {

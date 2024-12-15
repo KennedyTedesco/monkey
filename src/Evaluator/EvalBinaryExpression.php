@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Evaluator;
+namespace MonkeyLang\Evaluator;
 
-use Monkey\Object\ArrayObject;
-use Monkey\Object\BooleanObject;
-use Monkey\Object\ErrorObject;
-use Monkey\Object\FloatObject;
-use Monkey\Object\IntegerObject;
-use Monkey\Object\MonkeyObject;
-use Monkey\Object\StringObject;
+use MonkeyLang\Object\ArrayObject;
+use MonkeyLang\Object\BooleanObject;
+use MonkeyLang\Object\ErrorObject;
+use MonkeyLang\Object\FloatObject;
+use MonkeyLang\Object\IntegerObject;
+use MonkeyLang\Object\MonkeyObject;
+use MonkeyLang\Object\StringObject;
 
 final class EvalBinaryExpression
 {

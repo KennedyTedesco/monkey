@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Monkey\Parser;
+namespace MonkeyLang\Parser;
 
-use Monkey\Ast\Program;
-use Monkey\Ast\Statements\Statement;
-use Monkey\Parser\Statements\StatementParser;
-use Monkey\Token\TokenType;
+use MonkeyLang\Ast\Program;
+use MonkeyLang\Ast\Statements\Statement;
+use MonkeyLang\Parser\Statements\StatementParser;
+use MonkeyLang\Token\TokenType;
 
 final class ProgramParser
 {
