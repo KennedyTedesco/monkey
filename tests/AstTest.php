@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Monkey\Ast\Expressions\IdentifierExpression;
-use Monkey\Ast\Program;
-use Monkey\Ast\Statements\LetStatement;
-use Monkey\Ast\Types\IntegerLiteral;
-use Monkey\Token\Token;
-use Monkey\Token\TokenType;
+use MonkeyLang\Lang\Ast\Expressions\IdentifierExpression;
+use MonkeyLang\Lang\Ast\Program;
+use MonkeyLang\Lang\Ast\Statements\LetStatement;
+use MonkeyLang\Lang\Ast\Types\IntegerLiteral;
+use MonkeyLang\Lang\Token\Token;
+use MonkeyLang\Lang\Token\TokenType;
 
 test('to string', function () {
     $program = new Program();

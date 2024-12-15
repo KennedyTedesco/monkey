@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
+use Rector\CodingStyle\Rector\PostInc\PostIncDecToPreIncDecRector;
 use Rector\Config\RectorConfig;
+use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\Set\ValueObject\LevelSetList;
 
 return RectorConfig::configure()
@@ -29,6 +31,8 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         EncapsedStringsToSprintfRector::class,
+        PostIncDecToPreIncDecRector::class,
+        ReadOnlyPropertyRector::class,
     ])
     ->withPaths([
         __DIR__ . '/src',

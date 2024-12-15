@@ -10,11 +10,12 @@
   },
   "require": {
     "php": "^8.4",
-    "ext-readline": "*"
+    "ext-readline": "*",
+    "symfony/console": "^7.2"
   },
   "autoload": {
     "psr-4": {
-      "Monkey\\": "src"
+      "MonkeyLang\\": "src"
     }
   },
   "autoload-dev": {
