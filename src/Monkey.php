@@ -12,12 +12,20 @@ use Monkey\Object\NullObject;
 use Monkey\Parser\Parser;
 use Monkey\Parser\ProgramParser;
 use RuntimeException;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableStyle;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 use function count;
 
+use function in_array;
+use function sprintf;
+
 use const PHP_EOL;
-use const STDERR;
+use const STR_PAD_RIGHT;
 
 final class Monkey
 {
@@ -25,11 +33,27 @@ final class Monkey
 
     private readonly Environment $environment;
 
+    private readonly OutputInterface $output;
+
     private bool $debugMode = false;
+
+    private bool $showStats = false;
+
+    private readonly float $startTime;
+
+    private readonly int $startMemory;
 
     public function __construct()
     {
         $this->environment = new Environment();
+        $this->startTime = microtime(true);
+        $this->startMemory = memory_get_usage();
+
+        $this->output = new ConsoleOutput();
+        $this->output->getFormatter()->setStyle('title', new OutputFormatterStyle('white', null, ['bold']));
+        $this->output->getFormatter()->setStyle('memory', new OutputFormatterStyle('green'));
+        $this->output->getFormatter()->setStyle('peak', new OutputFormatterStyle('yellow'));
+        $this->output->getFormatter()->setStyle('time', new OutputFormatterStyle('blue'));
     }
 
     /**
@@ -41,20 +65,109 @@ final class Monkey
             return $this->showHelp();
         }
 
+        if (in_array('--debug', $argv)) {
+            $this->debugMode = true;
+            $argv = array_values(array_filter($argv, fn ($arg): bool => $arg !== '--debug'));
+        }
+
+        if (in_array('--stats', $argv)) {
+            $this->showStats = true;
+            $argv = array_values(array_filter($argv, fn ($arg): bool => $arg !== '--stats'));
+        }
+
         try {
-            return match ($argv[1]) {
+            // If we removed --debug and no other args remain, show help
+            if (count($argv) <= 1) {
+                return $this->showHelp();
+            }
+
+            $result = match ($argv[1]) {
                 'repl' => $this->startRepl(),
                 'run' => $this->runFile($argv[2] ?? null),
                 '--version', '-v' => $this->showVersion(),
                 '--help', '-h' => $this->showHelp(),
-                '--debug' => $this->enableDebugMode(),
                 default => $this->showHelp(),
             };
+
+            if ($this->showStats) {
+                $this->printPerformanceStats();
+            }
+
+            return $result;
         } catch (Throwable $throwable) {
             $this->writeError($throwable->getMessage());
 
+            if ($this->showStats) {
+                $this->printPerformanceStats();
+            }
+
             return 1;
         }
+    }
+
+    private function printPerformanceStats(): void
+    {
+        $timeEnd = microtime(true);
+        $memEnd = memory_get_usage();
+        $memUsed = $memEnd - $this->startMemory;
+        $peakMem = memory_get_peak_usage(true);
+        $timeTaken = $timeEnd - $this->startTime;
+
+        $this->output->writeln('');
+        $this->output->writeln('');
+        $this->output->writeln('<title>Performance Statistics</title>');
+
+        $tableStyle = new TableStyle();
+        $tableStyle
+            ->setHorizontalBorderChars('-')
+            ->setVerticalBorderChars('|')
+            ->setCrossingChars('+', '+', '+', '+', '+', '+', '+', '+', '+')
+            ->setPadType(STR_PAD_RIGHT);
+
+        $table = new Table($this->output);
+        $table->setStyle($tableStyle);
+
+        $table->setRows([
+            ['Memory used', "<memory>{$this->formatBytes($memUsed)}</memory>"],
+            ['Peak memory', "<peak>{$this->formatBytes($peakMem)}</peak>"],
+            ['Time taken', '<time>' . number_format($timeTaken, 6) . ' seconds</time>'],
+        ]);
+
+        $table->render();
+
+        $this->output->writeln('');
+    }
+
+    private function writeOutput(MonkeyObject $result): void
+    {
+        // Skip output for NullObject unless in debug mode
+        if ($result instanceof NullObject && !$this->debugMode) {
+            return;
+        }
+
+        if ($this->debugMode) {
+            $class = $result::class;
+            $this->output->write("<comment>{$class}:</comment> ");
+        }
+
+        $this->output->writeln($result->inspect());
+    }
+
+    private function writeError(string $message): void
+    {
+        $this->output->writeln("<error>Error: {$message}</error>");
+    }
+
+    private function formatBytes(int $bytes): string
+    {
+        $units = ['B', 'KB', 'MB', 'GB'];
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+
+        $bytes /= (1 << (10 * $pow));
+
+        return sprintf('%.2f %s', $bytes, $units[$pow]);
     }
 
     private function startRepl(): int
@@ -137,8 +250,11 @@ final class Monkey
 
     private function handleQuit(): bool
     {
-        echo 'Goodbye!' . PHP_EOL;
+        if ($this->showStats) {
+            $this->printPerformanceStats();
+        }
 
+        echo 'Goodbye!' . PHP_EOL;
         exit(0);
     }
 
@@ -160,7 +276,6 @@ final class Monkey
     private function handleClear(): bool
     {
         system('clear');
-
         $this->showWelcomeBanner();
 
         return true;
@@ -169,7 +284,6 @@ final class Monkey
     private function handleDebugToggle(): bool
     {
         $this->debugMode = !$this->debugMode;
-
         echo 'Debug mode: ' . ($this->debugMode ? 'Enabled' : 'Disabled') . PHP_EOL;
 
         return true;
@@ -190,25 +304,6 @@ final class Monkey
         return readline("\n➜ ");
     }
 
-    private function writeOutput(MonkeyObject $result): void
-    {
-        // Skip output for NullObject unless in debug mode
-        if ($result instanceof NullObject && !$this->debugMode) {
-            return;
-        }
-
-        if ($this->debugMode) {
-            echo $result::class . ': ';
-        }
-
-        echo $result->inspect() . PHP_EOL;
-    }
-
-    private function writeError(string $message): void
-    {
-        fwrite(STDERR, 'Error: ' . $message . PHP_EOL);
-    }
-
     private function showVersion(): int
     {
         echo 'Monkey Programming Language v' . self::VERSION . PHP_EOL;
@@ -227,6 +322,7 @@ final class Monkey
             --version, -v     Show version information
             --help, -h        Show this help message
             --debug           Enable debug mode
+            --stats           Show performance statistics
 
         Examples:
             monkey repl
@@ -234,12 +330,5 @@ final class Monkey
         HELP . PHP_EOL;
 
         return 0;
-    }
-
-    private function enableDebugMode(): int
-    {
-        $this->debugMode = true;
-
-        return $this->startRepl();
     }
 }
