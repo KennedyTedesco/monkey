@@ -6,6 +6,7 @@ namespace MonkeyLang\Monkey\Command;
 
 use MonkeyLang\Monkey\Config\Configuration;
 use MonkeyLang\Monkey\IO\OutputFormatter;
+use MonkeyLang\Monkey\Monkey;
 
 final readonly class VersionCommand implements Command
 {
@@ -16,7 +17,7 @@ final readonly class VersionCommand implements Command
 
     public function execute(Configuration $config): int
     {
-        $this->outputFormatter->write('Monkey Programming Language v 1.0');
+        $this->outputFormatter->write('Monkey Programming Language v' . Monkey::version());
 
         return 0;
     }
