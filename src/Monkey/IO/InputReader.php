@@ -23,7 +23,7 @@ final readonly class InputReader
 
     public function readLine(string $prompt = '➜ '): string | false
     {
-        $question = new Question("<prompt>{$prompt}</prompt> ");
+        $question = new Question($prompt);
 
         try {
             $answer = $this->questionHelper->ask($this->input, $this->output, $question);

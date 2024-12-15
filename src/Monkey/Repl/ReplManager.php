@@ -48,7 +48,7 @@ final class ReplManager
     {
         try {
             $this->debugMode = $config->hasDebug();
-            $this->showWelcomeBanner();
+            $this->welcome();
 
             while ($this->running) {
                 $this->outputFormatter->write('');
@@ -162,18 +162,19 @@ final class ReplManager
             system('clear');
         }
 
-        $this->showWelcomeBanner();
+        $this->welcome();
 
         return true;
     }
 
-    private function showWelcomeBanner(): void
+    private function welcome(): void
     {
         $table = new Table($this->outputFormatter->output);
 
         $table->setRows([
-            ['🐒 Monkey Programming Language v1.0.0'],
-            ["Type ':c' for clear, ':q' to quit"],
+            ['<fg=green>🐒 Monkey Programming Language</> <fg=yellow>v1.0.0</>'],
+            [''],
+            ["<fg=cyan>Type</> <fg=blue>:c</> <fg=cyan>for clear,</> <fg=blue>:q</> <fg=cyan>to quit</>"],
         ]);
 
         $table->render();
