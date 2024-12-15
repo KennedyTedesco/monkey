@@ -12,6 +12,16 @@ final class PerformanceTracker
 
     private ?int $startMemory = null;
 
+    public function __construct(
+        private readonly string $title,
+    ) {
+    }
+
+    public static function new(string $title): self
+    {
+        return new self($title);
+    }
+
     public function start(): void
     {
         $this->startTime = microtime(true);
@@ -25,9 +35,9 @@ final class PerformanceTracker
         }
 
         $metrics = new PerformanceMetrics(
+            title: $this->title,
             timeElapsed: microtime(true) - $this->startTime,
             memoryUsed: memory_get_usage() - $this->startMemory,
-            peakMemory: memory_get_peak_usage(true),
         );
 
         $this->startTime = null;

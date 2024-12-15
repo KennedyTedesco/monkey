@@ -24,7 +24,6 @@ final readonly class OutputFormatter
 
     public function writeOutput(MonkeyObject $result, bool $debug = false): void
     {
-        // Skip output for NullObject unless in debug mode
         if ($result instanceof NullObject && !$debug) {
             return;
         }
@@ -49,16 +48,12 @@ final readonly class OutputFormatter
 
     public function writePerformanceStats(PerformanceMetrics $metrics): void
     {
-        $this->output->writeln('');
-        $this->output->writeln('');
-        $this->output->writeln('<title>Performance Statistics</title>');
-
+        $this->output->writeln("<title>{$metrics->title} Performance Statistics</title>");
         $table = new Table($this->output);
 
         $table->setRows([
-            ['Memory used', "<memory>{$this->formatBytes($metrics->memoryUsed)}</memory>"],
-            ['Peak memory', "<peak>{$this->formatBytes($metrics->peakMemory)}</peak>"],
-            ['Time taken', '<time>' . number_format($metrics->timeElapsed, 6) . ' seconds</time>'],
+            ['Memory used', "\033[32m" . $this->formatBytes($metrics->memoryUsed) . "\033[0m"],
+            ['Time taken', "\033[34m" . number_format($metrics->timeElapsed, 6) . " seconds\033[0m"],
         ]);
 
         $table->render();
@@ -75,10 +70,6 @@ final readonly class OutputFormatter
         $this->output->getFormatter()->setStyle(
             'memory',
             new OutputFormatterStyle('green'),
-        );
-        $this->output->getFormatter()->setStyle(
-            'peak',
-            new OutputFormatterStyle('yellow'),
         );
         $this->output->getFormatter()->setStyle(
             'time',

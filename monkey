@@ -37,18 +37,15 @@ try {
 
     $outputFormatter = new OutputFormatter($output);
     $inputReader = new InputReader($input, $output, $questionHelper);
-    $performanceTracker = new PerformanceTracker();
     
     $replManager = new ReplManager(
         inputReader: $inputReader,
         outputFormatter: $outputFormatter,
-        performanceTracker: $performanceTracker
     );
 
     $commandFactory = new CommandFactory(
         replManager: $replManager,
         outputFormatter: $outputFormatter,
-        performanceTracker: $performanceTracker
     );
 
     $configManager = new ConfigurationManager();

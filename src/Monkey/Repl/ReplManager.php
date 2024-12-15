@@ -34,7 +34,6 @@ final class ReplManager
     public function __construct(
         private readonly InputReader $inputReader,
         private readonly OutputFormatter $outputFormatter,
-        private readonly PerformanceTracker $performanceTracker,
         private Environment $environment = new Environment() {
             get {
                 return $this->environment;
@@ -70,7 +69,9 @@ final class ReplManager
                 }
 
                 try {
-                    $this->evaluateAndOutput($input, $config);
+                    $result = $this->evaluate($input, $config);
+                    
+                    $this->outputFormatter->writeOutput($result, $this->debugMode);
                 } catch (MonkeyRuntimeException $e) {
                     $this->outputFormatter->writeError($e->getMessage());
                 } catch (Throwable $e) {
@@ -94,23 +95,15 @@ final class ReplManager
         }
     }
 
-    private function evaluateAndOutput(string $input, Configuration $config): void
+    private function evaluate(string $input, Configuration $config): MonkeyObject
     {
-        if ($config->hasStats()) {
-            $this->performanceTracker->start();
-        }
-
-        $result = $this->evaluate($input);
-        $this->outputFormatter->writeOutput($result, $this->debugMode);
+        $parserPerformanceTracker = null;
 
         if ($config->hasStats()) {
-            $metrics = $this->performanceTracker->stop();
-            $this->outputFormatter->writePerformanceStats($metrics);
+            $parserPerformanceTracker = new PerformanceTracker('Parser');
+            $parserPerformanceTracker->start();
         }
-    }
-
-    private function evaluate(string $input): MonkeyObject
-    {
+        
         $lexer = new Lexer($input);
         $parser = new Parser($lexer);
 
@@ -123,6 +116,11 @@ final class ReplManager
         }
 
         $program = new ProgramParser()($parser);
+
+        if ($config->hasStats()) {
+            $metrics = $parserPerformanceTracker->stop();
+            $this->outputFormatter->writePerformanceStats($metrics);
+        }
 
         return $this->evaluator->eval($program, $this->environment);
     }

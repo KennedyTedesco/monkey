@@ -7,7 +7,6 @@ namespace MonkeyLang\Monkey\Command;
 use MonkeyLang\Lang\Evaluator\Environment;
 use MonkeyLang\Lang\Evaluator\Evaluator;
 use MonkeyLang\Lang\Lexer\Lexer;
-use MonkeyLang\Lang\Object\MonkeyObject;
 use MonkeyLang\Lang\Parser\Parser;
 use MonkeyLang\Lang\Parser\ProgramParser;
 use MonkeyLang\Monkey\Config\Configuration;
@@ -20,7 +19,6 @@ final readonly class RunFileCommand implements Command
 {
     public function __construct(
         private OutputFormatter $outputFormatter,
-        private PerformanceTracker $performanceTracker,
     ) {
     }
 
@@ -42,29 +40,6 @@ final readonly class RunFileCommand implements Command
             throw new RuntimeException("Could not read file: {$filename}");
         }
 
-        if ($config->hasStats()) {
-            $this->performanceTracker->start();
-        }
-
-        try {
-            $result = $this->evaluateCode($contents);
-            $this->outputFormatter->writeOutput($result, $config->hasDebug());
-
-            if ($config->hasStats()) {
-                $metrics = $this->performanceTracker->stop();
-                $this->outputFormatter->writePerformanceStats($metrics);
-            }
-
-            return 0;
-        } catch (Throwable $throwable) {
-            $this->outputFormatter->writeError($throwable->getMessage());
-
-            return 1;
-        }
-    }
-
-    private function evaluateCode(string $contents): MonkeyObject
-    {
         $lexer = new Lexer($contents);
         $parser = new Parser($lexer);
 
@@ -74,9 +49,50 @@ final readonly class RunFileCommand implements Command
             );
         }
 
-        $program = new ProgramParser()($parser);
-        $evaluator = new Evaluator();
+        $parserPerformanceMetrics = null;
+        $parserPerformanceTracker = null;
 
-        return $evaluator->eval($program, new Environment());
+        if ($config->hasStats()) {
+            $parserPerformanceTracker = new PerformanceTracker('Parser');
+            $parserPerformanceTracker->start();
+        }
+
+        $program = new ProgramParser()($parser);
+
+        if ($config->hasStats()) {
+            $parserPerformanceMetrics = $parserPerformanceTracker->stop();
+        }
+
+        $evaluatorPerformanceMetrics = null;
+        $evaluatorPerformanceTracker = null;
+
+        if ($config->hasStats()) {
+            $evaluatorPerformanceTracker = new PerformanceTracker('Evaluator');
+            $evaluatorPerformanceTracker->start();
+        }
+
+        try {
+            $evaluator = new Evaluator();
+            $result = $evaluator->eval($program, new Environment());
+
+            if ($config->hasStats()) {
+                $evaluatorPerformanceMetrics = $evaluatorPerformanceTracker->stop();
+            }
+
+            $this->outputFormatter->writeOutput($result, $config->hasDebug());
+            $this->outputFormatter->write('');
+            $this->outputFormatter->write('');
+
+            if ($config->hasStats()) {
+                $this->outputFormatter->writePerformanceStats($parserPerformanceMetrics);
+                $this->outputFormatter->writePerformanceStats($evaluatorPerformanceMetrics);
+            }
+
+            return 0;
+        } catch (Throwable $throwable) {
+            $this->outputFormatter->writeError($throwable->getMessage());
+
+            return 1;
+        }
     }
 }
