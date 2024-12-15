@@ -25,6 +25,9 @@ final readonly class Monkey
         return self::VERSION;
     }
 
+    /**
+     * @param array<string> $argv
+     */
     public function run(array $argv): int
     {
         try {
