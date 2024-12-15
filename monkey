@@ -59,5 +59,6 @@ try {
     exit($monkey->run($argv));
 } catch (Throwable $e) {
     fwrite(STDERR, "Fatal error: {$e->getMessage()}\n");
+    
     exit(1);
 }
