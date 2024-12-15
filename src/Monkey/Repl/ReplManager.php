@@ -168,15 +168,7 @@ final class ReplManager
 
     private function showWelcomeBanner(): void
     {
-        $tableStyle = new TableStyle();
-        $tableStyle
-            ->setHorizontalBorderChars('-')
-            ->setVerticalBorderChars('|')
-            ->setCrossingChars('+', '+', '+', '+', '+', '+', '+', '+', '+')
-            ->setPadType(STR_PAD_RIGHT);
-
         $table = new Table($this->outputFormatter->output);
-        $table->setStyle($tableStyle);
 
         $table->setRows([
             ['🐒 Monkey Programming Language v1.0.0'],
