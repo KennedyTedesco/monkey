@@ -21,7 +21,7 @@ final class ConfigurationManager
     public function parseArguments(array $argv): Configuration
     {
         if (count($argv) <= 1) {
-            throw new RuntimeException('No command specified');
+            $argv[] = 'help';
         }
 
         $options = [];
@@ -48,11 +48,6 @@ final class ConfigurationManager
             } else {
                 $arguments[] = $arg;
             }
-        }
-
-        // If no command was found after processing options
-        if ($command === '') {
-            $command = '--help';
         }
 
         return new Configuration($command, $options, $arguments);
