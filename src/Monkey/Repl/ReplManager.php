@@ -15,26 +15,15 @@ use MonkeyLang\Monkey\Exceptions\MonkeyRuntimeException;
 use MonkeyLang\Monkey\IO\InputReader;
 use MonkeyLang\Monkey\IO\OutputFormatter;
 use MonkeyLang\Monkey\Performance\PerformanceTracker;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableStyle;
 use Throwable;
+
 
 use const PHP_OS_FAMILY;
 
 final class ReplManager
 {
-    private const array SPECIAL_COMMANDS = [
-        ':q' => 'handleQuit',
-        ':quit' => 'handleQuit',
-        'exit' => 'handleQuit',
-        ':h' => 'handleHelp',
-        ':help' => 'handleHelp',
-        ':c' => 'handleClear',
-        ':clear' => 'handleClear',
-        ':d' => 'handleDebugToggle',
-        ':debug' => 'handleDebugToggle',
-        ':r' => 'handleResetEnvironment',
-        ':reset' => 'handleResetEnvironment',
-    ];
-
     private bool $debugMode = false {
         get {
             return $this->debugMode;
@@ -133,7 +122,7 @@ final class ReplManager
             );
         }
 
-        $program = (new ProgramParser())($parser);
+        $program = new ProgramParser()($parser);
 
         return $this->evaluator->eval($program, $this->environment);
     }
@@ -142,10 +131,15 @@ final class ReplManager
     {
         $trimmedInput = trim($input);
 
-        if (isset(self::SPECIAL_COMMANDS[$trimmedInput])) {
-            $method = self::SPECIAL_COMMANDS[$trimmedInput];
+        $commands = [
+            ':q' => fn(): bool => $this->handleQuit(),
+            ':quit' => fn(): bool => $this->handleQuit(),
+            ':c' => fn(): bool => $this->handleClear(),
+            ':clear' => fn(): bool => $this->handleClear(),
+        ];
 
-            return $this->{$method}();
+        if (isset($commands[$trimmedInput])) {
+            return $commands[$trimmedInput]();
         }
 
         return false;
@@ -155,22 +149,6 @@ final class ReplManager
     {
         $this->running = false;
         $this->outputFormatter->write('Goodbye!');
-
-        return true;
-    }
-
-    private function handleHelp(): bool
-    {
-        $this->outputFormatter->write(<<<HELP
-        \nMonkey REPL Commands:
-        :q, :quit, exit   Exit the REPL
-        :h, :help         Show this help message
-        :c, :clear        Clear the screen
-        :d, :debug        Toggle debug mode
-        :r, :reset        Reset the environment
-
-        Press Ctrl+C to cancel current input
-        HELP);
 
         return true;
     }
@@ -188,44 +166,25 @@ final class ReplManager
         return true;
     }
 
-    private function handleDebugToggle(): bool
-    {
-        $this->debugMode = !$this->debugMode;
-        $this->outputFormatter->write(
-            'Debug mode: ' . ($this->debugMode ? 'Enabled' : 'Disabled'),
-        );
-
-        return true;
-    }
-
-    private function handleResetEnvironment(): bool
-    {
-        $this->environment = new Environment();
-        $this->outputFormatter->write('Environment has been reset');
-
-        return true;
-    }
-
     private function showWelcomeBanner(): void
     {
-        $this->outputFormatter->write(<<<BANNER
-                    __,__
-           .--.  .-"     "-.  .--.
-          / .. \\/  .-. .-.  \\/ .. \\
-         | |  '|  /   Y   \\  |'  | |
-         | \\   \\  \\ 0 | 0 /  /   / |
-          \\ '- ,\\.-"`` ``"-./, -' /
-           `'-' /_   ^ ^   _\\ '-'`
-               |  \\._   _./  |
-               \\   \\ `~` /   /
-                '._ '-=-' _.'
-                   '~---~'
-        -------------------------------
-        | Monkey Programming Language |
-        -------------------------------
+        $tableStyle = new TableStyle();
+        $tableStyle
+            ->setHorizontalBorderChars('-')
+            ->setVerticalBorderChars('|')
+            ->setCrossingChars('+', '+', '+', '+', '+', '+', '+', '+', '+')
+            ->setPadType(STR_PAD_RIGHT);
 
-        Type ':h' for help, ':c' for clear, ':q' to quit
-        BANNER);
+        $table = new Table($this->outputFormatter->output);
+        $table->setStyle($tableStyle);
+
+        $table->setRows([
+            ['🐒 Monkey Programming Language v1.0.0'],
+            ["Type ':c' for clear, ':q' to quit"],
+        ]);
+
+        $table->render();
+
         $this->outputFormatter->write('');
     }
 }

@@ -20,7 +20,7 @@ use const STR_PAD_RIGHT;
 final readonly class OutputFormatter
 {
     public function __construct(
-        private OutputInterface $output,
+        private(set) OutputInterface $output,
     ) {
         $this->configureStyles();
     }
