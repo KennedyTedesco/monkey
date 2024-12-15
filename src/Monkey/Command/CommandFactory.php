@@ -11,6 +11,7 @@ use RuntimeException;
 
 final class CommandFactory
 {
+    /** @var array<string, Command> */
     private array $commands = [];
 
     public function __construct(
@@ -35,10 +36,8 @@ final class CommandFactory
         $this->commands = [
             'repl' => new ReplCommand($this->replManager, $this->outputFormatter),
             'run' => new RunFileCommand($this->outputFormatter, $this->performanceTracker),
-            '--help' => new HelpCommand($this->outputFormatter),
-            '-h' => new HelpCommand($this->outputFormatter),
-            '--version' => new VersionCommand($this->outputFormatter),
-            '-v' => new VersionCommand($this->outputFormatter),
+            'help' => new HelpCommand($this->outputFormatter),
+            'version' => new VersionCommand($this->outputFormatter),
         ];
     }
 }

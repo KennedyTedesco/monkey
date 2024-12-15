@@ -11,10 +11,13 @@ use function in_array;
 
 final class ConfigurationManager
 {
-    private const array VALID_COMMANDS = ['repl', 'run', '--version', '-v', '--help', '-h'];
+    private const array VALID_COMMANDS = ['repl', 'run', 'version', 'help'];
 
     private const array VALID_OPTIONS = ['--debug', '--stats'];
 
+    /**
+     * @param array<string> $argv
+     */
     public function parseArguments(array $argv): Configuration
     {
         if (count($argv) <= 1) {
@@ -28,14 +31,14 @@ final class ConfigurationManager
         foreach ($argv as $index => $arg) {
             if ($index === 0) {
                 continue;
-            } // Skip script name
+            }
 
-            if (str_starts_with((string)$arg, '--')) {
+            if (str_starts_with($arg, '--')) {
                 if (!in_array($arg, self::VALID_OPTIONS)) {
                     throw new RuntimeException("Invalid option: {$arg}");
                 }
 
-                $options[trim((string)$arg, '-')] = true;
+                $options[trim($arg, '-')] = true;
             } elseif ($command === '') {
                 if (!in_array($arg, self::VALID_COMMANDS)) {
                     throw new RuntimeException("Invalid command: {$arg}");

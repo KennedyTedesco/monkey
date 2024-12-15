@@ -21,7 +21,12 @@ if (PHP_SAPI !== 'cli') {
     exit;
 }
 
-if (!isset($GLOBALS['argv']) || !is_array($GLOBALS['argv'])) {
+/**
+ * @var array<string> $argv
+ */
+$argv = (array) ($GLOBALS['argv'] ?? []);
+
+if ($argv === []) {
     exit(1);
 }
 
@@ -33,6 +38,7 @@ try {
     $outputFormatter = new OutputFormatter($output);
     $inputReader = new InputReader($input, $output, $questionHelper);
     $performanceTracker = new PerformanceTracker();
+    
     $replManager = new ReplManager(
         $inputReader,
         $outputFormatter,
@@ -40,16 +46,17 @@ try {
     );
 
     $commandFactory = new CommandFactory(
-        //$inputReader,
         $outputFormatter,
         $performanceTracker,
         $replManager
     );
-    $commandRunner = new CommandRunner($commandFactory);
+
     $configManager = new ConfigurationManager();
+    $commandRunner = new CommandRunner($commandFactory);
 
     $monkey = new Monkey($commandRunner, $configManager);
-    exit($monkey->run($GLOBALS['argv']));
+    
+    exit($monkey->run($argv));
 } catch (Throwable $e) {
     fwrite(STDERR, "Fatal error: {$e->getMessage()}\n");
     exit(1);

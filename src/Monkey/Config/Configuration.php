@@ -8,7 +8,13 @@ final readonly class Configuration
 {
     public function __construct(
         public string $command,
+        /**
+         * @var array<string, mixed>
+         */
         public array $options,
+        /**
+         * @var array<string>
+         */
         public array $arguments,
     ) {
     }
