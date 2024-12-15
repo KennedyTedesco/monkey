@@ -65,7 +65,7 @@ final class ReplManager
                     continue;
                 }
 
-                if ($this->handleSpecialCommand($input)) {
+                if ($this->runCommand($input)) {
                     continue;
                 }
 
@@ -127,25 +127,18 @@ final class ReplManager
         return $this->evaluator->eval($program, $this->environment);
     }
 
-    private function handleSpecialCommand(string $input): bool
+    private function runCommand(string $input): bool
     {
         $trimmedInput = trim($input);
 
-        $commands = [
-            ':q' => fn(): bool => $this->handleQuit(),
-            ':quit' => fn(): bool => $this->handleQuit(),
-            ':c' => fn(): bool => $this->handleClear(),
-            ':clear' => fn(): bool => $this->handleClear(),
-        ];
-
-        if (isset($commands[$trimmedInput])) {
-            return $commands[$trimmedInput]();
-        }
-
-        return false;
+        return match ($trimmedInput) {
+            ':q', ':quit' => $this->quit(),
+            ':c', ':clear' => $this->clear(),
+            default => false,
+        };
     }
 
-    private function handleQuit(): bool
+    private function quit(): bool
     {
         $this->running = false;
         $this->outputFormatter->write('');
@@ -154,7 +147,7 @@ final class ReplManager
         return true;
     }
 
-    private function handleClear(): bool
+    private function clear(): bool
     {
         if (PHP_OS_FAMILY === 'Windows') {
             system('cls');
