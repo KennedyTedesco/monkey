@@ -144,7 +144,7 @@ docker run --rm -v $(pwd):/monkey -w /monkey php:8.4-cli ./vendor/bin/pest
 Running from a file contents of the examples folder:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey run examples/fibo_while.monkey
+docker run --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey --stats run examples/fibo_while.monkey
 ```
 
 ### Using the REPL
@@ -158,17 +158,23 @@ docker run -it --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey repl
 Example:
 
 ```text
-🐒 Monkey Programming Language v1.0.0
-Type ':h' for help, ':c' for clear, ':q' to quit
++---------------------------------------+
+| 🐒 Monkey Programming Language v1.0.0 |
+|                                       |
+| Type :c for clear, :q to quit         |
++---------------------------------------+
+
 
 ➜ let a = 20 + fn(x){ return x + 10; }(2);
 32
+
+➜
 ```
 
 Or, if you want to execute a file:
 
 ```bash
-docker run --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey run examples/closure.monkey
+docker run --rm -v (pwd):/monkey -w /monkey php:8.4-cli ./monkey --stats run examples/closure.monkey
 ```
 
 ### Contributing
