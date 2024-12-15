@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use MonkeyLang\Object\ArrayObject;
-use MonkeyLang\Object\BooleanObject;
-use MonkeyLang\Object\ErrorObject;
-use MonkeyLang\Object\FloatObject;
-use MonkeyLang\Object\FunctionObject;
-use MonkeyLang\Object\IntegerObject;
-use MonkeyLang\Object\MonkeyObject;
-use MonkeyLang\Object\MonkeyObjectType;
-use MonkeyLang\Object\NullObject;
-use MonkeyLang\Object\StringObject;
+use MonkeyLang\Lang\Object\ArrayObject;
+use MonkeyLang\Lang\Object\BooleanObject;
+use MonkeyLang\Lang\Object\ErrorObject;
+use MonkeyLang\Lang\Object\FloatObject;
+use MonkeyLang\Lang\Object\FunctionObject;
+use MonkeyLang\Lang\Object\IntegerObject;
+use MonkeyLang\Lang\Object\MonkeyObject;
+use MonkeyLang\Lang\Object\MonkeyObjectType;
+use MonkeyLang\Lang\Object\NullObject;
+use MonkeyLang\Lang\Object\StringObject;
 
 function testObjectValue(MonkeyObject $object, $expected)
 {

@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use MonkeyLang\Ast\Expressions\BinaryExpression;
-use MonkeyLang\Ast\Expressions\CallExpression;
-use MonkeyLang\Ast\Expressions\IdentifierExpression;
-use MonkeyLang\Ast\Expressions\IfExpression;
-use MonkeyLang\Ast\Expressions\IndexExpression;
-use MonkeyLang\Ast\Expressions\PostfixExpression;
-use MonkeyLang\Ast\Expressions\UnaryExpression;
-use MonkeyLang\Ast\Expressions\WhileExpression;
-use MonkeyLang\Ast\Statements\AssignStatement;
-use MonkeyLang\Ast\Statements\BlockStatement;
-use MonkeyLang\Ast\Statements\ExpressionStatement;
-use MonkeyLang\Ast\Statements\LetStatement;
-use MonkeyLang\Ast\Statements\ReturnStatement;
-use MonkeyLang\Ast\Types\ArrayLiteral;
-use MonkeyLang\Ast\Types\BooleanLiteral;
-use MonkeyLang\Ast\Types\FunctionLiteral;
-use MonkeyLang\Ast\Types\IntegerLiteral;
-use MonkeyLang\Ast\Types\StringLiteral;
+use MonkeyLang\Lang\Ast\Expressions\BinaryExpression;
+use MonkeyLang\Lang\Ast\Expressions\CallExpression;
+use MonkeyLang\Lang\Ast\Expressions\IdentifierExpression;
+use MonkeyLang\Lang\Ast\Expressions\IfExpression;
+use MonkeyLang\Lang\Ast\Expressions\IndexExpression;
+use MonkeyLang\Lang\Ast\Expressions\PostfixExpression;
+use MonkeyLang\Lang\Ast\Expressions\UnaryExpression;
+use MonkeyLang\Lang\Ast\Expressions\WhileExpression;
+use MonkeyLang\Lang\Ast\Statements\AssignStatement;
+use MonkeyLang\Lang\Ast\Statements\BlockStatement;
+use MonkeyLang\Lang\Ast\Statements\ExpressionStatement;
+use MonkeyLang\Lang\Ast\Statements\LetStatement;
+use MonkeyLang\Lang\Ast\Statements\ReturnStatement;
+use MonkeyLang\Lang\Ast\Types\ArrayLiteral;
+use MonkeyLang\Lang\Ast\Types\BooleanLiteral;
+use MonkeyLang\Lang\Ast\Types\FunctionLiteral;
+use MonkeyLang\Lang\Ast\Types\IntegerLiteral;
+use MonkeyLang\Lang\Ast\Types\StringLiteral;
 
 test('let statements', function (string $input, string $name, $value) {
     $program = newProgram($input);

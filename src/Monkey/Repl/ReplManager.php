@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace MonkeyLang\Monkey\Repl;
 
-use MonkeyLang\Evaluator\Environment;
-use MonkeyLang\Evaluator\Evaluator;
-use MonkeyLang\Lexer\Lexer;
+use MonkeyLang\Lang\Evaluator\Environment;
+use MonkeyLang\Lang\Evaluator\Evaluator;
+use MonkeyLang\Lang\Lexer\Lexer;
+use MonkeyLang\Lang\Object\MonkeyObject;
+use MonkeyLang\Lang\Parser\Parser;
+use MonkeyLang\Lang\Parser\ProgramParser;
 use MonkeyLang\Monkey\Config\Configuration;
 use MonkeyLang\Monkey\Exceptions\MonkeyRuntimeException;
 use MonkeyLang\Monkey\IO\InputReader;
 use MonkeyLang\Monkey\IO\OutputFormatter;
 use MonkeyLang\Monkey\Performance\PerformanceTracker;
-use MonkeyLang\Object\MonkeyObject;
-use MonkeyLang\Parser\Parser;
-use MonkeyLang\Parser\ProgramParser;
 use Throwable;
 
 use const PHP_OS_FAMILY;

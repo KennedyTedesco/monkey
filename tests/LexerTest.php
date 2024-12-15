@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use MonkeyLang\Lexer\Lexer;
-use MonkeyLang\Token\TokenType;
+use MonkeyLang\Lang\Lexer\Lexer;
+use MonkeyLang\Lang\Token\TokenType;
 
 test('basic tokens', function () {
     $input = <<<MONKEY

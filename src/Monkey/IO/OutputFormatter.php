@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace MonkeyLang\Monkey\IO;
 
+use MonkeyLang\Lang\Object\MonkeyObject;
+use MonkeyLang\Lang\Object\NullObject;
 use MonkeyLang\Monkey\Performance\PerformanceMetrics;
-use MonkeyLang\Object\MonkeyObject;
-use MonkeyLang\Object\NullObject;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableStyle;
