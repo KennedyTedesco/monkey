@@ -9,13 +9,10 @@ use MonkeyLang\Lang\Object\NullObject;
 use MonkeyLang\Monkey\Performance\PerformanceMetrics;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use function count;
 use function sprintf;
-
-use const STR_PAD_RIGHT;
 
 final readonly class OutputFormatter
 {
@@ -56,15 +53,7 @@ final readonly class OutputFormatter
         $this->output->writeln('');
         $this->output->writeln('<title>Performance Statistics</title>');
 
-        $tableStyle = new TableStyle();
-        $tableStyle
-            ->setHorizontalBorderChars('-')
-            ->setVerticalBorderChars('|')
-            ->setCrossingChars('+', '+', '+', '+', '+', '+', '+', '+', '+')
-            ->setPadType(STR_PAD_RIGHT);
-
         $table = new Table($this->output);
-        $table->setStyle($tableStyle);
 
         $table->setRows([
             ['Memory used', "<memory>{$this->formatBytes($metrics->memoryUsed)}</memory>"],

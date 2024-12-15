@@ -16,7 +16,6 @@ use MonkeyLang\Monkey\IO\InputReader;
 use MonkeyLang\Monkey\IO\OutputFormatter;
 use MonkeyLang\Monkey\Performance\PerformanceTracker;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableStyle;
 use Throwable;
 
 
