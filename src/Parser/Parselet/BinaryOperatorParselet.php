@@ -22,9 +22,7 @@ final readonly class BinaryOperatorParselet implements InfixParselet
         $this->parser->nextToken();
 
         /** @var Expression $right */
-        $right = $this->parser->parseExpression(
-            $this->parser->precedence($token),
-        );
+        $right = $this->parser->parseExpression($token->type()->precedence());
 
         return new BinaryExpression($token, $token->literal(), $expression, $right);
     }

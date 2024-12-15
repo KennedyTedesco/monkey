@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Monkey\Token;
 
 use Monkey\Lexer\Char;
+use Monkey\Parser\Precedence;
 
 enum TokenType: int
 {
@@ -108,6 +109,22 @@ enum TokenType: int
             'return' => self::RETURN,
 
             default => null,
+        };
+    }
+
+    public function precedence(): Precedence
+    {
+        return match ($this) {
+            self::EQ, self::NOT_EQ => Precedence::EQUALS,
+            self::LT, self::LT_EQ, self::GT, self::GT_EQ => Precedence::LESS_GREATER,
+            self::PLUS, self::MINUS => Precedence::SUM,
+            self::SLASH, self::ASTERISK, self::MODULO => Precedence::PRODUCT,
+            self::LPAREN => Precedence::CALL,
+            self::LBRACKET => Precedence::INDEX,
+            self::AND => Precedence::AND,
+            self::OR => Precedence::OR,
+            self::POWER => Precedence::POWER,
+            default => Precedence::LOWEST,
         };
     }
 

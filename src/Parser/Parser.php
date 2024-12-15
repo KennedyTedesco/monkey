@@ -40,26 +40,6 @@ final class Parser
     /** @var array<int,PostfixParselet> */
     public array $postfixParselets = [];
 
-    /** @var array<int, Precedence> */
-    public array $precedences = [
-        TokenType::EQ->value => Precedence::EQUALS,
-        TokenType::NOT_EQ->value => Precedence::EQUALS,
-        TokenType::LT->value => Precedence::LESS_GREATER,
-        TokenType::LT_EQ->value => Precedence::LESS_GREATER,
-        TokenType::GT->value => Precedence::LESS_GREATER,
-        TokenType::GT_EQ->value => Precedence::LESS_GREATER,
-        TokenType::PLUS->value => Precedence::SUM,
-        TokenType::MINUS->value => Precedence::SUM,
-        TokenType::SLASH->value => Precedence::PRODUCT,
-        TokenType::ASTERISK->value => Precedence::PRODUCT,
-        TokenType::MODULO->value => Precedence::PRODUCT,
-        TokenType::LPAREN->value => Precedence::CALL,
-        TokenType::LBRACKET->value => Precedence::INDEX,
-        TokenType::AND->value => Precedence::AND,
-        TokenType::OR->value => Precedence::OR,
-        TokenType::POWER->value => Precedence::POWER,
-    ];
-
     private ?Token $prevToken = null;
 
     private ?Token $curToken = null;
@@ -148,7 +128,7 @@ final class Parser
         /** @var Expression $leftExpression */
         $leftExpression = $prefixParselet->parse();
 
-        while (!$this->peekToken()->is(TokenType::SEMICOLON) && $precedence->value < $this->precedence($this->peekToken())->value) {
+        while (!$this->peekToken()->is(TokenType::SEMICOLON) && $precedence->value < $this->peekToken()->type()->precedence()->value) {
             $infixParselet = $this->infixParselets[$this->peekToken()->type()->value] ?? null;
 
             if (!$infixParselet instanceof InfixParselet) {
@@ -162,11 +142,6 @@ final class Parser
         }
 
         return $leftExpression;
-    }
-
-    public function precedence(Token $token): Precedence
-    {
-        return $this->precedences[$token->type()->value] ?? Precedence::LOWEST;
     }
 
     /**
