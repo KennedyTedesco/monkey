@@ -33,21 +33,23 @@ use MonkeyLang\Lang\Evaluator\Builtin\EvalMapFunction;
 use MonkeyLang\Lang\Evaluator\Builtin\EvalPushFunction;
 use MonkeyLang\Lang\Evaluator\Builtin\EvalPutsFunction;
 use MonkeyLang\Lang\Evaluator\Builtin\EvalSliceFunction;
-use MonkeyLang\Lang\Object\BooleanObject;
 use MonkeyLang\Lang\Object\ErrorObject;
 use MonkeyLang\Lang\Object\FloatObject;
 use MonkeyLang\Lang\Object\FunctionObject;
 use MonkeyLang\Lang\Object\IntegerObject;
 use MonkeyLang\Lang\Object\MonkeyObject;
-use MonkeyLang\Lang\Object\NullObject;
 use MonkeyLang\Lang\Object\StringObject;
 
 use function call_user_func;
 
 final class Evaluator
 {
+    private ObjectPool $objectPool;
+
     public function __construct()
     {
+        $this->objectPool = new ObjectPool();
+
         $this->registerBuiltinFunctions();
     }
 
@@ -58,7 +60,7 @@ final class Evaluator
             $node instanceof IntegerLiteral => new IntegerObject($node->value),
             $node instanceof FloatLiteral => new FloatObject($node->value),
             $node instanceof StringLiteral => new StringObject($node->value),
-            $node instanceof BooleanLiteral => BooleanObject::from($node->value),
+            $node instanceof BooleanLiteral => $node->value ? $this->objectPool->true : $this->objectPool->false,
             $node instanceof BlockStatement => new EvalBlockStatement($this, $environment)($node),
             $node instanceof IfExpression => new EvalIfExpression($this, $environment)($node),
             $node instanceof WhileExpression => new EvalWhileExpression($this, $environment)($node),
@@ -81,7 +83,7 @@ final class Evaluator
             $node instanceof AssignStatement => new EvalAssingStatement($this, $environment)($node),
             $node instanceof IdentifierExpression => new EvalIdentifier($environment)($node),
             $node instanceof PostfixExpression => new EvalPostfixExpression($environment)($node),
-            default => NullObject::instance(),
+            default => $this->objectPool->null,
         };
     }
 
