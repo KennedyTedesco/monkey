@@ -35,7 +35,11 @@ final class ReplManager
         ':reset' => 'handleResetEnvironment',
     ];
 
-    private bool $debugMode = false;
+    private bool $debugMode = false {
+        get {
+            return $this->debugMode;
+        }
+    }
 
     private bool $running = true;
 
@@ -43,7 +47,11 @@ final class ReplManager
         private readonly InputReader $inputReader,
         private readonly OutputFormatter $outputFormatter,
         private readonly PerformanceTracker $performanceTracker,
-        private Environment $environment = new Environment(),
+        private Environment $environment = new Environment() {
+            get {
+                return $this->environment;
+            }
+        },
         private readonly Evaluator $evaluator = new Evaluator(),
     ) {
     }
@@ -55,7 +63,7 @@ final class ReplManager
             $this->showWelcomeBanner();
 
             while ($this->running) {
-                $this->outputFormatter->write(''); // Add newline before prompt
+                $this->outputFormatter->write('');
                 $input = $this->inputReader->readLine();
 
                 if ($input === false) {
@@ -95,16 +103,6 @@ final class ReplManager
 
             return 1;
         }
-    }
-
-    public function isDebugMode(): bool
-    {
-        return $this->debugMode;
-    }
-
-    public function getEnvironment(): Environment
-    {
-        return $this->environment;
     }
 
     private function evaluateAndOutput(string $input, Configuration $config): void
