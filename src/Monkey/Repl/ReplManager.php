@@ -14,7 +14,6 @@ use MonkeyLang\Monkey\Config\Configuration;
 use MonkeyLang\Monkey\Exceptions\MonkeyRuntimeException;
 use MonkeyLang\Monkey\IO\InputReader;
 use MonkeyLang\Monkey\IO\OutputFormatter;
-use MonkeyLang\Monkey\Performance\PerformanceTracker;
 use Symfony\Component\Console\Helper\Table;
 use Throwable;
 
@@ -69,7 +68,7 @@ final class ReplManager
                 }
 
                 try {
-                    $result = $this->evaluate($input, $config);
+                    $result = $this->evaluate($input);
                     
                     $this->outputFormatter->writeOutput($result, $this->debugMode);
                 } catch (MonkeyRuntimeException $e) {
@@ -95,15 +94,8 @@ final class ReplManager
         }
     }
 
-    private function evaluate(string $input, Configuration $config): MonkeyObject
+    private function evaluate(string $input): MonkeyObject
     {
-        $parserPerformanceTracker = null;
-
-        if ($config->hasStats()) {
-            $parserPerformanceTracker = new PerformanceTracker('Parser');
-            $parserPerformanceTracker->start();
-        }
-        
         $lexer = new Lexer($input);
         $parser = new Parser($lexer);
 
@@ -116,11 +108,6 @@ final class ReplManager
         }
 
         $program = new ProgramParser()($parser);
-
-        if ($config->hasStats()) {
-            $metrics = $parserPerformanceTracker->stop();
-            $this->outputFormatter->writePerformanceStats($metrics);
-        }
 
         return $this->evaluator->eval($program, $this->environment);
     }
