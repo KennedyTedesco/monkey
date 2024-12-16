@@ -48,7 +48,7 @@ final readonly class OutputFormatter
 
     public function writePerformanceStats(PerformanceMetrics $metrics): void
     {
-        $this->output->writeln("<title>{$metrics->title} Performance Statistics</title>");
+        $this->output->writeln("<title>{$metrics->title} Performance</title>");
         $table = new Table($this->output);
 
         $table->setRows([

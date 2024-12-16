@@ -49,21 +49,8 @@ final readonly class RunFileCommand implements Command
             );
         }
 
-        $parserPerformanceMetrics = null;
-        $parserPerformanceTracker = null;
-
-        if ($config->hasStats()) {
-            $parserPerformanceTracker = new PerformanceTracker('Parser');
-            $parserPerformanceTracker->start();
-        }
-
         $program = new ProgramParser()($parser);
 
-        if ($config->hasStats()) {
-            $parserPerformanceMetrics = $parserPerformanceTracker->stop();
-        }
-
-        $evaluatorPerformanceMetrics = null;
         $evaluatorPerformanceTracker = null;
 
         if ($config->hasStats()) {
@@ -72,8 +59,7 @@ final readonly class RunFileCommand implements Command
         }
 
         try {
-            $evaluator = new Evaluator();
-            $result = $evaluator->eval($program, new Environment());
+            $result = new Evaluator()->eval($program, new Environment());
 
             if ($config->hasStats()) {
                 $evaluatorPerformanceMetrics = $evaluatorPerformanceTracker->stop();
@@ -84,7 +70,6 @@ final readonly class RunFileCommand implements Command
             $this->outputFormatter->write('');
 
             if ($config->hasStats()) {
-                $this->outputFormatter->writePerformanceStats($parserPerformanceMetrics);
                 $this->outputFormatter->writePerformanceStats($evaluatorPerformanceMetrics);
             }
 
